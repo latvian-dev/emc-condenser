@@ -1,10 +1,9 @@
 package mods.lm_emc_cond.tile;
 import cpw.mods.fml.relauncher.*;
 import mods.lm_core.*;
-import mods.lm_emc_cond.Alchemy;
-import mods.lm_emc_cond.ev.*;
+import mods.lm_emc_cond.*;
 import mods.lm_emc_cond.gui.*;
-import mods.lm_emc_cond.net.PacketGuiButton;
+import mods.lm_emc_cond.item.*;
 import net.minecraft.client.gui.inventory.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
@@ -38,16 +37,23 @@ public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInvent
 	{
 		if(!worldObj.isRemote && tick % 3 == 0)
 		{
+			if(redstoneMode > 0)
+			{
+				boolean b = isPowered(true);
+				if(redstoneMode == 1 && !b) return;
+				if(redstoneMode == 2 && b) return;
+			}
+			
 			for(int i = 0; i < SIDE_SLOTS.length; i++)
 			{
 				ItemStack is = items[SIDE_SLOTS[i]];
-				if(is != null && is.stackSize > 0 && canCondense(is))
+				if(is != null && is.stackSize > 0)
 				{
 					if(is.itemID == Alchemy.i_battery.itemID)
 					{
-						if(is.hasTagCompound() && is.stackTagCompound.hasKey("StoredEV"))
+						if(is.hasTagCompound() && is.stackTagCompound.hasKey(ItemBattery.NBT_VAL))
 						{
-							double ev = is.stackTagCompound.getDouble("StoredEV");
+							double ev = is.stackTagCompound.getDouble(ItemBattery.NBT_VAL);
 							
 							if(ev == Double.POSITIVE_INFINITY)
 							{
@@ -58,13 +64,13 @@ public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInvent
 							else
 							{
 								storedEMC += ev;
-								is.stackTagCompound.removeTag("StoredEV");
+								is.stackTagCompound.removeTag(ItemBattery.NBT_VAL);
 							}
 						}
 					}
 					else
 					{
-						float iev = EnergyValues.inst.getValue(is);
+						float iev = EMC.getEMC(is);
 						
 						if(iev > 0F)
 						{
@@ -89,7 +95,7 @@ public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInvent
 			}
 		}
 		
-		if(!worldObj.isRemote && storedEMC > 0D && items[UP_SLOT] != null && canMakeProduct())
+		if(!worldObj.isRemote && storedEMC > 0D && items[UP_SLOT] != null)
 		{
 			if(items[UP_SLOT].itemID == Alchemy.i_battery.itemID)
 			{
@@ -98,9 +104,9 @@ public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInvent
 					NBTTagCompound tag = items[UP_SLOT].stackTagCompound;
 					if(tag == null) tag = new NBTTagCompound();
 					
-					double ev = tag.hasKey("StoredEV") ? tag.getDouble("StoredEV") : 0D;
+					double ev = tag.hasKey(ItemBattery.NBT_VAL) ? tag.getDouble(ItemBattery.NBT_VAL) : 0D;
 					
-					tag.setDouble("StoredEV", ev + storedEMC);
+					tag.setDouble(ItemBattery.NBT_VAL, ev + storedEMC);
 					storedEMC = 0D;
 					items[UP_SLOT].setTagCompound(tag);
 					isDirty = true;
@@ -108,7 +114,7 @@ public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInvent
 			}
 			else
 			{
-				double ev = EnergyValues.inst.getValue(items[UP_SLOT]);
+				double ev = EMC.getEMC(items[UP_SLOT]);
 				
 				if(ev > 0D)
 				{
@@ -126,12 +132,6 @@ public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInvent
 			}
 		}
 	}
-	
-	public boolean canMakeProduct()
-	{ return true; }
-	
-	public boolean canCondense(ItemStack is)
-	{ return true; }
 	
 	public void onBroken()
 	{
@@ -163,8 +163,8 @@ public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInvent
 	public Container getContainer(EntityPlayer ep, int ID)
 	{ return new ContainerCondenser(ep, this); }
 	
-	@SideOnly(Side.CLIENT)
 	@Override
+	@SideOnly(Side.CLIENT)
 	public GuiContainer getGui(EntityPlayer ep, int ID)
 	{ return new GuiCondenser(new ContainerCondenser(ep, this)); }
 	
@@ -175,25 +175,36 @@ public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInvent
 			if(i == 0) toggleSafeMode(true);
 			else if(i == 1) clearBuffer(true);
 			else if(i == 2) toggleRedstoneMode(true);
+			else if(i == 3) toggleSecurity(true);
 		}
 	}
 	
 	public void toggleSafeMode(boolean serverSide)
 	{
 		if(serverSide) { safeMode = !safeMode; isDirty = true; }
-		else new PacketGuiButton(0).sendToServer(this);
+		else AlchemyNetHandler.sendToServer(this, 0);
 	}
 	
 	public void clearBuffer(boolean serverSide)
 	{
 		if(serverSide) { storedEMC = 0; isDirty = true; }
-		else new PacketGuiButton(1).sendToServer(this);
+		else AlchemyNetHandler.sendToServer(this, 1);
 	}
 	
 	public void toggleRedstoneMode(boolean serverSide)
 	{
 		if(serverSide) { redstoneMode = (redstoneMode + 1) % 3; isDirty = true; }
-		else new PacketGuiButton(2).sendToServer(this);
+		else AlchemyNetHandler.sendToServer(this, 2);
+	}
+	
+	public void toggleSecurity(boolean serverSide)
+	{
+		if(serverSide)
+		{
+			if(serverSide) { security.level = (security.level + 1) % 3; isDirty = true; }
+			isDirty = true;
+		}
+		else AlchemyNetHandler.sendToServer(this, 3);
 	}
 
 	@Override
@@ -275,5 +286,5 @@ public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInvent
 	
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer ep)
-	{ return security.canPlayerInteract(ep); } // && ep.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64D
+	{ return true; }
 }

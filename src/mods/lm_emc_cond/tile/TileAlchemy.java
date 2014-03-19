@@ -1,5 +1,6 @@
 package mods.lm_emc_cond.tile;
 import java.util.*;
+
 import net.minecraft.block.*;
 import net.minecraft.entity.item.*;
 import net.minecraft.entity.player.*;
@@ -11,7 +12,7 @@ import net.minecraft.tileentity.*;
 import net.minecraftforge.common.*;
 import mods.lm_core.*;
 
-public class TileAlchemy extends TileEntity implements ISecureTile
+public class TileAlchemy extends TileEntity implements ITileInterface, ISecureTile
 {
 	public static final int UP = ForgeDirection.UP.ordinal();
 	public static final int DOWN = ForgeDirection.DOWN.ordinal();
@@ -22,7 +23,7 @@ public class TileAlchemy extends TileEntity implements ISecureTile
 	public boolean isDirty = true;
 	public boolean isLoaded = false;
 	public long tick = 0L;
-	public LMSecurity security = new LMSecurity(-1);
+	public LMSecurity security = new LMSecurity((String)null);
 	
 	@Override
 	public final TileEntity getTile()
@@ -31,7 +32,7 @@ public class TileAlchemy extends TileEntity implements ISecureTile
 	@Override
 	public final LMSecurity getSecurity()
 	{ return security; }
-
+	
 	public Packet getDescriptionPacket()
 	{
 		NBTTagCompound tag = new NBTTagCompound();
@@ -72,21 +73,24 @@ public class TileAlchemy extends TileEntity implements ISecureTile
 	public void readFromNBT(NBTTagCompound tag)
 	{
 		super.readFromNBT(tag);
-		security.readFromNBT(tag.getTagList("Security"));
 		
 		tick = tag.getLong("Tick");
 		if(tick < 0L) tick = 0L;
+		
+		if(tag.hasKey("Security"))
+		security.readFromNBT(tag.getCompoundTag("Security"));
 	}
 	
 	public void writeToNBT(NBTTagCompound tag)
 	{
 		super.writeToNBT(tag);
-		NBTTagList list = new NBTTagList();
-		security.writeToNBT(list);
-		tag.setTag("Security", list);
 		
 		if(tick < 0L) tick = 0L;
 		tag.setLong("Tick", tick);
+		
+		NBTTagCompound securityTag = new NBTTagCompound();
+		security.writeToNBT(securityTag);
+		tag.setTag("Security", securityTag);
 	}
 	
 	public final void updateEntity()
@@ -113,15 +117,10 @@ public class TileAlchemy extends TileEntity implements ISecureTile
 	}
 
 	public void onPlaced()
-	{
-		blockType = Block.blocksList[worldObj.getBlockId(xCoord, yCoord, zCoord)];
-	}
+	{ blockType = Block.blocksList[worldObj.getBlockId(xCoord, yCoord, zCoord)]; }
 
 	public void onPlacedBy(EntityPlayer ep, ItemStack is)
-	{
-		security = new LMSecurity(ep);
-		isDirty = true;
-	}
+	{ security.owner = ep.username; isDirty = true; }
 	
 	public void addDropItems(ArrayList<ItemStack> al, int blockID, int meta)
 	{ al.add(new ItemStack(blockID, 1, meta)); }
@@ -176,12 +175,9 @@ public class TileAlchemy extends TileEntity implements ISecureTile
 	
 	public void onPostPlaced(int s) { }
 	
-	public void sendClientEvent(int eventID, int param)
-	{ worldObj.addBlockEvent(xCoord, yCoord, zCoord, blockType.blockID, eventID, param); }
-	
 	/** Player may be null */
 	public boolean isIndestructible(EntityPlayer ep)
-	{ return ep != null && !security.canPlayerInteract(ep); }
+	{ return (ep == null) ? false : security.canPlayerInteract(ep); }
 	
 	public boolean canBePlaced(EntityPlayer ep, int sideAt)
 	{ return true; }

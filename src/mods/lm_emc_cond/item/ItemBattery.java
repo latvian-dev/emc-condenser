@@ -7,6 +7,8 @@ import net.minecraft.item.*;
 
 public class ItemBattery extends ItemAlchemy
 {
+	public static final String NBT_VAL = "StoredEMC";
+	
 	public ItemBattery(String s)
 	{
 		super(s);
@@ -27,15 +29,12 @@ public class ItemBattery extends ItemAlchemy
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack is, EntityPlayer ep, List l, boolean b)
 	{
-		if(is.hasTagCompound() && is.stackTagCompound.hasKey("StoredEMC"))
+		if(is.hasTagCompound() && is.stackTagCompound.hasKey(NBT_VAL))
 		{
-			double ev = is.stackTagCompound.getDouble("StoredEMC");
-			
-			if(ev == Double.POSITIVE_INFINITY)
-			l.add("Stored EMC: Infinity");
-			else l.add("Stored EMC: " + (long)ev);
+			double ev = is.stackTagCompound.getDouble(NBT_VAL);
+			l.add("Stored EMC: " + ev);
 		}
 		
-		else l.add("Stored EMC: 0");
+		else l.add("Stored EMC: 0.0");
 	}
 }

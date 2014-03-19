@@ -31,7 +31,8 @@ public class ContainerCondenser extends Container
 		addSlotToContainer(new Slot(ep.inventory, x, 8 + x * 18, 198));
 	}
 	
-	public boolean canInteractWith(EntityPlayer entityplayer)
+	@Override
+	public boolean canInteractWith(EntityPlayer ep)
 	{ return true; }
 	
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)

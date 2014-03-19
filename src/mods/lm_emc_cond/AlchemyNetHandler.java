@@ -1,4 +1,4 @@
-package mods.lm_emc_cond.net;
+package mods.lm_emc_cond;
 import java.io.*;
 
 import mods.lm_emc_cond.*;
@@ -16,9 +16,8 @@ public class AlchemyNetHandler implements IPacketHandler
 	{
 		try
 		{
-			if(p.channel.equals(AlchemyFinals.MOD_ID) && p instanceof PacketAlchemyTile && player instanceof EntityPlayer)
+			if(p.channel.equals(AlchemyFinals.MOD_ID) && player instanceof EntityPlayer)
 			{
-				PacketAlchemyTile pat = (PacketAlchemyTile)p;
 				World worldObj = ((EntityPlayer)player).worldObj;
 				
 				DataInputStream dios = new DataInputStream(new ByteArrayInputStream(p.data));
@@ -26,6 +25,7 @@ public class AlchemyNetHandler implements IPacketHandler
 				int x = dios.readInt();
 				int y = dios.readInt();
 				int z = dios.readInt();
+				int buttonID = dios.readByte();
 				
 				if(dim == worldObj.provider.dimensionId && !worldObj.isRemote)
 				{
@@ -33,8 +33,8 @@ public class AlchemyNetHandler implements IPacketHandler
 					
 					if(te != null && te instanceof TileAlchemy)
 					{
-						pat.readExtraData((TileAlchemy)te, dios);
-						pat.readAlchemyPacket((TileAlchemy)te, m, player);
+						if(te instanceof TileCondenser)
+						((TileCondenser)te).handleGuiButton(buttonID);
 					}
 				}
 			}
@@ -43,5 +43,30 @@ public class AlchemyNetHandler implements IPacketHandler
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public static void sendToServer(TileAlchemy te, int buttonID)
+	{
+		Packet250CustomPayload packet = new Packet250CustomPayload(AlchemyFinals.MOD_ID, new byte[0]);
+		
+		try
+		{
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			DataOutputStream dios = new DataOutputStream(bos);
+			
+			dios.writeShort((short)te.worldObj.provider.dimensionId);
+			dios.writeInt(te.xCoord);
+			dios.writeInt(te.yCoord);
+			dios.writeInt(te.zCoord);
+			dios.writeByte(buttonID);
+			dios.flush();
+			
+			packet.data = bos.toByteArray();
+			packet.length = bos.size();
+		}
+		catch(Exception e)
+		{ e.printStackTrace(); }
+		
+		PacketDispatcher.sendPacketToServer(packet);
 	}
 }

@@ -4,7 +4,6 @@ import java.util.logging.*;
 import mods.lm_core.*;
 import mods.lm_emc_cond.block.*;
 import mods.lm_emc_cond.item.*;
-import mods.lm_emc_cond.net.*;
 import mods.lm_emc_cond.tile.*;
 import net.minecraft.creativetab.*;
 import net.minecraft.item.*;

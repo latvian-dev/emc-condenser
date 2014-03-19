@@ -1,4 +1,5 @@
 package mods.lm_emc_cond.block;
+import com.pahimar.ee3.lib.*;
 import cpw.mods.fml.relauncher.*;
 import mods.lm_emc_cond.*;
 import mods.lm_emc_cond.tile.*;
@@ -26,13 +27,9 @@ public class BlockMachines extends BlockAlchemy
 		addAllDamages(names.length);
 		isBlockContainer = true;
 		
-		for(int i = 0; i < names.length; i++)
-		{
-			TileAlchemy t = createTileEntity(null, i);
-			if(t != null) Alchemy.inst.addTile(t.getClass(), names[i]);
-		}
-		
 		AlchemyRecipes.UUS_BLOCK_ITEM = new ItemStack(this, 1, 0);
+		
+		Alchemy.inst.addTile(TileCondenser.class, "condenser");
 	}
 	
 	public void loadRecipes()
@@ -41,11 +38,11 @@ public class BlockMachines extends BlockAlchemy
 		
 		AlchemyRecipes.add3x3Recipe(AlchemyRecipes.UUS_ITEM, AlchemyRecipes.UUS_BLOCK_ITEM, true);
 		
-		AlchemyRecipes.addRecipe(new ItemStack(this, 1, 1), "OPO", "OEO", "OMO",
+		AlchemyRecipes.addRecipe(new ItemStack(this, 1, 1), "OPO", "OSO", "OMO",
 				Character.valueOf('O'), Block.obsidian,
 				Character.valueOf('M'), AlchemyRecipes.UUS_BLOCK,
 				Character.valueOf('P'), Item.enderPearl,
-				Character.valueOf('E'), Item.emerald);
+				Character.valueOf('S'), new ItemStack(ItemIds.MINIUM_STONE, 1, 0));
 	}
 	
 	public boolean hasTileEntity(int m)
