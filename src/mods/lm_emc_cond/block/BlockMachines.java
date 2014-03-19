@@ -10,7 +10,7 @@ import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 
-public class BlockMachines extends BlockAlchemy
+public class BlockMachines extends BlockEMCC
 {
 	public static final String[] names =
 	{
@@ -27,20 +27,20 @@ public class BlockMachines extends BlockAlchemy
 		addAllDamages(names.length);
 		isBlockContainer = true;
 		
-		AlchemyRecipes.UUS_BLOCK_ITEM = new ItemStack(this, 1, 0);
+		EMCCRecipes.UUS_BLOCK_ITEM = new ItemStack(this, 1, 0);
 		
-		Alchemy.inst.addTile(TileCondenser.class, "condenser");
+		EMCC.inst.addTile(TileCondenser.class, "condenser");
 	}
 	
 	public void loadRecipes()
 	{
-		AlchemyRecipes.addOre(AlchemyRecipes.UUS_BLOCK, AlchemyRecipes.UUS_BLOCK_ITEM);
+		EMCCRecipes.addOre(EMCCRecipes.UUS_BLOCK, EMCCRecipes.UUS_BLOCK_ITEM);
 		
-		AlchemyRecipes.add3x3Recipe(AlchemyRecipes.UUS_ITEM, AlchemyRecipes.UUS_BLOCK_ITEM, true);
+		EMCCRecipes.add3x3Recipe(EMCCRecipes.UUS_ITEM, EMCCRecipes.UUS_BLOCK_ITEM, true);
 		
-		AlchemyRecipes.addRecipe(new ItemStack(this, 1, 1), "OPO", "OSO", "OMO",
+		EMCCRecipes.addRecipe(new ItemStack(this, 1, 1), "OPO", "OSO", "OMO",
 				Character.valueOf('O'), Block.obsidian,
-				Character.valueOf('M'), AlchemyRecipes.UUS_BLOCK,
+				Character.valueOf('M'), EMCCRecipes.UUS_BLOCK,
 				Character.valueOf('P'), Item.enderPearl,
 				Character.valueOf('S'), new ItemStack(ItemIds.MINIUM_STONE, 1, 0));
 	}
@@ -56,14 +56,14 @@ public class BlockMachines extends BlockAlchemy
 	}
 	
 	public String getUnlocalizedName(int i)
-	{ return AlchemyFinals.getBlockName(names[i]); }
+	{ return EMCCFinals.getBlockName(names[i]); }
 	
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister ir)
 	{
-		blockIcon = ir.registerIcon(AlchemyFinals.ASSETS + "uusb");
-		condSide = ir.registerIcon(AlchemyFinals.ASSETS + "condSide");
-		condTop = ir.registerIcon(AlchemyFinals.ASSETS + "condTop");
+		blockIcon = ir.registerIcon(EMCCFinals.ASSETS + "uusb");
+		condSide = ir.registerIcon(EMCCFinals.ASSETS + "condSide");
+		condTop = ir.registerIcon(EMCCFinals.ASSETS + "condTop");
 	}
 	
 	@SideOnly(Side.CLIENT)

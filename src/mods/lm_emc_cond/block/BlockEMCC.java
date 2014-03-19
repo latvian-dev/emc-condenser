@@ -16,18 +16,18 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.*;
 import net.minecraftforge.common.ForgeDirection;
 
-public class BlockAlchemy extends BlockContainer
+public class BlockEMCC extends BlockContainer
 {
 	public final String blockName;
 	public ArrayList<ItemStack> blocksAdded = new ArrayList<ItemStack>();
 	
-	public BlockAlchemy(String s, Material m)
+	public BlockEMCC(String s, Material m)
 	{
-		super(AlchemyConfig.getBlockID(s), m);
+		super(EMCCConfig.getBlockID(s), m);
 		blockName = s;
 		setHardness(2F);
 		setResistance(3F);
-		setUnlocalizedName(AlchemyFinals.getBlockName(s));
+		setUnlocalizedName(EMCCFinals.getBlockName(s));
 		isBlockContainer = false;
 	}
 
@@ -38,7 +38,7 @@ public class BlockAlchemy extends BlockContainer
 
 	@SideOnly(Side.CLIENT)
 	public CreativeTabs getCreativeTabToDisplayOn()
-	{ return Alchemy.tab; }
+	{ return EMCC.tab; }
 
 	public final TileEntity createNewTileEntity(World world)
 	{ return null; }
@@ -53,7 +53,7 @@ public class BlockAlchemy extends BlockContainer
 	{ return isBlockContainer; }
 
 	public String getUnlocalizedName(int m)
-	{ return AlchemyFinals.getBlockName(blockName); }
+	{ return EMCCFinals.getBlockName(blockName); }
 	
 	//ItemLME
 	public void addAllDamages(int until)
@@ -151,7 +151,7 @@ public class BlockAlchemy extends BlockContainer
 	
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister ir)
-	{ blockIcon = ir.registerIcon(AlchemyFinals.ASSETS + blockName); }
+	{ blockIcon = ir.registerIcon(EMCCFinals.ASSETS + blockName); }
 
 	@SideOnly(Side.CLIENT)
 	public Icon getIcon(int s, int m)

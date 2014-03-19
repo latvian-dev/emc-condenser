@@ -19,7 +19,7 @@ public class GuiCondenser extends GuiContainer
 	
 	public TinyButton buttonSafe, barEMC, buttonRedstone, buttonSecurity;
 	
-	public static final ResourceLocation texture = new ResourceLocation(AlchemyFinals.MOD_ID, "textures/gui/condenser.png");
+	public static final ResourceLocation texture = new ResourceLocation(EMCCFinals.MOD_ID, "textures/gui/condenser.png");
 	
 	public GuiCondenser(ContainerCondenser c)
 	{
@@ -114,17 +114,17 @@ public class GuiCondenser extends GuiContainer
 			al.add("Security");
 			
 			if(tile.security.level == LMSecurity.PUBLIC) al.add("Public");
-			else if(tile.security.level == LMSecurity.PRIVATE) al.add("Public");
+			else if(tile.security.level == LMSecurity.PRIVATE) al.add("Private");
 			else if(tile.security.level == LMSecurity.RESTRICTED)
 			{
 				al.add("Restricted");
 				
-				if(GuiScreen.isShiftKeyDown() && tile.security.friends.length > 0)
+				if(GuiScreen.isShiftKeyDown() && !tile.security.friends.isEmpty())
 				{
-					al.add(" ");
+					al.add("> Friends:");
 					
-					for(String s : tile.security.friends)
-					al.add(s);
+					for(int i = 0; i < tile.security.friends.size(); i++)
+					al.add(tile.security.friends.get(i));
 				}
 			}
 		}

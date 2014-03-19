@@ -4,20 +4,20 @@ import com.pahimar.ee3.lib.ItemIds;
 import mods.lm_emc_cond.*;
 import net.minecraft.item.*;
 
-public class ItemUUS extends ItemAlchemy
+public class ItemUUS extends ItemEMCC
 {
 	public ItemUUS(String s)
 	{
 		super(s);
-		AlchemyRecipes.UUS_ITEM = new ItemStack(this, 1, 0);
+		EMCCRecipes.UUS_ITEM = new ItemStack(this, 1, 0);
 		addAllDamages(1);
 	}
 	
 	public void loadRecipes()
 	{
-		AlchemyRecipes.addOre(AlchemyRecipes.UUS, AlchemyRecipes.UUS_ITEM);
+		EMCCRecipes.addOre(EMCCRecipes.UUS, EMCCRecipes.UUS_ITEM);
 		
-		AlchemyRecipes.addShapelessRecipe(AlchemyRecipes.UUS_ITEM,
+		EMCCRecipes.addShapelessRecipe(EMCCRecipes.UUS_ITEM,
 				new ItemStack(ItemIds.ALCHEMICAL_DUST, 1, 1),
 				new ItemStack(ItemIds.ALCHEMICAL_DUST, 1, 2),
 				new ItemStack(ItemIds.ALCHEMICAL_DUST, 1, 3),

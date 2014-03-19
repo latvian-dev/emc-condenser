@@ -10,13 +10,13 @@ import net.minecraft.tileentity.*;
 import net.minecraft.world.*;
 import cpw.mods.fml.common.network.*;
 
-public class AlchemyNetHandler implements IPacketHandler
+public class EMCCNetHandler implements IPacketHandler
 {
 	public void onPacketData(INetworkManager m, Packet250CustomPayload p, Player player)
 	{
 		try
 		{
-			if(p.channel.equals(AlchemyFinals.MOD_ID) && player instanceof EntityPlayer)
+			if(p.channel.equals(EMCCFinals.MOD_ID) && player instanceof EntityPlayer)
 			{
 				World worldObj = ((EntityPlayer)player).worldObj;
 				
@@ -47,7 +47,7 @@ public class AlchemyNetHandler implements IPacketHandler
 	
 	public static void sendToServer(TileAlchemy te, int buttonID)
 	{
-		Packet250CustomPayload packet = new Packet250CustomPayload(AlchemyFinals.MOD_ID, new byte[0]);
+		Packet250CustomPayload packet = new Packet250CustomPayload(EMCCFinals.MOD_ID, new byte[0]);
 		
 		try
 		{

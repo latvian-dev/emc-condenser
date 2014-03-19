@@ -2,7 +2,7 @@ package mods.lm_emc_cond;
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
-public class AlchemyClient extends AlchemyCommon
+public class EMCCClient extends EMCCCommon
 {
 	public static final int FRONT = 3;
 

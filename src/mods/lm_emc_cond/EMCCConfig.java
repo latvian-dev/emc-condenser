@@ -3,7 +3,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.common.Configuration;
 import mods.lm_core.*;
 
-public class AlchemyConfig
+public class EMCCConfig
 {
 	public static Configuration config;
 	
@@ -39,9 +39,9 @@ public class AlchemyConfig
 	
 	private static int blockID = 1313;
 	public static int getBlockID(String s)
-	{ return config.get(Configuration.CATEGORY_BLOCK + "." + AlchemyFinals.MOD_ID, s, ++blockID).getInt(); }
+	{ return config.get(Configuration.CATEGORY_BLOCK + "." + EMCCFinals.MOD_ID, s, ++blockID).getInt(); }
 	
 	private static int itemID = 13461;
 	public static int getItemID(String s)
-	{ return config.get(Configuration.CATEGORY_ITEM + "." + AlchemyFinals.MOD_ID, s, ++itemID).getInt(); }
+	{ return config.get(Configuration.CATEGORY_ITEM + "." + EMCCFinals.MOD_ID, s, ++itemID).getInt(); }
 }

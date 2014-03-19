@@ -5,7 +5,7 @@ import net.minecraft.item.*;
 import net.minecraft.item.crafting.*;
 import mods.lm_core.*;
 
-public class AlchemyRecipes
+public class EMCCRecipes
 {
 	private static final ArrayList<IRecipe> recipesLoaded = new ArrayList<IRecipe>();
 	private static final ArrayList<List<Integer>> furnaceRecipesLoaded = new ArrayList<List<Integer>>();
@@ -34,7 +34,7 @@ public class AlchemyRecipes
 				recipesLoaded.clear();
 			}
 			catch(Exception e)
-			{ e.printStackTrace(); Alchemy.logger.warning("Failed to reset Crafting Recipes"); }
+			{ e.printStackTrace(); EMCC.logger.warning("Failed to reset Crafting Recipes"); }
 			
 			try
 			{
@@ -43,15 +43,15 @@ public class AlchemyRecipes
 				furnaceRecipesLoaded.clear();
 			}
 			catch(Exception e)
-			{ e.printStackTrace(); Alchemy.logger.warning("Failed to reset Furnace Recipes"); }
+			{ e.printStackTrace(); EMCC.logger.warning("Failed to reset Furnace Recipes"); }
 		}
 		
-		for(int i = 0; i < Alchemy.blocks.size(); i++) Alchemy.blocks.get(i).loadRecipes();
-		for(int i = 0; i < Alchemy.items.size(); i++) Alchemy.items.get(i).loadRecipes();
+		for(int i = 0; i < EMCC.blocks.size(); i++) EMCC.blocks.get(i).loadRecipes();
+		for(int i = 0; i < EMCC.items.size(); i++) EMCC.items.get(i).loadRecipes();
 		
 		hasLoadedOnce = true;
 		
-		Alchemy.logger.info("Loaded " + (recipesLoaded.size() + furnaceRecipesLoaded.size()) + " reloadable recipes (Shaped, Shapeless & Smelting) from Alchemy mod");
+		EMCC.logger.info("Loaded " + (recipesLoaded.size() + furnaceRecipesLoaded.size()) + " reloadable recipes (Shaped, Shapeless & Smelting) from Alchemy mod");
 	}
 	
 	public static final ItemStack siz(ItemStack is, int s)

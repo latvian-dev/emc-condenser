@@ -8,23 +8,23 @@ import net.minecraft.creativetab.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 
-public class ItemAlchemy extends Item
+public class ItemEMCC extends Item
 {
 	public final String itemName;
 	public ArrayList<ItemStack> itemsAdded = new ArrayList<ItemStack>();
 
-	public ItemAlchemy(String s)
+	public ItemEMCC(String s)
 	{
-		super(AlchemyConfig.getItemID(s));
+		super(EMCCConfig.getItemID(s));
 		itemName = s;
-		setUnlocalizedName(AlchemyFinals.getItemName(s));
+		setUnlocalizedName(EMCCFinals.getItemName(s));
 	}
 	
 	public void onPostLoaded() { }
 
 	@SideOnly(Side.CLIENT)
 	public CreativeTabs getCreativeTab()
-	{ return Alchemy.tab; }
+	{ return EMCC.tab; }
 
 	@SuppressWarnings("all")
 	@SideOnly(Side.CLIENT)
@@ -32,7 +32,7 @@ public class ItemAlchemy extends Item
 	{ l.addAll(itemsAdded); }
 
 	public String getUnlocalizedName(ItemStack is)
-	{ return AlchemyFinals.getItemName(itemName); }
+	{ return EMCCFinals.getItemName(itemName); }
 
 	public void addAllDamages(int until)
 	{
@@ -51,7 +51,7 @@ public class ItemAlchemy extends Item
 
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister ir)
-	{ itemIcon = ir.registerIcon(AlchemyFinals.ASSETS + itemName); }
+	{ itemIcon = ir.registerIcon(EMCCFinals.ASSETS + itemName); }
 
 	@SideOnly(Side.CLIENT)
 	public Icon getIconFromDamageForRenderPass(int i, int r)

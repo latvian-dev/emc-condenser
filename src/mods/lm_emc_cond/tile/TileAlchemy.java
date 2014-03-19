@@ -133,7 +133,7 @@ public class TileAlchemy extends TileEntity implements ITileInterface, ISecureTi
 	}
 
 	public void openGui(EntityPlayer ep, int ID)
-	{ if(this instanceof IGuiTile) LatCore.openGui((IGuiTile)this, ID, ep); }
+	{ if(this instanceof IGuiTile && !worldObj.isRemote) LatCore.openGui((IGuiTile)this, ID, ep); }
 
 	public void dropItem(ItemStack is, double ox, double oy, double oz)
 	{ EntityItem ei = new EntityItem(worldObj, xCoord + 0.5D + ox, yCoord + 0.5D + oy, zCoord + 0.5D + oz, is);
@@ -177,7 +177,7 @@ public class TileAlchemy extends TileEntity implements ITileInterface, ISecureTi
 	
 	/** Player may be null */
 	public boolean isIndestructible(EntityPlayer ep)
-	{ return (ep == null) ? false : security.canPlayerInteract(ep); }
+	{ return (ep == null) ? (security.level != LMSecurity.PUBLIC) : !security.canPlayerInteract(ep); }
 	
 	public boolean canBePlaced(EntityPlayer ep, int sideAt)
 	{ return true; }

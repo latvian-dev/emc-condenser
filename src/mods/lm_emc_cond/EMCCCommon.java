@@ -1,6 +1,6 @@
 package mods.lm_emc_cond;
 
-public class AlchemyCommon
+public class EMCCCommon
 {
 	public void preInit() {}
 	public void init() {}

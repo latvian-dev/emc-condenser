@@ -5,7 +5,7 @@ import mods.lm_emc_cond.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 
-public class ItemBattery extends ItemAlchemy
+public class ItemBattery extends ItemEMCC
 {
 	public static final String NBT_VAL = "StoredEMC";
 	
@@ -18,11 +18,11 @@ public class ItemBattery extends ItemAlchemy
 	
 	public void loadRecipes()
 	{
-		AlchemyRecipes.addRecipe(new ItemStack(this, 1, 0), "QRQ", "QUQ", "QGQ",
+		EMCCRecipes.addRecipe(new ItemStack(this, 1, 0), "QRQ", "QUQ", "QGQ",
 				Character.valueOf('Q'), Item.netherQuartz,
 				Character.valueOf('R'), Item.redstone,
 				Character.valueOf('G'), Item.glowstone,
-				Character.valueOf('U'), AlchemyRecipes.UUS);
+				Character.valueOf('U'), EMCCRecipes.UUS);
 	}
 	
 	@SuppressWarnings("all")

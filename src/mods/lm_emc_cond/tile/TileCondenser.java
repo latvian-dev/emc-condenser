@@ -33,6 +33,37 @@ public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInvent
 		items = new ItemStack[46];
 	}
 	
+	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
+	{
+		ItemStack heldItem = null;
+		if(security.level == LMSecurity.RESTRICTED && (heldItem = ep.getHeldItem()) != null && heldItem.itemID == Item.nameTag.itemID && heldItem.hasDisplayName())
+		{
+			if(!worldObj.isRemote && security.owner.equals(ep.username))
+			{
+				String s = heldItem.getDisplayName();
+				
+				if(heldItem.stackTagCompound != null && heldItem.stackTagCompound.hasKey("display"))
+				{
+					NBTTagCompound displayTag = heldItem.stackTagCompound.getCompoundTag("display");
+		            if(displayTag.hasKey("Name")) displayTag.removeTag("Name");
+				}
+				
+				if(!security.friends.contains(s))
+				{
+					if(!ep.capabilities.isCreativeMode)
+					heldItem.setItemName(null);
+					
+					security.friends.add(s);
+					LatCore.printChat("Added '" + s + "' to friends list!");
+					isDirty = true;
+				}
+				else LatCore.printChat("'" + s + "' already added!");
+			}
+		}
+		else openGui(ep, 0);
+		return true;
+	}
+	
 	public void onUpdate()
 	{
 		if(!worldObj.isRemote && tick % 3 == 0)
@@ -49,7 +80,7 @@ public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInvent
 				ItemStack is = items[SIDE_SLOTS[i]];
 				if(is != null && is.stackSize > 0)
 				{
-					if(is.itemID == Alchemy.i_battery.itemID)
+					if(is.itemID == EMCC.i_battery.itemID)
 					{
 						if(is.hasTagCompound() && is.stackTagCompound.hasKey(ItemBattery.NBT_VAL))
 						{
@@ -97,7 +128,7 @@ public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInvent
 		
 		if(!worldObj.isRemote && storedEMC > 0D && items[UP_SLOT] != null)
 		{
-			if(items[UP_SLOT].itemID == Alchemy.i_battery.itemID)
+			if(items[UP_SLOT].itemID == EMCC.i_battery.itemID)
 			{
 				if(storedEMC > 0D)
 				{
@@ -182,19 +213,19 @@ public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInvent
 	public void toggleSafeMode(boolean serverSide)
 	{
 		if(serverSide) { safeMode = !safeMode; isDirty = true; }
-		else AlchemyNetHandler.sendToServer(this, 0);
+		else EMCCNetHandler.sendToServer(this, 0);
 	}
 	
 	public void clearBuffer(boolean serverSide)
 	{
 		if(serverSide) { storedEMC = 0; isDirty = true; }
-		else AlchemyNetHandler.sendToServer(this, 1);
+		else EMCCNetHandler.sendToServer(this, 1);
 	}
 	
 	public void toggleRedstoneMode(boolean serverSide)
 	{
 		if(serverSide) { redstoneMode = (redstoneMode + 1) % 3; isDirty = true; }
-		else AlchemyNetHandler.sendToServer(this, 2);
+		else EMCCNetHandler.sendToServer(this, 2);
 	}
 	
 	public void toggleSecurity(boolean serverSide)
@@ -204,7 +235,7 @@ public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInvent
 			if(serverSide) { security.level = (security.level + 1) % 3; isDirty = true; }
 			isDirty = true;
 		}
-		else AlchemyNetHandler.sendToServer(this, 3);
+		else EMCCNetHandler.sendToServer(this, 3);
 	}
 
 	@Override

@@ -11,18 +11,18 @@ import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.*;
 
-@Mod(modid = AlchemyFinals.MOD_ID, name = AlchemyFinals.MOD_NAME, version = AlchemyFinals.VERSION)
+@Mod(modid = EMCCFinals.MOD_ID, name = EMCCFinals.MOD_NAME, version = EMCCFinals.VERSION)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
-public class Alchemy
+public class EMCC
 {
-	@Mod.Instance(AlchemyFinals.MOD_ID)
-	public static Alchemy inst;
+	@Mod.Instance(EMCCFinals.MOD_ID)
+	public static EMCC inst;
 	
-	@SidedProxy(clientSide = AlchemyFinals.SIDE_CLIENT, serverSide = AlchemyFinals.SIDE_SERVER)
-	public static AlchemyCommon proxy; // LMEClient
+	@SidedProxy(clientSide = EMCCFinals.SIDE_CLIENT, serverSide = EMCCFinals.SIDE_SERVER)
+	public static EMCCCommon proxy; // LMEClient
 	
-	public static ArrayList<ItemAlchemy> items = new ArrayList<ItemAlchemy>();
-	public static ArrayList<BlockAlchemy> blocks = new ArrayList<BlockAlchemy>();
+	public static ArrayList<ItemEMCC> items = new ArrayList<ItemEMCC>();
+	public static ArrayList<BlockEMCC> blocks = new ArrayList<BlockEMCC>();
 	
 	public static CreativeTabs tab = null;
 	
@@ -37,19 +37,19 @@ public class Alchemy
 	{
 		logger.setParent(FMLLog.getLogger());
 		
-		AlchemyConfig.load(e);
+		EMCCConfig.load(e);
 		
 		addBlock(b_machines = new BlockMachines("machines"));
 		
 		addItem(i_uus = new ItemUUS("uus"));
 		addItem(i_battery = new ItemBattery("uusBattery"));
 		
-		tab = LatCore.createTab(AlchemyFinals.ASSETS + "tab", new ItemStack(b_machines, 1, 3));
+		tab = LatCore.createTab(EMCCFinals.ASSETS + "tab", new ItemStack(b_machines, 1, 3));
 		
-		LatCore.addPacketHandler(new AlchemyNetHandler(), AlchemyFinals.MOD_ID);
+		LatCore.addPacketHandler(new EMCCNetHandler(), EMCCFinals.MOD_ID);
 		
 		proxy.preInit();
-		AlchemyConfig.save();
+		EMCCConfig.save();
 	}
 
 	@Mod.EventHandler
@@ -61,23 +61,19 @@ public class Alchemy
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
-		AlchemyRecipes.load();
+		EMCCRecipes.load();
 		proxy.postInit();
 	}
 	
-	@Mod.EventHandler
-	public void serverStarting(FMLServerStartingEvent e)
-	{ e.registerServerCommand(new AlchemyCommand()); }
-	
-	public void addItem(ItemAlchemy i)
-	{ LatCore.addItem(i, AlchemyFinals.MOD_ID + '.' + i.itemName, AlchemyFinals.MOD_ID); items.add(i); }
+	public void addItem(ItemEMCC i)
+	{ LatCore.addItem(i, EMCCFinals.MOD_ID + '.' + i.itemName, EMCCFinals.MOD_ID); items.add(i); }
 
-	public void addBlock(BlockAlchemy b, Class<? extends ItemBlockAlchemy> c)
-	{ LatCore.addBlock(b, c, AlchemyFinals.MOD_ID + '.' + b.blockName, AlchemyFinals.MOD_ID); blocks.add(b); }
+	public void addBlock(BlockEMCC b, Class<? extends ItemBlockAlchemy> c)
+	{ LatCore.addBlock(b, c, EMCCFinals.MOD_ID + '.' + b.blockName, EMCCFinals.MOD_ID); blocks.add(b); }
 	
-	public void addBlock(BlockAlchemy b)
+	public void addBlock(BlockEMCC b)
 	{ addBlock(b, ItemBlockAlchemy.class); }
 
 	public void addTile(Class<? extends TileAlchemy> c, String s)
-	{ LatCore.addTileEntity(c, AlchemyFinals.MOD_ID + '.' + s); }
+	{ LatCore.addTileEntity(c, EMCCFinals.MOD_ID + '.' + s); }
 }
