@@ -18,7 +18,7 @@ public class GuiCondenser extends GuiContainer
 	
 	public TinyButton buttonSafe, barEMC, buttonRedstone, buttonSecurity;
 	
-	public static final ResourceLocation texture = new ResourceLocation(EMCCFinals.MOD_ID, "textures/gui/condenser.png");
+	public static final ResourceLocation texture = EMCCFinals.getLocation("textures/gui/condenser.png");
 	
 	public GuiCondenser(ContainerCondenser c)
 	{

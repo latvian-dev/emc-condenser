@@ -12,7 +12,7 @@ public class EMCCFinals
 	public static final String SIDE_SERVER = "mods.lm.emcc.EMCCCommon";
 	
 	public static final ResourceLocation getLocation(String s)
-	{ return new ResourceLocation(MOD_ID, s); }
+	{ return new ResourceLocation("lm_emcc", s); }
 	
 	public static final String getItemName(String s)
 	{ return ASSETS + "i." + s; }
