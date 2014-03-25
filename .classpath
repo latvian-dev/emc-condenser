@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="res"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Minecraft"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Equivalent-Exchange-3"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/EE3"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/LatCoreMC"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Minecraft"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
