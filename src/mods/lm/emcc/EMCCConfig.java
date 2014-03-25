@@ -9,7 +9,7 @@ public class EMCCConfig
 	
 	public static final void load(FMLPreInitializationEvent e)
 	{
-		config = LatCore.loadConfig(e, "/LatMod/Alchemy.cfg");
+		config = LatCore.loadConfig(e, "/LatMod/EMC_Cond.cfg");
 	}
 	
 	public static final void save()

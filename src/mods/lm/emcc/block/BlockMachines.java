@@ -2,6 +2,7 @@ package mods.lm.emcc.block;
 import com.pahimar.ee3.lib.*;
 
 import cpw.mods.fml.relauncher.*;
+import mods.lm.core.LatCore;
 import mods.lm.emcc.*;
 import mods.lm.emcc.tile.*;
 import net.minecraft.block.Block;
@@ -43,7 +44,7 @@ public class BlockMachines extends BlockEMCC
 				Character.valueOf('O'), Block.obsidian,
 				Character.valueOf('M'), EMCCRecipes.UUS_BLOCK,
 				Character.valueOf('P'), Item.enderPearl,
-				Character.valueOf('S'), new ItemStack(ItemIds.MINIUM_STONE, 1, 0));
+				Character.valueOf('S'), new ItemStack(ItemIds.MINIUM_STONE, 1, LatCore.ANY));
 	}
 	
 	public boolean hasTileEntity(int m)

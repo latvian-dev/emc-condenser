@@ -27,7 +27,7 @@ public class EMCC
 	
 	public static CreativeTabs tab = null;
 	
-	public static Logger logger = Logger.getLogger("Alchemy");
+	public static Logger logger = Logger.getLogger("EMC_Cond");
 	
 	public static BlockMachines b_machines;
 	public static ItemUUS i_uus;
@@ -69,11 +69,11 @@ public class EMCC
 	public void addItem(ItemEMCC i)
 	{ LatCore.addItem(i, EMCCFinals.MOD_ID + '.' + i.itemName, EMCCFinals.MOD_ID); items.add(i); }
 
-	public void addBlock(BlockEMCC b, Class<? extends ItemBlockAlchemy> c)
+	public void addBlock(BlockEMCC b, Class<? extends ItemBlockEMCC> c)
 	{ LatCore.addBlock(b, c, EMCCFinals.MOD_ID + '.' + b.blockName, EMCCFinals.MOD_ID); blocks.add(b); }
 	
 	public void addBlock(BlockEMCC b)
-	{ addBlock(b, ItemBlockAlchemy.class); }
+	{ addBlock(b, ItemBlockEMCC.class); }
 
 	public void addTile(Class<? extends TileAlchemy> c, String s)
 	{ LatCore.addTileEntity(c, EMCCFinals.MOD_ID + '.' + s); }

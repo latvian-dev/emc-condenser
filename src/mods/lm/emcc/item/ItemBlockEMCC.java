@@ -7,11 +7,11 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.*;
 
-public class ItemBlockAlchemy extends ItemBlock
+public class ItemBlockEMCC extends ItemBlock
 {
 	public BlockEMCC lmuBlock;
 
-	public ItemBlockAlchemy(int i)
+	public ItemBlockEMCC(int i)
 	{
 		super(i);
 		setHasSubtypes(true);
