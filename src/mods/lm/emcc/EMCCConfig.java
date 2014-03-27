@@ -39,9 +39,9 @@ public class EMCCConfig
 	
 	private static int blockID = 1313;
 	public static int getBlockID(String s)
-	{ return config.get(Configuration.CATEGORY_BLOCK + "." + EMCCFinals.MOD_ID, s, ++blockID).getInt(); }
+	{ return config.get(Configuration.CATEGORY_BLOCK, s, ++blockID).getInt(); }
 	
 	private static int itemID = 13461;
 	public static int getItemID(String s)
-	{ return config.get(Configuration.CATEGORY_ITEM + "." + EMCCFinals.MOD_ID, s, ++itemID).getInt(); }
+	{ return config.get(Configuration.CATEGORY_ITEM, s, ++itemID).getInt(); }
 }
