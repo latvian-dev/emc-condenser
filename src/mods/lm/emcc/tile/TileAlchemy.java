@@ -103,11 +103,7 @@ public class TileAlchemy extends TileEntity implements ITileInterface, ISecureTi
 		{
 			isDirty = false;
 			
-			worldObj.markTileEntityChunkModified(xCoord, yCoord, zCoord, this);
-			if(blockType != null) worldObj.func_96440_m(xCoord, yCoord, zCoord, blockType.blockID);
-			
-			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-		}
+			super.markDirty();
 		
 		tick++;
 	}
