@@ -30,7 +30,7 @@ public class EMCCNetHandler implements IPacketHandler
 				{
 					TileEntity te = worldObj.getBlockTileEntity(x, y, z);
 					
-					if(te != null && te instanceof TileAlchemy)
+					if(te != null && te instanceof TileEMCC)
 					{
 						if(te instanceof TileCondenser)
 						((TileCondenser)te).handleGuiButton(buttonID);
@@ -44,7 +44,7 @@ public class EMCCNetHandler implements IPacketHandler
 		}
 	}
 	
-	public static void sendToServer(TileAlchemy te, int buttonID)
+	public static void sendToServer(TileEMCC te, int buttonID)
 	{
 		Packet250CustomPayload packet = new Packet250CustomPayload(EMCCFinals.MOD_ID, new byte[0]);
 		

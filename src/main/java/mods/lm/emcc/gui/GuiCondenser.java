@@ -1,8 +1,7 @@
 package mods.lm.emcc.gui;
 import java.util.*;
-
 import cpw.mods.fml.relauncher.*;
-import mods.lm.core.*;
+import latmod.core.*;
 import mods.lm.emcc.*;
 import mods.lm.emcc.tile.*;
 import net.minecraft.client.gui.GuiScreen;
@@ -120,6 +119,7 @@ public class GuiCondenser extends GuiContainer
 				
 				if(GuiScreen.isShiftKeyDown() && !tile.security.friends.isEmpty())
 				{
+					al.add(" ");
 					al.add("> Friends:");
 					
 					for(int i = 0; i < tile.security.friends.size(); i++)

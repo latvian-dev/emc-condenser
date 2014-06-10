@@ -1,8 +1,7 @@
 package mods.lm.emcc;
 import java.util.*;
 import java.util.logging.*;
-
-import mods.lm.core.*;
+import latmod.core.*;
 import mods.lm.emcc.block.*;
 import mods.lm.emcc.item.*;
 import mods.lm.emcc.tile.*;
@@ -47,10 +46,10 @@ public class EMCC
 		
 		tab = LatCore.createTab(EMCCFinals.ASSETS + "tab", new ItemStack(b_machines, 1, 3));
 		
-		LatCore.addPacketHandler(new EMCCNetHandler(), EMCCFinals.MOD_ID);
+		NetworkRegistry.instance().registerChannel(new EMCCNetHandler(), EMCCFinals.MOD_ID);
 		
 		proxy.preInit();
-		EMCCConfig.save();
+		EMCCConfig.config.save();
 	}
 
 	@Mod.EventHandler
@@ -75,6 +74,6 @@ public class EMCC
 	public void addBlock(BlockEMCC b)
 	{ addBlock(b, ItemBlockEMCC.class); }
 
-	public void addTile(Class<? extends TileAlchemy> c, String s)
+	public void addTile(Class<? extends TileEMCC> c, String s)
 	{ LatCore.addTileEntity(c, EMCCFinals.MOD_ID + '.' + s); }
 }

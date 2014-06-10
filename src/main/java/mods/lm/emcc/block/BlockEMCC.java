@@ -55,7 +55,6 @@ public class BlockEMCC extends BlockContainer
 	public String getUnlocalizedName(int m)
 	{ return EMCCFinals.getBlockName(blockName); }
 	
-	//ItemLME
 	public void addAllDamages(int until)
 	{
 		for(int i = 0; i < until; i++)
@@ -83,7 +82,7 @@ public class BlockEMCC extends BlockContainer
 	{
 		if(isBlockContainer && el instanceof EntityPlayer)
 		{
-			TileAlchemy tile = (TileAlchemy) w.getBlockTileEntity(x, y, z);
+			TileEMCC tile = (TileEMCC) w.getBlockTileEntity(x, y, z);
 			if(tile != null) tile.onPlacedBy((EntityPlayer)el, is);
 		}
 	}
@@ -92,21 +91,21 @@ public class BlockEMCC extends BlockContainer
 	{
 		if(isBlockContainer)
 		{
-			TileAlchemy tile = (TileAlchemy) w.getBlockTileEntity(x, y, z);
+			TileEMCC tile = (TileEMCC) w.getBlockTileEntity(x, y, z);
 			if(tile != null) tile.onPostPlaced(s);
 		}
 	}
 	
 	public float getPlayerRelativeBlockHardness(EntityPlayer ep, World w, int x, int y, int z)
 	{
-		TileAlchemy tile = (TileAlchemy) w.getBlockTileEntity(x, y, z);
+		TileEMCC tile = (TileEMCC) w.getBlockTileEntity(x, y, z);
 		if(tile != null && tile.isIndestructible(ep)) return -1F;
 		return super.getPlayerRelativeBlockHardness(ep, w, x, y, z);
 	}
 	
 	public float getExplosionResistance(Entity e, World w, int x, int y, int z, double ex, double ey, double ez)
 	{
-		TileAlchemy tile = (TileAlchemy) w.getBlockTileEntity(x, y, z);
+		TileEMCC tile = (TileEMCC) w.getBlockTileEntity(x, y, z);
 		if(tile != null && tile.isIndestructible(null)) return 1000000F;
 		return super.getExplosionResistance(e, w, x, y, z, ex, ey, ez);
 	}
@@ -117,7 +116,7 @@ public class BlockEMCC extends BlockContainer
 	public ArrayList<ItemStack> getBlockDropped(World w, int x, int y, int z, int m, int f)
 	{
 		if(!isBlockContainer || !dropSpecialBlock()) return super.getBlockDropped(w, x, y, z, m, f);
-		TileAlchemy tile = (TileAlchemy) w.getBlockTileEntity(x, y, z);
+		TileEMCC tile = (TileEMCC) w.getBlockTileEntity(x, y, z);
 		if(tile != null)
 		{
 			ArrayList<ItemStack> al = new ArrayList<ItemStack>();
@@ -131,7 +130,7 @@ public class BlockEMCC extends BlockContainer
 	public void breakBlock(World w, int x, int y, int z, int i, int j)
 	{
 		if(!w.isRemote && isBlockContainer)
-		{ TileAlchemy tile = (TileAlchemy) w.getBlockTileEntity(x, y, z);
+		{ TileEMCC tile = (TileEMCC) w.getBlockTileEntity(x, y, z);
 		if(tile != null) tile.onBroken(); }
 		super.breakBlock(w, x, y, z, i, j);
 	}
@@ -139,7 +138,7 @@ public class BlockEMCC extends BlockContainer
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer ep, int s, float x1, float y1, float z1)
 	{
 		if(!isBlockContainer) return false;
-		TileAlchemy tile = (TileAlchemy) w.getBlockTileEntity(x, y, z);
+		TileEMCC tile = (TileEMCC) w.getBlockTileEntity(x, y, z);
 		return (tile != null) ? tile.onRightClick(ep, ep.getCurrentEquippedItem(), s, x1, y1, z1) : false;
 	}
 
@@ -171,7 +170,7 @@ public class BlockEMCC extends BlockContainer
 
 	public boolean onBlockEventReceived(World w, int x, int y, int z, int eventID, int param)
 	{
-		TileAlchemy t = (TileAlchemy) w.getBlockTileEntity(x, y, z);
+		TileEMCC t = (TileEMCC) w.getBlockTileEntity(x, y, z);
 		if(t != null) return t.receiveClientEvent(eventID, param);
 		return false;
 	}

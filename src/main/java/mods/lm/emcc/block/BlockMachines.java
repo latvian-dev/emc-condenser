@@ -1,8 +1,7 @@
 package mods.lm.emcc.block;
 import com.pahimar.ee3.lib.*;
-
 import cpw.mods.fml.relauncher.*;
-import mods.lm.core.LatCore;
+import latmod.core.*;
 import mods.lm.emcc.*;
 import mods.lm.emcc.tile.*;
 import net.minecraft.block.Block;
@@ -50,7 +49,7 @@ public class BlockMachines extends BlockEMCC
 	public boolean hasTileEntity(int m)
 	{ return m > 0; }
 	
-	public TileAlchemy createTileEntity(World w, int m)
+	public TileEMCC createTileEntity(World w, int m)
 	{
 		if(m == 0) return null;
 		else if(m == 1) return new TileCondenser();
@@ -73,7 +72,7 @@ public class BlockMachines extends BlockEMCC
 	{ 
 		if(m == 1)
 		{
-			if(s == TileAlchemy.UP)
+			if(s == TileEMCC.UP)
 			return condTop;
 			return condSide;
 		}

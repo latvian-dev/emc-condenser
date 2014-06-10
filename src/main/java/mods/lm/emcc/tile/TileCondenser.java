@@ -1,6 +1,7 @@
 package mods.lm.emcc.tile;
 import cpw.mods.fml.relauncher.*;
-import mods.lm.core.*;
+import latmod.core.*;
+import latmod.core.tile.*;
 import mods.lm.emcc.*;
 import mods.lm.emcc.gui.*;
 import mods.lm.emcc.item.*;
@@ -11,7 +12,7 @@ import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraftforge.common.ForgeDirection;
 
-public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInventory
+public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 {
 	public static final int UP_SLOT = 0;
 	public static final int[] UP_SLOTS = { UP_SLOT };
@@ -27,6 +28,7 @@ public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInvent
 	public double storedEMC = 0D;
 	public int redstoneMode = 0;
 	public ItemStack[] items = null;
+	public int cooldown = 0;
 	
 	public TileCondenser()
 	{
@@ -38,17 +40,17 @@ public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInvent
 		ItemStack heldItem = null;
 		if(!worldObj.isRemote && security.level == LMSecurity.RESTRICTED && (heldItem = ep.getHeldItem()) != null && heldItem.itemID == Item.nameTag.itemID && heldItem.hasDisplayName())
 		{
-			if(!worldObj.isRemote && security.owner.equals(ep.username))
+			if(security.owner.equals(ep.username))
 			{
 				String s = heldItem.getDisplayName();
 				
 				if(!security.friends.contains(s))
 				{
 					security.friends.add(s);
-					LatCore.printChat("Added '" + s + "' to friends list!");
+					LatCore.printChat(ep, "Added '" + s + "' to friends list!");
 					isDirty = true;
 				}
-				else LatCore.printChat("'" + s + "' already added!");
+				else LatCore.printChat(ep, "'" + s + "' already added!");
 			}
 		}
 		else openGui(ep, 0);
@@ -57,8 +59,18 @@ public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInvent
 	
 	public void onUpdate()
 	{
-		if(!worldObj.isRemote && tick % 3 == 0)
+		if(!worldObj.isRemote)
 		{
+			if(cooldown == 0)
+			{
+				cooldown = EMCCConfig.General.condenserSleepDelay;
+			}
+			else
+			{
+				cooldown--;
+				return;
+			}
+			
 			if(redstoneMode > 0)
 			{
 				boolean b = isPowered(true);
@@ -138,9 +150,11 @@ public class TileCondenser extends TileAlchemy implements IGuiTile, ISidedInvent
 					{
 						for(double d = 0D; d < d1; d++)
 						{
-							if(InvUtils.addItemToInv(this, InvUtils.single(items[UP_SLOT]), ForgeDirection.DOWN))
+							if(InvUtils.addItemToInv(this, InvUtils.singleCopy(items[UP_SLOT]), ForgeDirection.DOWN))
 								storedEMC -= ev;
 						}
+						
+						isDirty = true;
 					}
 				}
 			}

@@ -10,9 +10,10 @@ import net.minecraft.network.*;
 import net.minecraft.network.packet.*;
 import net.minecraft.tileentity.*;
 import net.minecraftforge.common.*;
-import mods.lm.core.*;
+import latmod.core.*;
+import latmod.core.tile.*;
 
-public class TileAlchemy extends TileEntity implements ITileInterface, ISecureTile
+public class TileEMCC extends TileEntity implements ITileInterface, ISecureTile
 {
 	public static final int UP = ForgeDirection.UP.ordinal();
 	public static final int DOWN = ForgeDirection.DOWN.ordinal();
@@ -103,7 +104,8 @@ public class TileAlchemy extends TileEntity implements ITileInterface, ISecureTi
 		{
 			isDirty = false;
 			
-			super.markDirty();
+			super.onInventoryChanged();
+		}
 		
 		tick++;
 	}
@@ -127,7 +129,7 @@ public class TileAlchemy extends TileEntity implements ITileInterface, ISecureTi
 		{ if(!worldObj.isRemote) openGui(ep, 0);
 		return true; } return false;
 	}
-
+	
 	public void openGui(EntityPlayer ep, int ID)
 	{ if(this instanceof IGuiTile && !worldObj.isRemote) LatCore.openGui((IGuiTile)this, ID, ep); }
 
@@ -142,9 +144,9 @@ public class TileAlchemy extends TileEntity implements ITileInterface, ISecureTi
 	@Override
 	public boolean equals(Object o)
 	{
-		if(o != null && o instanceof TileAlchemy)
+		if(o != null && o instanceof TileEMCC)
 		{
-			TileAlchemy t = (TileAlchemy)o;
+			TileEMCC t = (TileEMCC)o;
 			return t.worldObj.provider.dimensionId == worldObj.provider.dimensionId && t.xCoord == xCoord && t.yCoord == yCoord && t.zCoord == zCoord;
 		}
 
