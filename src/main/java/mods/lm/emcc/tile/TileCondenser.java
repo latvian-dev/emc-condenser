@@ -5,6 +5,7 @@ import latmod.core.tile.*;
 import mods.lm.emcc.*;
 import mods.lm.emcc.gui.*;
 import mods.lm.emcc.item.*;
+import net.minecraft.block.Block;
 import net.minecraft.client.gui.inventory.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
@@ -61,104 +62,137 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 	{
 		if(!worldObj.isRemote)
 		{
-			if(cooldown == 0)
+			if(cooldown <= 0)
 			{
-				cooldown = EMCCConfig.General.condenserSleepDelay;
+				cooldown = EMCCConfig.condenserSleepDelay;
+				
+				if(redstoneMode > 0)
+				{
+					boolean b = isPowered(true);
+					if(redstoneMode == 1 && !b) return;
+					if(redstoneMode == 2 && b) return;
+				}
+				
+				for(int i = 0; i < SIDE_SLOTS.length; i++)
+				{
+					ItemStack is = items[SIDE_SLOTS[i]];
+					if(is != null && is.stackSize > 0)
+					{
+						if(is.itemID == EMCC.i_battery.itemID)
+						{
+							if(is.hasTagCompound() && is.stackTagCompound.hasKey(ItemBattery.NBT_VAL))
+							{
+								double ev = is.stackTagCompound.getDouble(ItemBattery.NBT_VAL);
+								
+								storedEMC += ev;
+								is.stackTagCompound.removeTag(ItemBattery.NBT_VAL);
+								isDirty = true;
+							}
+						}
+						else
+						{
+							float iev = EMCC.getEMC(is);
+							
+							if(iev > 0F)
+							{
+								if(safeMode)
+								{
+									if(is.stackSize > 1)
+									{
+										storedEMC += iev * (is.stackSize - 1);
+										items[SIDE_SLOTS[i]].stackSize = 1;
+										isDirty = true;
+									}
+								}
+								else
+								{
+									storedEMC += iev * is.stackSize;
+									items[SIDE_SLOTS[i]] = null;
+									isDirty = true;
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			if(!worldObj.isRemote && storedEMC > 0D && items[UP_SLOT] != null)
+			{
+				if(items[UP_SLOT].itemID == EMCC.i_battery.itemID)
+				{
+					if(storedEMC > 0D)
+					{
+						NBTTagCompound tag = items[UP_SLOT].stackTagCompound;
+						if(tag == null) tag = new NBTTagCompound();
+						
+						double ev = tag.hasKey(ItemBattery.NBT_VAL) ? tag.getDouble(ItemBattery.NBT_VAL) : 0D;
+						
+						tag.setDouble(ItemBattery.NBT_VAL, ev + storedEMC);
+						storedEMC = 0D;
+						items[UP_SLOT].setTagCompound(tag);
+						isDirty = true;
+					}
+				}
+				else
+				{
+					double ev = EMCC.getEMC(items[UP_SLOT]);
+					
+					if(ev > 0D && EMCCBlacklist.canCondenseItem(items[UP_SLOT]))
+					{
+						double d1 = (storedEMC == Double.POSITIVE_INFINITY) ? (45D * 64D) : (long)(storedEMC / ev);
+						
+						if(d1 > 0D)
+						{
+							for(double d = 0D; d < d1; d++)
+							{
+								if(addSingleItemToContainer(InvUtils.singleCopy(items[UP_SLOT])))
+								{
+									storedEMC -= ev;
+								}
+							}
+							
+							isDirty = true;
+						}
+					}
+				}
 			}
 			else
 			{
 				cooldown--;
-				return;
 			}
-			
-			if(redstoneMode > 0)
+		}
+	}
+	
+	public boolean addSingleItemToContainer(ItemStack is)
+	{
+		if(is == null) return false;
+		
+		for(int i = 0; i < SIDE_SLOTS.length; i++)
+		{
+			ItemStack is1 = items[SIDE_SLOTS[i]];
+			if(is1 != null && is1.stackSize > 0 && InvUtils.itemsEquals(is, is1, false, true))
 			{
-				boolean b = isPowered(true);
-				if(redstoneMode == 1 && !b) return;
-				if(redstoneMode == 2 && b) return;
-			}
-			
-			for(int i = 0; i < SIDE_SLOTS.length; i++)
-			{
-				ItemStack is = items[SIDE_SLOTS[i]];
-				if(is != null && is.stackSize > 0)
+				if(is1.stackSize + 1 <= is1.getMaxStackSize())
 				{
-					if(is.itemID == EMCC.i_battery.itemID)
-					{
-						if(is.hasTagCompound() && is.stackTagCompound.hasKey(ItemBattery.NBT_VAL))
-						{
-							double ev = is.stackTagCompound.getDouble(ItemBattery.NBT_VAL);
-							
-							storedEMC += ev;
-							is.stackTagCompound.removeTag(ItemBattery.NBT_VAL);
-							isDirty = true;
-						}
-					}
-					else
-					{
-						float iev = EMC.getEMC(is);
-						
-						if(iev > 0F)
-						{
-							if(safeMode)
-							{
-								if(is.stackSize > 1)
-								{
-									storedEMC += iev * (is.stackSize - 1);
-									items[SIDE_SLOTS[i]].stackSize = 1;
-									isDirty = true;
-								}
-							}
-							else
-							{
-								storedEMC += iev * is.stackSize;
-								items[SIDE_SLOTS[i]] = null;
-								isDirty = true;
-							}
-						}
-					}
+					items[SIDE_SLOTS[i]].stackSize++;
+					isDirty = true;
+					return true;
 				}
 			}
 		}
 		
-		if(!worldObj.isRemote && storedEMC > 0D && items[UP_SLOT] != null)
+		for(int i = 0; i < SIDE_SLOTS.length; i++)
 		{
-			if(items[UP_SLOT].itemID == EMCC.i_battery.itemID)
+			ItemStack is1 = items[SIDE_SLOTS[i]];
+			if(is1 == null || is1.stackSize == 0)
 			{
-				if(storedEMC > 0D)
-				{
-					NBTTagCompound tag = items[UP_SLOT].stackTagCompound;
-					if(tag == null) tag = new NBTTagCompound();
-					
-					double ev = tag.hasKey(ItemBattery.NBT_VAL) ? tag.getDouble(ItemBattery.NBT_VAL) : 0D;
-					
-					tag.setDouble(ItemBattery.NBT_VAL, ev + storedEMC);
-					storedEMC = 0D;
-					items[UP_SLOT].setTagCompound(tag);
-					isDirty = true;
-				}
-			}
-			else
-			{
-				double ev = EMC.getEMC(items[UP_SLOT]);
-				
-				if(ev > 0D)
-				{
-					double d1 = (storedEMC == Double.POSITIVE_INFINITY) ? (45D * 64D) : (long)(storedEMC / ev);
-					
-					if(d1 > 0D)
-					{
-						for(double d = 0D; d < d1; d++)
-						{
-							if(InvUtils.addItemToInv(this, InvUtils.singleCopy(items[UP_SLOT]), ForgeDirection.DOWN))
-								storedEMC -= ev;
-						}
-						
-						isDirty = true;
-					}
-				}
+				items[SIDE_SLOTS[i]] = InvUtils.singleCopy(is);
+				isDirty = true;
+				return true;
 			}
 		}
+		
+		return false;
 	}
 	
 	public void onBroken()
@@ -175,6 +209,7 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 		storedEMC = tag.getDouble("StoredEMC");
 		safeMode = tag.getBoolean("SafeMode");
 		redstoneMode = tag.getByte("RSMode");
+		cooldown = tag.getShort("Cooldown");
 		items = InvUtils.readItemsFromNBT(items.length, tag, "Items");
 	}
 	
@@ -184,6 +219,7 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 		tag.setDouble("StoredEMC", storedEMC);
 		tag.setBoolean("SafeMode", safeMode);
 		tag.setByte("RSMode", (byte)redstoneMode);
+		tag.setShort("Cooldown", (short)cooldown);
 		InvUtils.writeItemsToNBT(items, tag, "Items");
 	}
 	
@@ -245,71 +281,52 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 
 	@Override
 	public ItemStack decrStackSize(int slot, int amt)
-	{
-		ItemStack stack = getStackInSlot(slot);
-		
-		if (stack != null)
-		{
-			if (stack.stackSize <= amt) setInventorySlotContents(slot, null);
-			else
-			{
-				stack = stack.splitStack(amt);
-				if (stack.stackSize == 0)
-				setInventorySlotContents(slot, null);
-			}
-		}
-		
-		return stack;
-	}
+	{ return InvUtils.decrStackSize(this, slot, amt); }
 
 	@Override
 	public ItemStack getStackInSlotOnClosing(int i)
-	{
-		ItemStack is = getStackInSlot(i);
-		if(is != null) setInventorySlotContents(i, null);
-		return is;
-	}
-
+	{ return InvUtils.getStackInSlotOnClosing(this, i); }
+	
 	@Override
-	public void setInventorySlotContents(int i, ItemStack itemstack)
-	{ items[i] = itemstack; }
+	public void setInventorySlotContents(int i, ItemStack is)
+	{ items[i] = is; isDirty = true; }
 	
 	@Override
 	public int[] getAccessibleSlotsFromSide(int s)
-	{ return (s == UP) ? UP_SLOTS : SIDE_SLOTS; }
-
+	{ return EMCCConfig.isCondenserIInventory == 0 ? NO_SLOTS : ((s == UP) ? UP_SLOTS : SIDE_SLOTS); }
+	
 	@Override
 	public boolean canInsertItem(int i, ItemStack is, int j)
-	{ return true; }
-
+	{ return EMCCConfig.isCondenserIInventory == 2 || EMCCConfig.isCondenserIInventory == 3; }
+	
 	@Override
 	public boolean canExtractItem(int i, ItemStack is, int j)
-	{ return true; }
-
+	{ return EMCCConfig.isCondenserIInventory == 1 || EMCCConfig.isCondenserIInventory == 3; }
+	
 	@Override
 	public String getInvName()
 	{ return "Condenser"; }
-
+	
 	@Override
 	public boolean isInvNameLocalized()
 	{ return false; }
-
+	
 	@Override
 	public int getInventoryStackLimit()
 	{ return 64; }
-
+	
 	@Override
 	public void openChest()
 	{
 	}
-
+	
 	@Override
 	public void closeChest()
 	{
 	}
-
+	
 	@Override
-	public boolean isItemValidForSlot(int i, ItemStack itemstack)
+	public boolean isItemValidForSlot(int i, ItemStack is)
 	{ return true; }
 	
 	@Override

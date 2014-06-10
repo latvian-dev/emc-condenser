@@ -1,5 +1,6 @@
 package mods.lm.emcc.block;
 import com.pahimar.ee3.lib.*;
+
 import cpw.mods.fml.relauncher.*;
 import latmod.core.*;
 import mods.lm.emcc.*;
@@ -28,21 +29,28 @@ public class BlockMachines extends BlockEMCC
 		addAllDamages(names.length);
 		isBlockContainer = true;
 		
-		EMCCRecipes.UUS_BLOCK_ITEM = new ItemStack(this, 1, 0);
+		EMCCRecipes.UUS_BLOCK = new ItemStack(this, 1, 0);
 		
 		EMCC.inst.addTile(TileCondenser.class, "condenser");
 	}
 	
 	public void loadRecipes()
 	{
-		EMCCRecipes.addOre(EMCCRecipes.UUS_BLOCK, EMCCRecipes.UUS_BLOCK_ITEM);
+		if(EMCCConfig.infuseMiniumStar)
+		EMCCRecipes.addInfusing(EMCCRecipes.UUS_BLOCK, new ItemStack(Block.obsidian), EMCCRecipes.siz(EMCCRecipes.UUS_ITEM, 8));
+		else EMCCRecipes.addRecipe(EMCCRecipes.UUS_BLOCK, "UUU", "UOU", "UUU",
+			Character.valueOf('U'), EMCCRecipes.UUS_ITEM,
+			Character.valueOf('O'), Block.obsidian);
 		
-		EMCCRecipes.add3x3Recipe(EMCCRecipes.UUS_ITEM, EMCCRecipes.UUS_BLOCK_ITEM, true);
+		ItemStack is = EMCCRecipes.UUS_BLOCK;
 		
-		EMCCRecipes.addRecipe(new ItemStack(this, 1, 1), "OPO", "OSO", "OMO",
+		if(EMCCConfig.recipeDifficulty == 1) is = new ItemStack(Item.netherStar);
+		else if(EMCCConfig.recipeDifficulty == 2) is = EMCCRecipes.MINIUM_STAR;
+		
+		EMCCRecipes.addRecipe(new ItemStack(this, 1, 1), "OBO", "OSO", "OIO",
 				Character.valueOf('O'), Block.obsidian,
-				Character.valueOf('M'), EMCCRecipes.UUS_BLOCK,
-				Character.valueOf('P'), Item.enderPearl,
+				Character.valueOf('I'), is,
+				Character.valueOf('B'), new ItemStack(EMCC.i_battery, 1, LatCore.ANY),
 				Character.valueOf('S'), new ItemStack(ItemIds.MINIUM_STONE, 1, LatCore.ANY));
 	}
 	

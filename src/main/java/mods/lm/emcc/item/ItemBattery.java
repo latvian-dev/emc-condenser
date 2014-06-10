@@ -23,7 +23,7 @@ public class ItemBattery extends ItemEMCC
 				Character.valueOf('Q'), Item.netherQuartz,
 				Character.valueOf('R'), Item.redstone,
 				Character.valueOf('G'), Item.glowstone,
-				Character.valueOf('U'), EMCCRecipes.UUS);
+				Character.valueOf('U'), EMCCRecipes.UUS_ITEM);
 	}
 	
 	@SuppressWarnings("all")

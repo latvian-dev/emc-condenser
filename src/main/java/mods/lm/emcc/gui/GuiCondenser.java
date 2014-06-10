@@ -37,16 +37,28 @@ public class GuiCondenser extends GuiContainer
 		super.mouseClicked(x, y, b);
 		
 		if(buttonSafe.isAt(x - guiLeft, y - guiTop))
-		tile.toggleSafeMode(false);
+		{
+			tile.toggleSafeMode(false);
+			mc.sndManager.playSoundFX("random.click", 1F, 1F);
+		}
 		
 		if(buttonRedstone.isAt(x - guiLeft, y - guiTop))
-		tile.toggleRedstoneMode(false);
+		{
+			tile.toggleRedstoneMode(false);
+			mc.sndManager.playSoundFX("random.click", 1F, 1F);
+		}
 		
 		if(barEMC.isAt(x - guiLeft, y - guiTop) && isShiftKeyDown())
-		tile.clearBuffer(false);
+		{
+			tile.clearBuffer(false);
+			mc.sndManager.playSoundFX("random.fizz", 1F, 1F);
+		}
 		
 		if(buttonSecurity.isAt(x - guiLeft, y - guiTop))
-		tile.toggleSecurity(false);
+		{
+			tile.toggleSecurity(false);
+			mc.sndManager.playSoundFX("random.click", 1F, 1F);
+		}
 	}
 	
 	public void drawGuiContainerBackgroundLayer(float f, int x, int y)
@@ -54,7 +66,7 @@ public class GuiCondenser extends GuiContainer
 		mc.renderEngine.bindTexture(texture);
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 		
-		double l = EMC.getEMC(tile.items[TileCondenser.UP_SLOT]);
+		double l = EMCC.getEMC(tile.items[TileCondenser.UP_SLOT]);
 		
 		if(l > 0L)
 		barEMC.render(guiLeft, guiTop, 0, ySize, (tile.storedEMC % l) / l);
@@ -77,7 +89,7 @@ public class GuiCondenser extends GuiContainer
 		
 		if(barEMC.isAt(x - guiLeft, y - guiTop))
 		{
-			float l = EMC.getEMC(tile.items[TileCondenser.UP_SLOT]);
+			float l = EMCC.getEMC(tile.items[TileCondenser.UP_SLOT]);
 			double storedEMC = (long)(tile.storedEMC * 100D) / 100D;
 			
 			if(tile.storedEMC == Double.POSITIVE_INFINITY)

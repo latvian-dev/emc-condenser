@@ -6,47 +6,54 @@ import latmod.core.*;
 public class EMCCConfig
 {
 	public static Configuration config;
-
-	public static class General
-	{
-		public static boolean isCondenserIInventory;
-		public static int condenserSleepDelay;
-
-		public static void load()
-		{
-			String CAT_GENERAL = "general";
-
-			isCondenserIInventory = getBool(CAT_GENERAL, "isCondenserIInventory", false);
-			condenserSleepDelay = getInt(CAT_GENERAL, "condenserSleepDelay", 4);
-			if(condenserSleepDelay < 1) condenserSleepDelay = 1;
-		}
-	}
 	
-	public static class Crafting
-	{
-		public static boolean smeltFleshToLeather;
-		public static boolean craftPortal;
-		public static boolean craftCircuitBoard;
-
-		public static void load()
-		{
-			String CAT_CRAFTING = "crafting";
-
-			smeltFleshToLeather = getBool(CAT_CRAFTING, "smeltFleshToLeather", true);
-			craftPortal = getBool(CAT_CRAFTING, "craftPortal", true);
-			craftCircuitBoard = getBool(CAT_CRAFTING, "craftCircuitBoard", true);
-		}
-	}
+	public static int isCondenserIInventory;
+	public static int condenserSleepDelay;
+	public static int recipeDifficulty;
+	public static boolean enableSecurity;
+	public static boolean infuseMiniumStar;
+	public static boolean infuseUUBlock;
 
 	public static final void load(FMLPreInitializationEvent e)
 	{
 		config = LatCore.loadConfig(e, "/LatMod/EMC_Condenser.cfg");
 
-		General.load();
-		Crafting.load();
-
+		String CAT_GENERAL = "general";
+		
+		isCondenserIInventory = getInt(CAT_GENERAL, "isCondenserIInventory", 3);
+		if(isCondenserIInventory < 0) isCondenserIInventory = 0;
+		if(isCondenserIInventory > 3) isCondenserIInventory = 3;
+		setComment(CAT_GENERAL, "isCondenserIInventory",
+				"0 - Automatization disabled",
+				"1 - Items can be only pumped out",
+				"2 - Items can be only pumped in",
+				"3 - Items can be pumped in both ways");
+		
+		condenserSleepDelay = getInt(CAT_GENERAL, "condenserSleepDelay", 4);
+		if(condenserSleepDelay < 0) condenserSleepDelay = 0;
+		setComment(CAT_GENERAL, "condenserSleepDelay",
+				"Longed delay - Less lag. I hope.",
+				"Min value - 0, instant condensing",
+				"Max value - 32767, that's more than 1.5 days in Minecraft");
+		
+		recipeDifficulty = getInt(CAT_GENERAL, "recipeDifficulty", 0);
+		if(recipeDifficulty < 0) recipeDifficulty = 0;
+		if(recipeDifficulty > 2) recipeDifficulty = 2;
+		setComment(CAT_GENERAL, "recipeDifficulty",
+				"This changed the item used in EMC Condenser's crafting recipe",
+				"0 - UnUnSeptium Block",
+				"1 - Nether Star",
+				"2 - Minium Star");
+		
+		enableSecurity = getBool(CAT_GENERAL, "enableSecurity", true);
+		
+		infuseMiniumStar = getBool(CAT_GENERAL, "infuseMiniumStar", true);
+		infuseUUBlock = getBool(CAT_GENERAL, "infuseUUBlock", true);
+		
 		if(config.hasChanged())
 		config.save();
+		
+		EMCCBlacklist.load(e);
 	}
 
 	public static boolean getBool(String cat, String s, boolean def, String... comment)
@@ -82,9 +89,9 @@ public class EMCCConfig
 	
 	private static int blockID = 1313;
 	public static int getBlockID(String s)
-	{ return config.get("block_id", s, ++blockID).getInt(); }
+	{ return config.get("ids", "block." + s, ++blockID).getInt(); }
 	
 	private static int itemID = 13461;
 	public static int getItemID(String s)
-	{ return config.get("item_id", s, ++itemID).getInt(); }
+	{ return config.get("ids", "item." + s, ++itemID).getInt(); }
 }

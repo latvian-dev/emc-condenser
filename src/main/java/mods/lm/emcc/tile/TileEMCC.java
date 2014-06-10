@@ -13,7 +13,7 @@ import net.minecraftforge.common.*;
 import latmod.core.*;
 import latmod.core.tile.*;
 
-public class TileEMCC extends TileEntity implements ITileInterface, ISecureTile
+public class TileEMCC extends TileEntity implements ITileInterface//, ISecureTile
 {
 	public static final int UP = ForgeDirection.UP.ordinal();
 	public static final int DOWN = ForgeDirection.DOWN.ordinal();
@@ -30,7 +30,6 @@ public class TileEMCC extends TileEntity implements ITileInterface, ISecureTile
 	public final TileEntity getTile()
 	{ return this; }
 	
-	@Override
 	public final LMSecurity getSecurity()
 	{ return security; }
 	
@@ -102,9 +101,11 @@ public class TileEMCC extends TileEntity implements ITileInterface, ISecureTile
 		
 		if(isDirty)
 		{
-			isDirty = false;
+			//worldObj.markTileEntityChunkModified(xCoord, yCoord, zCoord, this);
+			//if(getBlockType() != null) worldObj.func_96440_m(xCoord, yCoord, zCoord, getBlockType().blockID);
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			
-			super.onInventoryChanged();
+			isDirty = false;
 		}
 		
 		tick++;

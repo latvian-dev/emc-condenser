@@ -1,6 +1,10 @@
 package mods.lm.emcc;
 import java.util.*;
 import java.util.logging.*;
+
+import com.pahimar.ee3.emc.EmcRegistry;
+import com.pahimar.ee3.emc.EmcValue;
+
 import latmod.core.*;
 import mods.lm.emcc.block.*;
 import mods.lm.emcc.item.*;
@@ -12,7 +16,7 @@ import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.*;
 
 @Mod(modid = EMCCFinals.MOD_ID, name = EMCCFinals.MOD_NAME, version = EMCCFinals.VERSION)
-@NetworkMod(clientSideRequired = true, serverSideRequired = false)
+@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = { EMCCFinals.MOD_ID }, packetHandler = EMCCNetHandler.class)
 public class EMCC
 {
 	@Mod.Instance(EMCCFinals.MOD_ID)
@@ -29,7 +33,7 @@ public class EMCC
 	public static Logger logger = Logger.getLogger("EMC_Cond");
 	
 	public static BlockMachines b_machines;
-	public static ItemUUS i_uus;
+	public static ItemMaterials i_uus;
 	public static ItemBattery i_battery;
 	
 	@Mod.EventHandler
@@ -41,12 +45,12 @@ public class EMCC
 		
 		addBlock(b_machines = new BlockMachines("machines"));
 		
-		addItem(i_uus = new ItemUUS("uus"));
+		addItem(i_uus = new ItemMaterials("uus"));
 		addItem(i_battery = new ItemBattery("uusBattery"));
 		
 		tab = LatCore.createTab(EMCCFinals.ASSETS + "tab", new ItemStack(b_machines, 1, 3));
 		
-		NetworkRegistry.instance().registerChannel(new EMCCNetHandler(), EMCCFinals.MOD_ID);
+		//NetworkRegistry.instance().registerChannel(new EMCCNetHandler(), EMCCFinals.MOD_ID);
 		
 		proxy.preInit();
 		EMCCConfig.config.save();
@@ -76,4 +80,11 @@ public class EMCC
 
 	public void addTile(Class<? extends TileEMCC> c, String s)
 	{ LatCore.addTileEntity(c, EMCCFinals.MOD_ID + '.' + s); }
+	
+	public static float getEMC(ItemStack is)
+	{
+		if(is == null) return 0F;
+		EmcValue e = EmcRegistry.getInstance().getEmcValue(is);
+		return (e == null) ? 0F : e.getValue();
+	}
 }
