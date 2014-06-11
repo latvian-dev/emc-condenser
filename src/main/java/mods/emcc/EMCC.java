@@ -1,4 +1,4 @@
-package mods.lm.emcc;
+package mods.emcc;
 import java.util.*;
 import java.util.logging.*;
 
@@ -6,9 +6,9 @@ import com.pahimar.ee3.emc.EmcRegistry;
 import com.pahimar.ee3.emc.EmcValue;
 
 import latmod.core.*;
-import mods.lm.emcc.block.*;
-import mods.lm.emcc.item.*;
-import mods.lm.emcc.tile.*;
+import mods.emcc.block.*;
+import mods.emcc.item.*;
+import mods.emcc.tile.*;
 import net.minecraft.creativetab.*;
 import net.minecraft.item.*;
 import cpw.mods.fml.common.*;
@@ -36,12 +36,16 @@ public class EMCC
 	public static ItemMaterials i_uus;
 	public static ItemBattery i_battery;
 	
+	public static EMCCBlacklist blacklist = new EMCCBlacklist();
+	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
 		logger.setParent(FMLLog.getLogger());
 		
 		EMCCConfig.load(e);
+		
+		blacklist.preInit(e);
 		
 		addBlock(b_machines = new BlockMachines("machines"));
 		
@@ -77,7 +81,7 @@ public class EMCC
 	
 	public void addBlock(BlockEMCC b)
 	{ addBlock(b, ItemBlockEMCC.class); }
-
+	
 	public void addTile(Class<? extends TileEMCC> c, String s)
 	{ LatCore.addTileEntity(c, EMCCFinals.MOD_ID + '.' + s); }
 	

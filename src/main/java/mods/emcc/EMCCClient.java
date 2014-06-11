@@ -1,4 +1,4 @@
-package mods.lm.emcc;
+package mods.emcc;
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)

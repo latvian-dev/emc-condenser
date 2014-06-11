@@ -1,10 +1,10 @@
-package mods.lm.emcc.tile;
+package mods.emcc.tile;
 import cpw.mods.fml.relauncher.*;
 import latmod.core.*;
 import latmod.core.tile.*;
-import mods.lm.emcc.*;
-import mods.lm.emcc.gui.*;
-import mods.lm.emcc.item.*;
+import mods.emcc.*;
+import mods.emcc.gui.*;
+import mods.emcc.item.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.inventory.*;
 import net.minecraft.entity.player.*;
@@ -66,19 +66,33 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 			{
 				cooldown = EMCCConfig.condenserSleepDelay;
 				
-				if(redstoneMode > 0)
+				if(EMCCConfig.enableRedstoneControl)
 				{
-					boolean b = isPowered(true);
-					if(redstoneMode == 1 && !b) return;
-					if(redstoneMode == 2 && b) return;
+					if(redstoneMode > 0)
+					{
+						boolean b = isPowered(true);
+						if(redstoneMode == 1 && !b) return;
+						if(redstoneMode == 2 && b) return;
+					}
 				}
+				else
+				{
+					if(redstoneMode > 0)
+					{
+						redstoneMode = 0;
+						isDirty = true;
+					}
+				}
+				
+				int limit = EMCCConfig.condenserLimitPerTick;
+				if(limit == -1) limit = items.length * 64;
 				
 				for(int i = 0; i < SIDE_SLOTS.length; i++)
 				{
 					ItemStack is = items[SIDE_SLOTS[i]];
 					if(is != null && is.stackSize > 0)
 					{
-						if(is.itemID == EMCC.i_battery.itemID)
+						if(EMCCConfig.enableBattery && is.itemID == EMCC.i_battery.itemID)
 						{
 							if(is.hasTagCompound() && is.stackTagCompound.hasKey(ItemBattery.NBT_VAL))
 							{
@@ -93,9 +107,9 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 						{
 							float iev = EMCC.getEMC(is);
 							
-							if(iev > 0F)
+							if(iev > 0F && !EMCC.blacklist.isBlacklistedFuel(is))
 							{
-								if(safeMode)
+								if(safeMode && EMCCConfig.enableSafeMode)
 								{
 									if(is.stackSize > 1)
 									{
@@ -118,7 +132,7 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 			
 			if(!worldObj.isRemote && storedEMC > 0D && items[UP_SLOT] != null)
 			{
-				if(items[UP_SLOT].itemID == EMCC.i_battery.itemID)
+				if(EMCCConfig.enableBattery && items[UP_SLOT].itemID == EMCC.i_battery.itemID)
 				{
 					if(storedEMC > 0D)
 					{
@@ -137,7 +151,7 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 				{
 					double ev = EMCC.getEMC(items[UP_SLOT]);
 					
-					if(ev > 0D && EMCCBlacklist.canCondenseItem(items[UP_SLOT]))
+					if(ev > 0D && !EMCC.blacklist.isBlacklistedTarget(items[UP_SLOT]))
 					{
 						double d1 = (storedEMC == Double.POSITIVE_INFINITY) ? (45D * 64D) : (long)(storedEMC / ev);
 						
@@ -206,21 +220,21 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 	public void readFromNBT(NBTTagCompound tag)
 	{
 		super.readFromNBT(tag);
+		items = InvUtils.readItemsFromNBT(items.length, tag, "Items");
 		storedEMC = tag.getDouble("StoredEMC");
 		safeMode = tag.getBoolean("SafeMode");
 		redstoneMode = tag.getByte("RSMode");
 		cooldown = tag.getShort("Cooldown");
-		items = InvUtils.readItemsFromNBT(items.length, tag, "Items");
 	}
 	
 	public void writeToNBT(NBTTagCompound tag)
 	{
 		super.writeToNBT(tag);
+		InvUtils.writeItemsToNBT(items, tag, "Items");
 		tag.setDouble("StoredEMC", storedEMC);
 		tag.setBoolean("SafeMode", safeMode);
 		tag.setByte("RSMode", (byte)redstoneMode);
 		tag.setShort("Cooldown", (short)cooldown);
-		InvUtils.writeItemsToNBT(items, tag, "Items");
 	}
 	
 	@Override

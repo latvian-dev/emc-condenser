@@ -1,8 +1,8 @@
-package mods.lm.emcc.item;
+package mods.emcc.item;
 import java.util.*;
 
 import cpw.mods.fml.relauncher.*;
-import mods.lm.emcc.*;
+import mods.emcc.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 

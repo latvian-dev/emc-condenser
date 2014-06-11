@@ -1,10 +1,10 @@
-package mods.lm.emcc.block;
+package mods.emcc.block;
 import com.pahimar.ee3.lib.*;
 
 import cpw.mods.fml.relauncher.*;
 import latmod.core.*;
-import mods.lm.emcc.*;
-import mods.lm.emcc.tile.*;
+import mods.emcc.*;
+import mods.emcc.tile.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.*;
 import net.minecraft.client.renderer.texture.*;

@@ -1,8 +1,8 @@
-package mods.lm.emcc.item;
+package mods.emcc.item;
 import com.pahimar.ee3.lib.ItemIds;
 
 import cpw.mods.fml.relauncher.*;
-import mods.lm.emcc.*;
+import mods.emcc.*;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.*;
 import net.minecraft.util.Icon;

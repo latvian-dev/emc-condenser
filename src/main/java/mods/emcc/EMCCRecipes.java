@@ -1,4 +1,4 @@
-package mods.lm.emcc;
+package mods.emcc;
 import java.util.*;
 
 import com.pahimar.ee3.lib.ItemIds;

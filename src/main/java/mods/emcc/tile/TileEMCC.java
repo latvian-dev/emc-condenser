@@ -1,4 +1,4 @@
-package mods.lm.emcc.tile;
+package mods.emcc.tile;
 import java.util.*;
 
 import net.minecraft.block.*;

@@ -1,9 +1,9 @@
-package mods.lm.emcc.block;
+package mods.emcc.block;
 import java.util.*;
 
 import cpw.mods.fml.relauncher.*;
-import mods.lm.emcc.*;
-import mods.lm.emcc.tile.*;
+import mods.emcc.*;
+import mods.emcc.tile.*;
 import net.minecraft.block.*;
 import net.minecraft.block.material.*;
 import net.minecraft.client.renderer.texture.IconRegister;

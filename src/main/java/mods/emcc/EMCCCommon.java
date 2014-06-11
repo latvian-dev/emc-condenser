@@ -1,4 +1,4 @@
-package mods.lm.emcc;
+package mods.emcc;
 
 public class EMCCCommon
 {
