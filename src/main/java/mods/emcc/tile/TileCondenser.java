@@ -66,22 +66,13 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 			{
 				cooldown = EMCCConfig.condenserSleepDelay;
 				
-				if(EMCCConfig.enableRedstoneControl)
+				checkForced();
+				
+				if(redstoneMode > 0)
 				{
-					if(redstoneMode > 0)
-					{
-						boolean b = isPowered(true);
-						if(redstoneMode == 1 && !b) return;
-						if(redstoneMode == 2 && b) return;
-					}
-				}
-				else
-				{
-					if(redstoneMode > 0)
-					{
-						redstoneMode = 0;
-						isDirty = true;
-					}
+					boolean b = isPowered(true);
+					if(redstoneMode == 1 && !b) return;
+					if(redstoneMode == 2 && b) return;
 				}
 				
 				int limit = EMCCConfig.condenserLimitPerTick;
@@ -109,7 +100,7 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 							
 							if(iev > 0F && !EMCC.blacklist.isBlacklistedFuel(is))
 							{
-								if(safeMode && EMCCConfig.enableSafeMode)
+								if(safeMode)
 								{
 									if(is.stackSize > 1)
 									{
@@ -163,6 +154,7 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 								{
 									storedEMC -= ev;
 								}
+								else break;
 							}
 							
 							isDirty = true;
@@ -246,6 +238,18 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 	public GuiContainer getGui(EntityPlayer ep, int ID)
 	{ return new GuiCondenser(new ContainerCondenser(ep, this)); }
 	
+	public void checkForced()
+	{
+		if(EMCCConfig.forcedRedstoneControl != -1 && redstoneMode != EMCCConfig.forcedRedstoneControl)
+		{ isDirty = true; redstoneMode = EMCCConfig.forcedRedstoneControl; }
+		
+		if(EMCCConfig.forcedSecurity != -1 && security.level != EMCCConfig.forcedSecurity)
+		{ isDirty = true; security.level = EMCCConfig.forcedSecurity; }
+		
+		if(EMCCConfig.forcedSafeMode != -1 && safeMode != (EMCCConfig.forcedSafeMode == 1))
+		{ isDirty = true; safeMode = EMCCConfig.forcedSafeMode == 1; }
+	}
+	
 	public void handleGuiButton(int i)
 	{
 		if(LatCore.canUpdate() && !worldObj.isRemote)
@@ -254,6 +258,8 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 			else if(i == 1) clearBuffer(true);
 			else if(i == 2) toggleRedstoneMode(true);
 			else if(i == 3) toggleSecurity(true);
+			
+			checkForced();
 		}
 	}
 	

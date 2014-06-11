@@ -11,9 +11,9 @@ public class EMCCConfig
 	public static int isCondenserIInventory;
 	public static int condenserSleepDelay;
 	public static int recipeDifficulty;
-	public static boolean enableSecurity;
-	public static boolean enableRedstoneControl;
-	public static boolean enableSafeMode;
+	public static int forcedSecurity;
+	public static int forcedRedstoneControl;
+	public static int forcedSafeMode;
 	public static boolean infuseMiniumStar;
 	public static boolean infuseUUBlock;
 	public static int condenserLimitPerTick;
@@ -31,20 +31,33 @@ public class EMCCConfig
 				"2 - Items can be only pumped in",
 				"3 - Items can be pumped in both ways");
 		
-		condenserSleepDelay = getInt(CAT_GENERAL, "condenserSleepDelay", 4, 0, 32767,
+		condenserSleepDelay = getInt(CAT_GENERAL, "condenserSleepDelay", 20, 0, 32767,
 				"Longer delay - Less lag. I hope.",
 				"Min value - 0, instant condensing",
 				"Max value - 32767, that's more than 1.5 days in Minecraft");
 		
-		recipeDifficulty = getInt(CAT_GENERAL, "recipeDifficulty", 0, 0, 2,
+		recipeDifficulty = getInt(CAT_GENERAL, "recipeDifficulty", 2, 0, 2,
 				"This changed the item used in EMC Condenser's crafting recipe",
 				"0 - UnUnSeptium Block",
 				"1 - Nether Star",
 				"2 - Minium Star");
 		
-		enableSecurity = getBool(CAT_GENERAL, "enableSecurity", true);
-		enableRedstoneControl = getBool(CAT_GENERAL, "enableRedstoneControl", true);
-		enableSafeMode = getBool(CAT_GENERAL, "enableSafeMode", true);
+		forcedSecurity = getInt(CAT_GENERAL, "forcedSecurity", -1, -1, 2,
+				"-1 - Choosed by user",
+				"0 - Public",
+				"1 - Private",
+				"2 - Restricted");
+		
+		forcedRedstoneControl = getInt(CAT_GENERAL, "forcedRedstoneControl", -1, -1, 2,
+				"-1 - Choosed by user",
+				"0 - No Redstone Control",
+				"1 - Required High signal",
+				"2 - Required Low signal");
+		
+		forcedSafeMode = getInt(CAT_GENERAL, "forcedSafeMode", -1, -1, 1,
+				"-1 - Choosed by user",
+				"0 - Safe Mode always off",
+				"1 - Safe Mode always on");
 		
 		infuseMiniumStar = getBool(CAT_GENERAL, "infuseMiniumStar", true);
 		infuseUUBlock = getBool(CAT_GENERAL, "infuseUUBlock", true);

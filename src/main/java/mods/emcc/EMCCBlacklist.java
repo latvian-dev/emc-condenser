@@ -17,6 +17,7 @@ public class EMCCBlacklist
 		"oreCoal",
 		"oreRedstone",
 		"oreLapis",
+		"oreDiamond",
 		"oreEmerald",
 		"oreQuartz",
 		"oreTin",
@@ -27,6 +28,7 @@ public class EMCCBlacklist
 		"oreSilver",
 		"oreSapphire",
 		"oreRuby",
+		"oreAluminum",
 	};
 	
 	public final FastList<String> targets_od = new FastList<String>();
@@ -70,6 +72,13 @@ public class EMCCBlacklist
 		loadInto("blacklist_targets", targets_od, new String[0], targets_ul);
 		loadInto("blacklist_fuels", fuels_od, new String[0], fuels_ul);
 		loadInto("blacklist_all", all_od, defaultOres, all_ul);
+		
+		config.get("an_info", "info", 0).comment =
+		"ore_dictionary - list of OreDictionary names to ingore in condenser" +
+		"\nunlocalized - list of items to ingore in condenser" +
+		"\nsyntax: <unlocalized name> [damage]" +
+		"\nexamlpe: item.netherStar or item.potion -1" +
+		"\ndamage is only optimal, -1 equals all damage values for this item";
 		
 		if(config.hasChanged())
 			config.save();

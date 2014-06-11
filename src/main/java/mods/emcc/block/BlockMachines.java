@@ -36,7 +36,7 @@ public class BlockMachines extends BlockEMCC
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfig.infuseMiniumStar)
+		if(EMCCConfig.infuseUUBlock)
 		EMCCRecipes.addInfusing(EMCCRecipes.UUS_BLOCK, new ItemStack(Block.obsidian), EMCCRecipes.siz(EMCCRecipes.UUS_ITEM, 8));
 		else EMCCRecipes.addRecipe(EMCCRecipes.UUS_BLOCK, "UUU", "UOU", "UUU",
 			Character.valueOf('U'), EMCCRecipes.UUS_ITEM,
