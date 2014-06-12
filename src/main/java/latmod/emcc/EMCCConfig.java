@@ -19,6 +19,7 @@ public class EMCCConfig
 	public static int condenserLimitPerTick;
 	public static boolean enableBattery;
 	public static boolean enableClearBuffer;
+	public static int miniumToNetherStar;
 
 	public static final void load(FMLPreInitializationEvent e)
 	{
@@ -67,6 +68,11 @@ public class EMCCConfig
 		
 		enableBattery = getBool(CAT_GENERAL, "enableBattery", true);
 		enableClearBuffer = getBool(CAT_GENERAL, "enableClearBuffer", true);
+		
+		miniumToNetherStar = getInt(CAT_GENERAL, "miniumToNetherStar", 1, 0, 2,
+				"0 - Minium Star can't be converted back to Nether Star",
+				"1 - Minium Star + Glowstone Dust > Nether Star",
+				"2 - Minium Star in furnace > Nether Star");
 		
 		if(config.hasChanged())
 		config.save();

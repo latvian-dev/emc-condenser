@@ -57,7 +57,7 @@ public class GuiCondenser extends GuiContainer
 		
 		if(buttonSecurity.isAt(x - guiLeft, y - guiTop))
 		{
-			tile.toggleSecurity(false);
+			tile.toggleSecurity(false, player);
 			mc.sndManager.playSoundFX("random.click", 1F, 1F);
 		}
 	}

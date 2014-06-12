@@ -53,6 +53,7 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 				}
 				else LatCore.printChat(ep, "'" + s + "' already added!");
 			}
+			else LatCore.printChat(ep, "You are not the owner of this Condenser!");
 		}
 		else openGui(ep, 0);
 		return true;
@@ -100,19 +101,18 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 							
 							if(iev > 0F && !EMCC.blacklist.isBlacklistedFuel(items[CHEST_SLOTS[i]]))
 							{
+								if(safeMode && items[CHEST_SLOTS[i]].stackSize == 1) continue;
+								
 								int s = Math.min((safeMode && items[CHEST_SLOTS[i]].stackSize > 1) ? (items[CHEST_SLOTS[i]].stackSize - 1) : items[CHEST_SLOTS[i]].stackSize, limit);
 								
-								if(equalsTarget(items[CHEST_SLOTS[i]])) s = 0;
+								if(s <= 0 || equalsTarget(items[CHEST_SLOTS[i]])) continue;
 								
-								if(s > 0)
-								{
-									limit -= s;
-									storedEMC += iev * s;
-									items[CHEST_SLOTS[i]].stackSize -= s;
-									if(items[CHEST_SLOTS[i]].stackSize <= 0)
-										items[CHEST_SLOTS[i]] = null;
-									isDirty = true;
-								}
+								limit -= s;
+								storedEMC += iev * s;
+								items[CHEST_SLOTS[i]].stackSize -= s;
+								if(items[CHEST_SLOTS[i]].stackSize <= 0)
+									items[CHEST_SLOTS[i]] = null;
+								isDirty = true;
 							}
 						}
 					}
@@ -257,14 +257,14 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 		{ isDirty = true; safeMode = EMCCConfig.forcedSafeMode == 1; }
 	}
 	
-	public void handleGuiButton(int i)
+	public void handleGuiButton(int i, EntityPlayer ep)
 	{
 		if(LatCore.canUpdate() && !worldObj.isRemote)
 		{
 			if(i == 0) toggleSafeMode(true);
 			else if(i == 1) clearBuffer(true);
 			else if(i == 2) toggleRedstoneMode(true);
-			else if(i == 3) toggleSecurity(true);
+			else if(i == 3) toggleSecurity(true, ep);
 			
 			checkForced();
 		}
@@ -278,7 +278,11 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 	
 	public void clearBuffer(boolean serverSide)
 	{
-		if(serverSide && EMCCConfig.enableClearBuffer) { storedEMC = 0; isDirty = true; }
+		if(serverSide)
+		{
+			if(EMCCConfig.enableClearBuffer)
+			{ storedEMC = 0; isDirty = true; }
+		}
 		else EMCCNetHandler.sendToServer(this, 1);
 	}
 	
@@ -288,12 +292,15 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 		else EMCCNetHandler.sendToServer(this, 2);
 	}
 	
-	public void toggleSecurity(boolean serverSide)
+	public void toggleSecurity(boolean serverSide, EntityPlayer ep)
 	{
 		if(serverSide)
 		{
-			if(serverSide) { security.level = (security.level + 1) % 3; isDirty = true; }
-			isDirty = true;
+			if(security.owner.equals(ep.username))
+			{
+				security.level = (security.level + 1) % 3;
+				isDirty = true;
+			}
 		}
 		else EMCCNetHandler.sendToServer(this, 3);
 	}

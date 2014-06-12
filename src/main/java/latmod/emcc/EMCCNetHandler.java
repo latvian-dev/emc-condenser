@@ -33,7 +33,7 @@ public class EMCCNetHandler implements IPacketHandler
 					if(te != null && te instanceof TileEMCC)
 					{
 						if(te instanceof TileCondenser)
-						((TileCondenser)te).handleGuiButton(buttonID);
+						((TileCondenser)te).handleGuiButton(buttonID, (EntityPlayer)player);
 					}
 				}
 			}

@@ -13,7 +13,7 @@ import net.minecraftforge.common.*;
 import latmod.core.*;
 import latmod.core.tile.*;
 
-public class TileEMCC extends TileEntity implements ITileInterface//, ISecureTile
+public class TileEMCC extends TileEntity implements ITileInterface, ISecureTile
 {
 	public static final int UP = ForgeDirection.UP.ordinal();
 	public static final int DOWN = ForgeDirection.DOWN.ordinal();
@@ -32,6 +32,9 @@ public class TileEMCC extends TileEntity implements ITileInterface//, ISecureTil
 	
 	public final LMSecurity getSecurity()
 	{ return security; }
+	
+	public boolean enableSecurity()
+	{ return true; }
 	
 	public Packet getDescriptionPacket()
 	{

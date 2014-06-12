@@ -45,6 +45,11 @@ public class ItemMaterials extends ItemEMCC
 		else EMCCRecipes.addRecipe(EMCCRecipes.MINIUM_STAR, "MMM", "MSM", "MMM",
 				Character.valueOf('M'), new ItemStack(ItemIds.ALCHEMICAL_DUST, 1, 3),
 				Character.valueOf('S'), Item.netherStar );
+		
+		if(EMCCConfig.miniumToNetherStar == 1)
+			EMCCRecipes.addInfusing(new ItemStack(Item.netherStar), EMCCRecipes.MINIUM_STAR, new ItemStack(Item.glowstone));
+		else if(EMCCConfig.miniumToNetherStar == 2)
+			EMCCRecipes.addSmelting(new ItemStack(Item.netherStar), EMCCRecipes.MINIUM_STAR);
 	}
 	
 	public String getUnlocalizedName(ItemStack is)
