@@ -67,7 +67,7 @@ public class GuiCondenser extends GuiContainer
 		mc.renderEngine.bindTexture(texture);
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 		
-		double l = EMCC.getEMC(tile.items[TileCondenser.UP_SLOT]);
+		double l = EMCC.getEMC(tile.items[TileCondenser.SLOT_TARGET]);
 		
 		if(l > 0L)
 		barEMC.render(guiLeft, guiTop, 0, ySize, (tile.storedEMC % l) / l);
@@ -90,7 +90,7 @@ public class GuiCondenser extends GuiContainer
 		
 		if(barEMC.isAt(x - guiLeft, y - guiTop))
 		{
-			float l = EMCC.getEMC(tile.items[TileCondenser.UP_SLOT]);
+			float l = EMCC.getEMC(tile.items[TileCondenser.SLOT_TARGET]);
 			double storedEMC = (long)(tile.storedEMC * 100D) / 100D;
 			
 			if(tile.storedEMC == Double.POSITIVE_INFINITY)

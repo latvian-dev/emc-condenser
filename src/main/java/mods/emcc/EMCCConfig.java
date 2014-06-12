@@ -18,6 +18,7 @@ public class EMCCConfig
 	public static boolean infuseUUBlock;
 	public static int condenserLimitPerTick;
 	public static boolean enableBattery;
+	public static boolean enableClearBuffer;
 
 	public static final void load(FMLPreInitializationEvent e)
 	{
@@ -62,9 +63,10 @@ public class EMCCConfig
 		infuseMiniumStar = getBool(CAT_GENERAL, "infuseMiniumStar", true);
 		infuseUUBlock = getBool(CAT_GENERAL, "infuseUUBlock", true);
 		
-		condenserLimitPerTick = getInt(CAT_GENERAL, "condenserLimitPerTick", 64, -1, TileCondenser.SIDE_SLOTS.length * 64);
+		condenserLimitPerTick = getInt(CAT_GENERAL, "condenserLimitPerTick", 64, -1, 2880);
 		
 		enableBattery = getBool(CAT_GENERAL, "enableBattery", true);
+		enableClearBuffer = getBool(CAT_GENERAL, "enableClearBuffer", true);
 		
 		if(config.hasChanged())
 		config.save();

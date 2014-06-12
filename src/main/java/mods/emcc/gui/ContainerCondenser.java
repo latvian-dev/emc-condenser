@@ -14,14 +14,14 @@ public class ContainerCondenser extends Container
 		tile = t;
 		player = ep;
 		
-		addSlotToContainer(new Slot(t, TileCondenser.UP_SLOT, 8, 9));
+		addSlotToContainer(new Slot(t, TileCondenser.SLOT_TARGET, 8, 9));
 		
-		for(int i = 0; i < TileCondenser.SIDE_SLOTS.length; i++)
+		for(int i = 0; i < TileCondenser.CHEST_SLOTS.length; i++)
 		{
 			int x = i % 9;
 			int y = i / 9;
 			
-			addSlotToContainer(new Slot(t, TileCondenser.SIDE_SLOTS[i], 8 + x * 18, 36 + y * 18));
+			addSlotToContainer(new Slot(t, TileCondenser.CHEST_SLOTS[i], 8 + x * 18, 36 + y * 18));
 		}
 		
 		for(int y = 0; y < 3; y++) for(int x = 0; x < 9; x++)
@@ -35,8 +35,31 @@ public class ContainerCondenser extends Container
 	public boolean canInteractWith(EntityPlayer ep)
 	{ return true; }
 	
-	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+	public ItemStack transferStackInSlot(EntityPlayer ep, int i)
 	{
-		return null;
+		if(i == TileCondenser.SLOT_TARGET) return null;
+		
+		ItemStack is = null;
+		Slot slot = (Slot)inventorySlots.get(i);
+		
+		if (slot != null && slot.getHasStack())
+		{
+			ItemStack is1 = slot.getStack();
+			is = is1.copy();
+			
+			if (i < TileCondenser.CHEST_SLOTS.length)
+			{
+				if (!mergeItemStack(is1, TileCondenser.CHEST_SLOTS.length, inventorySlots.size(), true))
+					return null;
+			}
+			else if (!mergeItemStack(is1, 0, TileCondenser.CHEST_SLOTS.length, false))
+				return null;
+			
+			if (is1.stackSize == 0)
+				slot.putStack((ItemStack)null);
+			else slot.onSlotChanged();
+		}
+		
+		return is;
 	}
 }

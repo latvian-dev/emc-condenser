@@ -15,14 +15,14 @@ import net.minecraftforge.common.ForgeDirection;
 
 public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 {
-	public static final int UP_SLOT = 0;
-	public static final int[] UP_SLOTS = { UP_SLOT };
-	public static final int[] SIDE_SLOTS = new int[45];
+	public static final int SLOT_TARGET = 45;
+	public static final int[] TARGET_SLOTS = { SLOT_TARGET };
+	public static final int[] CHEST_SLOTS = new int[45];
 	
 	static
 	{
-		for(int i = 0; i < SIDE_SLOTS.length; i++)
-			SIDE_SLOTS[i] = i + 1;
+		for(int i = 0; i < CHEST_SLOTS.length; i++)
+			CHEST_SLOTS[i] = i;
 	}
 	
 	public boolean safeMode = false;
@@ -78,86 +78,85 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 				int limit = EMCCConfig.condenserLimitPerTick;
 				if(limit == -1) limit = items.length * 64;
 				
-				for(int i = 0; i < SIDE_SLOTS.length; i++)
+				for(int i = 0; i < CHEST_SLOTS.length; i++)
 				{
-					ItemStack is = items[SIDE_SLOTS[i]];
-					if(is != null && is.stackSize > 0)
+					if(items[CHEST_SLOTS[i]] != null && items[CHEST_SLOTS[i]].stackSize > 0)
 					{
-						if(EMCCConfig.enableBattery && is.itemID == EMCC.i_battery.itemID)
+						if(EMCCConfig.enableBattery && items[CHEST_SLOTS[i]].itemID == EMCC.i_battery.itemID)
 						{
-							if(is.hasTagCompound() && is.stackTagCompound.hasKey(ItemBattery.NBT_VAL))
+							if(items[CHEST_SLOTS[i]].hasTagCompound() && items[CHEST_SLOTS[i]].stackTagCompound.hasKey(ItemBattery.NBT_VAL))
 							{
-								double ev = is.stackTagCompound.getDouble(ItemBattery.NBT_VAL);
+								double ev = items[CHEST_SLOTS[i]].stackTagCompound.getDouble(ItemBattery.NBT_VAL);
 								
 								storedEMC += ev;
-								is.stackTagCompound.removeTag(ItemBattery.NBT_VAL);
+								items[CHEST_SLOTS[i]].stackTagCompound.removeTag(ItemBattery.NBT_VAL);
 								isDirty = true;
+								break;
 							}
 						}
 						else
 						{
-							float iev = EMCC.getEMC(is);
+							float iev = EMCC.getEMC(items[CHEST_SLOTS[i]]);
 							
-							if(iev > 0F && !EMCC.blacklist.isBlacklistedFuel(is))
+							if(iev > 0F && !EMCC.blacklist.isBlacklistedFuel(items[CHEST_SLOTS[i]]))
 							{
-								if(safeMode)
+								int s = Math.min((safeMode && items[CHEST_SLOTS[i]].stackSize > 1) ? (items[CHEST_SLOTS[i]].stackSize - 1) : items[CHEST_SLOTS[i]].stackSize, limit);
+								
+								if(equalsTarget(items[CHEST_SLOTS[i]])) s = 0;
+								
+								if(s > 0)
 								{
-									if(is.stackSize > 1)
-									{
-										storedEMC += iev * (is.stackSize - 1);
-										items[SIDE_SLOTS[i]].stackSize = 1;
-										isDirty = true;
-									}
-								}
-								else
-								{
-									storedEMC += iev * is.stackSize;
-									items[SIDE_SLOTS[i]] = null;
+									limit -= s;
+									storedEMC += iev * s;
+									items[CHEST_SLOTS[i]].stackSize -= s;
+									if(items[CHEST_SLOTS[i]].stackSize <= 0)
+										items[CHEST_SLOTS[i]] = null;
 									isDirty = true;
 								}
 							}
 						}
 					}
-				}
-			}
-			
-			if(!worldObj.isRemote && storedEMC > 0D && items[UP_SLOT] != null)
-			{
-				if(EMCCConfig.enableBattery && items[UP_SLOT].itemID == EMCC.i_battery.itemID)
-				{
-					if(storedEMC > 0D)
-					{
-						NBTTagCompound tag = items[UP_SLOT].stackTagCompound;
-						if(tag == null) tag = new NBTTagCompound();
-						
-						double ev = tag.hasKey(ItemBattery.NBT_VAL) ? tag.getDouble(ItemBattery.NBT_VAL) : 0D;
-						
-						tag.setDouble(ItemBattery.NBT_VAL, ev + storedEMC);
-						storedEMC = 0D;
-						items[UP_SLOT].setTagCompound(tag);
-						isDirty = true;
-					}
-				}
-				else
-				{
-					double ev = EMCC.getEMC(items[UP_SLOT]);
 					
-					if(ev > 0D && !EMCC.blacklist.isBlacklistedTarget(items[UP_SLOT]))
+					if(limit <= 0) break;
+				}
+				
+				if(storedEMC > 0D && items[SLOT_TARGET] != null)
+				{
+					if(EMCCConfig.enableBattery && items[SLOT_TARGET].itemID == EMCC.i_battery.itemID)
 					{
-						double d1 = (storedEMC == Double.POSITIVE_INFINITY) ? (45D * 64D) : (long)(storedEMC / ev);
-						
-						if(d1 > 0D)
+						if(storedEMC > 0D)
 						{
-							for(double d = 0D; d < d1; d++)
-							{
-								if(addSingleItemToContainer(InvUtils.singleCopy(items[UP_SLOT])))
-								{
-									storedEMC -= ev;
-								}
-								else break;
-							}
+							NBTTagCompound tag = items[SLOT_TARGET].stackTagCompound;
+							if(tag == null) tag = new NBTTagCompound();
 							
+							double ev = tag.hasKey(ItemBattery.NBT_VAL) ? tag.getDouble(ItemBattery.NBT_VAL) : 0D;
+							
+							tag.setDouble(ItemBattery.NBT_VAL, ev + storedEMC);
+							storedEMC = 0D;
+							items[SLOT_TARGET].setTagCompound(tag);
 							isDirty = true;
+						}
+					}
+					else
+					{
+						double ev = EMCC.getEMC(items[SLOT_TARGET]);
+						
+						if(ev > 0D && !EMCC.blacklist.isBlacklistedTarget(items[SLOT_TARGET]))
+						{
+							long d1 = (long)(storedEMC / ev);
+							
+							if(d1 > 0L)
+							{
+								for(long d = 0L; d < d1; d++)
+								{
+									if(addSingleItemToContainer(InvUtils.singleCopy(items[SLOT_TARGET])))
+									{
+										storedEMC -= ev;
+										isDirty = true;
+									}
+									else break;
+								}
+							}
 						}
 					}
 				}
@@ -169,30 +168,38 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 		}
 	}
 	
+	public boolean equalsTarget(ItemStack is)
+	{
+		if(is == null) return false;
+		ItemStack is1 = items[SLOT_TARGET];
+		if(is1 == null) return false;
+		return is.itemID == is1.itemID && is.getItemDamage() == is1.getItemDamage() && ItemStack.areItemStackTagsEqual(is, is1);
+	}
+	
 	public boolean addSingleItemToContainer(ItemStack is)
 	{
 		if(is == null) return false;
 		
-		for(int i = 0; i < SIDE_SLOTS.length; i++)
+		for(int i = 0; i < CHEST_SLOTS.length; i++)
 		{
-			ItemStack is1 = items[SIDE_SLOTS[i]];
+			ItemStack is1 = items[CHEST_SLOTS[i]];
 			if(is1 != null && is1.stackSize > 0 && InvUtils.itemsEquals(is, is1, false, true))
 			{
 				if(is1.stackSize + 1 <= is1.getMaxStackSize())
 				{
-					items[SIDE_SLOTS[i]].stackSize++;
+					items[CHEST_SLOTS[i]].stackSize++;
 					isDirty = true;
 					return true;
 				}
 			}
 		}
 		
-		for(int i = 0; i < SIDE_SLOTS.length; i++)
+		for(int i = 0; i < CHEST_SLOTS.length; i++)
 		{
-			ItemStack is1 = items[SIDE_SLOTS[i]];
+			ItemStack is1 = items[CHEST_SLOTS[i]];
 			if(is1 == null || is1.stackSize == 0)
 			{
-				items[SIDE_SLOTS[i]] = InvUtils.singleCopy(is);
+				items[CHEST_SLOTS[i]] = InvUtils.singleCopy(is);
 				isDirty = true;
 				return true;
 			}
@@ -271,7 +278,7 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 	
 	public void clearBuffer(boolean serverSide)
 	{
-		if(serverSide) { storedEMC = 0; isDirty = true; }
+		if(serverSide && EMCCConfig.enableClearBuffer) { storedEMC = 0; isDirty = true; }
 		else EMCCNetHandler.sendToServer(this, 1);
 	}
 	
@@ -313,7 +320,7 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 	
 	@Override
 	public int[] getAccessibleSlotsFromSide(int s)
-	{ return EMCCConfig.isCondenserIInventory == 0 ? NO_SLOTS : ((s == UP) ? UP_SLOTS : SIDE_SLOTS); }
+	{ return EMCCConfig.isCondenserIInventory == 0 ? NO_SLOTS : ((s == UP) ? TARGET_SLOTS : CHEST_SLOTS); }
 	
 	@Override
 	public boolean canInsertItem(int i, ItemStack is, int j)
