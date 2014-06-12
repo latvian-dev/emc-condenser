@@ -126,18 +126,16 @@ public class GuiCondenser extends GuiContainer
 			
 			if(tile.security.level == LMSecurity.PUBLIC) al.add("Public");
 			else if(tile.security.level == LMSecurity.PRIVATE) al.add("Private");
-			else if(tile.security.level == LMSecurity.RESTRICTED)
+			else if(tile.security.level == LMSecurity.RESTRICTED) al.add("Restricted");
+			al.add("Owner: " + tile.security.owner);
+			
+			if(tile.security.level == LMSecurity.RESTRICTED && GuiScreen.isShiftKeyDown() && !tile.security.friends.isEmpty())
 			{
-				al.add("Restricted");
+				al.add(" ");
+				al.add("> Friends:");
 				
-				if(GuiScreen.isShiftKeyDown() && !tile.security.friends.isEmpty())
-				{
-					al.add(" ");
-					al.add("> Friends:");
-					
-					for(int i = 0; i < tile.security.friends.size(); i++)
+				for(int i = 0; i < tile.security.friends.size(); i++)
 					al.add(tile.security.friends.get(i));
-				}
 			}
 		}
 		

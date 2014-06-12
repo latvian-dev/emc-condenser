@@ -20,6 +20,7 @@ public class EMCCConfig
 	public static boolean enableBattery;
 	public static boolean enableClearBuffer;
 	public static int miniumToNetherStar;
+	public static boolean infuseNameTag;
 
 	public static final void load(FMLPreInitializationEvent e)
 	{
@@ -73,6 +74,9 @@ public class EMCCConfig
 				"0 - Minium Star can't be converted back to Nether Star",
 				"1 - Minium Star + Glowstone Dust > Nether Star",
 				"2 - Minium Star in furnace > Nether Star");
+		
+		infuseNameTag = getBool(CAT_GENERAL, "infuseNameTag", true,
+				"If true, 4x Paper + any Slimeball > Name Tag");
 		
 		if(config.hasChanged())
 		config.save();

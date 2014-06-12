@@ -103,6 +103,13 @@ public class BlockEMCC extends BlockContainer
 		return super.getPlayerRelativeBlockHardness(ep, w, x, y, z);
 	}
 	
+	public float getBlockHardness(World w, int x, int y, int z)
+	{
+		TileEMCC tile = (TileEMCC) w.getBlockTileEntity(x, y, z);
+		if(tile != null && tile.isIndestructible(null)) return -1F;
+		return super.getBlockHardness(w, x, y, z);
+	}
+	
 	public float getExplosionResistance(Entity e, World w, int x, int y, int z, double ex, double ey, double ez)
 	{
 		TileEMCC tile = (TileEMCC) w.getBlockTileEntity(x, y, z);

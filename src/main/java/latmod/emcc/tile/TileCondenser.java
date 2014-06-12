@@ -55,7 +55,11 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 			}
 			else LatCore.printChat(ep, "You are not the owner of this Condenser!");
 		}
-		else openGui(ep, 0);
+		else
+		{
+			if(security.canPlayerInteract(ep)) openGui(ep, 0);
+			else if(!worldObj.isRemote) LatCore.printChat(ep, "Owner: " + security.owner);
+		}
 		return true;
 	}
 	

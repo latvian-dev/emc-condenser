@@ -36,7 +36,7 @@ public class EMCC
 	public static ItemMaterials i_uus;
 	public static ItemBattery i_battery;
 	
-	public static EMCCBlacklist blacklist = new EMCCBlacklist();
+	public static EMCCBlacklist blacklist;
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
@@ -45,6 +45,7 @@ public class EMCC
 		
 		EMCCConfig.load(e);
 		
+		blacklist = new EMCCBlacklist();
 		blacklist.preInit(e);
 		
 		addBlock(b_machines = new BlockMachines("machines"));
