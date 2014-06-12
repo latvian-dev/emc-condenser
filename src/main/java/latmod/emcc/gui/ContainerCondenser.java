@@ -1,5 +1,5 @@
-package mods.emcc.gui;
-import mods.emcc.tile.*;
+package latmod.emcc.gui;
+import latmod.emcc.tile.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;

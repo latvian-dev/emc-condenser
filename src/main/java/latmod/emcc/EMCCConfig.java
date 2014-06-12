@@ -1,8 +1,8 @@
-package mods.emcc;
+package latmod.emcc;
 import cpw.mods.fml.common.event.*;
-import mods.emcc.tile.TileCondenser;
 import net.minecraftforge.common.*;
 import latmod.core.*;
+import latmod.emcc.tile.TileCondenser;
 
 public class EMCCConfig
 {

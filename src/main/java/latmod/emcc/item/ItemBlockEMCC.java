@@ -1,8 +1,8 @@
-package mods.emcc.item;
+package latmod.emcc.item;
 import java.util.List;
 
 import cpw.mods.fml.relauncher.*;
-import mods.emcc.block.*;
+import latmod.emcc.block.*;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.*;

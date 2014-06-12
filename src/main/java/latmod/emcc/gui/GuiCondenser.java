@@ -1,10 +1,10 @@
-package mods.emcc.gui;
+package latmod.emcc.gui;
 import java.util.*;
 
 import cpw.mods.fml.relauncher.*;
 import latmod.core.*;
-import mods.emcc.*;
-import mods.emcc.tile.*;
+import latmod.emcc.*;
+import latmod.emcc.tile.*;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.*;
 import net.minecraft.entity.player.*;

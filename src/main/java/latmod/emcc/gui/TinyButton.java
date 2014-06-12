@@ -1,4 +1,4 @@
-package mods.emcc.gui;
+package latmod.emcc.gui;
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)

@@ -1,10 +1,10 @@
-package mods.emcc.tile;
+package latmod.emcc.tile;
 import cpw.mods.fml.relauncher.*;
 import latmod.core.*;
 import latmod.core.tile.*;
-import mods.emcc.*;
-import mods.emcc.gui.*;
-import mods.emcc.item.*;
+import latmod.emcc.*;
+import latmod.emcc.gui.*;
+import latmod.emcc.item.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.inventory.*;
 import net.minecraft.entity.player.*;

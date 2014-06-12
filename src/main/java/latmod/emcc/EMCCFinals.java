@@ -1,4 +1,4 @@
-package mods.emcc;
+package latmod.emcc;
 import net.minecraft.util.*;
 
 public class EMCCFinals

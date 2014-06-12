@@ -1,4 +1,4 @@
-package mods.emcc;
+package latmod.emcc;
 import java.util.*;
 import java.util.logging.*;
 
@@ -6,9 +6,9 @@ import com.pahimar.ee3.emc.EmcRegistry;
 import com.pahimar.ee3.emc.EmcValue;
 
 import latmod.core.*;
-import mods.emcc.block.*;
-import mods.emcc.item.*;
-import mods.emcc.tile.*;
+import latmod.emcc.block.*;
+import latmod.emcc.item.*;
+import latmod.emcc.tile.*;
 import net.minecraft.creativetab.*;
 import net.minecraft.item.*;
 import cpw.mods.fml.common.*;

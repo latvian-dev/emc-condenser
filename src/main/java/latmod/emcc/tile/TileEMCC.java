@@ -1,4 +1,4 @@
-package mods.emcc.tile;
+package latmod.emcc.tile;
 import java.util.*;
 
 import net.minecraft.block.*;

@@ -1,7 +1,7 @@
-package mods.emcc;
+package latmod.emcc;
 import java.io.*;
 
-import mods.emcc.tile.*;
+import latmod.emcc.tile.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.network.*;
 import net.minecraft.network.packet.*;

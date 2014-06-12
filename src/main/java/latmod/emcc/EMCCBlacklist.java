@@ -1,4 +1,4 @@
-package mods.emcc;
+package latmod.emcc;
 import latmod.core.*;
 import cpw.mods.fml.common.event.*;
 import net.minecraft.item.*;

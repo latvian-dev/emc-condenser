@@ -1,8 +1,8 @@
-package mods.emcc.item;
+package latmod.emcc.item;
 import java.util.*;
 
 import cpw.mods.fml.relauncher.*;
-import mods.emcc.*;
+import latmod.emcc.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 
