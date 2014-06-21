@@ -1,0 +1,10 @@
+itemGroup.emcc:tab=EMC Condenser Mod
+
+## Items ##
+emcc:i.uus.name=UnUnSeptium
+emcc:i.uusBattery.name=EMC Battery
+emcc:i.miniumStar.name=Minium Star
+
+## Blocks ##
+emcc:b.uusb.name=UnUnSeptium Block
+emcc:b.condenser.name=EMC Condenser

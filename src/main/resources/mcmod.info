@@ -1,0 +1,22 @@
+[
+{
+  "modid": "emcc",
+  "name": "EMC Condenser Mod",
+  "description": "This mod adds EMC Condenser, that you can use to transmutate items",
+  "version": "${version}",
+  "url": "https://github.com/LatvianModder/EMC_Condenser/tree/1.6.4",
+  "updateUrl": "",
+  "authorList": [
+    "LatvianModder"
+  ],
+  "credits": "Pahimar, for making EE3",
+  "logoFile": "/assets/emcc/textures/logo.png",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+    "latcore",
+    "EE3"
+  ]
+}
+]

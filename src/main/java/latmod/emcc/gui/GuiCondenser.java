@@ -1,0 +1,141 @@
+package latmod.emcc.gui;
+import java.util.*;
+import cpw.mods.fml.relauncher.*;
+import latmod.core.*;
+import latmod.core.base.GuiLM;
+import latmod.emcc.*;
+import latmod.emcc.tile.*;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.*;
+
+@SideOnly(Side.CLIENT)
+public class GuiCondenser extends GuiLM
+{
+	public TinyButton buttonSafe, barEMC, buttonRedstone, buttonSecurity;
+	
+	public GuiCondenser(ContainerCondenser c)
+	{
+		super(c);
+		ySize = 222;
+		
+		buttonSafe = new TinyButton(this, 152, 8, 8, 8);
+		barEMC = new TinyButton(this, 30, 9, 118, 16);
+		buttonRedstone = new TinyButton(this, 152, 18, 8, 8);
+		buttonSecurity = new TinyButton(this, 162, 8, 8, 18);
+	}
+	
+	public void mouseClicked(int x, int y, int b)
+	{
+		super.mouseClicked(x, y, b);
+		
+		TileCondenser tile = (TileCondenser)this.tile;
+		
+		if(buttonSafe.isAt(x - guiLeft, y - guiTop))
+		{
+			tile.toggleSafeMode(false);
+			playSound("random.click", 1F);
+		}
+		
+		if(buttonRedstone.isAt(x - guiLeft, y - guiTop))
+		{
+			tile.toggleRedstoneMode(false);
+			playSound("random.click", 1F);
+		}
+		
+		if(barEMC.isAt(x - guiLeft, y - guiTop) && isShiftKeyDown())
+		{
+			tile.clearBuffer(false);
+			playSound("random.click", 1F);
+		}
+		
+		if(buttonSecurity.isAt(x - guiLeft, y - guiTop))
+		{
+			tile.toggleSecurity(false, player);
+			playSound("random.click", 1F);
+		}
+	}
+	
+	public void drawGuiContainerBackgroundLayer(float f, int x, int y)
+	{
+		mc.renderEngine.bindTexture(texture);
+		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+		
+		double l = EMCC.getEMC(tile.items[TileCondenser.SLOT_TARGET]);
+		
+		TileCondenser tile = (TileCondenser)this.tile;
+		
+		if(l > 0L)
+		barEMC.render(guiLeft, guiTop, 0, ySize, (tile.storedEMC % l) / l);
+		
+		if(tile.safeMode)
+		buttonSafe.render(guiLeft, guiTop, xSize, 0, 1F);
+		
+		if(tile.redstoneMode > 0)
+		buttonRedstone.render(guiLeft, guiTop, xSize, tile.redstoneMode * 9, 1F);
+		
+		if(tile.security.level > 0)
+		buttonSecurity.render(guiLeft, guiTop, xSize + 9, (tile.security.level - 1) * 19, 1F);
+	}
+	
+	public void drawGuiContainerForegroundLayer(int x, int y)
+	{
+		super.drawGuiContainerForegroundLayer(x, y);
+		
+		ArrayList<String> al = new ArrayList<String>();
+		
+		TileCondenser tile = (TileCondenser)this.tile;
+		
+		if(barEMC.isAt(x - guiLeft, y - guiTop))
+		{
+			float l = EMCC.getEMC(tile.items[TileCondenser.SLOT_TARGET]);
+			double storedEMC = (long)(tile.storedEMC * 100D) / 100D;
+			
+			if(tile.storedEMC == Double.POSITIVE_INFINITY)
+			al.add(EnumChatFormatting.LIGHT_PURPLE.toString() + "Infinity");
+			else al.add(EnumChatFormatting.GOLD.toString() + ((l == 0L) ? (storedEMC + "") : (storedEMC + " / " + l)));
+			
+			if(isShiftKeyDown())
+			{
+				al.add(EnumChatFormatting.RED + "Empty EMC buffer");
+			}
+		}
+		
+		if(buttonSafe.isAt(x - guiLeft, y - guiTop))
+		{
+			al.add("Safe Mode");
+			
+			if(tile.safeMode) al.add("Enabled");
+			else al.add("Disabled");
+		}
+		
+		if(buttonRedstone.isAt(x - guiLeft, y - guiTop))
+		{
+			al.add("Redstone Control");
+			
+			if(tile.redstoneMode == 0) al.add("Disabled");
+			else if(tile.redstoneMode == 1) al.add("High Signal Required");
+			else if(tile.redstoneMode == 2) al.add("Low Signal Requird");
+		}
+		
+		if(buttonSecurity.isAt(x - guiLeft, y - guiTop))
+		{
+			al.add("Security");
+			
+			if(tile.security.level == LMSecurity.PUBLIC) al.add("Public");
+			else if(tile.security.level == LMSecurity.PRIVATE) al.add("Private");
+			else if(tile.security.level == LMSecurity.RESTRICTED) al.add("Restricted");
+			al.add("Owner: " + tile.security.owner);
+			
+			if(tile.security.level == LMSecurity.RESTRICTED && GuiScreen.isShiftKeyDown() && !tile.security.friends.isEmpty())
+			{
+				al.add(" ");
+				al.add("> Friends:");
+				
+				for(int i = 0; i < tile.security.friends.size(); i++)
+					al.add(tile.security.friends.get(i));
+			}
+		}
+		
+		if(!al.isEmpty()) drawHoveringText(al, x - guiLeft, y - guiTop, fontRendererObj);
+	}
+}
