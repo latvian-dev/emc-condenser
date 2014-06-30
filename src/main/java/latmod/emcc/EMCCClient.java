@@ -1,4 +1,11 @@
 package latmod.emcc;
+import latmod.core.*;
+import latmod.core.tile.*;
+import latmod.emcc.gui.*;
+import latmod.emcc.tile.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.tileentity.*;
+import net.minecraft.world.*;
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
@@ -16,5 +23,24 @@ public class EMCCClient extends EMCCCommon
 
 	public void postInit()
 	{
+	}
+	
+	public Object getClientGuiElement(int ID, EntityPlayer ep, World world, int x, int y, int z)
+	{
+		TileEntity te = world.getBlockTileEntity(x, y, z);
+		
+		if(te != null)
+		{
+			if(te instanceof ISecureTile)
+			{
+				LMSecurity security = ((ISecureTile)te).getSecurity();
+				
+				if(security != null && !security.canPlayerInteract(ep)) return null;
+			}
+			
+			if(ID == EMCCGuis.CONDENSER) return new GuiCondenser(new ContainerCondenser(ep, (TileCondenser)te));
+		}
+		
+		return null;
 	}
 }

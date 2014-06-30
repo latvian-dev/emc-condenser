@@ -3,54 +3,58 @@ import com.pahimar.ee3.lib.*;
 
 import cpw.mods.fml.relauncher.*;
 import latmod.core.*;
+import latmod.core.base.BlockLM;
 import latmod.emcc.*;
 import latmod.emcc.tile.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.*;
 import net.minecraft.client.renderer.texture.*;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.*;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 
-public class BlockMachines extends BlockEMCC
+public class BlockMachines extends BlockLM
 {
 	public static final String[] names =
 	{
-		"uusb",
+		"uub",
 		"condenser",
 	};
 	
 	@SideOnly(Side.CLIENT)
 	public Icon condSide, condTop;
 	
-	public BlockMachines(String s)
+	public BlockMachines(int id, String s)
 	{
-		super(s, Material.iron);
+		super(EMCC.mod, id, s, Material.iron);
 		addAllDamages(names.length);
 		isBlockContainer = true;
 		
-		EMCCRecipes.UUS_BLOCK = new ItemStack(this, 1, 0);
+		EMCCItems.UU_BLOCK = new ItemStack(this, 1, 0);
+		EMCCItems.CONDENSER = new ItemStack(this, 1, 1);
 		
-		EMCC.inst.addTile(TileCondenser.class, "condenser");
+		EMCC.mod.addTile(TileCondenser.class, "condenser");
 	}
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfig.infuseUUBlock)
-		EMCCRecipes.addInfusing(EMCCRecipes.UUS_BLOCK, new ItemStack(Block.obsidian), EMCCRecipes.siz(EMCCRecipes.UUS_ITEM, 8));
-		else EMCCRecipes.addRecipe(EMCCRecipes.UUS_BLOCK, "UUU", "UOU", "UUU",
-			Character.valueOf('U'), EMCCRecipes.UUS_ITEM,
+		if(EMCC.config.recipes.infuseUUBlock)
+		EMCC.addInfusing(EMCCItems.UU_BLOCK, new ItemStack(Block.obsidian), EMCC.recipes.size(EMCCItems.UU_ITEM, 8));
+		else EMCC.recipes.addRecipe(EMCCItems.UU_BLOCK, "UUU", "UOU", "UUU",
+			Character.valueOf('U'), EMCCItems.UU_ITEM,
 			Character.valueOf('O'), Block.obsidian);
 		
-		ItemStack is = EMCCRecipes.UUS_BLOCK;
+		ItemStack is = EMCCItems.UU_BLOCK;
 		
-		if(EMCCConfig.recipeDifficulty == 1) is = new ItemStack(Item.netherStar);
-		else if(EMCCConfig.recipeDifficulty == 2) is = EMCCRecipes.MINIUM_STAR;
+		if(EMCC.config.recipes.recipeDifficulty == 1) is = new ItemStack(Item.netherStar);
+		else if(EMCC.config.recipes.recipeDifficulty == 2) is = EMCCItems.MINIUM_STAR;
 		
-		EMCCRecipes.addRecipe(new ItemStack(this, 1, 1), "OBO", "OSO", "OIO",
+		EMCC.recipes.addRecipe(new ItemStack(this, 1, 1), "OBO", "OSO", "OIO",
 				Character.valueOf('O'), Block.obsidian,
 				Character.valueOf('I'), is,
-				Character.valueOf('B'), new ItemStack(EMCC.i_battery, 1, LatCore.ANY),
+				Character.valueOf('B'), new ItemStack(EMCCItems.i_uuBattery, 1, LatCore.ANY),
 				Character.valueOf('S'), new ItemStack(ItemIds.MINIUM_STONE, 1, LatCore.ANY));
 	}
 	
@@ -65,14 +69,14 @@ public class BlockMachines extends BlockEMCC
 	}
 	
 	public String getUnlocalizedName(int i)
-	{ return EMCCFinals.getBlockName(names[i]); }
+	{ return mod.getBlockName(names[i]); }
 	
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister ir)
 	{
-		blockIcon = ir.registerIcon(EMCCFinals.ASSETS + "uusb");
-		condSide = ir.registerIcon(EMCCFinals.ASSETS + "condSide");
-		condTop = ir.registerIcon(EMCCFinals.ASSETS + "condTop");
+		blockIcon = ir.registerIcon(mod.assets + "uub");
+		condSide = ir.registerIcon(mod.assets + "condSide");
+		condTop = ir.registerIcon(mod.assets + "condTop");
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -88,6 +92,10 @@ public class BlockMachines extends BlockEMCC
 		return blockIcon;
 	}
 	
-	public boolean canCableConnect(IBlockAccess iba, int x, int y, int z)
-	{ return iba.getBlockMetadata(x, y, z) > 1; }
+	public TileEntity createNewTileEntity(World w)
+	{ return null; }
+	
+	@SideOnly(Side.CLIENT)
+	public CreativeTabs getCreativeTabToDisplayOn()
+	{ return EMCC.tab; }
 }

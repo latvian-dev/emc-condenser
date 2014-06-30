@@ -3,8 +3,6 @@ import latmod.core.*;
 import cpw.mods.fml.common.event.*;
 import net.minecraft.item.*;
 import net.minecraftforge.common.*;
-import net.minecraftforge.event.*;
-import net.minecraftforge.oredict.*;
 
 public class EMCCBlacklist
 {
@@ -61,11 +59,7 @@ public class EMCCBlacklist
 		}
 	}
 	
-	public EMCCBlacklist()
-	{
-	}
-	
-	public void preInit(FMLPreInitializationEvent e)
+	public EMCCBlacklist(FMLPreInitializationEvent e)
 	{
 		config = LatCore.loadConfig(e, "/LatMod/EMC_Condenser_Blacklist.cfg");
 		

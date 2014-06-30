@@ -1,19 +1,13 @@
 package latmod.emcc.tile;
-import cpw.mods.fml.relauncher.*;
 import latmod.core.*;
-import latmod.core.tile.*;
 import latmod.emcc.*;
-import latmod.emcc.gui.*;
 import latmod.emcc.item.*;
-import net.minecraft.block.Block;
-import net.minecraft.client.gui.inventory.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraftforge.common.ForgeDirection;
 
-public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
+public class TileCondenser extends TileEMCC implements ISidedInventory
 {
 	public static final int SLOT_TARGET = 45;
 	public static final int[] TARGET_SLOTS = { SLOT_TARGET };
@@ -28,7 +22,6 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 	public boolean safeMode = false;
 	public double storedEMC = 0D;
 	public int redstoneMode = 0;
-	public ItemStack[] items = null;
 	public int cooldown = 0;
 	
 	public TileCondenser()
@@ -38,26 +31,27 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
 	{
+		/*
 		ItemStack heldItem = null;
-		if(!worldObj.isRemote && security.level == LMSecurity.RESTRICTED && (heldItem = ep.getHeldItem()) != null && heldItem.itemID == Item.nameTag.itemID && heldItem.hasDisplayName())
+		if(!worldObj.isRemote && security.level == LMSecurity.WHITELIST && (heldItem = ep.getHeldItem()) != null && heldItem.itemID == Item.nameTag.itemID && heldItem.hasDisplayName())
 		{
 			if(security.owner.equals(ep.username))
 			{
 				String s = heldItem.getDisplayName();
 				
-				if(!security.friends.contains(s))
+				if(!security.restricted.contains(s))
 				{
-					security.friends.add(s);
+					security.restricted.add(s);
 					LatCore.printChat(ep, "Added '" + s + "' to friends list!");
-					isDirty = true;
+					onInventoryChanged();
 				}
 				else LatCore.printChat(ep, "'" + s + "' already added!");
 			}
 			else LatCore.printChat(ep, "You are not the owner of this Condenser!");
 		}
-		else
+		else*/
 		{
-			if(security.canPlayerInteract(ep)) openGui(ep, 0);
+			if(security.canPlayerInteract(ep)) ep.openGui(EMCC.inst, EMCCGuis.CONDENSER, worldObj, xCoord, yCoord, zCoord);
 			else if(!worldObj.isRemote) LatCore.printChat(ep, "Owner: " + security.owner);
 		}
 		return true;
@@ -69,7 +63,7 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 		{
 			if(cooldown <= 0)
 			{
-				cooldown = EMCCConfig.condenserSleepDelay;
+				cooldown = EMCC.config.condenser.condenserSleepDelay;
 				
 				checkForced();
 				
@@ -80,14 +74,14 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 					if(redstoneMode == 2 && b) return;
 				}
 				
-				int limit = EMCCConfig.condenserLimitPerTick;
+				int limit = EMCC.config.condenser.condenserLimitPerTick;
 				if(limit == -1) limit = items.length * 64;
 				
 				for(int i = 0; i < CHEST_SLOTS.length; i++)
 				{
 					if(items[CHEST_SLOTS[i]] != null && items[CHEST_SLOTS[i]].stackSize > 0)
 					{
-						if(EMCCConfig.enableBattery && items[CHEST_SLOTS[i]].itemID == EMCC.i_battery.itemID)
+						if(EMCC.config.condenser.enableBattery && items[CHEST_SLOTS[i]].itemID == EMCCItems.i_uuBattery.itemID)
 						{
 							if(items[CHEST_SLOTS[i]].hasTagCompound() && items[CHEST_SLOTS[i]].stackTagCompound.hasKey(ItemBattery.NBT_VAL))
 							{
@@ -95,7 +89,7 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 								
 								storedEMC += ev;
 								items[CHEST_SLOTS[i]].stackTagCompound.removeTag(ItemBattery.NBT_VAL);
-								isDirty = true;
+								onInventoryChanged();
 								break;
 							}
 						}
@@ -116,7 +110,7 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 								items[CHEST_SLOTS[i]].stackSize -= s;
 								if(items[CHEST_SLOTS[i]].stackSize <= 0)
 									items[CHEST_SLOTS[i]] = null;
-								isDirty = true;
+								onInventoryChanged();
 							}
 						}
 					}
@@ -126,7 +120,7 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 				
 				if(storedEMC > 0D && items[SLOT_TARGET] != null)
 				{
-					if(EMCCConfig.enableBattery && items[SLOT_TARGET].itemID == EMCC.i_battery.itemID)
+					if(EMCC.config.condenser.enableBattery && items[SLOT_TARGET].itemID == EMCCItems.i_uuBattery.itemID)
 					{
 						if(storedEMC > 0D)
 						{
@@ -138,7 +132,7 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 							tag.setDouble(ItemBattery.NBT_VAL, ev + storedEMC);
 							storedEMC = 0D;
 							items[SLOT_TARGET].setTagCompound(tag);
-							isDirty = true;
+							onInventoryChanged();
 						}
 					}
 					else
@@ -156,7 +150,7 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 									if(addSingleItemToContainer(InvUtils.singleCopy(items[SLOT_TARGET])))
 									{
 										storedEMC -= ev;
-										isDirty = true;
+										onInventoryChanged();
 									}
 									else break;
 								}
@@ -192,7 +186,7 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 				if(is1.stackSize + 1 <= is1.getMaxStackSize())
 				{
 					items[CHEST_SLOTS[i]].stackSize++;
-					isDirty = true;
+					onInventoryChanged();
 					return true;
 				}
 			}
@@ -204,7 +198,7 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 			if(is1 == null || is1.stackSize == 0)
 			{
 				items[CHEST_SLOTS[i]] = InvUtils.singleCopy(is);
-				isDirty = true;
+				onInventoryChanged();
 				return true;
 			}
 		}
@@ -214,10 +208,10 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 	
 	public void onBroken()
 	{
-		isDirty = true;
+		onInventoryChanged();
 		InvUtils.dropAllItems(worldObj, xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, items);
 		items = new ItemStack[items.length];
-		isDirty = true;
+		onInventoryChanged();
 	}
 	
 	public void readFromNBT(NBTTagCompound tag)
@@ -228,6 +222,8 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 		safeMode = tag.getBoolean("SafeMode");
 		redstoneMode = tag.getByte("RSMode");
 		cooldown = tag.getShort("Cooldown");
+		
+		checkForced();
 	}
 	
 	public void writeToNBT(NBTTagCompound tag)
@@ -240,25 +236,16 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 		tag.setShort("Cooldown", (short)cooldown);
 	}
 	
-	@Override
-	public Container getContainer(EntityPlayer ep, int ID)
-	{ return new ContainerCondenser(ep, this); }
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public GuiContainer getGui(EntityPlayer ep, int ID)
-	{ return new GuiCondenser(new ContainerCondenser(ep, this)); }
-	
 	public void checkForced()
 	{
-		if(EMCCConfig.forcedRedstoneControl != -1 && redstoneMode != EMCCConfig.forcedRedstoneControl)
-		{ isDirty = true; redstoneMode = EMCCConfig.forcedRedstoneControl; }
+		if(EMCC.config.condenser.forcedRedstoneControl != -1 && redstoneMode != EMCC.config.condenser.forcedRedstoneControl)
+		{ onInventoryChanged(); redstoneMode = EMCC.config.condenser.forcedRedstoneControl; }
 		
-		if(EMCCConfig.forcedSecurity != -1 && security.level != EMCCConfig.forcedSecurity)
-		{ isDirty = true; security.level = EMCCConfig.forcedSecurity; }
+		if(EMCC.config.condenser.forcedSecurity != -1 && security.level != EMCC.config.condenser.forcedSecurity)
+		{ onInventoryChanged(); security.level = EMCC.config.condenser.forcedSecurity; }
 		
-		if(EMCCConfig.forcedSafeMode != -1 && safeMode != (EMCCConfig.forcedSafeMode == 1))
-		{ isDirty = true; safeMode = EMCCConfig.forcedSafeMode == 1; }
+		if(EMCC.config.condenser.forcedSafeMode != -1 && safeMode != (EMCC.config.condenser.forcedSafeMode == 1))
+		{ onInventoryChanged(); safeMode = EMCC.config.condenser.forcedSafeMode == 1; }
 	}
 	
 	public void handleGuiButton(int i, EntityPlayer ep)
@@ -276,7 +263,7 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 	
 	public void toggleSafeMode(boolean serverSide)
 	{
-		if(serverSide) { safeMode = !safeMode; isDirty = true; }
+		if(serverSide) { safeMode = !safeMode; onInventoryChanged(); }
 		else EMCCNetHandler.sendToServer(this, 0);
 	}
 	
@@ -284,15 +271,15 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 	{
 		if(serverSide)
 		{
-			if(EMCCConfig.enableClearBuffer)
-			{ storedEMC = 0; isDirty = true; }
+			if(EMCC.config.condenser.enableClearBuffer)
+			{ storedEMC = 0; onInventoryChanged(); }
 		}
 		else EMCCNetHandler.sendToServer(this, 1);
 	}
 	
 	public void toggleRedstoneMode(boolean serverSide)
 	{
-		if(serverSide) { redstoneMode = (redstoneMode + 1) % 3; isDirty = true; }
+		if(serverSide) { redstoneMode = (redstoneMode + 1) % 3; onInventoryChanged(); }
 		else EMCCNetHandler.sendToServer(this, 2);
 	}
 	
@@ -302,66 +289,28 @@ public class TileCondenser extends TileEMCC implements IGuiTile, ISidedInventory
 		{
 			if(security.owner.equals(ep.username))
 			{
-				security.level = (security.level + 1) % 3;
-				isDirty = true;
+				security.level = (security.level + 1) % 4;
+				onInventoryChanged();
 			}
 		}
 		else EMCCNetHandler.sendToServer(this, 3);
 	}
-
-	@Override
-	public int getSizeInventory()
-	{ return items.length; }
-
-	@Override
-	public ItemStack getStackInSlot(int i)
-	{ return items[i]; }
-
-	@Override
-	public ItemStack decrStackSize(int slot, int amt)
-	{ return InvUtils.decrStackSize(this, slot, amt); }
-
-	@Override
-	public ItemStack getStackInSlotOnClosing(int i)
-	{ return InvUtils.getStackInSlotOnClosing(this, i); }
-	
-	@Override
-	public void setInventorySlotContents(int i, ItemStack is)
-	{ items[i] = is; isDirty = true; }
 	
 	@Override
 	public int[] getAccessibleSlotsFromSide(int s)
-	{ return EMCCConfig.isCondenserIInventory == 0 ? NO_SLOTS : ((s == UP) ? TARGET_SLOTS : CHEST_SLOTS); }
+	{ return EMCC.config.condenser.isCondenserIInventory == 0 ? NO_SLOTS : ((s == UP) ? TARGET_SLOTS : CHEST_SLOTS); }
 	
 	@Override
 	public boolean canInsertItem(int i, ItemStack is, int j)
-	{ return EMCCConfig.isCondenserIInventory == 2 || EMCCConfig.isCondenserIInventory == 3; }
+	{ return EMCC.config.condenser.isCondenserIInventory == 2 || EMCC.config.condenser.isCondenserIInventory == 3; }
 	
 	@Override
 	public boolean canExtractItem(int i, ItemStack is, int j)
-	{ return EMCCConfig.isCondenserIInventory == 1 || EMCCConfig.isCondenserIInventory == 3; }
+	{ return EMCC.config.condenser.isCondenserIInventory == 1 || EMCC.config.condenser.isCondenserIInventory == 3; }
 	
 	@Override
 	public String getInvName()
 	{ return "Condenser"; }
-	
-	@Override
-	public boolean isInvNameLocalized()
-	{ return false; }
-	
-	@Override
-	public int getInventoryStackLimit()
-	{ return 64; }
-	
-	@Override
-	public void openChest()
-	{
-	}
-	
-	@Override
-	public void closeChest()
-	{
-	}
 	
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack is)

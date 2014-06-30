@@ -15,7 +15,7 @@ public class EMCCNetHandler implements IPacketHandler
 	{
 		try
 		{
-			if(p.channel.equals(EMCCFinals.MOD_ID) && player instanceof EntityPlayer)
+			if(p.channel.equals(EMCC.MOD_ID) && player instanceof EntityPlayer)
 			{
 				World worldObj = ((EntityPlayer)player).worldObj;
 				
@@ -46,7 +46,7 @@ public class EMCCNetHandler implements IPacketHandler
 	
 	public static void sendToServer(TileEMCC te, int buttonID)
 	{
-		Packet250CustomPayload packet = new Packet250CustomPayload(EMCCFinals.MOD_ID, new byte[0]);
+		Packet250CustomPayload packet = new Packet250CustomPayload(EMCC.MOD_ID, new byte[0]);
 		
 		try
 		{

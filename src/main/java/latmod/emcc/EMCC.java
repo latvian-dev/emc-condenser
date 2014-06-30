@@ -1,90 +1,81 @@
 package latmod.emcc;
-import java.util.*;
 import java.util.logging.*;
 
-import com.pahimar.ee3.emc.EmcRegistry;
-import com.pahimar.ee3.emc.EmcValue;
+import com.pahimar.ee3.emc.*;
+import com.pahimar.ee3.recipe.RecipesAludel;
 
 import latmod.core.*;
+import latmod.core.base.LMMod;
+import latmod.core.base.recipes.LMRecipes;
 import latmod.emcc.block.*;
 import latmod.emcc.item.*;
-import latmod.emcc.tile.*;
 import net.minecraft.creativetab.*;
 import net.minecraft.item.*;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.*;
 
-@Mod(modid = EMCCFinals.MOD_ID, name = EMCCFinals.MOD_NAME, version = EMCCFinals.VERSION)
-@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = { EMCCFinals.MOD_ID }, packetHandler = EMCCNetHandler.class)
+@Mod(modid = EMCC.MOD_ID, name = EMCC.MOD_NAME, version = EMCC.VERSION)
+@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = { EMCC.MOD_ID }, packetHandler = EMCCNetHandler.class)
 public class EMCC
 {
-	@Mod.Instance(EMCCFinals.MOD_ID)
+	public static final String MOD_ID = "emcc";
+	public static final String MOD_NAME = "EMC Condenser Mod";
+	public static final String VERSION = "1.3.0";
+	
+	@Mod.Instance(EMCC.MOD_ID)
 	public static EMCC inst;
 	
-	@SidedProxy(clientSide = EMCCFinals.SIDE_CLIENT, serverSide = EMCCFinals.SIDE_SERVER)
+	@SidedProxy(clientSide = "latmod.emcc.EMCCClient", serverSide = "latmod.emcc.EMCCCommon")
 	public static EMCCCommon proxy; // LMEClient
-	
-	public static ArrayList<ItemEMCC> items = new ArrayList<ItemEMCC>();
-	public static ArrayList<BlockEMCC> blocks = new ArrayList<BlockEMCC>();
 	
 	public static CreativeTabs tab = null;
 	
 	public static Logger logger = Logger.getLogger("EMC_Cond");
 	
-	public static BlockMachines b_machines;
-	public static ItemMaterials i_uus;
-	public static ItemBattery i_battery;
-	
+	public static LMMod mod;
+	public static EMCCConfig config;
 	public static EMCCBlacklist blacklist;
+	public static LMRecipes recipes;
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
 		logger.setParent(FMLLog.getLogger());
 		
-		EMCCConfig.load(e);
+		mod = new LMMod(MOD_ID);
+		config = new EMCCConfig(e);
+		blacklist = new EMCCBlacklist(e);
+		recipes = new LMRecipes(false);
 		
-		blacklist = new EMCCBlacklist();
-		blacklist.preInit(e);
+		mod.addBlock(EMCCItems.b_machines = new BlockMachines(config.ids.b_machines, "machines"));
 		
-		addBlock(b_machines = new BlockMachines("machines"));
+		mod.addItem(EMCCItems.i_mat = new ItemMaterials(config.ids.i_materials, "materials"));
+		mod.addItem(EMCCItems.i_uuBattery = new ItemBattery(config.ids.i_uuBattery, "uuBattery"));
 		
-		addItem(i_uus = new ItemMaterials("uus"));
-		addItem(i_battery = new ItemBattery("uusBattery"));
+		mod.onPostLoaded();
 		
-		tab = LatCore.createTab(EMCCFinals.ASSETS + "tab", new ItemStack(b_machines, 1, 3));
+		tab = LatCore.createTab(mod.assets + "tab", EMCCItems.UU_ITEM);
 		
-		//NetworkRegistry.instance().registerChannel(new EMCCNetHandler(), EMCCFinals.MOD_ID);
+		LatCore.addGuiHandler(inst, proxy);
 		
 		proxy.preInit();
-		EMCCConfig.config.save();
+		config.save();
 	}
 
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent e)
 	{
+		EMCCItems.load();
 		proxy.init();
 	}
 
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
-		EMCCRecipes.load();
+		mod.loadRecipes();
 		proxy.postInit();
 	}
-	
-	public void addItem(ItemEMCC i)
-	{ LatCore.addItem(i, EMCCFinals.MOD_ID + '.' + i.itemName, EMCCFinals.MOD_ID); items.add(i); }
-
-	public void addBlock(BlockEMCC b, Class<? extends ItemBlockEMCC> c)
-	{ LatCore.addBlock(b, c, EMCCFinals.MOD_ID + '.' + b.blockName, EMCCFinals.MOD_ID); blocks.add(b); }
-	
-	public void addBlock(BlockEMCC b)
-	{ addBlock(b, ItemBlockEMCC.class); }
-	
-	public void addTile(Class<? extends TileEMCC> c, String s)
-	{ LatCore.addTileEntity(c, EMCCFinals.MOD_ID + '.' + s); }
 	
 	public static float getEMC(ItemStack is)
 	{
@@ -92,4 +83,7 @@ public class EMCC
 		EmcValue e = EmcRegistry.getInstance().getEmcValue(is);
 		return (e == null) ? 0F : e.getValue();
 	}
+	
+	public static void addInfusing(ItemStack out, ItemStack in, ItemStack with)
+	{ RecipesAludel.getInstance().addRecipe(out, in, with); }
 }

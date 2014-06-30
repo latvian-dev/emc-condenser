@@ -11,28 +11,32 @@ public class ItemMaterials extends ItemEMCC
 {
 	public static final String[] names =
 	{
-		"uus",
+		"uu",
 		"miniumStar"
 	};
 	
 	@SideOnly(Side.CLIENT)
 	public Icon[] icons;
 	
-	public ItemMaterials(String s)
+	public ItemMaterials(int id, String s)
 	{
-		super(s);
-		addAllDamages(names.length);
+		super(id, s);
 		
-		EMCCRecipes.UUS_ITEM = new ItemStack(this, 1, 0);
-		EMCCRecipes.MINIUM_STAR = new ItemStack(this, 1, 1);
+		EMCCItems.UU_ITEM = new ItemStack(this, 1, 0);
+		EMCCItems.MINIUM_STAR = new ItemStack(this, 1, 1);
+	}
+	
+	public void onPostLoaded()
+	{
+		addAllDamages(names.length);
 	}
 	
 	public void loadRecipes()
 	{
-		EMCCRecipes.addShapelessRecipe(EMCCRecipes.UUS_ITEM,
-				EMCCRecipes.DUST_VERDANT,
-				EMCCRecipes.DUST_AZURE,
-				EMCCRecipes.DUST_MINIUM,
+		EMCC.recipes.addShapelessRecipe(EMCCItems.UU_ITEM,
+				EMCCItems.DUST_VERDANT,
+				EMCCItems.DUST_AZURE,
+				EMCCItems.DUST_MINIUM,
 				Item.redstone,
 				Item.glowstone,
 				Item.netherQuartz,
@@ -40,30 +44,30 @@ public class ItemMaterials extends ItemEMCC
 				Item.ingotGold,
 				Item.diamond);
 		
-		if(EMCCConfig.infuseMiniumStar)
-		EMCCRecipes.addInfusing(EMCCRecipes.MINIUM_STAR, new ItemStack(Item.netherStar), EMCCRecipes.siz(EMCCRecipes.DUST_MINIUM, 8));
-		else EMCCRecipes.addRecipe(EMCCRecipes.MINIUM_STAR, "MMM", "MSM", "MMM",
+		if(EMCC.config.recipes.infuseMiniumStar)
+		EMCC.addInfusing(EMCCItems.MINIUM_STAR, new ItemStack(Item.netherStar), EMCC.recipes.size(EMCCItems.DUST_MINIUM, 8));
+		else EMCC.recipes.addRecipe(EMCCItems.MINIUM_STAR, "MMM", "MSM", "MMM",
 				Character.valueOf('M'), new ItemStack(ItemIds.ALCHEMICAL_DUST, 1, 3),
 				Character.valueOf('S'), Item.netherStar );
 		
-		if(EMCCConfig.miniumToNetherStar == 1)
-			EMCCRecipes.addInfusing(new ItemStack(Item.netherStar), EMCCRecipes.MINIUM_STAR, new ItemStack(Item.glowstone));
-		else if(EMCCConfig.miniumToNetherStar == 2)
-			EMCCRecipes.addSmelting(new ItemStack(Item.netherStar), EMCCRecipes.MINIUM_STAR);
+		if(EMCC.config.recipes.miniumToNetherStar == 1)
+			EMCC.addInfusing(new ItemStack(Item.netherStar), EMCCItems.MINIUM_STAR, new ItemStack(Item.glowstone));
+		else if(EMCC.config.recipes.miniumToNetherStar == 2)
+			EMCC.recipes.addSmelting(new ItemStack(Item.netherStar), EMCCItems.MINIUM_STAR);
 		
-		if(EMCCConfig.infuseNameTag)
-			EMCCRecipes.addInfusing(new ItemStack(Item.nameTag), EMCCRecipes.siz(new ItemStack(Item.paper), 4), new ItemStack(Item.slimeBall));
+		if(EMCC.config.recipes.infuseNameTag)
+			EMCC.addInfusing(new ItemStack(Item.nameTag), EMCC.recipes.size(new ItemStack(Item.paper), 4), new ItemStack(Item.slimeBall));
 	}
 	
 	public String getUnlocalizedName(ItemStack is)
-	{ return EMCCFinals.getItemName(names[is.getItemDamage()]); }
+	{ return mod.getItemName(names[is.getItemDamage()]); }
 	
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister ir)
 	{
 		icons = new Icon[names.length];
 		for(int i = 0; i < icons.length; i++)
-		icons[i] = ir.registerIcon(EMCCFinals.ASSETS + names[i]);
+		icons[i] = ir.registerIcon(mod.assets + names[i]);
 	}
 	
 	@SideOnly(Side.CLIENT)

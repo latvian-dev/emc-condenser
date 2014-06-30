@@ -1,18 +1,17 @@
 package latmod.emcc.gui;
+import latmod.core.base.ContainerLM;
+import latmod.emcc.EMCC;
 import latmod.emcc.tile.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
-public class ContainerCondenser extends Container
+public class ContainerCondenser extends ContainerLM
 {
-	public TileCondenser tile;
-	public EntityPlayer player;
-	
 	public ContainerCondenser(EntityPlayer ep, TileCondenser t)
 	{
-		tile = t;
-		player = ep;
+		super(ep, t);
 		
 		addSlotToContainer(new Slot(t, TileCondenser.SLOT_TARGET, 8, 9));
 		
@@ -37,8 +36,6 @@ public class ContainerCondenser extends Container
 	
 	public ItemStack transferStackInSlot(EntityPlayer ep, int i)
 	{
-		if(i == TileCondenser.SLOT_TARGET) return null;
-		
 		ItemStack is = null;
 		Slot slot = (Slot)inventorySlots.get(i);
 		
@@ -62,4 +59,7 @@ public class ContainerCondenser extends Container
 		
 		return is;
 	}
+
+	public ResourceLocation getTexture()
+	{ return EMCC.mod.getLocation("textures/gui/condenser.png"); }
 }
