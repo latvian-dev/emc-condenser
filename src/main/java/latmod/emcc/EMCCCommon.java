@@ -28,6 +28,7 @@ public class EMCCCommon implements IGuiHandler
 			}
 			
 			if(ID == EMCCGuis.CONDENSER) return new ContainerCondenser(ep, (TileCondenser)te);
+			else if(ID == EMCCGuis.COND_SETTINGS) return new ContainerCondenserSettings(ep, (TileCondenser)te);
 		}
 		
 		return null;

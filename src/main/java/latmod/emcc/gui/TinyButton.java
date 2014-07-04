@@ -1,13 +1,14 @@
 package latmod.emcc.gui;
+import latmod.core.base.GuiLM;
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public class TinyButton
 {
-	public final GuiCondenser gui;
+	public final GuiLM gui;
 	public final int posX, posY, width, height;
 	
-	public TinyButton(GuiCondenser g, int x, int y, int w, int h)
+	public TinyButton(GuiLM g, int x, int y, int w, int h)
 	{
 		gui = g;
 		posX = x;

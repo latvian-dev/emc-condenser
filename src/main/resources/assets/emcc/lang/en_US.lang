@@ -1,10 +1,21 @@
 itemGroup.emcc:tab=EMC Condenser Mod
 
 ## Items ##
-emcc:i.uus.name=UnUnSeptium
-emcc:i.uusBattery.name=EMC Battery
-emcc:i.miniumStar.name=Minium Star
+emcc:item.uu.name=UnUnSeptium
+emcc:item.miniumStar.name=Minium Star
+
+emcc:item.battery.name=EMC Battery
+emcc:item.lifeStone.name=Life Stone
+emcc:item.voidStone.name=Void Stone
+
+emcc:item.wrench.name=UnUnSeptium Wrench
+emcc:item.sword.name=UnUnSeptium Sword
+emcc:item.pick.name=UnUnSeptium Pick
+emcc:item.shovel.name=UnUnSeptium Shovel
+emcc:item.axe.name=UnUnSeptium Axe
+emcc:item.hoe.name=UnUnSeptium Hoe
+emcc:item.smasher.name=UnUnSeptium Smasher
 
 ## Blocks ##
-emcc:b.uusb.name=UnUnSeptium Block
-emcc:b.condenser.name=EMC Condenser
+emcc:tile.uub.name=UnUnSeptium Block
+emcc:tile.condenser.name=EMC Condenser

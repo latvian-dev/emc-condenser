@@ -56,7 +56,7 @@ public class ItemMaterials extends ItemEMCC
 			EMCC.recipes.addSmelting(new ItemStack(Item.netherStar), EMCCItems.MINIUM_STAR);
 		
 		if(EMCC.config.recipes.infuseNameTag)
-			EMCC.addInfusing(new ItemStack(Item.nameTag), EMCC.recipes.size(new ItemStack(Item.paper), 4), new ItemStack(Item.slimeBall));
+			EMCC.addInfusing(new ItemStack(Item.nameTag), new ItemStack(Item.paper), new ItemStack(Item.slimeBall));
 	}
 	
 	public String getUnlocalizedName(ItemStack is)

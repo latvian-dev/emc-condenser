@@ -1,6 +1,5 @@
 package latmod.emcc.block;
 import com.pahimar.ee3.lib.*;
-
 import cpw.mods.fml.relauncher.*;
 import latmod.core.*;
 import latmod.core.base.BlockLM;
@@ -15,7 +14,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 
-public class BlockMachines extends BlockLM
+public class BlockEMCCBlocks extends BlockLM
 {
 	public static final String[] names =
 	{
@@ -26,7 +25,7 @@ public class BlockMachines extends BlockLM
 	@SideOnly(Side.CLIENT)
 	public Icon condSide, condTop;
 	
-	public BlockMachines(int id, String s)
+	public BlockEMCCBlocks(int id, String s)
 	{
 		super(EMCC.mod, id, s, Material.iron);
 		addAllDamages(names.length);
@@ -41,20 +40,20 @@ public class BlockMachines extends BlockLM
 	public void loadRecipes()
 	{
 		if(EMCC.config.recipes.infuseUUBlock)
-		EMCC.addInfusing(EMCCItems.UU_BLOCK, new ItemStack(Block.obsidian), EMCC.recipes.size(EMCCItems.UU_ITEM, 8));
-		else EMCC.recipes.addRecipe(EMCCItems.UU_BLOCK, "UUU", "UOU", "UUU",
+		EMCC.addInfusing(EMCCItems.UU_BLOCK, EMCCItems.UU_ITEM, new ItemStack(Block.obsidian, 8));
+		else EMCC.recipes.addRecipe(EMCCItems.UU_BLOCK, "OOO", "OUO", "OOO",
 			Character.valueOf('U'), EMCCItems.UU_ITEM,
 			Character.valueOf('O'), Block.obsidian);
 		
 		ItemStack is = EMCCItems.UU_BLOCK;
 		
-		if(EMCC.config.recipes.recipeDifficulty == 1) is = new ItemStack(Item.netherStar);
-		else if(EMCC.config.recipes.recipeDifficulty == 2) is = EMCCItems.MINIUM_STAR;
+		if(EMCC.config.recipes.condenserRecipeDifficulty == 1) is = new ItemStack(Item.netherStar);
+		else if(EMCC.config.recipes.condenserRecipeDifficulty == 2) is = EMCCItems.MINIUM_STAR;
 		
 		EMCC.recipes.addRecipe(new ItemStack(this, 1, 1), "OBO", "OSO", "OIO",
 				Character.valueOf('O'), Block.obsidian,
 				Character.valueOf('I'), is,
-				Character.valueOf('B'), new ItemStack(EMCCItems.i_uuBattery, 1, LatCore.ANY),
+				Character.valueOf('B'), new ItemStack(EMCCItems.i_emc_storage, 1, 4),
 				Character.valueOf('S'), new ItemStack(ItemIds.MINIUM_STONE, 1, LatCore.ANY));
 	}
 	
@@ -98,4 +97,7 @@ public class BlockMachines extends BlockLM
 	@SideOnly(Side.CLIENT)
 	public CreativeTabs getCreativeTabToDisplayOn()
 	{ return EMCC.tab; }
+	
+	public float getEnchantPowerBonus(World w, int x, int y, int z)
+	{ return w.getBlockMetadata(x, y, z) == 0 ? 3F : 0; }
 }

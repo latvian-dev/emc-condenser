@@ -1,5 +1,6 @@
 package latmod.emcc;
 import latmod.core.*;
+import latmod.core.mod.*;
 import cpw.mods.fml.common.event.*;
 import net.minecraft.item.*;
 import net.minecraftforge.common.*;
@@ -48,9 +49,6 @@ public class EMCCBlacklist
 			item = s;
 			damage = i;
 		}
-		
-		public int hashCode()
-		{ return item.hashCode() ^ (damage * 32); }
 		
 		public boolean equals(Object o)
 		{
@@ -116,7 +114,7 @@ public class EMCCBlacklist
 	{
 		if(fuels_ul.contains(is) || all_ul.contains(is)) return true;
 		
-		FastList<String> oreNames = OreHelper.getOreNames(is);
+		FastList<String> oreNames = LCEventHandler.getOreNames(is);
 		
 		if(oreNames != null && oreNames.size() > 0)
 		{
@@ -131,7 +129,7 @@ public class EMCCBlacklist
 	{
 		if(targets_ul.contains(is) || all_ul.contains(is)) return true;
 		
-		FastList<String> oreNames = OreHelper.getOreNames(is);
+		FastList<String> oreNames = LCEventHandler.getOreNames(is);
 		
 		if(oreNames != null && oreNames.size() > 0)
 		{
