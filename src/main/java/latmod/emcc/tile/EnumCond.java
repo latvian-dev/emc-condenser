@@ -56,7 +56,7 @@ public class EnumCond
 			if(this == ACTIVE_LOW && b) return true;
 			return false;
 		}
-
+		
 		public Redstone next()
 		{ return VALUES[(ID + 1) % VALUES.length]; }
 	}
@@ -103,17 +103,17 @@ public class EnumCond
 		{ return isOn() ? DISABLED : ENABLED; }
 	}
 	
-	public static enum AutoExport
+	public static enum RepairItems
 	{
 		DISABLED("Disabled"),
 		ENABLED("Enabled");
 		
-		public static final AutoExport[] VALUES = values();
+		public static final RepairItems[] VALUES = values();
 		
 		public final int ID;
 		public final String text;
 		
-		AutoExport(String s)
+		RepairItems(String s)
 		{
 			ID = ordinal();
 			text = s;
@@ -122,7 +122,7 @@ public class EnumCond
 		public boolean isOn()
 		{ return this == ENABLED; }
 
-		public AutoExport next()
+		public RepairItems next()
 		{ return isOn() ? DISABLED : ENABLED; }
 	}
 	
@@ -132,7 +132,7 @@ public class EnumCond
 		public static final int REDSTONE = 2;
 		public static final int SECURITY = 3;
 		public static final int INV_MODE = 4;
-		public static final int AUTO_EXPORT = 5;
+		public static final int REPAIR_ITEMS = 5;
 	}
 	
 	/** Just in case I figure out, how packet system works :P */
@@ -147,13 +147,16 @@ public class EnumCond
 		
 		public static void readRendering(TileCondenser t, NBTTagCompound tag)
 		{
-			t.security.readFromNBT(tag);
+			NBTTagCompound securityTag = tag.getCompoundTag("Security");
+			t.security.readFromNBT(securityTag);
+			
+			t.security.restricted.trim(16);
 			
 			t.storedEMC = tag.getDouble("StoredEMC");
 			t.safeMode = SafeMode.VALUES[tag.getByte("SafeMode")];
 			t.redstoneMode = Redstone.VALUES[tag.getByte("RSMode")];
 			t.invMode = InvMode.VALUES[tag.getByte("InvMode")];
-			t.autoExport = AutoExport.VALUES[tag.getByte("AutoExport")];
+			t.repairItems = RepairItems.VALUES[tag.getByte("AutoExport")];
 		}
 		
 		public static void readAll(TileCondenser t, NBTTagCompound tag)
@@ -176,13 +179,15 @@ public class EnumCond
 		
 		public static void writeRendering(TileCondenser t, NBTTagCompound tag)
 		{
-			t.security.writeToNBT(tag);
+			NBTTagCompound securityTag = new NBTTagCompound();
+			t.security.writeToNBT(securityTag);
+			tag.setTag("Security", securityTag);
 			
 			tag.setDouble("StoredEMC", t.storedEMC);
 			tag.setByte("SafeMode", (byte)t.safeMode.ID);
 			tag.setByte("RSMode", (byte)t.redstoneMode.ID);
 			tag.setByte("InvMode", (byte)t.invMode.ID);
-			tag.setByte("AutoExport", (byte)t.autoExport.ID);
+			tag.setByte("AutoExport", (byte)t.repairItems.ID);
 		}
 		
 		public static void writeAll(TileCondenser t, NBTTagCompound tag)

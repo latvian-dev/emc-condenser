@@ -106,7 +106,7 @@ public class EMCCEventHandler
 			if(d > 1000)
 			{
 				double d1 = d / 1000D;
-				d1 = ((long)(d1 * 100D)) / 100D;
+				d1 = ((long)(d1 * 1000D)) / 1000D;
 				s = "" + d1 + "K";
 			}
 			

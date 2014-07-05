@@ -1,7 +1,9 @@
 package latmod.emcc;
 import java.util.logging.*;
+
 import com.pahimar.ee3.emc.*;
 import com.pahimar.ee3.recipe.*;
+
 import latmod.core.*;
 import latmod.core.base.*;
 import latmod.core.base.recipes.*;
@@ -10,6 +12,7 @@ import latmod.emcc.item.*;
 import latmod.emcc.net.*;
 import net.minecraft.creativetab.*;
 import net.minecraft.item.*;
+import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
@@ -38,6 +41,8 @@ public class EMCC
 	public static LMRecipes recipes;
 	public static EMCCBlacklist blacklist;
 	public static EMCCCustomEMC customEMC;
+	
+	public static final EnumToolMaterial toolMaterial = EnumHelper.addToolMaterial("ununseptium", EnumToolMaterial.EMERALD.getHarvestLevel() + 1, 512, 10F, 7F, 20);
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)

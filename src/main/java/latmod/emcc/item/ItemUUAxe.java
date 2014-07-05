@@ -1,19 +1,15 @@
 package latmod.emcc.item;
-import latmod.core.EnumToolClass;
-import latmod.core.LatCore;
+import latmod.core.*;
 import latmod.emcc.*;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.*;
 
-public class ItemUUAxe extends ItemToolEMCC // ItemAxe
+public class ItemUUAxe extends ItemToolEMCC
 {
-	private ItemStack itemAxe;
-	
 	public ItemUUAxe(int id, String s)
 	{
-		super(id, s);
-		
-		itemAxe = new ItemStack(Item.axeDiamond);
+		super(id, s, ItemAxe.blocksEffectiveAgainst);
 		
 		LatCore.addTool(this, EnumToolClass.AXE, EnumToolClass.EMERALD);
 	}
@@ -26,9 +22,6 @@ public class ItemUUAxe extends ItemToolEMCC // ItemAxe
 					Character.valueOf('S'), EMCCItems.STICK);
 	}
 	
-	public boolean isVisible(ItemStack is)
-	{ return EMCC.config.tools.enableAxe; }
-	
-	public float getStrVsBlock(ItemStack is, Block block)
-	{ return itemAxe.getStrVsBlock(block); }
+	public float getStrVsBlock(ItemStack is, Block b)
+    { return b != null && (b.blockMaterial == Material.wood || b.blockMaterial == Material.plants || b.blockMaterial == Material.vine) ? this.efficiencyOnProperMaterial : super.getStrVsBlock(is, b); }
 }

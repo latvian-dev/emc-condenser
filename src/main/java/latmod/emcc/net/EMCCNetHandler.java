@@ -19,6 +19,7 @@ public class EMCCNetHandler implements IPacketHandler
 		addPacket(new PacketOpenGui(0));
 		addPacket(new PacketButtonPressed(0));
 		addPacket(new PacketTransItems());
+		addPacket(new PacketModifyRestricted(false, null));
 	}
 	
 	public void addPacket(PacketCondenser p)
@@ -82,7 +83,4 @@ public class EMCCNetHandler implements IPacketHandler
 	
 	public static void sendToServer(TileCondenser t, PacketCondenser p)
 	{ PacketDispatcher.sendPacketToServer(getCustomPacket(t, p)); }
-	
-	public static void sendToDimension(TileCondenser t, PacketCondenser p)
-	{ PacketDispatcher.sendPacketToAllPlayers(getCustomPacket(t, p)); }
 }

@@ -13,7 +13,7 @@ import net.minecraft.util.*;
 import net.minecraft.world.*;
 import net.minecraftforge.common.ForgeDirection;
 
-public class ItemUUWrench extends ItemToolEMCC
+public class ItemUUWrench extends ItemEMCC implements IEmcTool
 {
 	private static final String NBT_KEY = "WrenchData";
 	
@@ -24,6 +24,8 @@ public class ItemUUWrench extends ItemToolEMCC
 	{
 		super(id, s);
 		setMaxDamage(32);
+		setMaxStackSize(1);
+		setFull3D();
 	}
 	
 	public void loadRecipes()
@@ -44,8 +46,8 @@ public class ItemUUWrench extends ItemToolEMCC
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister ir)
 	{
-		itemIcon = ir.registerIcon(mod.assets + "wrench");
-		icon_full = ir.registerIcon(mod.assets + "wrench_full");
+		itemIcon = ir.registerIcon(EMCC.mod.assets + "tools/wrench");
+		icon_full = ir.registerIcon(EMCC.mod.assets + "tools/wrench_full");
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -123,4 +125,7 @@ public class ItemUUWrench extends ItemToolEMCC
 		
 		return false;
 	}
+
+	public double getEmcPerDmg(ItemStack is)
+	{ return EMCC.config.tools.toolEmcPerDamage; }
 }

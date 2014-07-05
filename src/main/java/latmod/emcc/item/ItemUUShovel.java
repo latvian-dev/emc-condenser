@@ -7,13 +7,9 @@ import net.minecraft.item.*;
 
 public class ItemUUShovel extends ItemToolEMCC
 {
-	private ItemStack itemShovel;
-	
 	public ItemUUShovel(int id, String s)
 	{
-		super(id, s);
-		
-		itemShovel = new ItemStack(Item.shovelDiamond);
+		super(id, s, ItemSpade.blocksEffectiveAgainst);
 		
 		LatCore.addTool(this, EnumToolClass.SHOVEL, EnumToolClass.EMERALD);
 	}
@@ -26,9 +22,6 @@ public class ItemUUShovel extends ItemToolEMCC
 					Character.valueOf('S'), EMCCItems.STICK);
 	}
 	
-	public boolean isVisible(ItemStack is)
-	{ return EMCC.config.tools.enableShovel; }
-	
-	public float getStrVsBlock(ItemStack is, Block block)
-	{ return itemShovel.getStrVsBlock(block); }
+	public boolean canHarvestBlock(Block b)
+	{ return b == Block.snow ? true : b == Block.blockSnow; }
 }

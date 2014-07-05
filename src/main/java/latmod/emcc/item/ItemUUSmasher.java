@@ -1,35 +1,32 @@
 package latmod.emcc.item;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-
-import latmod.core.EnumToolClass;
-import latmod.core.LatCore;
+import latmod.core.*;
 import latmod.emcc.*;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.item.*;
 
 public class ItemUUSmasher extends ItemToolEMCC // ItemPickaxe
 {
-	private ItemStack itemPick;
-	private ItemStack itemAxe;
-	private ItemStack itemShovel;
-	
 	public ItemUUSmasher(int id, String s)
 	{
-		super(id, s);
+		super(id, s, getEffectiveBlocks());
 		
-		itemPick = new ItemStack(EMCCItems.i_pick);
-		itemAxe = new ItemStack(EMCCItems.i_axe);
-		itemShovel = new ItemStack(EMCCItems.i_shovel);
+		damageVsEntity = 6F;
 		
 		LatCore.addTool(this, EnumToolClass.PICKAXE, EnumToolClass.EMERALD);
 		LatCore.addTool(this, EnumToolClass.SHOVEL, EnumToolClass.EMERALD);
 		LatCore.addTool(this, EnumToolClass.AXE, EnumToolClass.EMERALD);
 	}
 	
+	private static Block[] getEffectiveBlocks()
+	{
+		FastList<Block> list = new FastList<Block>();
+		list.addAll(ItemPickaxe.blocksEffectiveAgainst);
+		list.addAll(ItemSpade.blocksEffectiveAgainst);
+		list.addAll(ItemAxe.blocksEffectiveAgainst);
+		return list.toArray(new Block[0]);
+	}
+
 	public void loadRecipes()
 	{
 		if(EMCC.config.tools.enableSmasher)
@@ -44,28 +41,12 @@ public class ItemUUSmasher extends ItemToolEMCC // ItemPickaxe
 	public double getEmcPerDmg(ItemStack is)
 	{ return super.getEmcPerDmg(is) * 1.5D; }
 	
-	public boolean isVisible(ItemStack is)
-	{ return EMCC.config.tools.enablePick; }
-	
 	public boolean canHarvestBlock(Block b)
 	{ return true; }
 	
-	public float getStrVsBlock(ItemStack is, Block block)
-	{
-		float f = itemPick.getStrVsBlock(block);
-		float f1 = itemAxe.getStrVsBlock(block);
-		float f2 = itemShovel.getStrVsBlock(block);
-		return Math.max(f, Math.max(f1, f2));
-	}
+	public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block)
+	{ return toolMaterial.getEfficiencyOnProperMaterial(); }
 	
 	public boolean hitEntity(ItemStack is, EntityLivingBase el, EntityLivingBase el1)
 	{ is.damageItem(1, el1); return true; }
-	
-	@SuppressWarnings("all")
-	public Multimap getItemAttributeModifiers()
-	{
-		Multimap multimap = HashMultimap.create();
-		multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Weapon modifier", 6, 0));
-		return multimap;
-	}
 }

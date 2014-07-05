@@ -1,7 +1,9 @@
 package latmod.emcc.item;
+import cpw.mods.fml.relauncher.*;
 import latmod.emcc.*;
 import latmod.emcc.api.IEmcTool;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
 import net.minecraft.world.World;
@@ -26,9 +28,6 @@ public class ItemUUHoe extends ItemEMCC implements IEmcTool
 					Character.valueOf('U'), EMCCItems.UU_ITEM,
 					Character.valueOf('S'), EMCCItems.STICK);
 	}
-	
-	public boolean isVisible(ItemStack is)
-	{ return EMCC.config.tools.enableHoe; }
 	
 	public double getEmcPerDmg(ItemStack is)
 	{ return EMCC.config.tools.toolEmcPerDamage; }
@@ -62,4 +61,8 @@ public class ItemUUHoe extends ItemEMCC implements IEmcTool
 			else return false;
 		}
 	}
+	
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister ir)
+	{ itemIcon = ir.registerIcon("tools/" + itemName); }
 }

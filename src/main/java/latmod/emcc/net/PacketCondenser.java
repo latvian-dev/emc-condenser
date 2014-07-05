@@ -9,6 +9,7 @@ public abstract class PacketCondenser
 	public static final int ID_OPEN_GUI = 0;
 	public static final int ID_BUTTON_PRESSED = 1;
 	public static final int ID_TRANS_ITEMS = 2;
+	public static final int ID_MODIFY_RESTRICTED = 3;
 	
 	public final int packetID;
 	

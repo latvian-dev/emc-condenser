@@ -1,10 +1,8 @@
 package latmod.emcc.gui;
 import java.util.*;
-
 import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.*;
-import latmod.core.base.GuiLM;
+import latmod.core.base.gui.*;
 import latmod.emcc.*;
 import latmod.emcc.tile.*;
 import net.minecraft.util.*;
@@ -13,8 +11,8 @@ import net.minecraft.util.*;
 public class GuiCondenser extends GuiLM
 {
 	public TileCondenser condenser;
-	public TinyButton buttonSettings, buttonSafeMode, buttonTransItems;
-	public TinyButton barEMC, targetIcon;
+	public ButtonLM buttonSettings, buttonSafeMode, buttonTransItems;
+	public WidgetLM barEMC, targetIcon;
 	
 	public GuiCondenser(ContainerCondenser c)
 	{
@@ -23,35 +21,35 @@ public class GuiCondenser extends GuiLM
 		player = c.player;
 		ySize = 240;
 		
-		buttonSettings = new TinyButton(this, 153, 7, 16, 16);
-		buttonSafeMode = new TinyButton(this, 153, 25, 7, 6);
-		buttonTransItems = new TinyButton(this, 162, 25, 7, 6);
-		
-		barEMC = new TinyButton(this, 30, 9, 118, 16);
-		targetIcon = new TinyButton(this, 8, 9, 16, 16);
-	}
-	
-	public void mouseClicked(int x, int y, int b)
-	{
-		super.mouseClicked(x, y, b);
-		
-		if(buttonSettings.isAt(x - guiLeft, y - guiTop))
+		widgets.add(buttonSettings = new ButtonLM(this, 153, 7, 16, 16)
 		{
-			condenser.openGui(false, player, EMCCGuis.COND_SETTINGS);
-			playSound("random.click", 1F);
-		}
+			public void onButtonPressed(int b)
+			{
+				condenser.openGui(false, player, EMCCGuis.COND_SETTINGS);
+				playSound("random.click", 1F);
+			}
+		});
 		
-		if(buttonSafeMode.isAt(x - guiLeft, y - guiTop))
+		widgets.add(buttonSafeMode = new ButtonLM(this, 153, 25, 7, 6)
 		{
-			condenser.handleGuiButton(false, player, EnumCond.Buttons.SAFE_MODE);
-			playSound("random.click", 1F);
-		}
+			public void onButtonPressed(int b)
+			{
+				condenser.handleGuiButton(false, player, EnumCond.Buttons.SAFE_MODE);
+				playSound("random.click", 1F);
+			}
+		});
 		
-		if(buttonTransItems.isAt(x - guiLeft, y - guiTop))
+		widgets.add(buttonTransItems = new ButtonLM(this, 162, 25, 7, 6)
 		{
-			condenser.transferItems(false, player);
-			playSound("random.click", 1F);
-		}
+			public void onButtonPressed(int b)
+			{
+				condenser.transferItems(false, player);
+				playSound("random.click", 1F);
+			}
+		});
+		
+		barEMC = new WidgetLM(this, 30, 9, 118, 16);
+		targetIcon = new WidgetLM(this, 8, 9, 16, 16);
 	}
 	
 	public void drawGuiContainerBackgroundLayer(float f, int x, int y)
@@ -64,51 +62,45 @@ public class GuiCondenser extends GuiLM
 		double l = EMCC.getEMC(condenser.items[TileCondenser.SLOT_TARGET]);
 		
 		if(l > 0L)
-		barEMC.render(guiLeft, guiTop, 0, ySize, (condenser.storedEMC % l) / l);
+		barEMC.render(0, ySize, (condenser.storedEMC % l) / l, 1D);
 		
 		if(condenser.items[TileCondenser.SLOT_TARGET] == null)
-		targetIcon.render(guiLeft, guiTop, xSize, 0, 1F);
+		targetIcon.render(xSize, 0);
 		
 		if(condenser.safeMode.isOn())
-		buttonSafeMode.render(guiLeft, guiTop, xSize, 16, 1F);
+		buttonSafeMode.render(xSize, 16);
 		
 		if(b) GL11.glEnable(GL11.GL_LIGHTING);
 	}
 	
-	public void drawGuiContainerForegroundLayer(int x, int y)
+	public void drawGuiContainerForegroundLayer(int mx, int my)
 	{
-		super.drawGuiContainerForegroundLayer(x, y);
+		super.drawGuiContainerForegroundLayer(mx, my);
 		
 		ArrayList<String> al = new ArrayList<String>();
 		
-		if(barEMC.isAt(x - guiLeft, y - guiTop))
+		if(barEMC.mouseOver(mx, my))
 		{
 			float l = EMCC.getEMC(condenser.items[TileCondenser.SLOT_TARGET]);
 			double storedEMC = (long)(condenser.storedEMC * 1000D) / 1000D;
 			al.add(EnumChatFormatting.GOLD.toString() + ((l == 0L) ? (storedEMC + "") : (storedEMC + " / " + l)));
 		}
 		
-		if(buttonSettings.isAt(x - guiLeft, y - guiTop))
-		{
+		if(buttonSettings.mouseOver(mx, my))
 			al.add("Settings");
-		}
 		
-		if(buttonSafeMode.isAt(x - guiLeft, y - guiTop))
+		if(buttonSafeMode.mouseOver(mx, my))
 		{
 			al.add("Safe Mode");
 			al.add(condenser.safeMode.text);
 		}
 		
-		if(buttonTransItems.isAt(x - guiLeft, y - guiTop))
-		{
+		if(buttonTransItems.mouseOver(mx, my))
 			al.add("Take items");
-		}
 		
-		if(targetIcon.isAt(x - guiLeft, y - guiTop) && condenser.items[TileCondenser.SLOT_TARGET] == null)
-		{
+		if(targetIcon.mouseOver(mx, my) && condenser.items[TileCondenser.SLOT_TARGET] == null)
 			al.add("No Target");
-		}
 		
-		if(!al.isEmpty()) drawHoveringText(al, x - guiLeft, y - guiTop, fontRenderer);
+		if(!al.isEmpty()) drawHoveringText(al, mx - guiLeft, my - guiTop, fontRenderer);
 	}
 }

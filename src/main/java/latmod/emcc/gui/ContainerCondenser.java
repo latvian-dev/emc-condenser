@@ -1,5 +1,5 @@
 package latmod.emcc.gui;
-import latmod.core.base.ContainerLM;
+import latmod.core.base.gui.ContainerLM;
 import latmod.emcc.EMCC;
 import latmod.emcc.tile.*;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,7 +28,7 @@ public class ContainerCondenser extends ContainerLM
 			int x = i % 9;
 			int y = i / 9;
 			
-			addSlotToContainer(new SlotCondenserOutput(t, TileCondenser.OUTPUT_SLOTS[i], 8 + x * 18, 111 + y * 18));
+			addSlotToContainer(new SlotOutput(t, TileCondenser.OUTPUT_SLOTS[i], 8 + x * 18, 111 + y * 18));
 		}
 		
 		for(int y = 0; y < 3; y++) for(int x = 0; x < 9; x++)

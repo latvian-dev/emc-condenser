@@ -23,6 +23,7 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 		"battery",
 		"lifeStone",
 		"voidStone",
+		"glidingStone",
 	};
 	
 	@SideOnly(Side.CLIENT)
@@ -42,6 +43,7 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 		itemsAdded.add(new ItemStack(this, 1, 0));
 		itemsAdded.add(new ItemStack(this, 1, 2));
 		itemsAdded.add(new ItemStack(this, 1, 4));
+		itemsAdded.add(new ItemStack(this, 1, 6));
 	}
 	
 	public void loadRecipes()
@@ -86,24 +88,6 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 				
 				w.playSoundAtEntity(ep, "random.orb", 1F, (dmg % 2 == 0) ? 1F : 0.5F);
 			}
-			else
-			{
-				if(dmg == 2 || dmg == 3)
-				{
-					double emc = getStoredEmc(is);
-					
-					if(emc >= 128)
-					{
-						float hp = ep.getHealth();
-						float maxHp = ep.getMaxHealth();
-						
-						ep.setHealth(Math.min(maxHp - hp, hp + 2));
-						setStoredEmc(is, emc - 128);
-						
-						w.playSoundAtEntity(ep, "random.orb", 0.5F, 0.8F);
-					}
-				}
-			}
 		}
 		
 		return is;
@@ -143,9 +127,11 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 							{
 								emc -= perDmg;
 								is1.setItemDamage(is1.getItemDamage() - 1);
+								ep.inventory.onInventoryChanged();
 							}
 							
 							setStoredEmc(is, emc);
+							
 							if(emc < 1D) return;
 							continue;
 						}
@@ -163,11 +149,13 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 							
 							double a = Math.min(si.getEmcTrasferLimit(is1), max - siEmc);
 							
-							if(a >= emc)
+							if(a > 0D && emc >= a)
 							{
 								emc -= a;
 								setStoredEmc(is, emc);
 								si.setStoredEmc(is1, siEmc + a);
+								ep.inventory.setInventorySlotContents(i, is1);
+								ep.inventory.onInventoryChanged();
 							}
 						}
 					}
@@ -251,8 +239,8 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 		
 		for(int i = 0; i < icons.length; i++)
 		{
-			icons[i] = ir.registerIcon(mod.assets + names[i]);
-			icons_enabled[i] = ir.registerIcon(mod.assets + names[i] + "_enabled");
+			icons[i] = ir.registerIcon(mod.assets + "stones/" + names[i]);
+			icons_enabled[i] = ir.registerIcon(mod.assets + "stones/" + names[i] + "_enabled");
 		}
 	}
 	
@@ -287,8 +275,9 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 
 	public double getMaxEmcChargeFromBattery(ItemStack is)
 	{
-		if(is.getItemDamage() == 1) return 8192D;
-		else if(is.getItemDamage() == 2) return 1024D;
+		if(is.getItemDamage() < 2) return 0D;
+		if(is.getItemDamage() < 4) return 2048D;
+		if(is.getItemDamage() < 6) return 1024D;
 		return 0D;
 	}
 

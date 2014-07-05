@@ -7,7 +7,6 @@ import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraftforge.common.ForgeDirection;
 
 public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWrenchable
 {
@@ -33,8 +32,7 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 	public EnumCond.SafeMode safeMode;
 	public EnumCond.Redstone redstoneMode;
 	public EnumCond.InvMode invMode;
-	public EnumCond.AutoExport autoExport;
-	public InventoryRestricted restrictedItems;
+	public EnumCond.RepairItems repairItems;
 	
 	public TileCondenser()
 	{
@@ -42,15 +40,14 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 		safeMode = EnumCond.SafeMode.DISABLED;
 		redstoneMode = EnumCond.Redstone.DISABLED;
 		invMode = EnumCond.InvMode.ENABLED;
-		autoExport = EnumCond.AutoExport.DISABLED;
-		restrictedItems = new InventoryRestricted(this);
+		repairItems = EnumCond.RepairItems.DISABLED;
 		checkForced();
 	}
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
 	{
 		if(security.canPlayerInteract(ep)) openGui(ep, EMCCGuis.CONDENSER);
-		else if(!worldObj.isRemote) LatCore.printChat(ep, "Owner: " + security.owner);
+		else if(!worldObj.isRemote) printOwner(ep);
 		
 		return true;
 	}
@@ -83,11 +80,12 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 							storageItem.setStoredEmc(items[INPUT_SLOTS[i]], 0D);
 							markDirty();
 							onInventoryChanged();
+							continue;
 						}
 						
-						float iev = EMCC.getEMC(items[INPUT_SLOTS[i]]);
+						double iev = EMCC.getEMC(items[INPUT_SLOTS[i]]);
 						
-						if(iev > 0F && !EMCC.blacklist.isBlacklistedFuel(items[INPUT_SLOTS[i]]))
+						if(iev > 0D && !EMCC.blacklist.isBlacklistedFuel(items[INPUT_SLOTS[i]]))
 						{
 							if(safeMode.isOn() && items[INPUT_SLOTS[i]].stackSize == 1) continue;
 							
@@ -110,25 +108,51 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 				
 				if(storedEMC > 0D && items[SLOT_TARGET] != null)
 				{
-					if(items[SLOT_TARGET].getItem() instanceof IEmcStorageItem)
+					ItemStack tar = items[SLOT_TARGET];
+					
+					if(tar.getItem() instanceof IEmcStorageItem)
 					{
-						IEmcStorageItem storageItem = (IEmcStorageItem)items[SLOT_TARGET].getItem();
+						IEmcStorageItem storageItem = (IEmcStorageItem)tar.getItem();
 						
-						if(storageItem.canChargeEmc(items[SLOT_TARGET]))
+						if(storageItem.canChargeEmc(tar))
 						{
-							double ev = storageItem.getStoredEmc(items[SLOT_TARGET]);
-							double a = Math.min(storedEMC, storageItem.getEmcTrasferLimit(items[SLOT_TARGET]));
+							double ev = storageItem.getStoredEmc(tar);
+							double a = Math.min(storedEMC, storageItem.getEmcTrasferLimit(tar));
 							storageItem.setStoredEmc(items[SLOT_TARGET], ev + a);
 							storedEMC -= a;
 							markDirty();
 							onInventoryChanged();
 						}
 					}
+					else if(repairItems.isOn() && tar.isItemStackDamageable() && !tar.isStackable())
+					{
+						if(tar.getItemDamage() > 1)
+						{
+							ItemStack tar1 = tar.copy();
+							if(tar1.hasTagCompound())
+								tar1.stackTagCompound.removeTag("ench");
+							
+							ItemStack tar2 = tar1.copy();
+							tar2.setItemDamage(tar1.getItemDamage() - 1);
+							
+							double ev = EMCC.getEMC(tar1);
+							double ev2 = EMCC.getEMC(tar2);
+							
+							double a = ev2 - ev;
+							
+							if(storedEMC >= a)
+							{
+								storedEMC -= a;
+								items[SLOT_TARGET].setItemDamage(tar2.getItemDamage());
+								markDirty();
+							}
+						}
+					}
 					else
 					{
-						double ev = EMCC.getEMC(items[SLOT_TARGET]);
+						double ev = EMCC.getEMC(tar);
 						
-						if(ev > 0D && !EMCC.blacklist.isBlacklistedTarget(items[SLOT_TARGET]))
+						if(ev > 0D && !EMCC.blacklist.isBlacklistedTarget(tar))
 						{
 							long d1 = (long)(storedEMC / ev);
 							
@@ -136,7 +160,7 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 							{
 								for(long d = 0L; d < d1; d++)
 								{
-									if(InvUtils.addSingleItemToInv(InvUtils.singleCopy(items[SLOT_TARGET]), this, OUTPUT_SLOTS, -1, true))
+									if(InvUtils.addSingleItemToInv(InvUtils.singleCopy(tar), this, OUTPUT_SLOTS, -1, true))
 									{
 										storedEMC -= ev;
 										markDirty();
@@ -155,8 +179,6 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 				cooldown--;
 			}
 		}
-		
-		//spawnParticles();
 	}
 	
 	protected boolean customNBT()
@@ -175,6 +197,9 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 		writeToWrench(tag);
 	}
 	
+	public void printOwner(EntityPlayer ep)
+	{ LatCore.printChat(ep, "Owner: " + security.owner); }
+	
 	public void checkForced()
 	{
 		if(EMCC.config.condenser.forcedRedstoneControl != null && redstoneMode.ID != EMCC.config.condenser.forcedRedstoneControl.ID)
@@ -190,84 +215,6 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 		{ invMode = EMCC.config.condenser.forcedInvMode; markDirty(); }
 	}
 	
-	public void onRestrictedInvChanged()
-	{
-		ItemStack isA = restrictedItems.items[0];
-		
-		if(isA != null && isA.getItem() == Item.nameTag)
-		{
-			String s = isA.hasDisplayName() ? isA.getDisplayName() : null;
-			
-			if(s != null && !security.restricted.contains(s) && security.restricted.size() < restrictedItems.items.length - 2)
-				security.restricted.add(s);
-		}
-		
-		ItemStack isR = restrictedItems.items[6];
-		
-		if(isR != null && isR.getItem() == Item.nameTag)
-		{
-			String s = isR.hasDisplayName() ? isR.getDisplayName() : null;
-			
-			if(s != null && security.restricted.contains(s))
-				security.restricted.remove(s);
-		}
-		
-		security.restricted.sort();
-		
-		for(int i = 1; i <= 5; i++)
-			restrictedItems.items[i] = null;
-		
-		for(int i = 0; i < security.restricted.size(); i++)
-		{
-			restrictedItems.items[i + 1] = new ItemStack(Item.slimeBall);
-			restrictedItems.items[i + 1].setItemName(security.restricted.get(i));
-		}
-		
-		markDirty();
-	}
-	
-	public void onInventoryChanged()
-	{
-		super.onInventoryChanged();
-		
-		if(autoExport.isOn())
-		{
-			for(ForgeDirection f : ForgeDirection.VALID_DIRECTIONS)
-			{
-				if(f != ForgeDirection.UP)
-				{
-					IInventory inv = InvUtils.getInvAt(this, f, false);
-					
-					if(inv != null)
-					{
-						int[] invSlots = InvUtils.getAllSlots(inv, f);
-						boolean invChanged = false;
-						
-						for(int i = 0; i < OUTPUT_SLOTS.length; i++)
-						if(items[OUTPUT_SLOTS[i]] != null)
-						{
-							int ss = items[OUTPUT_SLOTS[i]].stackSize;
-							
-							for(int j = 0; j < ss; j++)
-							{
-								if(InvUtils.addSingleItemToInv(items[OUTPUT_SLOTS[i]].copy(), inv, invSlots, f.ordinal(), true))
-								{
-									items[OUTPUT_SLOTS[i]].stackSize--;
-									if(items[OUTPUT_SLOTS[i]].stackSize <= 0)
-										items[OUTPUT_SLOTS[i]] = null;
-									
-									invChanged = true;
-								}
-							}
-						}
-						
-						if(invChanged) inv.onInventoryChanged();
-					}
-				}
-			}
-		}
-	}
-	
 	public void handleGuiButton(boolean serverSide, EntityPlayer ep, int i)
 	{
 		if(serverSide)
@@ -278,12 +225,13 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 				redstoneMode = redstoneMode.next();
 			else if(i == EnumCond.Buttons.INV_MODE)
 				invMode = invMode.next();
-			else if(i == EnumCond.Buttons.AUTO_EXPORT)
-				autoExport = autoExport.next();
+			else if(i == EnumCond.Buttons.REPAIR_ITEMS)
+				repairItems = repairItems.next();
 			else if(i == EnumCond.Buttons.SECURITY)
 			{
-				if(ep != null && security.owner.equals(ep.getCommandSenderName()))
+				if(ep != null && security.isPlayerOwner(ep))
 					security.level = (security.level + 1) % 4;
+				else printOwner(ep);
 			}
 			
 			checkForced();
@@ -382,58 +330,4 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 	
 	public ItemStack getBlockToPlace()
 	{ return EMCCItems.CONDENSER; }
-	
-	/*
-	
-	private static final int BONUS_BLOCKS_1[][] = { { 0, 2, }, { 0, -2, }, { 2, -1, }, { 2, 1, }, { -2, -1, }, { -2, 1, }, };
-	private static final int BONUS_BLOCKS_2[][] = { { 2, 0, }, { -2, 0, }, { -1, 2, }, { 1, 2, }, { -1, -2, }, { 1, -2, }, };
-	
-	private int[][] getBonusBlocks()
-	{
-		int count = 0;
-		
-		for(int i = 0; i < 6; i++)
-		{
-			int ox = BONUS_BLOCKS_1[i][0];
-			int oy = BONUS_BLOCKS_1[i][1];
-			
-			if(!(worldObj.getBlockId(xCoord + ox, yCoord, zCoord + oy) == Block.netherBrick.blockID && worldObj.getBlockId(xCoord + ox, yCoord + 1, zCoord + oy) == EMCCItems.b_blocks.blockID && worldObj.getBlockMetadata(xCoord + ox, yCoord + 1, zCoord + oy) == 0))
-				break; else count++;
-		}
-		
-		if(count == 6) return BONUS_BLOCKS_1;
-		
-		for(int i = 0; i < 6; i++)
-		{
-			int ox = BONUS_BLOCKS_2[i][0];
-			int oy = BONUS_BLOCKS_2[i][1];
-			
-			if(!(worldObj.getBlockId(xCoord + ox, yCoord, zCoord + oy) == Block.netherBrick.blockID && worldObj.getBlockId(xCoord + ox, yCoord + 1, zCoord + oy) == EMCCItems.b_blocks.blockID && worldObj.getBlockMetadata(xCoord + ox, yCoord + 1, zCoord + oy) == 0))
-				return null;
-		}
-		
-		return BONUS_BLOCKS_2;
-	}
-	
-	public void spawnParticles()
-	{
-		if(!worldObj.isRemote) return;
-		
-		Random r = ParticleHelper.rand;
-		
-		int[][] blocks = getBonusBlocks();
-		if(blocks == null) return;
-		
-		for(int i = 0; i < 6; i++)
-		{
-			int bx = blocks[i][0] + xCoord;
-			int bz = blocks[i][1] + zCoord;
-			
-			if (!worldObj.isAirBlock((bx - xCoord) / 2 + xCoord, yCoord + 1, (bz - zCoord) / 2 + zCoord)) break;
-			
-			worldObj.spawnParticle("enchantmenttable", xCoord + 0.5D, yCoord + 2D, zCoord + 0.5D, ((bx - xCoord) + r.nextFloat()) - 0.5D, (1 - r.nextFloat() - 1F), ((bz - zCoord) + r.nextFloat()) - 0.5D);
-		}
-	}
-	
-	*/
 }

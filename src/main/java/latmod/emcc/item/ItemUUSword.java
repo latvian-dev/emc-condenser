@@ -1,21 +1,20 @@
 package latmod.emcc.item;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
+import cpw.mods.fml.relauncher.*;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.*;
-import net.minecraft.world.World;
+import latmod.core.base.IItemLM;
 import latmod.emcc.*;
+import latmod.emcc.api.IEmcTool;
 
-public class ItemUUSword extends ItemToolEMCC // ItemSword
+public class ItemUUSword extends ItemSword implements IItemLM, IEmcTool
 {
+	public final String itemName;
+	
 	public ItemUUSword(int id, String s)
 	{
-		super(id, s);
+		super(id, EMCC.toolMaterial);
+		itemName = s;
 	}
 	
 	public void loadRecipes()
@@ -26,32 +25,27 @@ public class ItemUUSword extends ItemToolEMCC // ItemSword
 					Character.valueOf('S'), EMCCItems.STICK);
 	}
 	
-	public boolean isVisible(ItemStack is)
-	{ return EMCC.config.tools.enableSword; }
+	public double getEmcPerDmg(ItemStack is)
+	{ return EMCC.config.tools.toolEmcPerDamage; }
 	
-	public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block)
-	{
-		if (par2Block.blockID == Block.web.blockID) return 15F; else
-		{
-			Material material = par2Block.blockMaterial;
-			return material != Material.plants && material != Material.vine && material != Material.coral && material != Material.leaves && material != Material.pumpkin ? 1F : 1.5F;
-		}
-	}
+	public Item getItem()
+	{ return this; }
 
-	public boolean hitEntity(ItemStack is, EntityLivingBase el, EntityLivingBase el1)
-	{ is.damageItem(1, el1); return true; }
+	public String getItemID()
+	{ return itemName; }
 
-	public boolean onBlockDestroyed(ItemStack is, World w, int bid, int x, int y, int z, EntityLivingBase el)
-	{ if(Block.blocksList[bid].getBlockHardness(w, x, y, z) != 0F) is.damageItem(2, el); return true; }
-	
-	public boolean canHarvestBlock(Block par1Block)
-	{ return par1Block.blockID == Block.web.blockID; }
-	
-	@SuppressWarnings("all")
-	public Multimap getItemAttributeModifiers()
+	public void onPostLoaded()
 	{
-		Multimap multimap = HashMultimap.create();
-		multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Weapon modifier", 7, 0));
-		return multimap;
 	}
+	
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister ir)
+	{ itemIcon = ir.registerIcon(EMCC.mod.assets + "tools/" + itemName); }
+	
+	@SideOnly(Side.CLIENT)
+	public CreativeTabs getCreativeTab()
+	{ return EMCC.tab; }
+	
+	public String getUnlocalizedName(ItemStack is)
+	{ return EMCC.mod.getItemName(itemName); }
 }

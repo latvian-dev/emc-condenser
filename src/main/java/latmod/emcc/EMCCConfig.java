@@ -100,6 +100,7 @@ public class EMCCConfig extends LMConfig
 		public EnumCond.Security forcedSecurity;
 		public EnumCond.Redstone forcedRedstoneControl;
 		public EnumCond.SafeMode forcedSafeMode;
+		public EnumCond.RepairItems forcedRepairItems;
 		
 		public Condenser()
 		{
@@ -124,11 +125,12 @@ public class EMCCConfig extends LMConfig
 					"3 - Items can be pumped in both ways");
 			forcedInvMode = (i_forcedInvMode == -1) ? null : EnumCond.InvMode.VALUES[i_forcedInvMode];
 			
-			int i_forcedSecurity = getInt("forcedSecurity", -1, -1, 2,
+			int i_forcedSecurity = getInt("forcedSecurity", -1, -1, 3,
 					"-1 - Choosed by user",
 					"0 - Public",
 					"1 - Private",
-					"2 - Restricted");
+					"2 - Whitelist",
+					"2 - Blacklist");
 			forcedSecurity = (i_forcedSecurity == -1) ? null : EnumCond.Security.VALUES[i_forcedSecurity];
 			
 			int i_forcedRedstoneControl = getInt( "forcedRedstoneControl", -1, -1, 2,
@@ -143,6 +145,12 @@ public class EMCCConfig extends LMConfig
 					"0 - Safe Mode always off",
 					"1 - Safe Mode always on");
 			forcedSafeMode = (i_forcedSafeMode == -1) ? null : EnumCond.SafeMode.VALUES[i_forcedSafeMode];
+			
+			int i_forcedRepairItems = getInt("forcedRepairItems", -1, -1, 1,
+					"-1 - Choosed by user",
+					"0 - Repair Items always off",
+					"1 - Repair Items always on");
+			forcedRepairItems = (i_forcedRepairItems == -1) ? null : EnumCond.RepairItems.VALUES[i_forcedRepairItems];
 		}
 	}
 	
@@ -160,6 +168,7 @@ public class EMCCConfig extends LMConfig
 		public double lifeStone_health;
 		public double lifeStone_food;
 		public double voidStone_item;
+		public double glidingStone_flying;
 		public double toolEmcPerDamage;
 		
 		public Tools()

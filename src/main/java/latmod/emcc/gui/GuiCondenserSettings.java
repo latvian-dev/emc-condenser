@@ -1,110 +1,117 @@
 package latmod.emcc.gui;
 import java.util.*;
-
 import cpw.mods.fml.relauncher.*;
-import latmod.core.base.GuiLM;
-import latmod.emcc.EMCCGuis;
+import latmod.core.base.gui.*;
+import latmod.emcc.*;
 import latmod.emcc.tile.*;
 
 @SideOnly(Side.CLIENT)
 public class GuiCondenserSettings extends GuiLM
 {
 	public TileCondenser condenser;
-	public TinyButton buttonSettings, buttonRedstone, buttonSecurity, buttonInvMode, buttonAutoExport;
+	public ButtonLM buttonSettings, buttonRedstone, buttonSecurity, buttonSecuritySettings, buttonInvMode, buttonRepairItems;
 	
 	public GuiCondenserSettings(ContainerCondenserSettings c)
 	{
 		super(c);
 		condenser = (TileCondenser)c.tile;
 		player = c.player;
-		ySize = 240;
+		ySize = 205;
 		
-		buttonSettings = new TinyButton(this, 153, 7, 16, 16);
-		
-		buttonRedstone = new TinyButton(this, 71, 30, 16, 16);
-		buttonSecurity = new TinyButton(this, 153, 30, 16, 16);
-		buttonInvMode = new TinyButton(this, 71, 75, 16, 16);
-		buttonAutoExport = new TinyButton(this, 153, 75, 16, 16);
-	}
-	
-	public void mouseClicked(int x, int y, int b)
-	{
-		super.mouseClicked(x, y, b);
-		
-		if(buttonSettings.isAt(x - guiLeft, y - guiTop))
+		widgets.add(buttonSettings = new ButtonLM(this, 153, 7, 16, 16)
 		{
-			condenser.openGui(false, player, EMCCGuis.CONDENSER);
-			playSound("random.click", 1F);
-		}
+			public void onButtonPressed(int b)
+			{
+				condenser.openGui(false, player, EMCCGuis.CONDENSER);
+				playSound("random.click", 1F);
+			}
+		});
 		
-		if(buttonRedstone.isAt(x - guiLeft, y - guiTop))
+		widgets.add(buttonRedstone = new ButtonLM(this, 71, 30, 16, 16)
 		{
-			condenser.handleGuiButton(false, player, EnumCond.Buttons.REDSTONE);
-			playSound("random.click", 1F);
-		}
+			public void onButtonPressed(int b)
+			{
+				condenser.handleGuiButton(false, player, EnumCond.Buttons.REDSTONE);
+				playSound("random.click", 1F);
+			}
+		});
 		
-		if(buttonSecurity.isAt(x - guiLeft, y - guiTop))
+		widgets.add(buttonSecurity = new ButtonLM(this, 153, 30, 16, 16)
 		{
-			condenser.handleGuiButton(false, player, EnumCond.Buttons.SECURITY);
-			playSound("random.click", 1F);
-		}
+			public void onButtonPressed(int b)
+			{
+				condenser.handleGuiButton(false, player, EnumCond.Buttons.SECURITY);
+				playSound("random.click", 1F);
+			}
+		});
 		
-		if(buttonInvMode.isAt(x - guiLeft, y - guiTop))
+		widgets.add(buttonSecuritySettings = new ButtonLM(this, 92, 48, 74, 17)
 		{
-			condenser.handleGuiButton(false, player, EnumCond.Buttons.INV_MODE);
-			playSound("random.click", 1F);
-		}
+			public void onButtonPressed(int b)
+			{
+				if(condenser.security.isLevelRestricted())
+				{
+					condenser.openGui(player, EMCCGuis.COND_RESTRICTED);
+					playSound("random.click", 1F);
+				}
+			}
+		});
 		
-		if(buttonAutoExport.isAt(x - guiLeft, y - guiTop))
+		widgets.add(buttonInvMode = new ButtonLM(this, 71, 75, 16, 16)
 		{
-			condenser.handleGuiButton(false, player, EnumCond.Buttons.AUTO_EXPORT);
-			playSound("random.click", 1F);
-		}
+			public void onButtonPressed(int b)
+			{
+				condenser.handleGuiButton(false, player, EnumCond.Buttons.INV_MODE);
+				playSound("random.click", 1F);
+			}
+		});
+		
+		widgets.add(buttonRepairItems = new ButtonLM(this, 153, 75, 16, 16)
+		{
+			public void onButtonPressed(int b)
+			{
+				condenser.handleGuiButton(false, player, EnumCond.Buttons.REPAIR_ITEMS);
+				playSound("random.click", 1F);
+			}
+		});
 	}
 	
 	public void drawGuiContainerBackgroundLayer(float f, int x, int y)
 	{
 		super.drawGuiContainerBackgroundLayer(f, x, y);
 		
-		buttonRedstone.render(guiLeft, guiTop, xSize + condenser.redstoneMode.ID * 16, 0, 1F);
-		buttonSecurity.render(guiLeft, guiTop, xSize + condenser.security.level * 16, 16, 1F);
-		buttonInvMode.render(guiLeft, guiTop, xSize + condenser.invMode.ID * 16, 32, 1F);
+		buttonRedstone.render(xSize + condenser.redstoneMode.ID * 16, 0);
+		buttonSecurity.render(xSize + condenser.security.level * 16, 16);
+		buttonInvMode.render(xSize + condenser.invMode.ID * 16, 32);
 		
-		if(condenser.autoExport.isOn())
-			buttonAutoExport.render(guiLeft, guiTop, xSize + 64, 0, 1F);
+		if(condenser.security.isLevelRestricted() && condenser.security.isPlayerOwner(player))
+			buttonSecuritySettings.render(xSize, 48);
+		
+		if(condenser.repairItems.isOn())
+			buttonRepairItems.render(xSize + 48, 0);
 	}
 	
-	public void drawGuiContainerForegroundLayer(int x, int y)
+	public void drawGuiContainerForegroundLayer(int mx, int my)
 	{
-		super.drawGuiContainerForegroundLayer(x, y);
+		super.drawGuiContainerForegroundLayer(mx, my);
 		
 		ArrayList<String> al = new ArrayList<String>();
 		
-		if(buttonSettings.isAt(x - guiLeft, y - guiTop))
-		{
+		if(buttonSettings.mouseOver(mx, my))
 			al.add("Back");
-		}
 		
-		if(buttonRedstone.isAt(x - guiLeft, y - guiTop))
-		{
+		if(buttonRedstone.mouseOver(mx, my))
 			al.add(condenser.redstoneMode.text);
-		}
 		
-		if(buttonSecurity.isAt(x - guiLeft, y - guiTop))
-		{
+		if(buttonSecurity.mouseOver(mx, my))
 			al.add(condenser.getSecurityEnum().text);
-		}
 		
-		if(buttonInvMode.isAt(x - guiLeft, y - guiTop))
-		{
+		if(buttonInvMode.mouseOver(mx, my))
 			al.add(condenser.invMode.text);
-		}
 		
-		if(buttonAutoExport.isAt(x - guiLeft, y - guiTop))
-		{
-			al.add(condenser.autoExport.text);
-		}
+		if(buttonRepairItems.mouseOver(mx, my))
+			al.add(condenser.repairItems.text);
 		
-		if(!al.isEmpty()) drawHoveringText(al, x - guiLeft, y - guiTop, fontRenderer);
+		if(!al.isEmpty()) drawHoveringText(al, mx - guiLeft, my - guiTop, fontRenderer);
 	}
 }

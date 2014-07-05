@@ -40,6 +40,7 @@ public class EMCCClient extends EMCCCommon
 			
 			if(ID == EMCCGuis.CONDENSER) return new GuiCondenser(new ContainerCondenser(ep, (TileCondenser)te));
 			else if(ID == EMCCGuis.COND_SETTINGS) return new GuiCondenserSettings(new ContainerCondenserSettings(ep, (TileCondenser)te));
+			else if(ID == EMCCGuis.COND_RESTRICTED) return new GuiRestricted(new ContainerRestricted(ep, (TileCondenser)te));
 		}
 		
 		return null;

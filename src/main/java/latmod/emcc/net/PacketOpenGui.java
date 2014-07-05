@@ -2,6 +2,7 @@ package latmod.emcc.net;
 import java.io.*;
 
 import net.minecraft.entity.player.EntityPlayer;
+import latmod.emcc.EMCCGuis;
 import latmod.emcc.tile.*;
 
 public class PacketOpenGui extends PacketCondenser
@@ -22,6 +23,9 @@ public class PacketOpenGui extends PacketCondenser
 	public void readPacket(TileCondenser t, DataInputStream dis, EntityPlayer ep) throws Exception
 	{
 		guiID = dis.readByte();
-		t.openGui(true, ep, guiID);
+		
+		if(guiID != EMCCGuis.COND_RESTRICTED || t.security.isPlayerOwner(ep))
+			t.openGui(true, ep, guiID);
+		else t.printOwner(ep);
 	}
 }
