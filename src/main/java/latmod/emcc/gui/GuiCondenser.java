@@ -17,15 +17,14 @@ public class GuiCondenser extends GuiLM
 	public GuiCondenser(ContainerCondenser c)
 	{
 		super(c);
-		condenser = (TileCondenser)c.tile;
-		player = c.player;
+		condenser = (TileCondenser)c.inv;
 		ySize = 240;
 		
 		widgets.add(buttonSettings = new ButtonLM(this, 153, 7, 16, 16)
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.openGui(false, player, EMCCGuis.COND_SETTINGS);
+				condenser.openGui(false, container.player, EMCCGuis.COND_SETTINGS);
 				playSound("random.click", 1F);
 			}
 		});
@@ -34,7 +33,7 @@ public class GuiCondenser extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.handleGuiButton(false, player, EnumCond.Buttons.SAFE_MODE);
+				condenser.handleGuiButton(false, container.player, EMCCGuis.Buttons.SAFE_MODE, b);
 				playSound("random.click", 1F);
 			}
 		});
@@ -43,7 +42,7 @@ public class GuiCondenser extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.transferItems(false, player);
+				condenser.transferItems(false, container.player);
 				playSound("random.click", 1F);
 			}
 		});
@@ -87,19 +86,19 @@ public class GuiCondenser extends GuiLM
 		}
 		
 		if(buttonSettings.mouseOver(mx, my))
-			al.add("Settings");
+			al.add(EMCC.mod.translate("settings"));
 		
 		if(buttonSafeMode.mouseOver(mx, my))
 		{
-			al.add("Safe Mode");
-			al.add(condenser.safeMode.text);
+			al.add(condenser.safeMode.getTitle());
+			al.add(condenser.safeMode.getText());
 		}
 		
 		if(buttonTransItems.mouseOver(mx, my))
-			al.add("Take items");
+			al.add(EMCC.mod.translate("takeitems"));
 		
 		if(targetIcon.mouseOver(mx, my) && condenser.items[TileCondenser.SLOT_TARGET] == null)
-			al.add("No Target");
+			al.add(EMCC.mod.translate("notarget"));
 		
 		if(!al.isEmpty()) drawHoveringText(al, mx - guiLeft, my - guiTop, fontRenderer);
 	}

@@ -10,7 +10,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraft.potion.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 
@@ -23,7 +22,6 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 		"battery",
 		"lifeStone",
 		"voidStone",
-		"glidingStone",
 	};
 	
 	@SideOnly(Side.CLIENT)
@@ -43,7 +41,6 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 		itemsAdded.add(new ItemStack(this, 1, 0));
 		itemsAdded.add(new ItemStack(this, 1, 2));
 		itemsAdded.add(new ItemStack(this, 1, 4));
-		itemsAdded.add(new ItemStack(this, 1, 6));
 	}
 	
 	public void loadRecipes()
@@ -55,7 +52,7 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 				Character.valueOf('G'), Item.glowstone,
 				Character.valueOf('U'), EMCCItems.UU_ITEM);
 		
-		if(EMCC.config.tools.lifeStone_health != -1D || EMCC.config.tools.lifeStone_food != -1D)
+		if(EMCC.config.tools.lifeStone_1hp != -1D || EMCC.config.tools.lifeStone_food != -1D)
 		EMCC.recipes.addRecipe(new ItemStack(this, 1, 2), "SPS", "PBP", "SPS",
 				Character.valueOf('S'), Item.beefCooked,
 				Character.valueOf('B'), new ItemStack(this, 1, 0),
@@ -99,7 +96,7 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 		{
 			EntityPlayer ep = (EntityPlayer)e;
 			
-			if(is.getItemDamage() == 1 && (w.getWorldTime() % 10 == 0))
+			if(is.getItemDamage() == 1 && (w.getWorldTime() % 8 == 0))
 			{
 				if(w.isRemote) return;
 				
@@ -162,41 +159,38 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 				}
 			}
 			
-			if(is.getItemDamage() == 3 && w.getWorldTime() % 20 == 0)
+			if(is.getItemDamage() == 3 && w.getWorldTime() % 8 == 0)
 			{
 				if(w.isRemote) return;
 				
-				if(EMCC.config.tools.lifeStone_health == -1D && EMCC.config.tools.lifeStone_food == -1D) return;
+				if(EMCC.config.tools.lifeStone_1hp == -1D && EMCC.config.tools.lifeStone_food == -1D) return;
 				
 				double emc = getStoredEmc(is);
 				
-				if(emc >= EMCC.config.tools.lifeStone_food && ep.getFoodStats().needFood())
+				if(EMCC.config.tools.lifeStone_food != -1D && emc >= EMCC.config.tools.lifeStone_food && ep.getFoodStats().needFood())
 				{
 					ep.getFoodStats().setFoodLevel(ep.getFoodStats().getFoodLevel() + 1);
 					emc -= EMCC.config.tools.lifeStone_food;
 					setStoredEmc(is, emc);
 				}
 				
-				if(ep.getHealth() < ep.getMaxHealth() && emc >= EMCC.config.tools.lifeStone_health)
-				{
-					ep.addPotionEffect(new PotionEffect(Potion.regeneration.id, 19, 2, true));
-					setStoredEmc(is, emc - EMCC.config.tools.lifeStone_health);
-				}
+				float hp = ep.getHealth();
+				float maxHp = ep.getMaxHealth();
 				
-				if(emc < EMCC.config.tools.lifeStone_food && emc < EMCC.config.tools.lifeStone_health) is.setItemDamage(2);
+				if(EMCC.config.tools.lifeStone_1hp != -1D && hp < maxHp && emc >= EMCC.config.tools.lifeStone_1hp)
+				{
+					ep.setHealth(hp + 1F);
+					emc -= EMCC.config.tools.lifeStone_1hp;
+					if(emc < 0D) emc = 0D;
+					setStoredEmc(is, emc);
+				}
 			}
 			
 			if(is.getItemDamage() == 5 && (w.getWorldTime() % 4 == 0))
 			{
 				double emc = getStoredEmc(is);
 				
-				if(emc < 8D)
-				{
-					is.setItemDamage(4);
-					return;
-				}
-				
-				if(EMCC.config.tools.voidStone_item == -1D) return;
+				if(EMCC.config.tools.voidStone_item == -1D || emc < EMCC.config.tools.voidStone_item) return;
 				
 				@SuppressWarnings("unchecked")
 				List<EntityItem> items = ep.worldObj.getEntitiesWithinAABB(EntityItem.class, ep.boundingBox.expand(3D, 3D, 3D));
@@ -205,25 +199,18 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 				{
 					if (InvUtils.addSingleItemToInv(item.getEntityItem(), ep.inventory, InvUtils.getPlayerSlots(ep), -1, false))
 					{
-						//for(int i = 0; i < 10; i++)
-							w.spawnParticle("smoke", item.posX, item.posY + item.height / 2F, item.posZ, 0D, 0D, 0D);
+						w.spawnParticle("smoke", item.posX, item.posY + item.height / 2F, item.posZ, 0D, 0D, 0D);
 						
 						if(!w.isRemote)
 						{
-							if(item.delayBeforeCanPickup > 6)
-								item.delayBeforeCanPickup = 6;
+							if(item.delayBeforeCanPickup > 4)
+								item.delayBeforeCanPickup = 4;
 							if(item.delayBeforeCanPickup != 0) continue;
 							
-							emc -= 8D;
+							emc -= EMCC.config.tools.voidStone_item;
 							setStoredEmc(is, emc);
 							
 							item.setLocationAndAngles(ep.posX, ep.posY, ep.posZ, 0F, 0F);
-							
-							if(emc < 8D)
-							{
-								is.setItemDamage(4);
-								return;
-							}
 						}
 					}
 				}
@@ -248,6 +235,8 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 	public Icon getIcon(ItemStack is, int r)
 	{
 		int dmg = is.getItemDamage();
+		if(dmg >= icons.length * 2) return icons[0];
+		
 		return (dmg % 2 == 1) ? icons_enabled[dmg / 2] : icons[dmg / 2];
 	}
 	
@@ -278,6 +267,7 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 		if(is.getItemDamage() < 2) return 0D;
 		if(is.getItemDamage() < 4) return 2048D;
 		if(is.getItemDamage() < 6) return 1024D;
+		if(is.getItemDamage() < 8) return 2048D;
 		return 0D;
 	}
 

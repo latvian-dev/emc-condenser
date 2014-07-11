@@ -1,5 +1,6 @@
 package latmod.emcc.gui;
 import java.util.*;
+
 import cpw.mods.fml.relauncher.*;
 import latmod.core.base.gui.*;
 import latmod.emcc.*;
@@ -14,15 +15,14 @@ public class GuiCondenserSettings extends GuiLM
 	public GuiCondenserSettings(ContainerCondenserSettings c)
 	{
 		super(c);
-		condenser = (TileCondenser)c.tile;
-		player = c.player;
+		condenser = (TileCondenser)c.inv;
 		ySize = 205;
 		
 		widgets.add(buttonSettings = new ButtonLM(this, 153, 7, 16, 16)
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.openGui(false, player, EMCCGuis.CONDENSER);
+				condenser.openGui(false, container.player, EMCCGuis.CONDENSER);
 				playSound("random.click", 1F);
 			}
 		});
@@ -31,7 +31,7 @@ public class GuiCondenserSettings extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.handleGuiButton(false, player, EnumCond.Buttons.REDSTONE);
+				condenser.handleGuiButton(false, container.player, EMCCGuis.Buttons.REDSTONE, b);
 				playSound("random.click", 1F);
 			}
 		});
@@ -40,7 +40,7 @@ public class GuiCondenserSettings extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.handleGuiButton(false, player, EnumCond.Buttons.SECURITY);
+				condenser.handleGuiButton(false, container.player, EMCCGuis.Buttons.SECURITY, b);
 				playSound("random.click", 1F);
 			}
 		});
@@ -49,9 +49,10 @@ public class GuiCondenserSettings extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				if(condenser.security.isLevelRestricted())
+				if(condenser.security.level.isRestricted())
 				{
-					condenser.openGui(player, EMCCGuis.COND_RESTRICTED);
+					if(!condenser.openGui(false, container.player, EMCCGuis.COND_RESTRICTED))
+						condenser.printOwner(container.player);
 					playSound("random.click", 1F);
 				}
 			}
@@ -61,7 +62,7 @@ public class GuiCondenserSettings extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.handleGuiButton(false, player, EnumCond.Buttons.INV_MODE);
+				condenser.handleGuiButton(false, container.player, EMCCGuis.Buttons.INV_MODE, b);
 				playSound("random.click", 1F);
 			}
 		});
@@ -70,7 +71,7 @@ public class GuiCondenserSettings extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.handleGuiButton(false, player, EnumCond.Buttons.REPAIR_ITEMS);
+				condenser.handleGuiButton(false, container.player, EMCCGuis.Buttons.REPAIR_TOOLS, b);
 				playSound("random.click", 1F);
 			}
 		});
@@ -81,13 +82,13 @@ public class GuiCondenserSettings extends GuiLM
 		super.drawGuiContainerBackgroundLayer(f, x, y);
 		
 		buttonRedstone.render(xSize + condenser.redstoneMode.ID * 16, 0);
-		buttonSecurity.render(xSize + condenser.security.level * 16, 16);
+		buttonSecurity.render(xSize + condenser.security.level.ID * 16, 16);
 		buttonInvMode.render(xSize + condenser.invMode.ID * 16, 32);
 		
-		if(condenser.security.isLevelRestricted() && condenser.security.isPlayerOwner(player))
+		if(condenser.security.level.isRestricted() && condenser.security.isPlayerOwner(container.player))
 			buttonSecuritySettings.render(xSize, 48);
 		
-		if(condenser.repairItems.isOn())
+		if(condenser.repairTools.isOn())
 			buttonRepairItems.render(xSize + 48, 0);
 	}
 	
@@ -98,19 +99,19 @@ public class GuiCondenserSettings extends GuiLM
 		ArrayList<String> al = new ArrayList<String>();
 		
 		if(buttonSettings.mouseOver(mx, my))
-			al.add("Back");
+			al.add(EMCC.mod.translate("back"));
 		
 		if(buttonRedstone.mouseOver(mx, my))
-			al.add(condenser.redstoneMode.text);
+			al.add(condenser.redstoneMode.getText());
 		
 		if(buttonSecurity.mouseOver(mx, my))
-			al.add(condenser.getSecurityEnum().text);
+			al.add(condenser.security.level.getText());
 		
 		if(buttonInvMode.mouseOver(mx, my))
-			al.add(condenser.invMode.text);
+			al.add(condenser.invMode.getText());
 		
 		if(buttonRepairItems.mouseOver(mx, my))
-			al.add(condenser.repairItems.text);
+			al.add(condenser.repairTools.getText());
 		
 		if(!al.isEmpty()) drawHoveringText(al, mx - guiLeft, my - guiTop, fontRenderer);
 	}

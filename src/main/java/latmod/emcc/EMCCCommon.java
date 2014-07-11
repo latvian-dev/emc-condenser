@@ -1,6 +1,4 @@
 package latmod.emcc;
-import latmod.core.*;
-import latmod.core.tile.*;
 import latmod.emcc.gui.*;
 import latmod.emcc.tile.*;
 import cpw.mods.fml.common.network.*;
@@ -20,13 +18,6 @@ public class EMCCCommon implements IGuiHandler
 		
 		if(te != null)
 		{
-			if(te instanceof ISecureTile)
-			{
-				LMSecurity security = ((ISecureTile)te).getSecurity();
-				
-				if(security != null && !security.canPlayerInteract(ep)) return null;
-			}
-			
 			if(ID == EMCCGuis.CONDENSER) return new ContainerCondenser(ep, (TileCondenser)te);
 			else if(ID == EMCCGuis.COND_SETTINGS) return new ContainerCondenserSettings(ep, (TileCondenser)te);
 			else if(ID == EMCCGuis.COND_RESTRICTED) return new ContainerRestricted(ep, (TileCondenser)te);

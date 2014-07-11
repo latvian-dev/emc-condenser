@@ -1,4 +1,4 @@
-itemGroup.emcc:tab=EMC Condenser Mod
+itemGroup.emcc:tab=EMC Condenser
 
 ## Items ##
 emcc:item.uu.name=UnUnSeptium
@@ -6,7 +6,7 @@ emcc:item.miniumStar.name=Minium Star
 
 emcc:item.battery.name=EMC Battery
 emcc:item.lifeStone.name=Life Stone
-emcc:item.voidStone.name=Void Stone
+emcc:item.voidStone.name=Black Hole Stone
 
 emcc:item.wrench.name=UnUnSeptium Wrench
 emcc:item.sword.name=UnUnSeptium Sword
@@ -19,3 +19,20 @@ emcc:item.smasher.name=UnUnSeptium Smasher
 ## Blocks ##
 emcc:tile.uub.name=UnUnSeptium Block
 emcc:tile.condenser.name=EMC Condenser
+
+## Lang ##
+emcc:owner=Owner: %s
+
+emcc:settings=Settings
+emcc:back=Back
+emcc:notarget=No Target
+
+emcc:safemode=Safe Mode
+emcc:safemode.disabled=Disabled
+emcc:safemode.enabled=Enabled
+
+emcc:repairtools=Repair Tools
+emcc:repairtools.disabled=Disabled
+emcc:repairtools.enabled=Enabled
+
+emcc:takeitems=Take Items

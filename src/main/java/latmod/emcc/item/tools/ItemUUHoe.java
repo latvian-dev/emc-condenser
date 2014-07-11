@@ -1,11 +1,14 @@
-package latmod.emcc.item;
+package latmod.emcc.item.tools;
 import cpw.mods.fml.relauncher.*;
+import latmod.core.ODItems;
 import latmod.emcc.*;
 import latmod.emcc.api.IEmcTool;
+import latmod.emcc.item.ItemEMCC;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.Event.Result;
@@ -13,11 +16,15 @@ import net.minecraftforge.event.entity.player.UseHoeEvent;
 
 public class ItemUUHoe extends ItemEMCC implements IEmcTool
 {
+	@SideOnly(Side.CLIENT)
+	public Icon areaIcon;
+	
 	public ItemUUHoe(int id, String s)
 	{
 		super(id, s);
 		setMaxStackSize(1);
-		setMaxDamage(256);
+		setMaxDamage(EMCC.toolMaterial.getMaxUses());
+		
 		setFull3D();
 	}
 	
@@ -26,7 +33,9 @@ public class ItemUUHoe extends ItemEMCC implements IEmcTool
 		if(EMCC.config.tools.enableHoe)
 			EMCC.recipes.addRecipe(new ItemStack(this), "UU", " S", " S",
 					Character.valueOf('U'), EMCCItems.UU_ITEM,
-					Character.valueOf('S'), EMCCItems.STICK);
+					Character.valueOf('S'), ODItems.STICK);
+		
+		ItemToolEMCC.addAreaRecipe(new ItemStack(this));
 	}
 	
 	public double getEmcPerDmg(ItemStack is)
@@ -34,7 +43,29 @@ public class ItemUUHoe extends ItemEMCC implements IEmcTool
 	
 	public boolean onItemUse(ItemStack is, EntityPlayer ep, World w, int x, int y, int z, int side, float x1, float y1, float z1)
 	{
-		if (!ep.canPlayerEdit(x, y, z, side, is)) return false;
+		boolean b = false;
+		
+		b = onItemUse2(is, ep, w, x, y, z, side, x1, y1, z1);
+		
+		if(ItemToolEMCC.isArea(is) && EMCC.config.tools.enableToolPowers)
+		{
+			for(int ox = -1; ox <= 1; ox++)
+			for(int oz = -1; oz <= 1; oz++)
+			{
+				if((ox == 0 && oz == 0) || is.getItemDamage() == is.getMaxDamage());
+				else
+				{
+					b |= onItemUse2(is, ep, w, x + ox, y, z + oz, side, x1, y1, z1);
+				}
+			}
+		}
+		
+		return b;
+	}
+	
+	public boolean onItemUse2(ItemStack is, EntityPlayer ep, World w, int x, int y, int z, int side, float x1, float y1, float z1)
+	{
+		if (!ep.canPlayerEdit(x, y, z, side, is) || ep.isSneaking()) return false;
 		else
 		{
 			UseHoeEvent event = new UseHoeEvent(ep, is, w, x, y, z);
@@ -64,5 +95,12 @@ public class ItemUUHoe extends ItemEMCC implements IEmcTool
 	
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister ir)
-	{ itemIcon = ir.registerIcon("tools/" + itemName); }
+	{
+		itemIcon = ir.registerIcon(EMCC.mod.assets + "tools/def/" + itemName);
+		areaIcon = ir.registerIcon(EMCC.mod.assets + "tools/area/" + itemName);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public Icon getIcon(ItemStack is, int r)
+	{ return ItemToolEMCC.isArea(is) ? areaIcon : itemIcon; }
 }

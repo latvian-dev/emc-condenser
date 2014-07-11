@@ -1,11 +1,10 @@
 package latmod.emcc;
-import com.pahimar.ee3.lib.ItemIds;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Item;
+import com.pahimar.ee3.lib.*;
+import net.minecraft.item.*;
 import latmod.core.LatCore;
 import latmod.emcc.block.*;
 import latmod.emcc.item.*;
+import latmod.emcc.item.tools.*;
 
 public class EMCCItems
 {
@@ -30,8 +29,6 @@ public class EMCCItems
 	public static ItemStack DUST_VERDANT;
 	public static ItemStack DUST_AZURE;
 	public static ItemStack DUST_MINIUM;
-	
-	public static final String STICK = "stickWood";
 	
 	public static void load()
 	{

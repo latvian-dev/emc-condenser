@@ -6,22 +6,27 @@ import latmod.emcc.tile.*;
 
 public class PacketButtonPressed extends PacketCondenser
 {
-	public int button;
+	public static final int PACKET_ID = EMCCNetHandler.nextPacketID();
 	
-	public PacketButtonPressed(int b)
+	public int buttonID;
+	public int mouseButton;
+	
+	public PacketButtonPressed(int b, int mb)
 	{
-		super(ID_BUTTON_PRESSED);
-		button = b;
+		super(PACKET_ID);
+		buttonID = b;
+		mouseButton = mb;
 	}
 	
 	public void writePacket(TileCondenser t, DataOutputStream dos) throws Exception
 	{
-		dos.writeByte(button);
+		dos.writeByte(buttonID);
+		dos.writeByte(mouseButton);
 	}
 	
 	public void readPacket(TileCondenser t, DataInputStream dis, EntityPlayer ep) throws Exception
 	{
-		button = dis.readByte();
-		t.handleGuiButton(true, ep, button);
+		buttonID = dis.readByte();
+		t.handleGuiButton(true, ep, buttonID, mouseButton);
 	}
 }

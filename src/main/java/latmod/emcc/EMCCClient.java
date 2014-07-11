@@ -1,6 +1,4 @@
 package latmod.emcc;
-import latmod.core.*;
-import latmod.core.tile.*;
 import latmod.emcc.gui.*;
 import latmod.emcc.tile.*;
 import net.minecraft.entity.player.*;
@@ -31,13 +29,6 @@ public class EMCCClient extends EMCCCommon
 		
 		if(te != null)
 		{
-			if(te instanceof ISecureTile)
-			{
-				LMSecurity security = ((ISecureTile)te).getSecurity();
-				
-				if(security != null && !security.canPlayerInteract(ep)) return null;
-			}
-			
 			if(ID == EMCCGuis.CONDENSER) return new GuiCondenser(new ContainerCondenser(ep, (TileCondenser)te));
 			else if(ID == EMCCGuis.COND_SETTINGS) return new GuiCondenserSettings(new ContainerCondenserSettings(ep, (TileCondenser)te));
 			else if(ID == EMCCGuis.COND_RESTRICTED) return new GuiRestricted(new ContainerRestricted(ep, (TileCondenser)te));

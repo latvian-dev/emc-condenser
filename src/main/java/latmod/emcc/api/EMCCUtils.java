@@ -1,5 +1,16 @@
 package latmod.emcc.api;
+import java.util.ArrayList;
+
+import latmod.core.InvUtils;
+import latmod.core.LMUtils;
+import latmod.core.ParticleHelper;
+import net.minecraft.block.Block;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
+import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.world.World;
 
 public class EMCCUtils
 {
@@ -28,5 +39,115 @@ public class EMCCUtils
 		}
 		
 		return false;
+	}
+	
+	private static boolean dropAndSmeltBlock(World w, int x, int y, int z, EntityPlayer ep, Block b, int meta, int fortune)
+	{
+		boolean flag = false;
+		
+		ArrayList<ItemStack> is0 = b.getBlockDropped(w, x, y, z, meta, fortune);
+		
+		if(is0 != null && !is0.isEmpty())
+		{
+			for(ItemStack is : is0) if(is != null)
+			{
+				ItemStack is1 = FurnaceRecipes.smelting().getSmeltingResult(InvUtils.singleCopy(is));
+				
+				if(is1 != null)
+				{
+					if(!w.isRemote) for(int s = 0; s < is.stackSize; s++)
+						LMUtils.dropItem(w, x + 0.5D, y + 0.5D, z + 0.5D, is1, 10);
+					flag = true;
+				}
+				else if(!w.isRemote) LMUtils.dropItem(w, x + 0.5D, y + 0.5D, z + 0.5D, is, 10);
+			}
+		}
+		
+		return flag;
+	}
+	
+	public static boolean breakBlockWithBlazingItem(World w, int x, int y, int z, EntityPlayer ep, ItemStack is, IEffectiveTool ei)
+	{
+		Block b = Block.blocksList[w.getBlockId(x, y, z)];
+		if(b == null || !ei.isEffective(b)) return false;
+		
+		int meta = w.getBlockMetadata(x, y, z);
+		
+		if(EMCCUtils.dropAndSmeltBlock(w, x, y, z, ep, b, meta, EnchantmentHelper.getFortuneModifier(ep)))
+		{
+			for(int i = 0; i < 20; i++)
+			{
+				double ox = ParticleHelper.rand.nextFloat();
+				double oy = ParticleHelper.rand.nextFloat();
+				double oz = ParticleHelper.rand.nextFloat();
+				
+				w.spawnParticle("flame", x + ox, y + oy, z + oz, 0D, 0D, 0D);
+			}
+		}
+		else
+		{
+			for(int i = 0; i < 40; i++)
+			{
+				double ox = ParticleHelper.rand.nextFloat();
+				double oy = ParticleHelper.rand.nextFloat();
+				double oz = ParticleHelper.rand.nextFloat();
+				
+				w.spawnParticle("tilecrack_" + b.blockID + "_" + meta, x + ox, y + oy, z + oz, 0D, 0D, 0D);
+			}
+		}
+		
+		w.setBlockToAir(x, y, z);
+		is.damageItem(2, ep);
+		return true;
+	}
+	
+	public static boolean destroyBlockArea(World w, int x, int y, int z, EntityLivingBase el, ItemStack is, int bid, IEffectiveTool ei)
+	{
+		boolean b = false;
+		
+		if(!w.isRemote)
+		{
+			int meta = w.getBlockMetadata(x, y, z);
+			
+			if (Block.blocksList[bid].getBlockHardness(w, x, y, z) != 0F)
+				is.damageItem(1, el);
+			
+			int fortune = EnchantmentHelper.getFortuneModifier(el);
+			
+			for(int ox = -1; ox <= 1; ox++)
+			for(int oy = -1; oy <= 1; oy++)
+			for(int oz = -1; oz <= 1; oz++)
+			{
+				if((ox == 0 && oy == 0 && oz == 0) || is.getItemDamage() == is.getMaxDamage());
+				else
+				{
+					if(w.getBlockTileEntity(x + ox, y + oy, z + oz) == null)
+					{
+						int bid1 = w.getBlockId(x + ox, y + oy, z + oz);
+						
+						if(bid1 != 0 && Block.blocksList[bid1] != null && ei.isEffective(Block.blocksList[bid1]))
+						{
+							float h = Block.blocksList[bid1].getBlockHardness(w, x + ox, y + oy, z + oz);
+							
+							if(h != -1F)
+							{
+								if(w.setBlockToAir(x + ox, y + oy, z + oz))
+								{
+									if (h != 0F) is.damageItem(1, el);
+									
+									Block.blocksList[bid1].dropBlockAsItem(w, x + ox, y + oy, z + oz, meta, fortune);
+									
+									b = true;
+									
+									if(is.stackSize == 0) return true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return b;
 	}
 }

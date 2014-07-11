@@ -6,12 +6,14 @@ import latmod.emcc.tile.*;
 
 public class PacketModifyRestricted extends PacketCondenser
 {
+	public static final int PACKET_ID = EMCCNetHandler.nextPacketID();
+	
 	public boolean add;
 	public String name;
 	
 	public PacketModifyRestricted(boolean b, String s)
 	{
-		super(ID_MODIFY_RESTRICTED);
+		super(PACKET_ID);
 		add = b;
 		name = s;
 	}

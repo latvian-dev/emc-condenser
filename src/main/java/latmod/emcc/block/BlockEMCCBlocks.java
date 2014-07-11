@@ -1,8 +1,10 @@
 package latmod.emcc.block;
 import com.pahimar.ee3.lib.*;
+
 import cpw.mods.fml.relauncher.*;
 import latmod.core.*;
 import latmod.core.base.BlockLM;
+import latmod.core.base.TileLM;
 import latmod.emcc.*;
 import latmod.emcc.tile.*;
 import net.minecraft.block.Block;
@@ -60,7 +62,7 @@ public class BlockEMCCBlocks extends BlockLM
 	public boolean hasTileEntity(int m)
 	{ return m > 0; }
 	
-	public TileEMCC createTileEntity(World w, int m)
+	public TileLM createTileEntity(World w, int m)
 	{
 		if(m == 0) return null;
 		else if(m == 1) return new TileCondenser();
@@ -83,7 +85,7 @@ public class BlockEMCCBlocks extends BlockLM
 	{ 
 		if(m == 1)
 		{
-			if(s == TileEMCC.UP)
+			if(s == TileLM.UP)
 			return condTop;
 			return condSide;
 		}
@@ -99,5 +101,5 @@ public class BlockEMCCBlocks extends BlockLM
 	{ return EMCC.tab; }
 	
 	public float getEnchantPowerBonus(World w, int x, int y, int z)
-	{ return w.getBlockMetadata(x, y, z) == 0 ? 3F : 0; }
+	{ return w.getBlockMetadata(x, y, z) == 0 ? (float)EMCC.config.general.ununblockEnchantPower : 0; }
 }

@@ -1,5 +1,7 @@
 package latmod.emcc.tile;
 import latmod.core.*;
+import latmod.core.base.*;
+import latmod.core.tile.*;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.net.*;
@@ -7,8 +9,10 @@ import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
+import net.minecraft.network.*;
+import net.minecraft.network.packet.*;
 
-public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWrenchable
+public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrenchable
 {
 	public static final byte VERSION = 1;
 	
@@ -29,27 +33,55 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 	
 	public double storedEMC = 0D;
 	public int cooldown = 0;
-	public EnumCond.SafeMode safeMode;
-	public EnumCond.Redstone redstoneMode;
-	public EnumCond.InvMode invMode;
-	public EnumCond.RepairItems repairItems;
+	public SafeMode safeMode;
+	public RedstoneMode redstoneMode;
+	public InvMode invMode;
+	public RepairTools repairTools;
 	
 	public TileCondenser()
 	{
 		items = new ItemStack[SLOT_COUNT];
-		safeMode = EnumCond.SafeMode.DISABLED;
-		redstoneMode = EnumCond.Redstone.DISABLED;
-		invMode = EnumCond.InvMode.ENABLED;
-		repairItems = EnumCond.RepairItems.DISABLED;
+		safeMode = SafeMode.DISABLED;
+		redstoneMode = RedstoneMode.DISABLED;
+		invMode = InvMode.ENABLED;
+		repairTools = RepairTools.DISABLED;
 		checkForced();
+	}
+	
+	public Packet getDescriptionPacket()
+	{
+		NBTTagCompound tag = new NBTTagCompound();
+		CondenserNBTHelper.writeRendering(this, tag);
+		return new Packet132TileEntityData(xCoord, yCoord, zCoord, 0, tag);
+	}
+	
+	public void onDataPacket(INetworkManager m, Packet132TileEntityData p)
+	{
+		CondenserNBTHelper.readRendering(this, p.data);
 	}
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
 	{
-		if(security.canPlayerInteract(ep)) openGui(ep, EMCCGuis.CONDENSER);
-		else if(!worldObj.isRemote) printOwner(ep);
+		if(!worldObj.isRemote)
+		{
+			if(!openGui(true, ep, EMCCGuis.CONDENSER))
+				printOwner(ep);
+		}
 		
 		return true;
+	}
+	
+	public boolean openGui(boolean serverSide, EntityPlayer ep, int guiID)
+	{
+		if(security.canPlayerInteract(ep))
+		{
+			if(serverSide) { ep.openGui(EMCC.inst, guiID, worldObj, xCoord, yCoord, zCoord); }
+			else EMCCNetHandler.sendToServer(this, new PacketOpenGui(guiID));
+			
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public void onUpdate()
@@ -60,11 +92,11 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 			{
 				cooldown = EMCC.config.condenser.condenserSleepDelay;
 				
-				if(redstoneMode.cancel(isPowered(true)))
+				if(redstoneMode != RedstoneMode.DISABLED && redstoneMode.cancel(isPowered(true)))
 					return;
 				
 				int limit = EMCC.config.condenser.condenserLimitPerTick;
-				if(limit == -1) limit = items.length * 64;
+				if(limit == -1) limit = INPUT_SLOTS.length * 64;
 				
 				for(int i = 0; i < INPUT_SLOTS.length; i++)
 				{
@@ -124,9 +156,9 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 							onInventoryChanged();
 						}
 					}
-					else if(repairItems.isOn() && tar.isItemStackDamageable() && !tar.isStackable())
+					else if(repairTools.isOn() && tar.isItemStackDamageable() && !tar.isStackable())
 					{
-						if(tar.getItemDamage() > 1)
+						if(tar.getItemDamage() > 0)
 						{
 							ItemStack tar1 = tar.copy();
 							if(tar1.hasTagCompound())
@@ -140,7 +172,7 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 							
 							double a = ev2 - ev;
 							
-							if(storedEMC >= a)
+							if(storedEMC >= a && a > 0D)
 							{
 								storedEMC -= a;
 								items[SLOT_TARGET].setItemDamage(tar2.getItemDamage());
@@ -198,15 +230,15 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 	}
 	
 	public void printOwner(EntityPlayer ep)
-	{ LatCore.printChat(ep, "Owner: " + security.owner); }
+	{ LatCore.printChat(ep, EMCC.mod.translate("owner", security.owner)); }
 	
 	public void checkForced()
 	{
 		if(EMCC.config.condenser.forcedRedstoneControl != null && redstoneMode.ID != EMCC.config.condenser.forcedRedstoneControl.ID)
 		{ redstoneMode = EMCC.config.condenser.forcedRedstoneControl; markDirty(); }
 		
-		if(EMCC.config.condenser.forcedSecurity != null && security.level != EMCC.config.condenser.forcedSecurity.ID)
-		{ security.level = EMCC.config.condenser.forcedSecurity.ID; markDirty(); }
+		if(EMCC.config.condenser.forcedSecurity != null && security.level != EMCC.config.condenser.forcedSecurity)
+		{ security.level = EMCC.config.condenser.forcedSecurity; markDirty(); }
 		
 		if(EMCC.config.condenser.forcedSafeMode != null && safeMode.ID != EMCC.config.condenser.forcedSafeMode.ID)
 		{ safeMode = EMCC.config.condenser.forcedSafeMode; markDirty(); }
@@ -215,22 +247,22 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 		{ invMode = EMCC.config.condenser.forcedInvMode; markDirty(); }
 	}
 	
-	public void handleGuiButton(boolean serverSide, EntityPlayer ep, int i)
+	public void handleGuiButton(boolean serverSide, EntityPlayer ep, int i, int mb)
 	{
 		if(serverSide)
 		{
-			if(i == EnumCond.Buttons.SAFE_MODE)
+			if(i == EMCCGuis.Buttons.SAFE_MODE)
 				safeMode = safeMode.next();
-			else if(i == EnumCond.Buttons.REDSTONE)
-				redstoneMode = redstoneMode.next();
-			else if(i == EnumCond.Buttons.INV_MODE)
-				invMode = invMode.next();
-			else if(i == EnumCond.Buttons.REPAIR_ITEMS)
-				repairItems = repairItems.next();
-			else if(i == EnumCond.Buttons.SECURITY)
+			else if(i == EMCCGuis.Buttons.REDSTONE)
+				redstoneMode = (mb == 0) ? redstoneMode.next() : redstoneMode.prev();
+			else if(i == EMCCGuis.Buttons.INV_MODE)
+				invMode = (mb == 0) ? invMode.next() : invMode.prev();
+			else if(i == EMCCGuis.Buttons.REPAIR_TOOLS)
+				repairTools = repairTools.next();
+			else if(i == EMCCGuis.Buttons.SECURITY)
 			{
 				if(ep != null && security.isPlayerOwner(ep))
-					security.level = (security.level + 1) % 4;
+					security.level = (mb == 0) ? security.level.next() : security.level.prev();
 				else printOwner(ep);
 			}
 			
@@ -239,14 +271,8 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 		}
 		else
 		{
-			EMCCNetHandler.sendToServer(this, new PacketButtonPressed(i));
+			EMCCNetHandler.sendToServer(this, new PacketButtonPressed(i, mb));
 		}
-	}
-	
-	public void openGui(boolean serverSide, EntityPlayer ep, int guiID)
-	{
-		if(serverSide) { openGui(ep, guiID); }
-		else EMCCNetHandler.sendToServer(this, new PacketOpenGui(guiID));
 	}
 	
 	public void transferItems(boolean serverSide, EntityPlayer ep)
@@ -276,12 +302,9 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 		else EMCCNetHandler.sendToServer(this, new PacketTransItems());
 	}
 	
-	public EnumCond.Security getSecurityEnum()
-	{ return EnumCond.Security.VALUES[security.level]; }
-	
 	@Override
 	public int[] getAccessibleSlotsFromSide(int s)
-	{ return (invMode == EnumCond.InvMode.DISABLED) ? NO_SLOTS : ((s == UP) ? INPUT_SLOTS : OUTPUT_SLOTS); }
+	{ return (invMode == InvMode.DISABLED) ? NO_SLOTS : ((s == DOWN) ? OUTPUT_SLOTS : INPUT_SLOTS); }
 	
 	@Override
 	public boolean canInsertItem(int i, ItemStack is, int j)
@@ -314,14 +337,10 @@ public class TileCondenser extends TileEMCC implements ISidedInventory, IEmcWren
 	{ return security.canPlayerInteract(ep); }
 	
 	public void readFromWrench(NBTTagCompound tag)
-	{
-		EnumCond.NBT.readAll(this, tag);
-	}
+	{ CondenserNBTHelper.readAll(this, tag); checkForced(); }
 	
 	public void writeToWrench(NBTTagCompound tag)
-	{
-		EnumCond.NBT.writeAll(this, tag);
-	}
+	{ CondenserNBTHelper.writeAll(this, tag); }
 	
 	public void onWrenched(EntityPlayer ep, ItemStack is)
 	{

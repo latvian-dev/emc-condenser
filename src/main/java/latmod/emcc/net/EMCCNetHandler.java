@@ -1,7 +1,6 @@
 package latmod.emcc.net;
 import java.io.*;
-
-import latmod.emcc.EMCC;
+import latmod.emcc.*;
 import latmod.emcc.tile.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.network.*;
@@ -14,10 +13,15 @@ public class EMCCNetHandler implements IPacketHandler
 {
 	public PacketCondenser[] packets = new PacketCondenser[32];
 	
+	private static int nextPacketID = -1;
+	
+	public static final int nextPacketID()
+	{ return ++nextPacketID; }
+	
 	public EMCCNetHandler()
 	{
 		addPacket(new PacketOpenGui(0));
-		addPacket(new PacketButtonPressed(0));
+		addPacket(new PacketButtonPressed(0, 0));
 		addPacket(new PacketTransItems());
 		addPacket(new PacketModifyRestricted(false, null));
 	}

@@ -27,15 +27,14 @@ public class GuiRestricted extends GuiLM
 	public GuiRestricted(ContainerRestricted c)
 	{
 		super(c);
-		condenser = (TileCondenser)c.tile;
-		player = c.player;
+		condenser = (TileCondenser)c.inv;
 		ySize = 202;
 		
 		widgets.add(buttonBack = new ButtonLM(this, 153, 7, 16, 16)
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.openGui(false, player, EMCCGuis.COND_SETTINGS);
+				condenser.openGui(false, container.player, EMCCGuis.COND_SETTINGS);
 				playSound("random.click", 1F);
 			}
 		});

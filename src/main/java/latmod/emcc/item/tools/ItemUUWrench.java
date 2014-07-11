@@ -1,8 +1,9 @@
-package latmod.emcc.item;
+package latmod.emcc.item.tools;
 import cpw.mods.fml.relauncher.*;
-import latmod.core.*;
+import latmod.core.ODItems;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
+import latmod.emcc.item.ItemEMCC;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.*;
 import net.minecraft.entity.player.*;
@@ -33,8 +34,8 @@ public class ItemUUWrench extends ItemEMCC implements IEmcTool
 		if(EMCC.config.tools.enablePick)
 			EMCC.recipes.addRecipe(new ItemStack(this), "UBU", " S ", " S ",
 					Character.valueOf('U'), EMCCItems.UU_BLOCK,
-					Character.valueOf('S'), EMCCItems.STICK,
-					Character.valueOf('B'), new ItemStack(EMCCItems.i_emc_storage, 1, LatCore.ANY));
+					Character.valueOf('S'), ODItems.STICK,
+					Character.valueOf('B'), new ItemStack(EMCCItems.i_emc_storage, 1, 0));
 	}
 	
 	public boolean isVisible(ItemStack is)

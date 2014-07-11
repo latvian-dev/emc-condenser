@@ -1,24 +1,24 @@
 package latmod.emcc;
 import java.util.logging.*;
-
 import com.pahimar.ee3.emc.*;
 import com.pahimar.ee3.recipe.*;
-
 import latmod.core.*;
 import latmod.core.base.*;
 import latmod.core.base.recipes.*;
+import latmod.emcc.blacklist.*;
 import latmod.emcc.block.*;
+import latmod.emcc.customemc.*;
 import latmod.emcc.item.*;
+import latmod.emcc.item.tools.*;
 import latmod.emcc.net.*;
 import net.minecraft.creativetab.*;
 import net.minecraft.item.*;
-import net.minecraftforge.common.EnumHelper;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.*;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.*;
 
-@Mod(modid = EMCC.MOD_ID, name = EMCC.MOD_NAME, version = EMCC.VERSION)
+@Mod(modid = EMCC.MOD_ID, name = EMCC.MOD_NAME, version = EMCC.VERSION, dependencies = "required-after:latcore;required-after:EE3")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = { EMCC.MOD_ID }, packetHandler = EMCCNetHandler.class)
 public class EMCC
 {
@@ -42,7 +42,7 @@ public class EMCC
 	public static EMCCBlacklist blacklist;
 	public static EMCCCustomEMC customEMC;
 	
-	public static final EnumToolMaterial toolMaterial = EnumHelper.addToolMaterial("ununseptium", EnumToolMaterial.EMERALD.getHarvestLevel() + 1, 512, 10F, 7F, 20);
+	public static final EnumToolMaterial toolMaterial = EnumHelper.addToolMaterial("ununseptium", EnumToolMaterial.EMERALD.getHarvestLevel() + 1, 512, EnumToolMaterial.EMERALD.getEfficiencyOnProperMaterial(), 7F, 20);
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
@@ -83,13 +83,14 @@ public class EMCC
 	public void init(FMLInitializationEvent e)
 	{
 		EMCCItems.load();
-		customEMC.registerCustomEmcValues();
+		customEMC.registerUNItems();
 		proxy.init();
 	}
-
+	
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
+		customEMC.postRegisterUNItems();
 		mod.loadRecipes();
 		proxy.postInit();
 	}

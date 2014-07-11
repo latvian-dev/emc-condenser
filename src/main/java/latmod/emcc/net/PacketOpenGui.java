@@ -7,11 +7,13 @@ import latmod.emcc.tile.*;
 
 public class PacketOpenGui extends PacketCondenser
 {
+	public static final int PACKET_ID = EMCCNetHandler.nextPacketID();
+	
 	public int guiID;
 	
 	public PacketOpenGui(int id)
 	{
-		super(ID_OPEN_GUI);
+		super(PACKET_ID);
 		guiID = id;
 	}
 	
