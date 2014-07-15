@@ -92,9 +92,9 @@ public class GuiCondenserSettings extends GuiLM
 			buttonRepairItems.render(xSize + 48, 0);
 	}
 	
-	public void drawGuiContainerForegroundLayer(int mx, int my)
+	public void drawScreen(int mx, int my, float f)
 	{
-		super.drawGuiContainerForegroundLayer(mx, my);
+		super.drawScreen(mx, my, f);
 		
 		ArrayList<String> al = new ArrayList<String>();
 		
@@ -113,6 +113,6 @@ public class GuiCondenserSettings extends GuiLM
 		if(buttonRepairItems.mouseOver(mx, my))
 			al.add(condenser.repairTools.getText());
 		
-		if(!al.isEmpty()) drawHoveringText(al, mx - guiLeft, my - guiTop, fontRenderer);
+		if(!al.isEmpty()) drawHoveringText(al, mx, my, fontRenderer);
 	}
 }

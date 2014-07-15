@@ -38,7 +38,7 @@ public class ItemUUAxe extends ItemToolEMCC
 		if(!isArea(is)) return super.onBlockDestroyed(is, w, bid, x, y, z, el);
 		else
 		{
-			if(!isEffective(Block.blocksList[bid]) || !EMCC.config.tools.enableToolPowers) return false;
+			if(!isEffective(Block.blocksList[bid])) return false;
 			
 			boolean b = false;
 			

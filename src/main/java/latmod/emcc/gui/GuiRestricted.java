@@ -1,13 +1,10 @@
 package latmod.emcc.gui;
 import java.util.*;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-
 import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.*;
-import latmod.core.FastList;
+import latmod.core.util.*;
 import latmod.core.base.gui.*;
 import latmod.emcc.*;
 import latmod.emcc.net.*;
@@ -107,9 +104,9 @@ public class GuiRestricted extends GuiLM
 		if(b) GL11.glEnable(GL11.GL_LIGHTING);
 	}
 	
-	public void drawGuiContainerForegroundLayer(int x, int y)
+	public void drawScreen(int mx, int my, float f)
 	{
-		super.drawGuiContainerForegroundLayer(x, y);
+		super.drawScreen(mx, my, f);
 		
 		String s = textBox.text + "";
 		
@@ -117,27 +114,27 @@ public class GuiRestricted extends GuiLM
 			s += '_';
 		
 		if(s.length() > 0)
-		fontRenderer.drawString(s, 35, 37, 0xFFC6C6C6);
+		fontRenderer.drawString(s, 35 + guiLeft, 37 + guiTop, 0xFFC6C6C6);
 		
 		ArrayList<String> al = new ArrayList<String>();
 		
-		if(buttonBack.isAt(x - guiLeft, y - guiTop))
+		if(buttonBack.isAt(mx - guiLeft, my - guiTop))
 		{
-			al.add("Back");
+			al.add(EMCC.mod.translate("back"));
 		}
 		
 		for(int i = 0; i < players.length; i++)
 		{
-			if(players[i].isAt(x - guiLeft, y - guiTop))
+			if(players[i].isAt(mx - guiLeft, my - guiTop))
 			if(players[i].playerName != null)
 			{
 				al.add(players[i].playerName);
 				
 				if(GuiScreen.isShiftKeyDown())
-					al.add("Remove from this list");
+					al.add(EMCC.mod.translate("removeFromList"));
 			}
 		}
 		
-		if(!al.isEmpty()) drawHoveringText(al, x - guiLeft, y - guiTop, fontRenderer);
+		if(!al.isEmpty()) drawHoveringText(al, mx, my, fontRenderer);
 	}
 }

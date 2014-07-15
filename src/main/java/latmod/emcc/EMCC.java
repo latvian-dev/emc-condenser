@@ -24,7 +24,7 @@ public class EMCC
 {
 	public static final String MOD_ID = "emcc";
 	public static final String MOD_NAME = "EMC Condenser Mod";
-	public static final String VERSION = "1.3.0";
+	public static final String VERSION = "1.3.1";
 	
 	@Mod.Instance(EMCC.MOD_ID)
 	public static EMCC inst;

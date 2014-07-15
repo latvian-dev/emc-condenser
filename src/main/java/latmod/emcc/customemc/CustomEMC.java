@@ -1,7 +1,6 @@
 package latmod.emcc.customemc;
 import java.util.*;
-
-import latmod.core.FastList;
+import latmod.core.util.FastList;
 
 import com.google.gson.annotations.*;
 
@@ -19,7 +18,7 @@ public class CustomEMC
 	public void addOreValue(String oreName, float val)
 	{ ore_dictionary.put(oreName, val); }
 	
-	public void addUNValue(String name, Integer dmg, float val)
+	public void addUNValue(String name, int dmg, float val)
 	{
 		UNameValue v = new UNameValue();
 		v.name = name;

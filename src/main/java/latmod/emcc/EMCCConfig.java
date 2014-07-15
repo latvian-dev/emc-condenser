@@ -85,9 +85,12 @@ public class EMCCConfig extends LMConfig
 	public class Recipes extends Category
 	{
 		public int condenserRecipeDifficulty;
+		public int miniumToNetherStar;
 		public boolean infuseMiniumStar;
 		public boolean infuseUUBlock;
-		public int miniumToNetherStar;
+		public boolean infuseEnchBottle;
+		public int toolBlazingInfusion;
+		public int toolAreaInfusion;
 		
 		public Recipes()
 		{
@@ -99,13 +102,22 @@ public class EMCCConfig extends LMConfig
 					"1 - Nether Star",
 					"2 - Minium Star");
 			
-			infuseMiniumStar = getBool("infuseMiniumStar", true);
-			infuseUUBlock = getBool("infuseUUBlock", true);
-			
 			miniumToNetherStar = getInt("miniumToNetherStar", 1, 0, 2,
 					"0 - Minium Star can't be converted back to Nether Star",
 					"1 - Minium Star + Glowstone Dust > Nether Star",
 					"2 - Minium Star in furnace > Nether Star");
+			
+			infuseMiniumStar = getBool("infuseMiniumStar", true);
+			infuseUUBlock = getBool("infuseUUBlock", true);
+			infuseEnchBottle = getBool("infuseEnchBottle", true);
+			
+			toolBlazingInfusion = getInt("toolBlazingInfusion", 16, 0, 64,
+					"Blaze rods required to add Fire Aspect to UU Tools.",
+					"0 will disable blazing tools");
+			
+			toolAreaInfusion = getInt("toolAreaInfusion", 8, 0, 64,
+					"UnUnSeptium blocks required to add Area Mode to UU Tools.",
+					"0 will disable Area Mode");
 		}
 	}
 	
@@ -181,11 +193,11 @@ public class EMCCConfig extends LMConfig
 		public boolean enableAxe;
 		public boolean enableHoe;
 		public boolean enableSmasher;
-		public boolean enableToolPowers;
 		
 		public double lifeStone_1hp;
 		public double lifeStone_food;
-		public double voidStone_item;
+		public double blackHoleStone_item;
+		public double blackHoleStone_range;
 		public double toolEmcPerDamage;
 		
 		public Tools()
@@ -200,11 +212,11 @@ public class EMCCConfig extends LMConfig
 			enableAxe = getBool("enableAxe", true);
 			enableHoe = getBool("enableHoe", true);
 			enableSmasher = getBool("enableSmasher", true);
-			enableToolPowers = getBool("enableToolPowers", true);
 			
 			lifeStone_1hp = getDouble("lifeStone_1hp", 24D);
 			lifeStone_food = getDouble("lifeStone_food", 128D);
-			voidStone_item = getDouble("voidStone_item", 48D);
+			blackHoleStone_item = getDouble("blackHoleStone_item", 48D);
+			blackHoleStone_range = getDouble("blackHoleStone_range", 4D);
 			toolEmcPerDamage = getDouble("toolEmcPerDamage", 64D);
 		}
 	}

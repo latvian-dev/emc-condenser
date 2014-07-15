@@ -12,7 +12,8 @@ public class ItemMaterials extends ItemEMCC
 	public static final String[] names =
 	{
 		"uu",
-		"miniumStar"
+		"miniumStar",
+		"nuggetEmerald"
 	};
 	
 	@SideOnly(Side.CLIENT)
@@ -22,8 +23,12 @@ public class ItemMaterials extends ItemEMCC
 	{
 		super(id, s);
 		
+		setMaxDamage(0);
+		setHasSubtypes(true);
+		
 		EMCCItems.UU_ITEM = new ItemStack(this, 1, 0);
 		EMCCItems.MINIUM_STAR = new ItemStack(this, 1, 1);
+		EMCC.recipes.addOre("nuggetEmerald", EMCCItems.NUGGET_EMERALD = new ItemStack(this, 1, 2));
 	}
 	
 	public void onPostLoaded()
@@ -54,6 +59,11 @@ public class ItemMaterials extends ItemEMCC
 			EMCC.addInfusing(new ItemStack(Item.netherStar), EMCCItems.MINIUM_STAR, new ItemStack(Item.glowstone));
 		else if(EMCC.config.recipes.miniumToNetherStar == 2)
 			EMCC.recipes.addSmelting(new ItemStack(Item.netherStar), EMCCItems.MINIUM_STAR);
+		
+		EMCC.recipes.addItemBlockRecipe(EMCCItems.NUGGET_EMERALD, new ItemStack(Item.emerald), true);
+		
+		if(EMCC.config.recipes.infuseEnchBottle)
+			EMCC.addInfusing(new ItemStack(Item.expBottle), new ItemStack(Item.potion, 1, 32), EMCCItems.NUGGET_EMERALD);
 	}
 	
 	public String getUnlocalizedName(ItemStack is)

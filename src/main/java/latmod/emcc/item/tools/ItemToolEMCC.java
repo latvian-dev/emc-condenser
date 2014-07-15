@@ -109,10 +109,10 @@ public class ItemToolEMCC extends ItemTool implements IItemLM, IEmcTool, IEffect
 	{ for(Material m1 : materials) { if(m1 == m) return true; } return false; }
 	
 	public static boolean isBlazing(ItemStack is)
-	{ return EMCC.config.tools.enableToolPowers && EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, is) > 0; }
+	{ return EMCC.config.recipes.toolBlazingInfusion > 0 && EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, is) > 0; }
 	
 	public static boolean isArea(ItemStack is)
-	{ return EMCC.config.tools.enableToolPowers && is.hasTagCompound() && is.stackTagCompound.getBoolean("AreaMode"); }
+	{ return EMCC.config.recipes.toolAreaInfusion > 0 && is.hasTagCompound() && is.stackTagCompound.getBoolean("AreaMode"); }
 	
 	public static ItemStack setBlazing(ItemStack is)
 	{
@@ -131,8 +131,8 @@ public class ItemToolEMCC extends ItemTool implements IItemLM, IEmcTool, IEffect
 	}
 
 	public static void addBlazingRecipe(ItemStack is)
-	{ EMCC.addInfusing(setBlazing(is.copy()), is.copy(), new ItemStack(Item.blazeRod, 8)); }
+	{ if(EMCC.config.recipes.toolBlazingInfusion > 0) EMCC.addInfusing(setBlazing(is.copy()), is.copy(), new ItemStack(Item.blazeRod, EMCC.config.recipes.toolBlazingInfusion)); }
 	
 	public static void addAreaRecipe(ItemStack is)
-	{ EMCC.addInfusing(setArea(is.copy()), is.copy(), EMCC.recipes.size(EMCCItems.UU_BLOCK, 4)); }
+	{ if(EMCC.config.recipes.toolAreaInfusion > 0) EMCC.addInfusing(setArea(is.copy()), is.copy(), EMCC.recipes.size(EMCCItems.UU_BLOCK, EMCC.config.recipes.toolAreaInfusion)); }
 }

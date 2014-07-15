@@ -1,10 +1,15 @@
 package latmod.emcc.gui;
 import java.util.*;
+
 import org.lwjgl.opengl.GL11;
+
 import cpw.mods.fml.relauncher.*;
 import latmod.core.base.gui.*;
+import latmod.core.mod.LC;
 import latmod.emcc.*;
+import latmod.emcc.api.IEmcStorageItem;
 import latmod.emcc.tile.*;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 
 @SideOnly(Side.CLIENT)
@@ -58,10 +63,31 @@ public class GuiCondenser extends GuiLM
 		
 		super.drawGuiContainerBackgroundLayer(f, x, y);
 		
-		double l = EMCC.getEMC(condenser.items[TileCondenser.SLOT_TARGET]);
+		ItemStack tar = condenser.items[TileCondenser.SLOT_TARGET];
 		
-		if(l > 0L)
-		barEMC.render(0, ySize, (condenser.storedEMC % l) / l, 1D);
+		double emc1 =  EMCC.getEMC(tar);
+		
+		boolean charging = tar != null && tar.getItem() instanceof IEmcStorageItem;
+		
+		boolean repairing = tar != null && !charging && condenser.repairTools.isOn() && tar.isItemStackDamageable() && !tar.isStackable();
+		
+		if(repairing && tar.getItemDamage() > 0)
+		{
+			ItemStack tar1 = tar.copy();
+			if(tar1.hasTagCompound())
+				tar1.stackTagCompound.removeTag("ench");
+			
+			ItemStack tar2 = tar1.copy();
+			tar2.setItemDamage(tar1.getItemDamage() - 1);
+			
+			double ev = EMCC.getEMC(tar1);
+			double ev2 = EMCC.getEMC(tar2);
+			
+			emc1 = ev2 - ev;
+		}
+		
+		if(emc1 > 0L)
+		barEMC.render(0, ySize, (condenser.storedEMC % emc1) / emc1, 1D);
 		
 		if(condenser.items[TileCondenser.SLOT_TARGET] == null)
 		targetIcon.render(xSize, 0);
@@ -72,17 +98,40 @@ public class GuiCondenser extends GuiLM
 		if(b) GL11.glEnable(GL11.GL_LIGHTING);
 	}
 	
-	public void drawGuiContainerForegroundLayer(int mx, int my)
+	public void drawScreen(int mx, int my, float f)
 	{
-		super.drawGuiContainerForegroundLayer(mx, my);
+		super.drawScreen(mx, my, f);
 		
 		ArrayList<String> al = new ArrayList<String>();
 		
 		if(barEMC.mouseOver(mx, my))
 		{
-			float l = EMCC.getEMC(condenser.items[TileCondenser.SLOT_TARGET]);
-			double storedEMC = (long)(condenser.storedEMC * 1000D) / 1000D;
-			al.add(EnumChatFormatting.GOLD.toString() + ((l == 0L) ? (storedEMC + "") : (storedEMC + " / " + l)));
+			ItemStack tar = condenser.items[TileCondenser.SLOT_TARGET];
+			
+			double emc1 =  EMCC.getEMC(tar);
+			
+			boolean charging = tar != null && tar.getItem() instanceof IEmcStorageItem;
+			
+			boolean repairing = tar != null && !charging && condenser.repairTools.isOn() && tar.isItemStackDamageable() && !tar.isStackable();
+			
+			if(repairing && tar.getItemDamage() > 0)
+			{
+				ItemStack tar1 = tar.copy();
+				if(tar1.hasTagCompound())
+					tar1.stackTagCompound.removeTag("ench");
+				
+				ItemStack tar2 = tar1.copy();
+				tar2.setItemDamage(tar1.getItemDamage() - 1);
+				
+				double ev = EMCC.getEMC(tar1);
+				double ev2 = EMCC.getEMC(tar2);
+				
+				emc1 = ev2 - ev;
+			}
+			
+			al.add(EnumChatFormatting.GOLD.toString() + "" + formatEMC(condenser.storedEMC) + (emc1 <= 0D ? "" : (" / " + formatEMC(emc1))));
+			if(charging && condenser.storedEMC > 0D) al.add(EMCC.mod.translate("charging"));
+			else if(emc1 > 0D && repairing && tar.getItemDamage() > 0) al.add(EMCC.mod.translate("repairing"));
 		}
 		
 		if(buttonSettings.mouseOver(mx, my))
@@ -100,6 +149,35 @@ public class GuiCondenser extends GuiLM
 		if(targetIcon.mouseOver(mx, my) && condenser.items[TileCondenser.SLOT_TARGET] == null)
 			al.add(EMCC.mod.translate("notarget"));
 		
-		if(!al.isEmpty()) drawHoveringText(al, mx - guiLeft, my - guiTop, fontRenderer);
+		if(!al.isEmpty()) drawHoveringText(al, mx, my, fontRenderer);
+	}
+	
+	public static String formatEMC(double d)
+	{
+		d = ((long)(d * 1000D)) / 1000D;
+		
+		String s = "" + d;
+		
+		if(!LC.proxy.isShiftDown())
+		{
+			if(d > 1000)
+			{
+				double d1 = d / 1000D;
+				d1 = ((long)(d1 * 1000D)) / 1000D;
+				s = "" + d1 + "K";
+			}
+			
+			if(d > 1000000)
+			{
+				double d1 = d / 1000000D;
+				d1 = ((long)(d1 * 100D)) / 100D;
+				s = "" + d1 + "M";
+			}
+		}
+		
+		if(s.endsWith(".0"))
+			s = s.substring(0, s.length() - 2);
+		
+		return s;
 	}
 }

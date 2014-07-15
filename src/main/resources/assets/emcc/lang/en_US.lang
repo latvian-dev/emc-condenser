@@ -3,10 +3,11 @@ itemGroup.emcc:tab=EMC Condenser
 ## Items ##
 emcc:item.uu.name=UnUnSeptium
 emcc:item.miniumStar.name=Minium Star
+emcc:item.nuggetEmerald.name=Emerald Nugget
 
 emcc:item.battery.name=EMC Battery
 emcc:item.lifeStone.name=Life Stone
-emcc:item.voidStone.name=Black Hole Stone
+emcc:item.blackHoleStone.name=Black Hole Stone
 
 emcc:item.wrench.name=UnUnSeptium Wrench
 emcc:item.sword.name=UnUnSeptium Sword
@@ -22,10 +23,14 @@ emcc:tile.condenser.name=EMC Condenser
 
 ## Lang ##
 emcc:owner=Owner: %s
-
+emcc:repairing=Repairing...
+emcc:charging=Charging...
 emcc:settings=Settings
 emcc:back=Back
 emcc:notarget=No Target
+emcc:storedEMC=Stored EMC: %s
+emcc:repairEMC=Repair EMC: %s
+emcc:removeFromList=Remove from this list
 
 emcc:safemode=Safe Mode
 emcc:safemode.disabled=Disabled

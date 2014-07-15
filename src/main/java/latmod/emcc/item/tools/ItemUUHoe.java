@@ -47,7 +47,7 @@ public class ItemUUHoe extends ItemEMCC implements IEmcTool
 		
 		b = onItemUse2(is, ep, w, x, y, z, side, x1, y1, z1);
 		
-		if(ItemToolEMCC.isArea(is) && EMCC.config.tools.enableToolPowers)
+		if(ItemToolEMCC.isArea(is))
 		{
 			for(int ox = -1; ox <= 1; ox++)
 			for(int oz = -1; oz <= 1; oz++)

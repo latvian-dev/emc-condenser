@@ -21,7 +21,7 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 	{
 		"battery",
 		"lifeStone",
-		"voidStone",
+		"blackHoleStone",
 	};
 	
 	@SideOnly(Side.CLIENT)
@@ -33,6 +33,8 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 	public ItemEmcStorage(int id, String s)
 	{
 		super(id, s);
+		setMaxDamage(0);
+		setHasSubtypes(true);
 		setMaxStackSize(1);
 	}
 	
@@ -58,7 +60,7 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 				Character.valueOf('B'), new ItemStack(this, 1, 0),
 				Character.valueOf('P'), new ItemStack(Item.potion, 1, 8225));
 		
-		if(EMCC.config.tools.voidStone_item != -1D)
+		if(EMCC.config.tools.blackHoleStone_item != -1D)
 		EMCC.recipes.addRecipe(new ItemStack(this, 1, 4), "OEO", "EBE", "OEO",
 				Character.valueOf('O'), EMCCItems.UU_BLOCK,
 				Character.valueOf('B'), new ItemStack(this, 1, 0),
@@ -190,10 +192,12 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 			{
 				double emc = getStoredEmc(is);
 				
-				if(EMCC.config.tools.voidStone_item == -1D || emc < EMCC.config.tools.voidStone_item) return;
+				if(EMCC.config.tools.blackHoleStone_item == -1D || emc < EMCC.config.tools.blackHoleStone_item) return;
+				
+				double r = EMCC.config.tools.blackHoleStone_range;
 				
 				@SuppressWarnings("unchecked")
-				List<EntityItem> items = ep.worldObj.getEntitiesWithinAABB(EntityItem.class, ep.boundingBox.expand(3D, 3D, 3D));
+				List<EntityItem> items = ep.worldObj.getEntitiesWithinAABB(EntityItem.class, ep.boundingBox.expand(r, r, r));
 				
 				for (EntityItem item : items)
 				{
@@ -207,7 +211,7 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 								item.delayBeforeCanPickup = 4;
 							if(item.delayBeforeCanPickup != 0) continue;
 							
-							emc -= EMCC.config.tools.voidStone_item;
+							emc -= EMCC.config.tools.blackHoleStone_item;
 							setStoredEmc(is, emc);
 							
 							item.setLocationAndAngles(ep.posX, ep.posY, ep.posZ, 0F, 0F);

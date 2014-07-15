@@ -3,10 +3,11 @@ itemGroup.emcc:tab=EMC Kondenseris
 ## Items ##
 emcc:item.uu.name=UnUnSeptijs
 emcc:item.miniumStar.name=Mīnija Zvaigzne
+emcc:item.nuggetEmerald.name=Smaragda Gabaliņš
 
 emcc:item.battery.name=EMC Baterija
 emcc:item.lifeStone.name=Dzīvības Akmens
-emcc:item.voidStone.name=Melnā Cauruma Akmens
+emcc:item.blackHoleStone.name=Melnā Cauruma Akmens
 
 emcc:item.wrench.name=UnUnSeptija Atslēga
 emcc:item.sword.name=UnUnSeptija Zobens
@@ -22,10 +23,14 @@ emcc:tile.condenser.name=EMC Kondenseris
 
 ## Lang ##
 emcc:owner=Īpašnieks: %s
-
+emcc:repairing=Labo...
+emcc:charging=Lādē...
 emcc:settings=Uzstādījumi
 emcc:back=Atpakaļ
 emcc:notarget=Nav Mērķa
+emcc:storedEMC=Saglabātais EMC: %s
+emcc:repairEMC=Salabošanas EMC: %s
+emcc:removeFromList=Izņemt no šī saraksta
 
 emcc:safemode=Drošais Režīms
 emcc:safemode.disabled=Izslēgts

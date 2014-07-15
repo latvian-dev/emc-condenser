@@ -1,6 +1,7 @@
 This is EMC Condenser mod 1.6.4 branch.
 EMC Condenser mod adds similar block to Energy Condenser from EE2,
 that allows to transmutate items. Goodbye, tons of dirt, hello diamonds!
+This mod also adds UnUnSeptium tools & EE3 Aludel recipes plugin.
 
 Download link:
 https://github.com/LatvianModder/Files/tree/Mods/EMC-Condenser

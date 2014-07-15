@@ -1,10 +1,9 @@
 package latmod.emcc.blacklist;
 import java.io.*;
-
 import latmod.core.*;
 import latmod.core.mod.*;
-import latmod.emcc.EMCC;
-import latmod.emcc.EMCCItems;
+import latmod.core.util.*;
+import latmod.emcc.*;
 import cpw.mods.fml.common.event.*;
 import net.minecraft.item.*;
 
@@ -43,6 +42,8 @@ public class EMCCBlacklist
 			list.all.addOreName("oreSapphire");
 			list.all.addOreName("oreAluminum");
 			list.all.addOreName("oreFzDarkIron");
+			
+			list.all.addUName("item.expBottle", null);
 			
 			list.targets.addUName("item.netherStar", null);
 			list.targets.addUName("item.enchantedBook", null);

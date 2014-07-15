@@ -25,6 +25,7 @@ public class EMCCItems
 	
 	public static ItemStack UU_ITEM;
 	public static ItemStack MINIUM_STAR;
+	public static ItemStack NUGGET_EMERALD;
 	
 	public static ItemStack DUST_VERDANT;
 	public static ItemStack DUST_AZURE;

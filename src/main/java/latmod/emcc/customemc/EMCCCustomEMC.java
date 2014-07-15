@@ -56,27 +56,29 @@ public class EMCCCustomEMC
 			map.addOreValue("ingotAluminum", 256F);
 			map.addOreValue("ingotFzDarkIron", 512F);
 			
-			map.addOreValue("dustCoal", 32F);
-			map.addOreValue("dustIron", 256F);
-			map.addOreValue("dustGold", 2048F);
 			map.addOreValue("dustPlatinum", 2048F);
 			map.addOreValue("dustVinteum", 512F);
 			
-			map.addOreValue("shardAir", 128F);
-			map.addOreValue("shardWater", 128F);
-			map.addOreValue("shardEarth", 128F);
-			map.addOreValue("shardFire", 128F);
-			map.addOreValue("shardOrder", 128F);
-			map.addOreValue("shardEntropy", 128F);
-			map.addOreValue("quicksilver", 256F);
+			map.addOreValue("shardAir", 512F);
+			map.addOreValue("shardWater", 512F);
+			map.addOreValue("shardEarth", 512F);
+			map.addOreValue("shardFire", 512F);
+			map.addOreValue("shardOrder", 512F);
+			map.addOreValue("shardEntropy", 512F);
+			map.addOreValue("quicksilver", 512F);
 			
-			map.addUNValue("item.skull.zombie", null, 1024F);
-			map.addUNValue("item.skull.skeleton", null, 1024F);
-			map.addUNValue("item.skull.creeper", null, 1024F);
-			map.addUNValue("item.skull.wither", null, 1024F);
-			map.addUNValue("item.enchantedBook", null, 2048F);
+			map.addUNValue("item.skull.skeleton", 0, 1024F);
+			map.addUNValue("item.skull.wither", 1, 1024F);
+			map.addUNValue("item.skull.zombie", 2, 1024F);
+			map.addUNValue("item.skull.creeper", 4, 1024F);
+			map.addUNValue("item.enchantedBook", LatCore.ANY, 2048F);
 			
-			map.addUNValue("AppEng.Tools.QuartzCuttingKnife", null, 776F);
+			map.addUNValue("tile.projectred.exploration.stone.stonemarble", 0 ,1F);
+			map.addUNValue("tile.projectred.exploration.stone.cobblebasalt", 2, 1F);
+			map.addUNValue("tile.projectred.exploration.stone.stonebasalt", 3, 1F);
+			
+			map.addUNValue("railcraft.cube.stone.abyssal", 6, 1F);
+			map.addUNValue("railcraft.cube.brick.abyssal.2", 2, 1F);
 			
 			LMUtils.toJsonFile(file, map);
 		}

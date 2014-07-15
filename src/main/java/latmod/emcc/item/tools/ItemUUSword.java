@@ -59,7 +59,7 @@ public class ItemUUSword extends ItemSword implements IItemLM, IEmcTool
 	
 	public ItemStack onItemRightClick(ItemStack is, World w, EntityPlayer ep)
 	{
-		if(!w.isRemote && ItemToolEMCC.isBlazing(is) && ep.isBurning() && EMCC.config.tools.enableToolPowers)
+		if(!w.isRemote && ItemToolEMCC.isBlazing(is) && ep.isBurning())
 		{
 			ep.extinguish();
 			is.damageItem(2, ep);

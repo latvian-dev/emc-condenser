@@ -23,14 +23,14 @@ public class EMCCEventHandler
 		
 		if(i instanceof IEmcStorageItem)
 		{
-			e.toolTip.add("Stored EMC: " + num(((IEmcStorageItem)i).getStoredEmc(e.itemStack)));
+			e.toolTip.add(EMCC.mod.translate("storedEMC", num(((IEmcStorageItem)i).getStoredEmc(e.itemStack))));
 		}
 		
 		if(i instanceof IEmcTool)
 		{
 			String num = "" + ((IEmcTool)i).getEmcPerDmg(e.itemStack);
 			if(num.endsWith(".0")) num = num.substring(0, num.length() - 2);
-			e.toolTip.add("Repair EMC: " + num);
+			e.toolTip.add(EMCC.mod.translate("repairEMC", num));
 		}
 		
 		for(int j = 0; j < e.toolTip.size(); j++)

@@ -1,7 +1,10 @@
 package latmod.emcc.blacklist;
 import java.util.List;
+
 import net.minecraft.item.*;
 import latmod.core.*;
+import latmod.core.util.FastList;
+
 import com.google.gson.annotations.Expose;
 
 public class BlacklistEntry
