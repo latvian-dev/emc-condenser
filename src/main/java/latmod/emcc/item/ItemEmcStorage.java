@@ -1,5 +1,6 @@
 package latmod.emcc.item;
 import java.util.List;
+
 import cpw.mods.fml.relauncher.*;
 import latmod.core.*;
 import latmod.emcc.*;
@@ -95,19 +96,22 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 	public void onUpdate(ItemStack is, World w, Entity e, int t, boolean b)
 	{
 		if(e instanceof EntityPlayer)
+			onItemUpdate(is, w, (EntityPlayer)e, w.getWorldTime());
+	}
+	
+	@SuppressWarnings("all")
+	public void onItemUpdate(ItemStack is, World w, EntityPlayer ep, long worldTime)
+	{
+		if(is.getItemDamage() == 1 && (worldTime % 12 == 0))
 		{
-			EntityPlayer ep = (EntityPlayer)e;
+			if(w.isRemote || !EMCC.config.tools.enableBattery) return;
 			
-			if(is.getItemDamage() == 1 && (w.getWorldTime() % 8 == 0))
+			double emc = getStoredEmc(is);
+			
+			if(emc < 1D) return;
+			
+			try
 			{
-				if(w.isRemote) return;
-				
-				if(!EMCC.config.tools.enableBattery) return;
-				
-				double emc = getStoredEmc(is);
-				
-				if(emc < 1D) return;
-				
 				for(int i = 0; i < ep.inventory.getSizeInventory(); i++)
 				{
 					ItemStack is1 = ep.inventory.getStackInSlot(i);
@@ -160,13 +164,17 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 					}
 				}
 			}
+			catch(Exception e)
+			{ e.printStackTrace(); }
+		}
+		
+		if(is.getItemDamage() == 3 && worldTime % 8 == 0)
+		{
+			if(w.isRemote) return;
+			if(EMCC.config.tools.lifeStone_1hp == -1D && EMCC.config.tools.lifeStone_food == -1D) return;
 			
-			if(is.getItemDamage() == 3 && w.getWorldTime() % 8 == 0)
+			try
 			{
-				if(w.isRemote) return;
-				
-				if(EMCC.config.tools.lifeStone_1hp == -1D && EMCC.config.tools.lifeStone_food == -1D) return;
-				
 				double emc = getStoredEmc(is);
 				
 				if(EMCC.config.tools.lifeStone_food != -1D && emc >= EMCC.config.tools.lifeStone_food && ep.getFoodStats().needFood())
@@ -187,20 +195,28 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 					setStoredEmc(is, emc);
 				}
 			}
+			catch(Exception e)
+			{ e.printStackTrace(); }
+		}
+		
+		if(is.getItemDamage() == 5 && (worldTime % 4 == 0))
+		{
+			double emc = getStoredEmc(is);
 			
-			if(is.getItemDamage() == 5 && (w.getWorldTime() % 4 == 0))
+			if(EMCC.config.tools.blackHoleStone_item == -1D || emc < EMCC.config.tools.blackHoleStone_item) return;
+			
+			double r = EMCC.config.tools.blackHoleStone_range;
+			
+			if(r < 1D) return;
+			
+			try
 			{
-				double emc = getStoredEmc(is);
+				List items = ep.worldObj.getEntitiesWithinAABB(EntityItem.class, ep.boundingBox.expand(r, r, r));
 				
-				if(EMCC.config.tools.blackHoleStone_item == -1D || emc < EMCC.config.tools.blackHoleStone_item) return;
-				
-				double r = EMCC.config.tools.blackHoleStone_range;
-				
-				@SuppressWarnings("unchecked")
-				List<EntityItem> items = ep.worldObj.getEntitiesWithinAABB(EntityItem.class, ep.boundingBox.expand(r, r, r));
-				
-				for (EntityItem item : items)
+				if(items != null && !items.isEmpty()) for(int i = 0; i < items.size(); i++)
 				{
+					EntityItem item = (EntityItem)items.get(i);
+					
 					if (InvUtils.addSingleItemToInv(item.getEntityItem(), ep.inventory, InvUtils.getPlayerSlots(ep), -1, false))
 					{
 						w.spawnParticle("smoke", item.posX, item.posY + item.height / 2F, item.posZ, 0D, 0D, 0D);
@@ -219,6 +235,8 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 					}
 				}
 			}
+			catch(Exception e)
+			{ e.printStackTrace(); }
 		}
 	}
 	

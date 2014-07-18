@@ -36,7 +36,7 @@ public class ItemUUPick extends ItemToolEMCC
 	{ return super.isEffective(b) || isEffectiveAgainst(b.blockMaterial, Material.iron, Material.anvil, Material.rock); }
 	
 	public float getStrVsBlock(ItemStack is, Block b)
-	{ return isEffective(b) ? (efficiencyOnProperMaterial / (isArea(is) ? 8F : 1F)) : 1F; }
+	{ return isEffective(b) ? (efficiencyOnProperMaterial / (isArea(is) ? ItemToolEMCC.areaSlowness : 1F)) : 1F; }
 	
 	public boolean onBlockStartBreak(ItemStack tool, int x, int y, int z, EntityPlayer ep)
 	{

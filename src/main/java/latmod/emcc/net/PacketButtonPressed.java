@@ -27,6 +27,7 @@ public class PacketButtonPressed extends PacketCondenser
 	public void readPacket(TileCondenser t, DataInputStream dis, EntityPlayer ep) throws Exception
 	{
 		buttonID = dis.readByte();
+		mouseButton = dis.readByte();
 		t.handleGuiButton(true, ep, buttonID, mouseButton);
 	}
 }

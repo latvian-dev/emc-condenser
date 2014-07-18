@@ -18,6 +18,8 @@ import latmod.emcc.api.*;
 
 public class ItemToolEMCC extends ItemTool implements IItemLM, IEmcTool, IEffectiveTool
 {
+	public static final float areaSlowness = 3F;
+
 	public final String itemName;
 	
 	@SideOnly(Side.CLIENT)

@@ -31,7 +31,7 @@ public class ItemUUAxe extends ItemToolEMCC
 	{ return super.isEffective(b) || isEffectiveAgainst(b.blockMaterial, Material.wood, Material.plants, Material.vine, Material.pumpkin); }
 	
 	public float getStrVsBlock(ItemStack is, Block b)
-	{ return isEffective(b) ? (efficiencyOnProperMaterial / (isArea(is) ? 4F : 1F)) : 1F; }
+	{ return isEffective(b) ? (efficiencyOnProperMaterial / (isArea(is) ? ItemToolEMCC.areaSlowness : 1F)) : 1F; }
 	
 	public boolean onBlockDestroyed(ItemStack is, World w, int bid, int x, int y, int z, EntityLivingBase el)
     {

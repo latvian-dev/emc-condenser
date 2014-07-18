@@ -56,7 +56,7 @@ public class ItemUUSmasher extends ItemToolEMCC
 	{ is.damageItem(1, el1); return true; }
 	
 	public float getStrVsBlock(ItemStack is, Block b)
-	{ return efficiencyOnProperMaterial / (isArea(is) ? 8F : 1F); }
+	{ return efficiencyOnProperMaterial / (isArea(is) ? ItemToolEMCC.areaSlowness : 1F); }
 	
 	public boolean onBlockStartBreak(ItemStack tool, int x, int y, int z, EntityPlayer ep)
 	{

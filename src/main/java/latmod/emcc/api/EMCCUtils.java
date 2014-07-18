@@ -105,7 +105,7 @@ public class EMCCUtils
 	{
 		boolean b = false;
 		
-		if(!w.isRemote)
+		if(!w.isRemote && !el.isSneaking())
 		{
 			int meta = w.getBlockMetadata(x, y, z);
 			
