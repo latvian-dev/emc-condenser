@@ -1,86 +1,181 @@
 package latmod.emcc;
 import cpw.mods.fml.common.event.*;
-import latmod.core.base.LMConfig;
+import latmod.core.*;
+import latmod.core.base.*;
+import latmod.core.tile.*;
+import latmod.emcc.tile.*;
 
 public class EMCCConfig extends LMConfig
 {
 	public General general;
+	public Recipes recipes;
+	public Condenser condenser;
+	public Tools tools;
 	
 	public EMCCConfig(FMLPreInitializationEvent e)
 	{
 		super(e, "/LatMod/EMC_Condenser.cfg");
 		add(general = new General());
+		add(recipes = new Recipes());
+		add(condenser = new Condenser());
+		add(tools = new Tools());
+		save();
 	}
 	
 	public class General extends Category
 	{
-		public int isCondenserIInventory;
-		public int condenserSleepDelay;
-		public int recipeDifficulty;
-		public int forcedSecurity;
-		public int forcedRedstoneControl;
-		public int forcedSafeMode;
-		public boolean infuseMiniumStar;
-		public boolean infuseUUBlock;
-		public int condenserLimitPerTick;
-		public boolean enableBattery;
-		public boolean enableClearBuffer;
-		public int miniumToNetherStar;
-		public boolean infuseNameTag;
+		public boolean enableCustomEMC;
+		public boolean enableAludelRecipes;
+		public boolean enableBlacklist;
+		public double ununblockEnchantPower;
 		
 		public General()
 		{
 			super("general");
 			
-			isCondenserIInventory = getInt("isCondenserIInventory", 3, 0, 3,
-					"0 - Automatization disabled",
-					"1 - Items can be only pumped out",
-					"2 - Items can be only pumped in",
-					"3 - Items can be pumped in both ways");
+			enableCustomEMC = getBool("enableCustomEMC", true);
+			enableAludelRecipes = getBool("enableAludelRecipes", true);
+			enableBlacklist = getBool("enableBlacklist", true);
+			ununblockEnchantPower = getDouble("ununblockEnchantPower", 3D);
+		}
+	}
+	
+	public class Recipes extends Category
+	{
+		public int condenserRecipeDifficulty;
+		public int miniumToNetherStar;
+		public boolean infuseMiniumStar;
+		public boolean infuseUUBlock;
+		public boolean infuseEnchBottle;
+		public int toolBlazingInfusion;
+		public int toolAreaInfusion;
+		
+		public Recipes()
+		{
+			super("recipes");
 			
-			condenserSleepDelay = getInt("condenserSleepDelay", 20, 0, 32767,
-					"Longer delay - Less lag. I hope.",
-					"Min value - 0, instant condensing",
-					"Max value - 32767, that's more than 1.5 days in Minecraft");
-			
-			recipeDifficulty = getInt("recipeDifficulty", 2, 0, 2,
+			condenserRecipeDifficulty = getInt("condenserRecipeDifficulty", 2, 0, 2,
 					"This changed the item used in EMC Condenser's crafting recipe",
 					"0 - UnUnSeptium Block",
 					"1 - Nether Star",
 					"2 - Minium Star");
-			
-			forcedSecurity = getInt("forcedSecurity", -1, -1, 2,
-					"-1 - Choosed by user",
-					"0 - Public",
-					"1 - Private",
-					"2 - Restricted");
-			
-			forcedRedstoneControl = getInt("forcedRedstoneControl", -1, -1, 2,
-					"-1 - Choosed by user",
-					"0 - No Redstone Control",
-					"1 - Required High signal",
-					"2 - Required Low signal");
-			
-			forcedSafeMode = getInt("forcedSafeMode", -1, -1, 1,
-					"-1 - Choosed by user",
-					"0 - Safe Mode always off",
-					"1 - Safe Mode always on");
-			
-			infuseMiniumStar = getBool("infuseMiniumStar", true);
-			infuseUUBlock = getBool("infuseUUBlock", true);
-			
-			condenserLimitPerTick = getInt("condenserLimitPerTick", 64, -1, 2880);
-			
-			enableBattery = getBool("enableBattery", true);
-			enableClearBuffer = getBool("enableClearBuffer", true);
 			
 			miniumToNetherStar = getInt("miniumToNetherStar", 1, 0, 2,
 					"0 - Minium Star can't be converted back to Nether Star",
 					"1 - Minium Star + Glowstone Dust > Nether Star",
 					"2 - Minium Star in furnace > Nether Star");
 			
-			infuseNameTag = getBool("infuseNameTag", true,
-					"If true, 4x Paper + any Slimeball > Name Tag");
+			infuseMiniumStar = getBool("infuseMiniumStar", true);
+			infuseUUBlock = getBool("infuseUUBlock", true);
+			infuseEnchBottle = getBool("infuseEnchBottle", true);
+			
+			toolBlazingInfusion = getInt("toolBlazingInfusion", 16, 0, 64,
+					"Blaze rods required to add Fire Aspect to UU Tools.",
+					"0 will disable blazing tools");
+			
+			toolAreaInfusion = getInt("toolAreaInfusion", 8, 0, 64,
+					"UnUnSeptium blocks required to add Area Mode to UU Tools.",
+					"0 will disable Area Mode");
+		}
+	}
+	
+	public class Condenser extends Category
+	{
+		public int condenserSleepDelay;
+		public int condenserLimitPerTick;
+		public InvMode forcedInvMode;
+		public LMSecurity.Level forcedSecurity;
+		public RedstoneMode forcedRedstoneControl;
+		public SafeMode forcedSafeMode;
+		public RepairTools forcedRepairItems;
+		
+		public Condenser()
+		{
+			super("condenser");
+			
+			condenserSleepDelay = getInt("condenserSleepDelay", 10, 0, 32767,
+					"Longer delay - Less condenser updates",
+					"Min value - 0, instant condensing",
+					"Max value - 32767, that's more than 1.5 days in Minecraft",
+					"Default value - 10 (0.5 seconds)");
+			
+			condenserLimitPerTick = getInt("condenserLimitPerTick", 8, -1, 2048,
+					"How many items can be condensed every <condenserSleepDelay> ticks",
+					"Max = 2048, Min = 1",
+					"-1 = Condense all (first release version)");
+			
+			int i_forcedInvMode = getInt("forcedInvMode", -1, -1, 3,
+					"-1 - Choosed by user",
+					"0 - Items can be go both ways",
+					"1 - Items can only go in",
+					"2 - Items can only go out",
+					"3 - Automatization disabled");
+			forcedInvMode = (i_forcedInvMode == -1) ? null : InvMode.VALUES[i_forcedInvMode];
+			
+			int i_forcedSecurity = getInt("forcedSecurity", -1, -1, 3,
+					"-1 - Choosed by user",
+					"0 - Public",
+					"1 - Private",
+					"2 - Whitelist",
+					"3 - Blacklist");
+			forcedSecurity = (i_forcedSecurity == -1) ? null : LMSecurity.Level.VALUES[i_forcedSecurity];
+			
+			int i_forcedRedstoneControl = getInt( "forcedRedstoneControl", -1, -1, 2,
+					"-1 - Choosed by user",
+					"0 - No Redstone Control",
+					"1 - Required High signal",
+					"2 - Required Low signal");
+			forcedRedstoneControl = (i_forcedRedstoneControl == -1) ? null : RedstoneMode.VALUES[i_forcedRedstoneControl];
+			
+			int i_forcedSafeMode = getInt("forcedSafeMode", -1, -1, 1,
+					"-1 - Choosed by user",
+					"0 - Safe Mode always off",
+					"1 - Safe Mode always on");
+			forcedSafeMode = (i_forcedSafeMode == -1) ? null : SafeMode.VALUES[i_forcedSafeMode];
+			
+			int i_forcedRepairItems = getInt("forcedRepairItems", -1, -1, 1,
+					"-1 - Choosed by user",
+					"0 - Repair Items always off",
+					"1 - Repair Items always on");
+			forcedRepairItems = (i_forcedRepairItems == -1) ? null : RepairTools.VALUES[i_forcedRepairItems];
+		}
+	}
+	
+	public class Tools extends Category
+	{
+		public boolean enableWrench;
+		public boolean enableBattery;
+		public boolean enableSword;
+		public boolean enablePick;
+		public boolean enableShovel;
+		public boolean enableAxe;
+		public boolean enableHoe;
+		public boolean enableSmasher;
+		
+		public double lifeStone_1hp;
+		public double lifeStone_food;
+		public double blackHoleStone_item;
+		public double blackHoleStone_range;
+		public double toolEmcPerDamage;
+		
+		public Tools()
+		{
+			super("tools");
+			
+			enableWrench = getBool("enableWrench", true);
+			enableBattery = getBool("enableBattery", true);
+			enableSword = getBool("enableSword", true);
+			enablePick = getBool("enablePick", true);
+			enableShovel = getBool("enableShovel", true);
+			enableAxe = getBool("enableAxe", true);
+			enableHoe = getBool("enableHoe", true);
+			enableSmasher = getBool("enableSmasher", true);
+			
+			lifeStone_1hp = getDouble("lifeStone_1hp", 24D);
+			lifeStone_food = getDouble("lifeStone_food", 128D);
+			blackHoleStone_item = getDouble("blackHoleStone_item", 48D);
+			blackHoleStone_range = getDouble("blackHoleStone_range", 4D);
+			toolEmcPerDamage = getDouble("toolEmcPerDamage", 64D);
 		}
 	}
 }

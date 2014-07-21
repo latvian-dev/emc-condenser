@@ -1,141 +1,183 @@
 package latmod.emcc.gui;
 import java.util.*;
+
+import org.lwjgl.opengl.GL11;
+
 import cpw.mods.fml.relauncher.*;
-import latmod.core.*;
-import latmod.core.base.GuiLM;
+import latmod.core.base.gui.*;
+import latmod.core.mod.LC;
 import latmod.emcc.*;
+import latmod.emcc.api.IEmcStorageItem;
 import latmod.emcc.tile.*;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 
 @SideOnly(Side.CLIENT)
 public class GuiCondenser extends GuiLM
 {
-	public TinyButton buttonSafe, barEMC, buttonRedstone, buttonSecurity;
+	public TileCondenser condenser;
+	public ButtonLM buttonSettings, buttonSafeMode, buttonTransItems;
+	public WidgetLM barEMC, targetIcon;
 	
 	public GuiCondenser(ContainerCondenser c)
 	{
 		super(c);
-		ySize = 222;
+		condenser = (TileCondenser)c.inv;
+		ySize = 240;
 		
-		buttonSafe = new TinyButton(this, 152, 8, 8, 8);
-		barEMC = new TinyButton(this, 30, 9, 118, 16);
-		buttonRedstone = new TinyButton(this, 152, 18, 8, 8);
-		buttonSecurity = new TinyButton(this, 162, 8, 8, 18);
-	}
-	
-	public void mouseClicked(int x, int y, int b)
-	{
-		super.mouseClicked(x, y, b);
-		
-		TileCondenser tile = (TileCondenser)this.tile;
-		
-		if(buttonSafe.isAt(x - guiLeft, y - guiTop))
+		widgets.add(buttonSettings = new ButtonLM(this, 153, 7, 16, 16)
 		{
-			tile.toggleSafeMode(false);
-			playSound("random.click", 1F);
-		}
+			public void onButtonPressed(int b)
+			{
+				condenser.openGui(false, container.player, EMCCGuis.COND_SETTINGS);
+				playClickSound();
+			}
+		});
 		
-		if(buttonRedstone.isAt(x - guiLeft, y - guiTop))
+		widgets.add(buttonSafeMode = new ButtonLM(this, 153, 25, 7, 6)
 		{
-			tile.toggleRedstoneMode(false);
-			playSound("random.click", 1F);
-		}
+			public void onButtonPressed(int b)
+			{
+				condenser.handleGuiButton(false, container.player, EMCCGuis.Buttons.SAFE_MODE, b);
+				playClickSound();
+			}
+		});
 		
-		if(barEMC.isAt(x - guiLeft, y - guiTop) && isShiftKeyDown())
+		widgets.add(buttonTransItems = new ButtonLM(this, 162, 25, 7, 6)
 		{
-			tile.clearBuffer(false);
-			playSound("random.click", 1F);
-		}
+			public void onButtonPressed(int b)
+			{
+				condenser.transferItems(false, container.player);
+				playClickSound();
+			}
+		});
 		
-		if(buttonSecurity.isAt(x - guiLeft, y - guiTop))
-		{
-			tile.toggleSecurity(false, player);
-			playSound("random.click", 1F);
-		}
+		barEMC = new WidgetLM(this, 30, 9, 118, 16);
+		targetIcon = new WidgetLM(this, 8, 9, 16, 16);
 	}
 	
 	public void drawGuiContainerBackgroundLayer(float f, int x, int y)
 	{
-		mc.renderEngine.bindTexture(texture);
-		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+		boolean b = GL11.glIsEnabled(GL11.GL_LIGHTING);
+		if(b) GL11.glDisable(GL11.GL_LIGHTING);
 		
-		double l = EMCC.getEMC(tile.items[TileCondenser.SLOT_TARGET]);
+		super.drawGuiContainerBackgroundLayer(f, x, y);
 		
-		TileCondenser tile = (TileCondenser)this.tile;
+		ItemStack tar = condenser.items[TileCondenser.SLOT_TARGET];
 		
-		if(l > 0L)
-		barEMC.render(guiLeft, guiTop, 0, ySize, (tile.storedEMC % l) / l);
+		double emc1 =  EMCC.getEMC(tar);
 		
-		if(tile.safeMode)
-		buttonSafe.render(guiLeft, guiTop, xSize, 0, 1F);
+		boolean charging = tar != null && tar.getItem() instanceof IEmcStorageItem;
 		
-		if(tile.redstoneMode > 0)
-		buttonRedstone.render(guiLeft, guiTop, xSize, tile.redstoneMode * 9, 1F);
+		boolean repairing = tar != null && !charging && condenser.repairTools.isOn() && tar.isItemStackDamageable() && !tar.isStackable();
 		
-		if(tile.security.level > 0)
-		buttonSecurity.render(guiLeft, guiTop, xSize + 9, (tile.security.level - 1) * 19, 1F);
+		if(repairing && tar.getItemDamage() > 0)
+		{
+			ItemStack tar1 = tar.copy();
+			if(tar1.hasTagCompound())
+				tar1.stackTagCompound.removeTag("ench");
+			
+			ItemStack tar2 = tar1.copy();
+			tar2.setItemDamage(tar1.getItemDamage() - 1);
+			
+			double ev = EMCC.getEMC(tar1);
+			double ev2 = EMCC.getEMC(tar2);
+			
+			emc1 = ev2 - ev;
+		}
+		
+		if(emc1 > 0L)
+		barEMC.render(0, ySize, (condenser.storedEMC % emc1) / emc1, 1D);
+		
+		if(condenser.items[TileCondenser.SLOT_TARGET] == null)
+		targetIcon.render(xSize, 0);
+		
+		if(condenser.safeMode.isOn())
+		buttonSafeMode.render(xSize, 16);
+		
+		if(b) GL11.glEnable(GL11.GL_LIGHTING);
 	}
 	
-	public void drawGuiContainerForegroundLayer(int x, int y)
+	public void drawScreen(int mx, int my, float f)
 	{
-		super.drawGuiContainerForegroundLayer(x, y);
+		super.drawScreen(mx, my, f);
 		
 		ArrayList<String> al = new ArrayList<String>();
 		
-		TileCondenser tile = (TileCondenser)this.tile;
-		
-		if(barEMC.isAt(x - guiLeft, y - guiTop))
+		if(barEMC.mouseOver(mx, my))
 		{
-			float l = EMCC.getEMC(tile.items[TileCondenser.SLOT_TARGET]);
-			double storedEMC = (long)(tile.storedEMC * 100D) / 100D;
+			ItemStack tar = condenser.items[TileCondenser.SLOT_TARGET];
 			
-			if(tile.storedEMC == Double.POSITIVE_INFINITY)
-			al.add(EnumChatFormatting.LIGHT_PURPLE.toString() + "Infinity");
-			else al.add(EnumChatFormatting.GOLD.toString() + ((l == 0L) ? (storedEMC + "") : (storedEMC + " / " + l)));
+			double emc1 =  EMCC.getEMC(tar);
 			
-			if(isShiftKeyDown())
+			boolean charging = tar != null && tar.getItem() instanceof IEmcStorageItem;
+			
+			boolean repairing = tar != null && !charging && condenser.repairTools.isOn() && tar.isItemStackDamageable() && !tar.isStackable();
+			
+			if(repairing && tar.getItemDamage() > 0)
 			{
-				al.add(EnumChatFormatting.RED + "Empty EMC buffer");
-			}
-		}
-		
-		if(buttonSafe.isAt(x - guiLeft, y - guiTop))
-		{
-			al.add("Safe Mode");
-			
-			if(tile.safeMode) al.add("Enabled");
-			else al.add("Disabled");
-		}
-		
-		if(buttonRedstone.isAt(x - guiLeft, y - guiTop))
-		{
-			al.add("Redstone Control");
-			
-			if(tile.redstoneMode == 0) al.add("Disabled");
-			else if(tile.redstoneMode == 1) al.add("High Signal Required");
-			else if(tile.redstoneMode == 2) al.add("Low Signal Requird");
-		}
-		
-		if(buttonSecurity.isAt(x - guiLeft, y - guiTop))
-		{
-			al.add("Security");
-			
-			if(tile.security.level == LMSecurity.PUBLIC) al.add("Public");
-			else if(tile.security.level == LMSecurity.PRIVATE) al.add("Private");
-			else if(tile.security.level == LMSecurity.RESTRICTED) al.add("Restricted");
-			al.add("Owner: " + tile.security.owner);
-			
-			if(tile.security.level == LMSecurity.RESTRICTED && GuiScreen.isShiftKeyDown() && !tile.security.friends.isEmpty())
-			{
-				al.add(" ");
-				al.add("> Friends:");
+				ItemStack tar1 = tar.copy();
+				if(tar1.hasTagCompound())
+					tar1.stackTagCompound.removeTag("ench");
 				
-				for(int i = 0; i < tile.security.friends.size(); i++)
-					al.add(tile.security.friends.get(i));
+				ItemStack tar2 = tar1.copy();
+				tar2.setItemDamage(tar1.getItemDamage() - 1);
+				
+				double ev = EMCC.getEMC(tar1);
+				double ev2 = EMCC.getEMC(tar2);
+				
+				emc1 = ev2 - ev;
+			}
+			
+			al.add(EnumChatFormatting.GOLD.toString() + "" + formatEMC(condenser.storedEMC) + (emc1 <= 0D ? "" : (" / " + formatEMC(emc1))));
+			if(charging && condenser.storedEMC > 0D) al.add(EMCC.mod.translate("charging"));
+			else if(emc1 > 0D && repairing && tar.getItemDamage() > 0) al.add(EMCC.mod.translate("repairing"));
+		}
+		
+		if(buttonSettings.mouseOver(mx, my))
+			al.add(EMCC.mod.translate("settings"));
+		
+		if(buttonSafeMode.mouseOver(mx, my))
+		{
+			al.add(condenser.safeMode.getTitle());
+			al.add(condenser.safeMode.getText());
+		}
+		
+		if(buttonTransItems.mouseOver(mx, my))
+			al.add(EMCC.mod.translate("takeitems"));
+		
+		if(targetIcon.mouseOver(mx, my) && condenser.items[TileCondenser.SLOT_TARGET] == null)
+			al.add(EMCC.mod.translate("notarget"));
+		
+		if(!al.isEmpty()) drawHoveringText(al, mx, my, fontRendererObj);
+	}
+	
+	public static String formatEMC(double d)
+	{
+		d = ((long)(d * 1000D)) / 1000D;
+		
+		String s = "" + d;
+		
+		if(!LC.proxy.isShiftDown())
+		{
+			if(d > 1000)
+			{
+				double d1 = d / 1000D;
+				d1 = ((long)(d1 * 1000D)) / 1000D;
+				s = "" + d1 + "K";
+			}
+			
+			if(d > 1000000)
+			{
+				double d1 = d / 1000000D;
+				d1 = ((long)(d1 * 100D)) / 100D;
+				s = "" + d1 + "M";
 			}
 		}
 		
-		if(!al.isEmpty()) drawHoveringText(al, x - guiLeft, y - guiTop, fontRendererObj);
+		if(s.endsWith(".0"))
+			s = s.substring(0, s.length() - 2);
+		
+		return s;
 	}
 }

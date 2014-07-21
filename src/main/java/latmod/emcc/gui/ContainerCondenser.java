@@ -1,5 +1,5 @@
 package latmod.emcc.gui;
-import latmod.core.base.ContainerLM;
+import latmod.core.base.gui.ContainerLM;
 import latmod.emcc.EMCC;
 import latmod.emcc.tile.*;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,30 +9,41 @@ import net.minecraft.util.ResourceLocation;
 
 public class ContainerCondenser extends ContainerLM
 {
-	public TileCondenser tile;
-	public EntityPlayer player;
-	
 	public ContainerCondenser(EntityPlayer ep, TileCondenser t)
 	{
 		super(ep, t);
 		
-		addSlotToContainer(new Slot(t, TileCondenser.SLOT_TARGET, 8, 9));
+		addSlotToContainer(new SlotCondenserTarget(t, TileCondenser.SLOT_TARGET, 8, 9));
 		
-		for(int i = 0; i < TileCondenser.CHEST_SLOTS.length; i++)
+		for(int i = 0; i < TileCondenser.INPUT_SLOTS.length; i++)
 		{
 			int x = i % 9;
 			int y = i / 9;
 			
-			addSlotToContainer(new Slot(t, TileCondenser.CHEST_SLOTS[i], 8 + x * 18, 36 + y * 18));
+			addSlotToContainer(new Slot(t, TileCondenser.INPUT_SLOTS[i], 8 + x * 18, 36 + y * 18));
 		}
 		
-		addPlayerSlots(56);
+		for(int i = 0; i < TileCondenser.OUTPUT_SLOTS.length; i++)
+		{
+			int x = i % 9;
+			int y = i / 9;
+			
+			addSlotToContainer(new SlotOutput(t, TileCondenser.OUTPUT_SLOTS[i], 8 + x * 18, 111 + y * 18));
+		}
+		
+		for(int y = 0; y < 3; y++) for(int x = 0; x < 9; x++)
+		addSlotToContainer(new Slot(ep.inventory, x + y * 9 + 9, 8 + x * 18, 158 + y * 18));
+		
+		for(int x = 0; x < 9; x++)
+		addSlotToContainer(new Slot(ep.inventory, x, 8 + x * 18, 216));
 	}
+	
+	@Override
+	public boolean canInteractWith(EntityPlayer ep)
+	{ return true; }
 	
 	public ItemStack transferStackInSlot(EntityPlayer ep, int i)
 	{
-		if(i == TileCondenser.SLOT_TARGET) return null;
-		
 		ItemStack is = null;
 		Slot slot = (Slot)inventorySlots.get(i);
 		
@@ -41,12 +52,14 @@ public class ContainerCondenser extends ContainerLM
 			ItemStack is1 = slot.getStack();
 			is = is1.copy();
 			
-			if (i < TileCondenser.CHEST_SLOTS.length)
+			int maxSlot = TileCondenser.SLOT_COUNT - TileCondenser.OUTPUT_SLOTS.length;
+			
+			if (i < maxSlot)
 			{
-				if (!mergeItemStack(is1, TileCondenser.CHEST_SLOTS.length, inventorySlots.size(), true))
+				if (!mergeItemStack(is1, maxSlot, inventorySlots.size(), true))
 					return null;
 			}
-			else if (!mergeItemStack(is1, 0, TileCondenser.CHEST_SLOTS.length, false))
+			else if (!mergeItemStack(is1, 0, maxSlot, false))
 				return null;
 			
 			if (is1.stackSize == 0)
