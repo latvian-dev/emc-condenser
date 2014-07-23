@@ -28,8 +28,8 @@ public class ItemUUAxe extends ItemToolEMCC
 	{
 		if(EMCC.config.tools.enableAxe)
 			EMCC.recipes.addRecipe(new ItemStack(this), "UU", "US", " S",
-					Character.valueOf('U'), EMCCItems.UU_ITEM,
-					Character.valueOf('S'), ODItems.STICK);
+					'U', EMCCItems.UU_ITEM,
+					'S', ODItems.STICK);
 		
 		ItemToolEMCC.addAreaRecipe(new ItemStack(this));
 	}

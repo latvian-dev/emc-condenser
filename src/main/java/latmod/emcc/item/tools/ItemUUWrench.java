@@ -33,9 +33,9 @@ public class ItemUUWrench extends ItemEMCC implements IEmcTool
 	{
 		if(EMCC.config.tools.enableWrench)
 			EMCC.recipes.addRecipe(new ItemStack(this), "UBU", " S ", " S ",
-					Character.valueOf('U'), EMCCItems.UU_BLOCK,
-					Character.valueOf('S'), ODItems.STICK,
-					Character.valueOf('B'), new ItemStack(EMCCItems.i_emc_storage, 1, 0));
+					'U', EMCCItems.UU_BLOCK,
+					'S', ODItems.STICK,
+					'B', new ItemStack(EMCCItems.i_emc_storage, 1, 0));
 	}
 	
 	public int getItemEnchantability()

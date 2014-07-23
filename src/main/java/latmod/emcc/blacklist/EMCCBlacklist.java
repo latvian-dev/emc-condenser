@@ -1,7 +1,6 @@
 package latmod.emcc.blacklist;
 import java.io.*;
 import latmod.core.*;
-import latmod.core.mod.*;
 import latmod.core.util.*;
 import latmod.emcc.*;
 import cpw.mods.fml.common.event.*;
@@ -70,7 +69,7 @@ public class EMCCBlacklist
 		if(!EMCC.config.general.enableBlacklist) return false;
 		if(list.fuels.isBlacklistedUN(is) || list.all.isBlacklistedUN(is)) return true;
 		
-		FastList<String> oreNames = LCEventHandler.getOreNames(is);
+		FastList<String> oreNames = ODItems.getOreNames(is);
 		
 		if(oreNames != null && oreNames.size() > 0)
 		{
@@ -89,7 +88,7 @@ public class EMCCBlacklist
 		
 		if(list.targets.isBlacklistedUN(is) || list.all.isBlacklistedUN(is)) return true;
 		
-		FastList<String> oreNames = LCEventHandler.getOreNames(is);
+		FastList<String> oreNames = ODItems.getOreNames(is);
 		
 		if(oreNames != null && oreNames.size() > 0)
 		{

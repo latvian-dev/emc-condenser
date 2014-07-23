@@ -30,8 +30,8 @@ public class ItemUUSword extends ItemSword implements IItemLM, IEmcTool
 	{
 		if(EMCC.config.tools.enableSword)
 			EMCC.recipes.addRecipe(new ItemStack(this), "U", "U", "S",
-					Character.valueOf('U'), EMCCItems.UU_ITEM,
-					Character.valueOf('S'), ODItems.STICK);
+					'U', EMCCItems.UU_ITEM,
+					'S', ODItems.STICK);
 		
 		ItemStack is1 = new ItemStack(this);
 		ItemToolEMCC.setBlazing(is1);

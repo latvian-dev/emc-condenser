@@ -22,9 +22,14 @@ public class BlockCondenser extends BlockEMCC
 		super(s, Material.rock);
 		isBlockContainer = true;
 		
-		EMCCItems.CONDENSER = new ItemStack(this);
-		
 		EMCC.mod.addTile(TileCondenser.class, "condenser");
+	}
+	
+	public void onPostLoaded()
+	{
+		super.onPostLoaded();
+		
+		EMCCItems.CONDENSER = new ItemStack(this);
 	}
 
 	public TileLM createNewTileEntity(World w, int m)
@@ -38,10 +43,10 @@ public class BlockCondenser extends BlockEMCC
 		else if(EMCC.config.recipes.condenserRecipeDifficulty == 2) is = EMCCItems.MINIUM_STAR;
 		
 		EMCC.recipes.addRecipe(EMCCItems.CONDENSER, "OBO", "OSO", "OIO",
-				Character.valueOf('O'), Blocks.obsidian,
-				Character.valueOf('I'), is,
-				Character.valueOf('B'), new ItemStack(EMCCItems.i_emc_storage, 1, 4),
-				Character.valueOf('S'), new ItemStack(ModItems.stoneMinium, 1, LatCore.ANY));
+				'O', ODItems.OBSIDIAN,
+				'I', is,
+				'B', new ItemStack(EMCCItems.i_emc_storage, 1, 4),
+				'S', new ItemStack(ModItems.stoneMinium, 1, LatCore.ANY));
 	}
 	
 	@SideOnly(Side.CLIENT)

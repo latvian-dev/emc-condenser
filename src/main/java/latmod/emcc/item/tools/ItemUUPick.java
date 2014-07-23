@@ -29,8 +29,8 @@ public class ItemUUPick extends ItemToolEMCC
 	{
 		if(EMCC.config.tools.enablePick)
 			EMCC.recipes.addRecipe(new ItemStack(this), "UUU", " S ", " S ",
-					Character.valueOf('U'), EMCCItems.UU_ITEM,
-					Character.valueOf('S'), ODItems.STICK);
+					'U', EMCCItems.UU_ITEM,
+					'S', ODItems.STICK);
 		
 		ItemToolEMCC.addBlazingRecipe(new ItemStack(this));
 		ItemToolEMCC.addAreaRecipe(new ItemStack(this));

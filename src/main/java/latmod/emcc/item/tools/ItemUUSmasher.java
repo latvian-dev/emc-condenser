@@ -35,11 +35,11 @@ public class ItemUUSmasher extends ItemToolEMCC
 	{
 		if(EMCC.config.tools.enableSmasher)
 			EMCC.recipes.addRecipe(new ItemStack(this), "APA", "BVB", " S ",
-					Character.valueOf('B'), EMCCItems.UU_BLOCK,
-					Character.valueOf('S'), ODItems.STICK,
-					Character.valueOf('P'), EMCCItems.i_pick,
-					Character.valueOf('A'), EMCCItems.i_axe,
-					Character.valueOf('V'), EMCCItems.i_shovel);
+					'B', EMCCItems.UU_BLOCK,
+					'S', ODItems.STICK,
+					'P', EMCCItems.i_pick,
+					'A', EMCCItems.i_axe,
+					'V', EMCCItems.i_shovel);
 		
 		ItemToolEMCC.addBlazingRecipe(new ItemStack(this));
 		ItemToolEMCC.addAreaRecipe(new ItemStack(this));

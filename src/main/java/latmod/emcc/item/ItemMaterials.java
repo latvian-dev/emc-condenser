@@ -41,9 +41,9 @@ public class ItemMaterials extends ItemEMCC
 				EMCCItems.DUST_VERDANT,
 				EMCCItems.DUST_AZURE,
 				EMCCItems.DUST_MINIUM,
-				Items.redstone,
-				Items.glowstone_dust,
-				Items.quartz,
+				ODItems.REDSTONE,
+				ODItems.GLOWSTONE,
+				ODItems.QUARTZ,
 				ODItems.IRON,
 				ODItems.GOLD,
 				ODItems.DIAMOND);

@@ -1,4 +1,5 @@
 package latmod.emcc.block;
+import latmod.core.*;
 import latmod.core.base.*;
 import latmod.emcc.*;
 import net.minecraft.block.material.*;
@@ -12,6 +13,11 @@ public class BlockUUBlock extends BlockEMCC
 	{
 		super(s, Material.rock);
 		isBlockContainer = false;
+	}
+	
+	public void onPostLoaded()
+	{
+		super.onPostLoaded();
 		
 		EMCCItems.UU_BLOCK = new ItemStack(this);
 	}
@@ -27,7 +33,7 @@ public class BlockUUBlock extends BlockEMCC
 		if(EMCC.config.recipes.infuseUUBlock)
 		EMCC.addInfusing(EMCCItems.UU_BLOCK, EMCCItems.UU_ITEM, new ItemStack(Blocks.obsidian, 8));
 		else EMCC.recipes.addRecipe(EMCCItems.UU_BLOCK, "OOO", "OUO", "OOO",
-			Character.valueOf('U'), EMCCItems.UU_ITEM,
-			Character.valueOf('O'), Blocks.obsidian);
+			'U', EMCCItems.UU_ITEM,
+			'O', ODItems.OBSIDIAN);
 	}
 }

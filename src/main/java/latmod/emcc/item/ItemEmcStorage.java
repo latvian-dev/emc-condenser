@@ -1,5 +1,6 @@
 package latmod.emcc.item;
 import java.util.List;
+
 import cpw.mods.fml.relauncher.*;
 import latmod.core.*;
 import latmod.emcc.*;
@@ -50,22 +51,22 @@ public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 	{
 		if(EMCC.config.tools.enableBattery)
 		EMCC.recipes.addRecipe(new ItemStack(this, 1, 0), "QRQ", "QUQ", "QGQ",
-				Character.valueOf('Q'), Items.quartz,
-				Character.valueOf('R'), Items.redstone,
-				Character.valueOf('G'), Items.glowstone_dust,
-				Character.valueOf('U'), EMCCItems.UU_ITEM);
+				'Q', ODItems.QUARTZ,
+				'R', ODItems.REDSTONE,
+				'G', ODItems.GLOWSTONE,
+				'U', EMCCItems.UU_ITEM);
 		
 		if(EMCC.config.tools.lifeStone_1hp != -1D || EMCC.config.tools.lifeStone_food != -1D)
 		EMCC.recipes.addRecipe(new ItemStack(this, 1, 2), "SPS", "PBP", "SPS",
-				Character.valueOf('S'), Items.beef,
-				Character.valueOf('B'), new ItemStack(this, 1, 0),
-				Character.valueOf('P'), new ItemStack(Items.potionitem, 1, 8225));
+				'S', Items.beef,
+				'B', new ItemStack(this, 1, 0),
+				'P', new ItemStack(Items.potionitem, 1, 8225));
 		
 		if(EMCC.config.tools.blackHoleStone_item != -1D)
 		EMCC.recipes.addRecipe(new ItemStack(this, 1, 4), "OEO", "EBE", "OEO",
-				Character.valueOf('O'), EMCCItems.UU_BLOCK,
-				Character.valueOf('B'), new ItemStack(this, 1, 0),
-				Character.valueOf('E'), Items.ender_pearl);
+				'O', EMCCItems.UU_BLOCK,
+				'B', new ItemStack(this, 1, 0),
+				'E', Items.ender_pearl);
 	}
 	
 	public String getUnlocalizedName(ItemStack is)
