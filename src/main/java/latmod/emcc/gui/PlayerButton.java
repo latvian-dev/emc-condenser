@@ -74,7 +74,7 @@ public class PlayerButton extends ButtonLM
 	{
 		if(GuiScreen.isShiftKeyDown())
 		{
-			EMCCNetHandler.sendToServer(((GuiRestricted)gui).condenser, new PacketModifyRestricted(false, playerName));
+			EMCCNetHandler.INSTANCE.sendToServer(new MessageModifyRestricted(((GuiRestricted)gui).condenser, false, playerName));
 			gui.playSoundFX("random.fizz", 1F);
 		}
 	}

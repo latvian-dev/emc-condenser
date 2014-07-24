@@ -74,7 +74,7 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 		if(security.canPlayerInteract(ep))
 		{
 			if(serverSide) { ep.openGui(EMCC.inst, guiID, worldObj, xCoord, yCoord, zCoord); }
-			else EMCCNetHandler.sendToServer(this, new PacketOpenGui(guiID));
+			else EMCCNetHandler.INSTANCE.sendToServer(new MessageOpenGui(this, guiID));
 			
 			return true;
 		}
@@ -265,7 +265,7 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 		}
 		else
 		{
-			EMCCNetHandler.sendToServer(this, new PacketButtonPressed(i, mb));
+			EMCCNetHandler.INSTANCE.sendToServer(new MessageButtonPressed(this, i, mb));
 		}
 	}
 	
@@ -293,7 +293,7 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 				}
 			}
 		}
-		else EMCCNetHandler.sendToServer(this, new PacketTransItems());
+		else EMCCNetHandler.INSTANCE.sendToServer(new MessageTransItems(this));
 	}
 	
 	@Override

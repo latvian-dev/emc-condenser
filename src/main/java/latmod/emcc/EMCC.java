@@ -58,6 +58,7 @@ public class EMCC
 		recipes = new LMRecipes(false);
 		
 		mod.addBlock(EMCCItems.b_uu_block = new BlockUUBlock("uub"));
+		mod.addBlock(EMCCItems.b_condenser = new BlockCondenser("condenser"));
 		
 		mod.addItem(EMCCItems.i_mat = new ItemMaterials("materials"));
 		mod.addItem(EMCCItems.i_emc_storage = new ItemEmcStorage("emcStorage"));

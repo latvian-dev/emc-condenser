@@ -1,6 +1,5 @@
 package latmod.emcc.net;
 import latmod.emcc.*;
-import latmod.emcc.tile.TileCondenser;
 import cpw.mods.fml.common.network.*;
 import cpw.mods.fml.common.network.simpleimpl.*;
 import cpw.mods.fml.relauncher.*;
@@ -8,23 +7,14 @@ import cpw.mods.fml.relauncher.*;
 public class EMCCNetHandler
 {
 	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(EMCC.MOD_ID);
-	private static int nextPacketID = -1;
-	public static final PacketCondenser[] packets = new PacketCondenser[32];
-	
-	public static int nextPacketID()
-	{ return ++nextPacketID; }
-	
-	public static void addPacket(PacketCondenser p)
-	{ packets[p.packetID] = p; }
+	private static int nextPacketID = -1; public static int nextPacketID() { return ++nextPacketID; }
 	
 	public static void init()
 	{
-    	INSTANCE.registerMessage(MessageCondenser.class, MessageCondenser.class, 0, Side.CLIENT);
-    	
-    	addPacket(new PacketOpenGui(0));
-		addPacket(new PacketButtonPressed(0, 0));
-		addPacket(new PacketTransItems());
-		addPacket(new PacketModifyRestricted(false, null));
+		INSTANCE.registerMessage(MessageButtonPressed.class, MessageButtonPressed.class, nextPacketID(), Side.SERVER);
+		INSTANCE.registerMessage(MessageOpenGui.class, MessageOpenGui.class, nextPacketID(), Side.SERVER);
+		INSTANCE.registerMessage(MessageTransItems.class, MessageTransItems.class, nextPacketID(), Side.SERVER);
+		INSTANCE.registerMessage(MessageModifyRestricted.class, MessageModifyRestricted.class, nextPacketID(), Side.SERVER);
 	}
 
 	/*
@@ -86,9 +76,4 @@ public class EMCCNetHandler
 	}
 	
 	*/
-	
-	public static void sendToServer(TileCondenser t, PacketCondenser p)
-	{
-		//INSTANCE.sendToServer(getCustomMessage(t, p));
-	}
 }

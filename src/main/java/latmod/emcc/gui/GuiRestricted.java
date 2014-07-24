@@ -74,7 +74,7 @@ public class GuiRestricted extends GuiLM
 	{
 		if(textBox.text.length() > 0)
 		{
-			EMCCNetHandler.sendToServer(condenser, new PacketModifyRestricted(true, textBox.text));
+			EMCCNetHandler.INSTANCE.sendToServer(new MessageModifyRestricted(condenser, true, textBox.text));
 			textBox.clear();
 		}
 	}
