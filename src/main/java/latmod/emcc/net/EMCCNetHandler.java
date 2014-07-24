@@ -6,7 +6,7 @@ import cpw.mods.fml.relauncher.*;
 
 public class EMCCNetHandler
 {
-	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(EMCC.MOD_ID);
+	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(EMCC.getModID());
 	private static int nextPacketID = -1; public static int nextPacketID() { return ++nextPacketID; }
 	
 	public static void init()

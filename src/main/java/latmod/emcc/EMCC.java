@@ -22,15 +22,18 @@ import net.minecraftforge.common.util.EnumHelper;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 
-@Mod(modid = EMCC.MOD_ID, name = EMCC.MOD_NAME, version = EMCC.VERSION, dependencies = "required-after:LatCore;required-after:EE3")
+@Mod(modid = EMCC.MODID, name = EMCC.MODNAME, version = EMCC.MODVERSION, dependencies = "required-after:LatCore;required-after:EE3")
 //@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = { EMCC.MOD_ID }, packetHandler = EMCCNetHandler.class)
 public class EMCC
 {
-	public static final String MOD_ID = "emcc";
-	public static final String MOD_NAME = "EMC Condenser Mod";
-	public static final String VERSION = "1.3.1";
+	protected static final String MODID = "EMCC";
+	protected static final String MODNAME = "EMC Condenser Mod";
+	protected static final String MODVERSION = "1.3.1";
 	
-	@Mod.Instance(EMCC.MOD_ID)
+	public static final String getModID()
+	{ return MODID; }
+	
+	@Mod.Instance(EMCC.MODID)
 	public static EMCC inst;
 	
 	@SidedProxy(clientSide = "latmod.emcc.EMCCClient", serverSide = "latmod.emcc.EMCCCommon")
@@ -51,7 +54,7 @@ public class EMCC
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
-		mod = new LMMod(MOD_ID);
+		mod = new LMMod(MODID);
 		config = new EMCCConfig(e);
 		blacklist = new EMCCBlacklist(e);
 		customEMC = new EMCCCustomEMC(e);
