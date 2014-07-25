@@ -92,7 +92,7 @@ public class EMCCCustomEMC
 			Iterator<Float> values = map.ore_dictionary.values().iterator();
 			
 			while(keys.hasNext())
-			EnergyValueRegistry.addPreAssignedEnergyValue(new OreStack(keys.next()), values.next());
+			EnergyValueRegistry.getInstance().addPreAssignedEnergyValue(new OreStack(keys.next()), values.next());
 		}
 		
 		if(!map.registry_name.isEmpty())
@@ -100,7 +100,7 @@ public class EMCCCustomEMC
 			for(RegNameValue v : map.registry_name)
 			{
 				if(v.value > 0F)
-				EnergyValueRegistry.addPreAssignedEnergyValue(new OreStack("emcc_" + v.name), v.value);
+				EnergyValueRegistry.getInstance().addPreAssignedEnergyValue(new OreStack("emcc_" + v.name), v.value);
 			}
 		}
 	}
