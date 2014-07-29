@@ -21,7 +21,7 @@ public class ItemUUAxe extends ItemToolEMCC
 	{
 		super(s, effective, false, true);
 		
-		setHarvestLevel(EnumToolClass.AXE.toolClass, EnumToolClass.EMERALD);
+		setHarvestLevel(EnumToolClass.AXE.toolClass, EnumToolClass.ALUMITE);
 	}
 	
 	public void loadRecipes()

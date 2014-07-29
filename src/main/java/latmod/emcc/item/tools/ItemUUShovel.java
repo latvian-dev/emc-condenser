@@ -22,7 +22,7 @@ public class ItemUUShovel extends ItemToolEMCC
 	{
 		super(s, effective, true, true);
 		
-		setHarvestLevel(EnumToolClass.SHOVEL.toolClass, EnumToolClass.EMERALD);
+		setHarvestLevel(EnumToolClass.SHOVEL.toolClass, EnumToolClass.ALUMITE);
 	}
 	
 	public void loadRecipes()

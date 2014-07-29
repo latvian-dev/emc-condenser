@@ -22,7 +22,7 @@ public class ItemUUPick extends ItemToolEMCC
 	{
 		super(s, effective, true, true);
 		
-		setHarvestLevel(EnumToolClass.PICKAXE.toolClass, EnumToolClass.EMERALD);
+		setHarvestLevel(EnumToolClass.PICKAXE.toolClass, EnumToolClass.ALUMITE);
 	}
 	
 	public void loadRecipes()

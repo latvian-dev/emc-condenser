@@ -17,9 +17,9 @@ public class ItemUUSmasher extends ItemToolEMCC
 	{
 		super(s, getEffectiveBlocks(), true, true);
 		
-		setHarvestLevel(EnumToolClass.PICKAXE.toolClass, EnumToolClass.EMERALD);
-		setHarvestLevel(EnumToolClass.SHOVEL.toolClass, EnumToolClass.EMERALD);
-		setHarvestLevel(EnumToolClass.AXE.toolClass, EnumToolClass.EMERALD);
+		setHarvestLevel(EnumToolClass.PICKAXE.toolClass, EnumToolClass.ALUMITE);
+		setHarvestLevel(EnumToolClass.SHOVEL.toolClass, EnumToolClass.ALUMITE);
+		setHarvestLevel(EnumToolClass.AXE.toolClass, EnumToolClass.ALUMITE);
 	}
 	
 	private static Set<Block> getEffectiveBlocks()
