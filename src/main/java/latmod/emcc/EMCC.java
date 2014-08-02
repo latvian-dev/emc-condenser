@@ -22,7 +22,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 
-@Mod(modid = EMCC.MODID, name = EMCC.MODNAME, version = EMCC.MODVERSION, dependencies = "required-after:LatCore;required-after:EE3")
+@Mod(modid = EMCC.MODID, name = EMCC.MODNAME, version = EMCC.MODVERSION, dependencies = "required-after:LatCoreMC;required-after:EE3")
 //@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = { EMCC.MOD_ID }, packetHandler = EMCCNetHandler.class)
 public class EMCC
 {
