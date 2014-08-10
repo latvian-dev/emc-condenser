@@ -1,16 +1,18 @@
 package latmod.emcc.block;
-import com.pahimar.ee3.init.*;
-import cpw.mods.fml.relauncher.*;
 import latmod.core.*;
-import latmod.core.base.*;
+import latmod.core.base.TileLM;
 import latmod.emcc.*;
-import latmod.emcc.tile.*;
-import net.minecraft.block.material.*;
-import net.minecraft.client.renderer.texture.*;
-import net.minecraft.init.*;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import latmod.emcc.tile.TileCondenser;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
+
+import com.pahimar.ee3.init.ModItems;
+
+import cpw.mods.fml.relauncher.*;
 
 public class BlockCondenser extends BlockEMCC
 {
@@ -59,7 +61,7 @@ public class BlockCondenser extends BlockEMCC
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int s, int m)
 	{ 
-		if(s == TileLM.UP) return topIcon;
+		if(s == LatCore.TOP) return topIcon;
 		return blockIcon;
 	}
 }

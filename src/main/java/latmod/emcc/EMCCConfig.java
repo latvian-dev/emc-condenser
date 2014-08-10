@@ -1,9 +1,9 @@
 package latmod.emcc;
-import cpw.mods.fml.common.event.*;
-import latmod.core.*;
-import latmod.core.base.*;
+import latmod.core.LMSecurity;
+import latmod.core.base.LMConfig;
 import latmod.core.tile.*;
 import latmod.emcc.tile.*;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class EMCCConfig extends LMConfig
 {

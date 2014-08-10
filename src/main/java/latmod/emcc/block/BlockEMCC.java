@@ -1,9 +1,9 @@
 package latmod.emcc.block;
-import cpw.mods.fml.relauncher.*;
+import latmod.core.base.BlockLM;
+import latmod.emcc.EMCC;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
-import latmod.core.base.*;
-import latmod.emcc.*;
+import cpw.mods.fml.relauncher.*;
 
 public abstract class BlockEMCC extends BlockLM
 {

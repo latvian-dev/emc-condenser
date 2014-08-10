@@ -1,9 +1,9 @@
 package latmod.emcc;
 import latmod.emcc.gui.*;
-import latmod.emcc.tile.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.world.*;
+import latmod.emcc.tile.TileCondenser;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)

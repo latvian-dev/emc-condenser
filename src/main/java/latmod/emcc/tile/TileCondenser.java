@@ -1,16 +1,14 @@
 package latmod.emcc.tile;
 import latmod.core.*;
-import latmod.core.base.*;
+import latmod.core.base.TileLM;
 import latmod.core.tile.*;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.net.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.network.*;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrenchable
 {
@@ -47,16 +45,6 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 		repairTools = RepairTools.DISABLED;
 		checkForced();
 	}
-	
-	public Packet getDescriptionPacket()
-	{
-		NBTTagCompound tag = new NBTTagCompound();
-		CondenserNBTHelper.writeRendering(this, tag);
-		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, tag);
-	}
-	
-	public void onDataPacket(NetworkManager m, S35PacketUpdateTileEntity p)
-	{ CondenserNBTHelper.readRendering(this, p.func_148857_g()); }
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
 	{
@@ -210,17 +198,33 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 	protected boolean customNBT()
 	{ return true; }
 	
-	public void readFromNBT(NBTTagCompound tag)
+	public void readTileData(NBTTagCompound tag)
 	{
-		super.readFromNBT(tag);
-		readFromWrench(tag);
+		super.readTileData(tag);
+		
+		storedEMC = tag.getDouble("StoredEMC");
+		safeMode = SafeMode.VALUES[tag.getByte("SafeMode")];
+		redstoneMode = RedstoneMode.VALUES[tag.getByte("RSMode")];
+		invMode = InvMode.VALUES[tag.getByte("InvMode")];
+		repairTools = RepairTools.VALUES[tag.getByte("RepairTools")];
+		cooldown = tag.getShort("Cooldown");
+		
+		security.restricted.trim(16);
 		checkForced();
 	}
 	
-	public void writeToNBT(NBTTagCompound tag)
+	public void writeTileData(NBTTagCompound tag)
 	{
-		super.writeToNBT(tag);
-		writeToWrench(tag);
+		security.restricted.trim(16);
+		
+		super.writeTileData(tag);
+		
+		tag.setDouble("StoredEMC", storedEMC);
+		tag.setByte("SafeMode", (byte)safeMode.ID);
+		tag.setByte("RSMode", (byte)redstoneMode.ID);
+		tag.setByte("InvMode", (byte)invMode.ID);
+		tag.setByte("RepairTools", (byte)repairTools.ID);
+		tag.setShort("Cooldown", (short)cooldown);
 	}
 	
 	public void printOwner(EntityPlayer ep)
@@ -298,7 +302,7 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 	
 	@Override
 	public int[] getAccessibleSlotsFromSide(int s)
-	{ return (invMode == InvMode.DISABLED) ? NO_SLOTS : ((s == DOWN) ? OUTPUT_SLOTS : INPUT_SLOTS); }
+	{ return (invMode == InvMode.DISABLED) ? NO_SLOTS : ((s == LatCore.BOTTOM) ? OUTPUT_SLOTS : INPUT_SLOTS); }
 	
 	@Override
 	public boolean canInsertItem(int i, ItemStack is, int j)
@@ -331,10 +335,10 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 	{ return security.canPlayerInteract(ep); }
 	
 	public void readFromWrench(NBTTagCompound tag)
-	{ CondenserNBTHelper.readAll(this, tag); checkForced(); }
+	{ readTileData(tag); }
 	
 	public void writeToWrench(NBTTagCompound tag)
-	{ CondenserNBTHelper.writeAll(this, tag); }
+	{ writeTileData(tag); }
 	
 	public void onWrenched(EntityPlayer ep, ItemStack is)
 	{

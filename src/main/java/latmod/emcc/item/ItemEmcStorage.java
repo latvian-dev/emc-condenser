@@ -1,7 +1,6 @@
 package latmod.emcc.item;
 import java.util.List;
 
-import cpw.mods.fml.relauncher.*;
 import latmod.core.*;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
@@ -10,10 +9,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.*;
 
 public class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 {

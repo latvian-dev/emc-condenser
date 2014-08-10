@@ -1,10 +1,10 @@
 package latmod.emcc.gui;
-import java.util.*;
+import java.util.ArrayList;
 
-import cpw.mods.fml.relauncher.*;
 import latmod.core.base.gui.*;
 import latmod.emcc.*;
-import latmod.emcc.tile.*;
+import latmod.emcc.tile.TileCondenser;
+import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public class GuiCondenserSettings extends GuiLM

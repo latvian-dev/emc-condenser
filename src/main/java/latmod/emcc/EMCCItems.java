@@ -1,9 +1,10 @@
 package latmod.emcc;
-import com.pahimar.ee3.init.*;
-import net.minecraft.item.*;
 import latmod.emcc.block.*;
 import latmod.emcc.item.*;
 import latmod.emcc.item.tools.*;
+import net.minecraft.item.ItemStack;
+
+import com.pahimar.ee3.init.ModItems;
 
 public class EMCCItems
 {

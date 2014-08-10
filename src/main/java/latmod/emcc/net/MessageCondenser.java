@@ -1,6 +1,6 @@
 package latmod.emcc.net;
-import latmod.emcc.tile.*;
-import io.netty.buffer.*;
+import io.netty.buffer.ByteBuf;
+import latmod.emcc.tile.TileCondenser;
 import cpw.mods.fml.common.network.simpleimpl.*;
 
 public abstract class MessageCondenser implements IMessage

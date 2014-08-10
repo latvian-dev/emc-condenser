@@ -1,16 +1,17 @@
 package latmod.emcc.gui;
-import java.util.*;
+import java.util.ArrayList;
 
-import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.relauncher.*;
 import latmod.core.base.gui.*;
 import latmod.core.mod.LC;
 import latmod.emcc.*;
 import latmod.emcc.api.IEmcStorageItem;
-import latmod.emcc.tile.*;
+import latmod.emcc.tile.TileCondenser;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumChatFormatting;
+
+import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public class GuiCondenser extends GuiLM

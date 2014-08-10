@@ -1,7 +1,9 @@
 package latmod.emcc.item.tools;
 import java.util.*;
 
-import cpw.mods.fml.relauncher.*;
+import latmod.core.base.IItemLM;
+import latmod.emcc.*;
+import latmod.emcc.api.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -10,13 +12,10 @@ import net.minecraft.enchantment.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import latmod.core.base.IItemLM;
-import latmod.emcc.EMCC;
-import latmod.emcc.EMCCItems;
-import latmod.emcc.api.*;
+import cpw.mods.fml.relauncher.*;
 
 public class ItemToolEMCC extends ItemTool implements IItemLM, IEmcTool, IEffectiveTool
 {
@@ -129,8 +128,8 @@ public class ItemToolEMCC extends ItemTool implements IItemLM, IEmcTool, IEffect
 	}
 
 	public static void addBlazingRecipe(ItemStack is)
-	{ if(EMCC.config.recipes.toolBlazingInfusion > 0) EMCC.addInfusing(setBlazing(is.copy()), is.copy(), new ItemStack(Items.blaze_rod, EMCC.config.recipes.toolBlazingInfusion)); }
+	{ if(EMCC.config.recipes.toolBlazingInfusion > 0) EMCC.recipes.addInfusing(setBlazing(is.copy()), is.copy(), new ItemStack(Items.blaze_rod, EMCC.config.recipes.toolBlazingInfusion)); }
 	
 	public static void addAreaRecipe(ItemStack is)
-	{ if(EMCC.config.recipes.toolAreaInfusion > 0) EMCC.addInfusing(setArea(is.copy()), is.copy(), EMCC.recipes.size(EMCCItems.UU_BLOCK, EMCC.config.recipes.toolAreaInfusion)); }
+	{ if(EMCC.config.recipes.toolAreaInfusion > 0) EMCC.recipes.addInfusing(setArea(is.copy()), is.copy(), EMCC.recipes.size(EMCCItems.UU_BLOCK, EMCC.config.recipes.toolAreaInfusion)); }
 }

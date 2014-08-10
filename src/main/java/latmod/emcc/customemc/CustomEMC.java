@@ -1,8 +1,9 @@
 package latmod.emcc.customemc;
 import java.util.*;
+
 import latmod.core.util.FastList;
 
-import com.google.gson.annotations.*;
+import com.google.gson.annotations.Expose;
 
 public class CustomEMC
 {

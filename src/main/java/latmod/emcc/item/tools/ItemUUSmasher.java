@@ -5,11 +5,11 @@ import latmod.core.*;
 import latmod.core.util.FastList;
 import latmod.emcc.*;
 import latmod.emcc.api.EMCCUtils;
-import net.minecraft.block.*;
-import net.minecraft.entity.*;
+import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
-import net.minecraft.world.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 public class ItemUUSmasher extends ItemToolEMCC
 {

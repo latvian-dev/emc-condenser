@@ -1,29 +1,27 @@
 package latmod.emcc;
+import latmod.core.LatCore;
+import latmod.core.base.LMMod;
+import latmod.emcc.blacklist.EMCCBlacklist;
+import latmod.emcc.block.*;
+import latmod.emcc.customemc.EMCCCustomEMC;
+import latmod.emcc.item.*;
+import latmod.emcc.item.tools.*;
+import latmod.emcc.net.EMCCNetHandler;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item.ToolMaterial;
+import net.minecraft.item.*;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.EnumHelper;
+
 import org.apache.logging.log4j.*;
 
 import com.pahimar.ee3.api.EnergyValue;
 import com.pahimar.ee3.exchange.EnergyValueRegistry;
-import com.pahimar.ee3.recipe.*;
 
-import latmod.core.*;
-import latmod.core.base.*;
-import latmod.core.base.recipes.*;
-import latmod.emcc.blacklist.*;
-import latmod.emcc.block.*;
-import latmod.emcc.customemc.*;
-import latmod.emcc.item.*;
-import latmod.emcc.item.tools.*;
-import latmod.emcc.net.EMCCNetHandler;
-import net.minecraft.creativetab.*;
-import net.minecraft.item.*;
-import net.minecraft.item.Item.ToolMaterial;
-import net.minecraftforge.common.*;
-import net.minecraftforge.common.util.EnumHelper;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 
 @Mod(modid = EMCC.MODID, name = EMCC.MODNAME, version = EMCC.MODVERSION, dependencies = "required-after:LatCoreMC;required-after:EE3")
-//@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = { EMCC.MOD_ID }, packetHandler = EMCCNetHandler.class)
 public class EMCC
 {
 	protected static final String MODID = "EMCC";
@@ -37,7 +35,7 @@ public class EMCC
 	public static EMCC inst;
 	
 	@SidedProxy(clientSide = "latmod.emcc.EMCCClient", serverSide = "latmod.emcc.EMCCCommon")
-	public static EMCCCommon proxy; // EMCCClient
+	public static EMCCCommon proxy;
 	
 	public static CreativeTabs tab = null;
 	
@@ -45,7 +43,7 @@ public class EMCC
 	
 	public static LMMod mod;
 	public static EMCCConfig config;
-	public static LMRecipes recipes;
+	public static EMCCRecipes recipes;
 	public static EMCCBlacklist blacklist;
 	public static EMCCCustomEMC customEMC;
 	
@@ -58,7 +56,7 @@ public class EMCC
 		config = new EMCCConfig(e);
 		blacklist = new EMCCBlacklist(e);
 		customEMC = new EMCCCustomEMC(e);
-		recipes = new LMRecipes(false);
+		recipes = new EMCCRecipes();
 		
 		mod.addBlock(EMCCItems.b_uu_block = new BlockUUBlock("uub"));
 		mod.addBlock(EMCCItems.b_condenser = new BlockCondenser("condenser"));
@@ -109,7 +107,4 @@ public class EMCC
 		EnergyValue e = EnergyValueRegistry.getInstance().getEnergyValue(is);
 		return (e == null) ? 0F : e.getEnergyValue();
 	}
-	
-	public static void addInfusing(ItemStack out, ItemStack in, ItemStack with)
-	{ RecipesAludel.getInstance().addRecipe(out, in, with); }
 }

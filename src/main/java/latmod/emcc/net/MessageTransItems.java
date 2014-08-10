@@ -1,6 +1,6 @@
 package latmod.emcc.net;
-import latmod.emcc.tile.TileCondenser;
 import io.netty.buffer.ByteBuf;
+import latmod.emcc.tile.TileCondenser;
 import cpw.mods.fml.common.network.simpleimpl.*;
 
 public class MessageTransItems extends MessageCondenser implements IMessageHandler<MessageTransItems, IMessage>

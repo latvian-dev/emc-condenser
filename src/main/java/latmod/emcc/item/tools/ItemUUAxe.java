@@ -1,8 +1,6 @@
 package latmod.emcc.item.tools;
 import java.util.Set;
 
-import com.google.common.collect.Sets;
-
 import latmod.core.*;
 import latmod.emcc.*;
 import net.minecraft.block.Block;
@@ -10,8 +8,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import com.google.common.collect.Sets;
 
 public class ItemUUAxe extends ItemToolEMCC
 {

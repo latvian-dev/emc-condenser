@@ -1,11 +1,11 @@
 package latmod.emcc.item;
-import cpw.mods.fml.relauncher.*;
 import latmod.core.ODItems;
 import latmod.emcc.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import cpw.mods.fml.relauncher.*;
 
 public class ItemMaterials extends ItemEMCC
 {
@@ -49,20 +49,20 @@ public class ItemMaterials extends ItemEMCC
 				ODItems.DIAMOND);
 		
 		if(EMCC.config.recipes.infuseMiniumStar)
-		EMCC.addInfusing(EMCCItems.MINIUM_STAR, new ItemStack(Items.nether_star), EMCC.recipes.size(EMCCItems.DUST_MINIUM, 8));
+		EMCC.recipes.addInfusing(EMCCItems.MINIUM_STAR, new ItemStack(Items.nether_star), EMCC.recipes.size(EMCCItems.DUST_MINIUM, 8));
 		else EMCC.recipes.addRecipe(EMCCItems.MINIUM_STAR, "MMM", "MSM", "MMM",
 				Character.valueOf('M'), EMCCItems.DUST_MINIUM,
 				Character.valueOf('S'), Items.nether_star);
 		
 		if(EMCC.config.recipes.miniumToNetherStar == 1)
-			EMCC.addInfusing(new ItemStack(Items.nether_star), EMCCItems.MINIUM_STAR, new ItemStack(Items.glowstone_dust));
+			EMCC.recipes.addInfusing(new ItemStack(Items.nether_star), EMCCItems.MINIUM_STAR, new ItemStack(Items.glowstone_dust));
 		else if(EMCC.config.recipes.miniumToNetherStar == 2)
 			EMCC.recipes.addSmelting(new ItemStack(Items.nether_star), EMCCItems.MINIUM_STAR);
 		
 		EMCC.recipes.addItemBlockRecipe(EMCCItems.NUGGET_EMERALD, new ItemStack(Items.emerald), true);
 		
 		if(EMCC.config.recipes.infuseEnchBottle)
-			EMCC.addInfusing(new ItemStack(Items.experience_bottle), new ItemStack(Items.potionitem, 1, 32), EMCCItems.NUGGET_EMERALD);
+			EMCC.recipes.addInfusing(new ItemStack(Items.experience_bottle), new ItemStack(Items.potionitem, 1, 32), EMCCItems.NUGGET_EMERALD);
 	}
 	
 	public String getUnlocalizedName(ItemStack is)

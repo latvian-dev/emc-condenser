@@ -1,14 +1,17 @@
 package latmod.emcc.gui;
-import java.util.*;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-import org.lwjgl.opengl.GL11;
-import cpw.mods.fml.relauncher.*;
-import latmod.core.util.*;
+import java.util.ArrayList;
+
 import latmod.core.base.gui.*;
+import latmod.core.util.FastList;
 import latmod.emcc.*;
 import latmod.emcc.net.*;
-import latmod.emcc.tile.*;
+import latmod.emcc.tile.TileCondenser;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
+
+import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public class GuiRestricted extends GuiLM

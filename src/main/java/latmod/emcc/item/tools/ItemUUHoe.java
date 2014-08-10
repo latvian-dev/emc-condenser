@@ -1,6 +1,4 @@
 package latmod.emcc.item.tools;
-import cpw.mods.fml.common.eventhandler.Event.Result;
-import cpw.mods.fml.relauncher.*;
 import latmod.core.ODItems;
 import latmod.emcc.*;
 import latmod.emcc.api.IEmcTool;
@@ -9,11 +7,13 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
+import cpw.mods.fml.common.eventhandler.Event.Result;
+import cpw.mods.fml.relauncher.*;
 
 public class ItemUUHoe extends ItemEMCC implements IEmcTool
 {

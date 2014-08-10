@@ -1,9 +1,9 @@
 package latmod.emcc.gui;
 import latmod.core.base.gui.ContainerLM;
 import latmod.emcc.EMCC;
-import latmod.emcc.tile.*;
+import latmod.emcc.tile.TileCondenser;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.*;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 

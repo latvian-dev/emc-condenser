@@ -1,11 +1,11 @@
 package latmod.emcc.gui;
-import cpw.mods.fml.relauncher.*;
-import net.minecraft.client.entity.*;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.*;
-import net.minecraft.util.*;
 import latmod.core.base.gui.*;
 import latmod.emcc.net.*;
+import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.*;
+import net.minecraft.util.ResourceLocation;
+import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public class PlayerButton extends ButtonLM

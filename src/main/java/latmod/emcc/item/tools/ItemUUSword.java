@@ -1,17 +1,16 @@
 package latmod.emcc.item.tools;
-import cpw.mods.fml.relauncher.*;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.*;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.World;
 import latmod.core.ODItems;
 import latmod.core.base.IItemLM;
 import latmod.emcc.*;
 import latmod.emcc.api.IEmcTool;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.*;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.*;
 
 public class ItemUUSword extends ItemSword implements IItemLM, IEmcTool
 {
@@ -33,9 +32,7 @@ public class ItemUUSword extends ItemSword implements IItemLM, IEmcTool
 					'U', EMCCItems.UU_ITEM,
 					'S', ODItems.STICK);
 		
-		ItemStack is1 = new ItemStack(this);
-		ItemToolEMCC.setBlazing(is1);
-		EMCC.addInfusing(is1, new ItemStack(this), new ItemStack(Items.blaze_rod, 4));
+		ItemToolEMCC.addBlazingRecipe(new ItemStack(this));
 	}
 	
 	public double getEmcPerDmg(ItemStack is)

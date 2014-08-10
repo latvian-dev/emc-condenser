@@ -1,8 +1,8 @@
 package latmod.emcc.net;
-import net.minecraft.entity.player.EntityPlayer;
+import io.netty.buffer.ByteBuf;
 import latmod.emcc.EMCCGuis;
 import latmod.emcc.tile.TileCondenser;
-import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayer;
 import cpw.mods.fml.common.network.simpleimpl.*;
 
 public class MessageOpenGui extends MessageCondenser implements IMessageHandler<MessageOpenGui, IMessage>

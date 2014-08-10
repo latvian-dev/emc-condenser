@@ -1,5 +1,5 @@
 package latmod.emcc.api;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
 
 public interface IEmcStorageItem
 {

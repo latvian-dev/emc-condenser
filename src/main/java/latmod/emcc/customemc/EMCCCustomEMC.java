@@ -1,11 +1,14 @@
 package latmod.emcc.customemc;
-import java.io.*;
-import java.util.*;
-import com.pahimar.ee3.exchange.*;
+import java.io.File;
+import java.util.Iterator;
+
 import latmod.core.*;
 import latmod.emcc.EMCC;
-import cpw.mods.fml.common.event.*;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
+
+import com.pahimar.ee3.exchange.*;
+
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class EMCCCustomEMC
 {

@@ -1,15 +1,17 @@
 package latmod.emcc;
 import java.util.List;
-import com.pahimar.ee3.exchange.*;
-import com.pahimar.ee3.item.crafting.RecipeAludel;
-import com.pahimar.ee3.recipe.RecipesAludel;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import latmod.core.InvUtils;
-import latmod.core.LatCore;
+
+import latmod.core.*;
 import latmod.core.mod.LC;
 import latmod.emcc.api.*;
 import net.minecraft.item.*;
-import net.minecraftforge.event.entity.player.*;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+
+import com.pahimar.ee3.exchange.*;
+import com.pahimar.ee3.item.crafting.RecipeAludel;
+import com.pahimar.ee3.recipe.RecipesAludel;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class EMCCEventHandler
 {

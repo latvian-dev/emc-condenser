@@ -1,18 +1,18 @@
 package latmod.emcc.item.tools;
 import java.util.Set;
 
-import com.google.common.collect.Sets;
-
 import latmod.core.*;
 import latmod.emcc.*;
-import latmod.emcc.api.*;
-import net.minecraft.block.*;
-import net.minecraft.block.material.*;
+import latmod.emcc.api.EMCCUtils;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.*;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
-import net.minecraft.world.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
+import com.google.common.collect.Sets;
 
 public class ItemUUPick extends ItemToolEMCC
 {
