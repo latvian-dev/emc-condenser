@@ -1,7 +1,6 @@
 package latmod.emcc.tile;
 import latmod.core.*;
-import latmod.core.base.TileLM;
-import latmod.core.tile.*;
+import latmod.core.mod.tile.*;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.net.*;

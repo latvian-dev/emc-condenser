@@ -2,16 +2,24 @@ package latmod.emcc;
 
 public class EMCCGuis
 {
-	public static final int CONDENSER = 0;
-	public static final int COND_SETTINGS = 1;
-	public static final int COND_RESTRICTED = 2;
+	private static int nextGuiID = 0;
+	public static final int nextGuiID()
+	{ return ++nextGuiID; }
+	
+	public static final int CONDENSER = nextGuiID();
+	public static final int COND_SETTINGS = nextGuiID();
+	public static final int COND_RESTRICTED = nextGuiID();
 	
 	public static class Buttons
 	{
-		public static final int SAFE_MODE = 1;
-		public static final int REDSTONE = 2;
-		public static final int SECURITY = 3;
-		public static final int INV_MODE = 4;
-		public static final int REPAIR_TOOLS = 5;
+		private static int nextButtonID = 0;
+		public static final int nextButtonID()
+		{ return ++nextButtonID; }
+		
+		public static final int SAFE_MODE = nextButtonID();
+		public static final int REDSTONE = nextButtonID();
+		public static final int SECURITY = nextButtonID();
+		public static final int INV_MODE = nextButtonID();
+		public static final int REPAIR_TOOLS = nextButtonID();
 	}
 }

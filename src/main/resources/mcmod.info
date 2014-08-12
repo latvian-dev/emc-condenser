@@ -1,6 +1,6 @@
 [
 {
-  "modid": "emcc",
+  "modid": "EMCC",
   "name": "EMC Condenser Mod",
   "description": "This mod adds EMC Condenser, that you can use to transmutate items",
   "version": "${version}",

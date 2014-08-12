@@ -1,5 +1,5 @@
 package latmod.emcc.gui;
-import latmod.core.base.gui.*;
+import latmod.core.mod.gui.*;
 import latmod.emcc.net.*;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.GuiScreen;

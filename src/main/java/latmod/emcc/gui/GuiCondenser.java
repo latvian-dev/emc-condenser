@@ -1,8 +1,8 @@
 package latmod.emcc.gui;
 import java.util.ArrayList;
 
-import latmod.core.base.gui.*;
 import latmod.core.mod.LC;
+import latmod.core.mod.gui.*;
 import latmod.emcc.*;
 import latmod.emcc.api.IEmcStorageItem;
 import latmod.emcc.tile.TileCondenser;

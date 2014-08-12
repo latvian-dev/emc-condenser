@@ -1,6 +1,6 @@
 package latmod.emcc.block;
 import latmod.core.ODItems;
-import latmod.core.base.TileLM;
+import latmod.core.mod.tile.TileLM;
 import latmod.emcc.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;

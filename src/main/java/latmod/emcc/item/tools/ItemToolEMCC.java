@@ -1,7 +1,7 @@
 package latmod.emcc.item.tools;
 import java.util.*;
 
-import latmod.core.base.IItemLM;
+import latmod.core.mod.item.IItemLM;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import net.minecraft.block.Block;

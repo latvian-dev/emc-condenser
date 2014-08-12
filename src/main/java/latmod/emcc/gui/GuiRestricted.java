@@ -1,7 +1,7 @@
 package latmod.emcc.gui;
 import java.util.ArrayList;
 
-import latmod.core.base.gui.*;
+import latmod.core.mod.gui.*;
 import latmod.core.util.FastList;
 import latmod.emcc.*;
 import latmod.emcc.net.*;

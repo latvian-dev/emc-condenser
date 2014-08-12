@@ -1,6 +1,6 @@
 package latmod.emcc.block;
 import latmod.core.*;
-import latmod.core.base.TileLM;
+import latmod.core.mod.tile.TileLM;
 import latmod.emcc.*;
 import latmod.emcc.tile.TileCondenser;
 import net.minecraft.block.material.Material;

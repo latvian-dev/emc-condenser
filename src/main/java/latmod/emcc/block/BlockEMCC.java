@@ -1,5 +1,5 @@
 package latmod.emcc.block;
-import latmod.core.base.BlockLM;
+import latmod.core.mod.block.BlockLM;
 import latmod.emcc.EMCC;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;

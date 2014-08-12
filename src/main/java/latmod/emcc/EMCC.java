@@ -1,6 +1,6 @@
 package latmod.emcc;
-import latmod.core.LatCore;
-import latmod.core.base.LMMod;
+import latmod.core.*;
+import latmod.core.mod.LMMod;
 import latmod.emcc.blacklist.EMCCBlacklist;
 import latmod.emcc.block.*;
 import latmod.emcc.customemc.EMCCCustomEMC;
@@ -21,12 +21,11 @@ import com.pahimar.ee3.exchange.EnergyValueRegistry;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 
-@Mod(modid = EMCC.MODID, name = EMCC.MODNAME, version = EMCC.MODVERSION, dependencies = "required-after:LatCoreMC;required-after:EE3")
+@Mod(modid = EMCC.MODID, name = "EMC Condenser Mod", version = EMCC.MODVERSION, dependencies = "required-after:LatCoreMC;required-after:EE3")
 public class EMCC
 {
 	protected static final String MODID = "EMCC";
-	protected static final String MODNAME = "EMC Condenser Mod";
-	protected static final String MODVERSION = "1.3.1";
+	protected static final String MODVERSION = "1.3.2";
 	
 	public static final String getModID()
 	{ return MODID; }

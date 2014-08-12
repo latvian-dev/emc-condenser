@@ -1,5 +1,4 @@
 package latmod.emcc.item;
-import latmod.core.ODItems;
 import latmod.emcc.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Items;
@@ -41,12 +40,12 @@ public class ItemMaterials extends ItemEMCC
 				EMCCItems.DUST_VERDANT,
 				EMCCItems.DUST_AZURE,
 				EMCCItems.DUST_MINIUM,
-				ODItems.REDSTONE,
-				ODItems.GLOWSTONE,
-				ODItems.QUARTZ,
-				ODItems.IRON,
-				ODItems.GOLD,
-				ODItems.DIAMOND);
+				Items.redstone,
+				Items.glowstone_dust,
+				Items.quartz,
+				Items.iron_ingot,
+				Items.gold_ingot,
+				Items.diamond);
 		
 		if(EMCC.config.recipes.infuseMiniumStar)
 		EMCC.recipes.addInfusing(EMCCItems.MINIUM_STAR, new ItemStack(Items.nether_star), EMCC.recipes.size(EMCCItems.DUST_MINIUM, 8));

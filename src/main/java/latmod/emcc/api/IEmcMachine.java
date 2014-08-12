@@ -1,5 +1,5 @@
 package latmod.emcc.api;
-import latmod.core.tile.ITileInterface;
+import latmod.core.mod.tile.ITileInterface;
 
 public interface IEmcMachine extends ITileInterface
 {

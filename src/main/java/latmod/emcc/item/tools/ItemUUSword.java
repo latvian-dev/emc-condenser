@@ -1,6 +1,6 @@
 package latmod.emcc.item.tools;
 import latmod.core.ODItems;
-import latmod.core.base.IItemLM;
+import latmod.core.mod.item.IItemLM;
 import latmod.emcc.*;
 import latmod.emcc.api.IEmcTool;
 import net.minecraft.client.renderer.texture.IIconRegister;
