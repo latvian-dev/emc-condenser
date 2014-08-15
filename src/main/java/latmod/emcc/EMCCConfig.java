@@ -1,7 +1,7 @@
 package latmod.emcc;
-import latmod.core.LMSecurity;
 import latmod.core.mod.LMConfig;
 import latmod.core.mod.tile.*;
+import latmod.core.security.LMSecurity;
 import latmod.emcc.tile.*;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 

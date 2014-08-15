@@ -1,12 +1,11 @@
 package latmod.emcc;
-import latmod.core.*;
+import latmod.core.LatCore;
 import latmod.core.mod.LMMod;
 import latmod.emcc.blacklist.EMCCBlacklist;
 import latmod.emcc.block.*;
 import latmod.emcc.customemc.EMCCCustomEMC;
 import latmod.emcc.item.*;
 import latmod.emcc.item.tools.*;
-import latmod.emcc.net.EMCCNetHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.*;
@@ -21,7 +20,7 @@ import com.pahimar.ee3.exchange.EnergyValueRegistry;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 
-@Mod(modid = EMCC.MODID, name = "EMC Condenser Mod", version = EMCC.MODVERSION, dependencies = "required-after:LatCoreMC;required-after:EE3")
+@Mod(modid = EMCC.MODID, name = "EMC Condenser", version = EMCC.MODVERSION, dependencies = "required-after:LatCoreMC;required-after:EE3")
 public class EMCC
 {
 	protected static final String MODID = "EMCC";
@@ -94,7 +93,6 @@ public class EMCC
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
-		EMCCNetHandler.init();
 		customEMC.postInitRegNameItems();
 		mod.loadRecipes();
 		proxy.postInit();

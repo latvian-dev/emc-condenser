@@ -22,11 +22,8 @@ emcc:tile.uub.name=UnUnSeptium Block
 emcc:tile.condenser.name=EMC Condenser
 
 ## Lang ##
-emcc:owner=Owner: %s
 emcc:repairing=Repairing...
 emcc:charging=Charging...
-emcc:settings=Settings
-emcc:back=Back
 emcc:notarget=No Target
 emcc:storedEMC=Stored EMC: %s
 emcc:repairEMC=Repair EMC: %s

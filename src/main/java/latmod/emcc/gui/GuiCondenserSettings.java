@@ -1,6 +1,7 @@
 package latmod.emcc.gui;
 import java.util.ArrayList;
 
+import latmod.core.mod.*;
 import latmod.core.mod.gui.*;
 import latmod.emcc.*;
 import latmod.emcc.tile.TileCondenser;
@@ -10,11 +11,11 @@ import cpw.mods.fml.relauncher.*;
 public class GuiCondenserSettings extends GuiLM
 {
 	public TileCondenser condenser;
-	public ButtonLM buttonSettings, buttonRedstone, buttonSecurity, buttonSecuritySettings, buttonInvMode, buttonRepairItems;
+	public ButtonLM buttonSettings, buttonRedstone, buttonSecurity, buttonInvMode, buttonRepairItems;
 	
 	public GuiCondenserSettings(ContainerCondenserSettings c)
 	{
-		super(c);
+		super(c, EMCC.mod.getLocation("textures/gui/condenserSettings.png"));
 		condenser = (TileCondenser)c.inv;
 		ySize = 205;
 		
@@ -22,7 +23,7 @@ public class GuiCondenserSettings extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.openGui(false, container.player, EMCCGuis.CONDENSER);
+				condenser.clientOpenGui(EMCCGuis.CONDENSER);
 				playClickSound();
 			}
 		});
@@ -31,7 +32,7 @@ public class GuiCondenserSettings extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.handleGuiButton(false, container.player, EMCCGuis.Buttons.REDSTONE, b);
+				condenser.clientPressButton(LCGuis.Buttons.REDSTONE, b);
 				playClickSound();
 			}
 		});
@@ -40,21 +41,8 @@ public class GuiCondenserSettings extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.handleGuiButton(false, container.player, EMCCGuis.Buttons.SECURITY, b);
+				condenser.clientPressButton(LCGuis.Buttons.SECURITY, b);
 				playClickSound();
-			}
-		});
-		
-		widgets.add(buttonSecuritySettings = new ButtonLM(this, 92, 48, 74, 17)
-		{
-			public void onButtonPressed(int b)
-			{
-				if(condenser.security.level.isRestricted())
-				{
-					if(!condenser.openGui(false, container.player, EMCCGuis.COND_RESTRICTED))
-						condenser.printOwner(container.player);
-					playClickSound();
-				}
 			}
 		});
 		
@@ -62,7 +50,7 @@ public class GuiCondenserSettings extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.handleGuiButton(false, container.player, EMCCGuis.Buttons.INV_MODE, b);
+				condenser.clientPressButton(LCGuis.Buttons.INV_MODE, b);
 				playClickSound();
 			}
 		});
@@ -71,7 +59,7 @@ public class GuiCondenserSettings extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.handleGuiButton(false, container.player, EMCCGuis.Buttons.REPAIR_TOOLS, b);
+				condenser.clientPressButton(EMCCGuis.Buttons.REPAIR_TOOLS, b);
 				playClickSound();
 			}
 		});
@@ -81,15 +69,12 @@ public class GuiCondenserSettings extends GuiLM
 	{
 		super.drawGuiContainerBackgroundLayer(f, x, y);
 		
-		buttonRedstone.render(xSize + condenser.redstoneMode.ID * 16, 0);
-		buttonSecurity.render(xSize + condenser.security.level.ID * 16, 16);
-		buttonInvMode.render(xSize + condenser.invMode.ID * 16, 32);
-		
-		if(condenser.security.level.isRestricted() && condenser.security.isPlayerOwner(container.player))
-			buttonSecuritySettings.render(xSize, 48);
+		buttonRedstone.render(button_redstone[condenser.redstoneMode.ID]);
+		buttonSecurity.render(button_security[condenser.security.level.ID]);
+		buttonInvMode.render(button_inv[condenser.invMode.ID]);
 		
 		if(condenser.repairTools.isOn())
-			buttonRepairItems.render(xSize + 48, 0);
+			buttonRepairItems.render(button_inner_pressed);
 	}
 	
 	public void drawScreen(int mx, int my, float f)
@@ -99,7 +84,7 @@ public class GuiCondenserSettings extends GuiLM
 		ArrayList<String> al = new ArrayList<String>();
 		
 		if(buttonSettings.mouseOver(mx, my))
-			al.add(EMCC.mod.translate("back"));
+			al.add(LC.mod.translate("back"));
 		
 		if(buttonRedstone.mouseOver(mx, my))
 			al.add(condenser.redstoneMode.getText());

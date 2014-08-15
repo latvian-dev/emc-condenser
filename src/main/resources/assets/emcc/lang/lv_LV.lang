@@ -22,11 +22,8 @@ emcc:tile.uub.name=UnUnSeptija Bloks
 emcc:tile.condenser.name=EMC Kondenseris
 
 ## Lang ##
-emcc:owner=Īpašnieks: %s
 emcc:repairing=Labo...
 emcc:charging=Lādē...
-emcc:settings=Uzstādījumi
-emcc:back=Atpakaļ
 emcc:notarget=Nav Mērķa
 emcc:storedEMC=Saglabātais EMC: %s
 emcc:repairEMC=Salabošanas EMC: %s

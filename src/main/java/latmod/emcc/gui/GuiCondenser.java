@@ -7,8 +7,9 @@ import latmod.emcc.*;
 import latmod.emcc.api.IEmcStorageItem;
 import latmod.emcc.tile.TileCondenser;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.*;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.*;
@@ -16,13 +17,20 @@ import cpw.mods.fml.relauncher.*;
 @SideOnly(Side.CLIENT)
 public class GuiCondenser extends GuiLM
 {
+	public static final ResourceLocation texLoc = EMCC.mod.getLocation("textures/gui/condenser.png");
+	
+	public final TextureCoords
+	texBar = new TextureCoords(texLoc, 0, 240),
+	texTarget = new TextureCoords(texLoc, 176, 0),
+	texTinyPressed = new TextureCoords(texLoc, 176, 16);
+	
 	public TileCondenser condenser;
 	public ButtonLM buttonSettings, buttonSafeMode, buttonTransItems;
 	public WidgetLM barEMC, targetIcon;
 	
 	public GuiCondenser(ContainerCondenser c)
 	{
-		super(c);
+		super(c, texLoc);
 		condenser = (TileCondenser)c.inv;
 		ySize = 240;
 		
@@ -30,7 +38,7 @@ public class GuiCondenser extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.openGui(false, container.player, EMCCGuis.COND_SETTINGS);
+				condenser.clientOpenGui(EMCCGuis.COND_SETTINGS);
 				playClickSound();
 			}
 		});
@@ -39,7 +47,7 @@ public class GuiCondenser extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.handleGuiButton(false, container.player, EMCCGuis.Buttons.SAFE_MODE, b);
+				condenser.clientPressButton(EMCCGuis.Buttons.SAFE_MODE, b);
 				playClickSound();
 			}
 		});
@@ -48,8 +56,11 @@ public class GuiCondenser extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.transferItems(false, container.player);
-				playClickSound();
+				if(b == 0)
+				{
+					condenser.sendClientAction(TileCondenser.ACTION_TRANS_ITEMS, null);
+					playClickSound();
+				}
 			}
 		});
 		
@@ -57,12 +68,12 @@ public class GuiCondenser extends GuiLM
 		targetIcon = new WidgetLM(this, 8, 9, 16, 16);
 	}
 	
-	public void drawGuiContainerBackgroundLayer(float f, int x, int y)
+	public void drawGuiContainerBackgroundLayer(float f, int mx, int my)
 	{
 		boolean b = GL11.glIsEnabled(GL11.GL_LIGHTING);
 		if(b) GL11.glDisable(GL11.GL_LIGHTING);
 		
-		super.drawGuiContainerBackgroundLayer(f, x, y);
+		super.drawGuiContainerBackgroundLayer(f, mx, my);
 		
 		ItemStack tar = condenser.items[TileCondenser.SLOT_TARGET];
 		
@@ -88,13 +99,16 @@ public class GuiCondenser extends GuiLM
 		}
 		
 		if(emc1 > 0L)
-		barEMC.render(0, ySize, (condenser.storedEMC % emc1) / emc1, 1D);
+			barEMC.render(texBar, (condenser.storedEMC % emc1) / emc1, 1D);
 		
 		if(condenser.items[TileCondenser.SLOT_TARGET] == null)
-		targetIcon.render(xSize, 0);
+			targetIcon.render(texTarget);
 		
 		if(condenser.safeMode.isOn())
-		buttonSafeMode.render(xSize, 16);
+			buttonSafeMode.render(texTinyPressed);
+		
+		if(buttonTransItems.mouseOver(mx, my) && Mouse.isButtonDown(0))
+			buttonTransItems.render(texTinyPressed);
 		
 		if(b) GL11.glEnable(GL11.GL_LIGHTING);
 	}
@@ -136,7 +150,7 @@ public class GuiCondenser extends GuiLM
 		}
 		
 		if(buttonSettings.mouseOver(mx, my))
-			al.add(EMCC.mod.translate("settings"));
+			al.add(LC.mod.translate("settings"));
 		
 		if(buttonSafeMode.mouseOver(mx, my))
 		{

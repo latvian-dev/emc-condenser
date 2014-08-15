@@ -1,17 +1,17 @@
 package latmod.emcc.tile;
 import latmod.core.*;
+import latmod.core.mod.LCGuis;
 import latmod.core.mod.tile.*;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
-import latmod.emcc.net.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrenchable
+public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrenchable, IClientActionTile
 {
-	public static final byte VERSION = 1;
+	public static final String ACTION_TRANS_ITEMS = "transItems";
 	
 	public static final int SLOT_TARGET = 0;
 	public static final int[] TARGET_SLOTS = { SLOT_TARGET };
@@ -48,25 +48,8 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
 	{
 		if(!worldObj.isRemote)
-		{
-			if(!openGui(true, ep, EMCCGuis.CONDENSER))
-				printOwner(ep);
-		}
-		
+			openGui(EMCCGuis.CONDENSER, ep);
 		return true;
-	}
-	
-	public boolean openGui(boolean serverSide, EntityPlayer ep, int guiID)
-	{
-		if(security.canPlayerInteract(ep))
-		{
-			if(serverSide) { ep.openGui(EMCC.inst, guiID, worldObj, xCoord, yCoord, zCoord); }
-			else EMCCNetHandler.INSTANCE.sendToServer(new MessageOpenGui(this, guiID));
-			
-			return true;
-		}
-		
-		return false;
 	}
 	
 	public void onUpdate()
@@ -208,14 +191,11 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 		repairTools = RepairTools.VALUES[tag.getByte("RepairTools")];
 		cooldown = tag.getShort("Cooldown");
 		
-		security.restricted.trim(16);
 		checkForced();
 	}
 	
 	public void writeTileData(NBTTagCompound tag)
 	{
-		security.restricted.trim(16);
-		
 		super.writeTileData(tag);
 		
 		tag.setDouble("StoredEMC", storedEMC);
@@ -225,9 +205,6 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 		tag.setByte("RepairTools", (byte)repairTools.ID);
 		tag.setShort("Cooldown", (short)cooldown);
 	}
-	
-	public void printOwner(EntityPlayer ep)
-	{ LatCore.printChat(ep, EMCC.mod.translate("owner", security.owner)); }
 	
 	public void checkForced()
 	{
@@ -242,61 +219,6 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 		
 		if(EMCC.config.condenser.forcedInvMode != null && invMode.ID != EMCC.config.condenser.forcedInvMode.ID)
 		{ invMode = EMCC.config.condenser.forcedInvMode; markDirty(); }
-	}
-	
-	public void handleGuiButton(boolean serverSide, EntityPlayer ep, int i, int mb)
-	{
-		if(serverSide)
-		{
-			if(i == EMCCGuis.Buttons.SAFE_MODE)
-				safeMode = safeMode.next();
-			else if(i == EMCCGuis.Buttons.REDSTONE)
-				redstoneMode = (mb == 0) ? redstoneMode.next() : redstoneMode.prev();
-			else if(i == EMCCGuis.Buttons.INV_MODE)
-				invMode = (mb == 0) ? invMode.next() : invMode.prev();
-			else if(i == EMCCGuis.Buttons.REPAIR_TOOLS)
-				repairTools = repairTools.next();
-			else if(i == EMCCGuis.Buttons.SECURITY)
-			{
-				if(ep != null && security.isPlayerOwner(ep))
-					security.level = (mb == 0) ? security.level.next() : security.level.prev();
-				else printOwner(ep);
-			}
-			
-			checkForced();
-			markDirty();
-		}
-		else
-		{
-			EMCCNetHandler.INSTANCE.sendToServer(new MessageButtonPressed(this, i, mb));
-		}
-	}
-	
-	public void transferItems(boolean serverSide, EntityPlayer ep)
-	{
-		if(serverSide)
-		{
-			int[] invSlots = InvUtils.getPlayerSlots(ep);
-			
-			for(int i = 0; i < OUTPUT_SLOTS.length; i++)
-			if(items[OUTPUT_SLOTS[i]] != null)
-			{
-				int ss = items[OUTPUT_SLOTS[i]].stackSize;
-				
-				for(int j = 0; j < ss; j++)
-				{
-					if(InvUtils.addSingleItemToInv(items[OUTPUT_SLOTS[i]].copy(), ep.inventory, invSlots, -1, true))
-					{
-						items[OUTPUT_SLOTS[i]].stackSize--;
-						if(items[OUTPUT_SLOTS[i]].stackSize <= 0)
-							items[OUTPUT_SLOTS[i]] = null;
-						
-						markDirty();
-					}
-				}
-			}
-		}
-		else EMCCNetHandler.INSTANCE.sendToServer(new MessageTransItems(this));
 	}
 	
 	@Override
@@ -331,7 +253,7 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 	{ return true; }
 	
 	public boolean canWrench(EntityPlayer ep)
-	{ return security.canPlayerInteract(ep); }
+	{ return security.canInteract(ep); }
 	
 	public void readFromWrench(NBTTagCompound tag)
 	{ readTileData(tag); }
@@ -346,4 +268,60 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 	
 	public ItemStack getBlockToPlace()
 	{ return EMCCItems.CONDENSER; }
+	
+	public void handleButton(String button, int mouseButton, EntityPlayer ep)
+	{
+		if(button.equals(EMCCGuis.Buttons.SAFE_MODE))
+			safeMode = safeMode.next();
+		else if(button.equals(LCGuis.Buttons.REDSTONE))
+			redstoneMode = (mouseButton == 0) ? redstoneMode.next() : redstoneMode.prev();
+		else if(button.equals(LCGuis.Buttons.INV_MODE))
+			invMode = (mouseButton == 0) ? invMode.next() : invMode.prev();
+		else if(button.equals(EMCCGuis.Buttons.REPAIR_TOOLS))
+			repairTools = repairTools.next();
+		else if(button.equals(LCGuis.Buttons.SECURITY))
+		{
+			if(ep != null && security.isOwner(ep))
+				security.level = security.level.next();
+			else printOwner(ep);
+		}
+		
+		checkForced();
+		markDirty();
+	}
+	
+	public void openGui(int guiID, EntityPlayer ep)
+	{
+		if(security.canInteract(ep))
+			ep.openGui(EMCC.inst, guiID, worldObj, xCoord, yCoord, zCoord);
+		else printOwner(ep);
+	}
+	
+	public void onClientAction(EntityPlayer ep, String action, NBTTagCompound data)
+	{
+		super.onClientAction(ep, action, data);
+		
+		if(action.equals(ACTION_TRANS_ITEMS))
+		{
+			int[] invSlots = InvUtils.getPlayerSlots(ep);
+			
+			for(int i = 0; i < OUTPUT_SLOTS.length; i++)
+			if(items[OUTPUT_SLOTS[i]] != null)
+			{
+				int ss = items[OUTPUT_SLOTS[i]].stackSize;
+				
+				for(int j = 0; j < ss; j++)
+				{
+					if(InvUtils.addSingleItemToInv(items[OUTPUT_SLOTS[i]].copy(), ep.inventory, invSlots, -1, true))
+					{
+						items[OUTPUT_SLOTS[i]].stackSize--;
+						if(items[OUTPUT_SLOTS[i]].stackSize <= 0)
+							items[OUTPUT_SLOTS[i]] = null;
+						
+						markDirty();
+					}
+				}
+			}
+		}
+	}
 }

@@ -1,11 +1,9 @@
 package latmod.emcc.gui;
 import latmod.core.mod.gui.ContainerLM;
-import latmod.emcc.EMCC;
 import latmod.emcc.tile.TileCondenser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 
 public class ContainerCondenserSettings extends ContainerLM
 {
@@ -26,7 +24,4 @@ public class ContainerCondenserSettings extends ContainerLM
 	
 	public ItemStack transferStackInSlot(EntityPlayer ep, int i)
 	{ return null; }
-	
-	public ResourceLocation getTexture()
-	{ return EMCC.mod.getLocation("textures/gui/condenserSettings.png"); }
 }

@@ -18,24 +18,28 @@ public class EMCCEventHandler
 	@SubscribeEvent
 	public void onItemTooltip(ItemTooltipEvent e)
 	{
-		Item i = e.itemStack.getItem();
+		Item item = e.itemStack.getItem();
 		
-		if(i instanceof IEmcStorageItem)
+		if(item instanceof IEmcStorageItem)
 		{
-			e.toolTip.add(EMCC.mod.translate("storedEMC", num(((IEmcStorageItem)i).getStoredEmc(e.itemStack))));
+			e.toolTip.add(EMCC.mod.translate("storedEMC", num(((IEmcStorageItem)item).getStoredEmc(e.itemStack))));
 		}
 		
-		if(i instanceof IEmcTool)
+		if(item instanceof IEmcTool)
 		{
-			String num = "" + ((IEmcTool)i).getEmcPerDmg(e.itemStack);
+			String num = "" + ((IEmcTool)item).getEmcPerDmg(e.itemStack);
 			if(num.endsWith(".0")) num = num.substring(0, num.length() - 2);
 			e.toolTip.add(EMCC.mod.translate("repairEMC", num));
 		}
 		
 		for(int j = 0; j < e.toolTip.size(); j++)
 		{
-			if(e.toolTip.get(j).startsWith("Infused with "))
-			{ e.toolTip.remove(j); break; }
+			String s = e.toolTip.get(j);
+			if(s.startsWith("Infused with "))
+				e.toolTip.remove(j);
+			
+			if(s.equalsIgnoreCase("No Exchange Energy value"))
+				e.toolTip.remove(j);
 		}
 		
 		List<RecipeAludel> al = RecipesAludel.getInstance().getRecipes();
