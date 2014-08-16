@@ -1,6 +1,6 @@
 package latmod.emcc;
 import latmod.core.LatCore;
-import latmod.core.mod.LMMod;
+import latmod.core.mod.*;
 import latmod.emcc.blacklist.EMCCBlacklist;
 import latmod.emcc.block.*;
 import latmod.emcc.customemc.EMCCCustomEMC;
@@ -24,7 +24,7 @@ import cpw.mods.fml.common.event.*;
 public class EMCC
 {
 	protected static final String MODID = "EMCC";
-	protected static final String MODVERSION = "1.3.2";
+	protected static final String MODVERSION = "1.3.3";
 	
 	public static final String getModID()
 	{ return MODID; }
@@ -85,6 +85,7 @@ public class EMCC
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent e)
 	{
+		LC.versionsToCheck.put(MODID, MODVERSION);
 		EMCCItems.load();
 		customEMC.initRegNameItems();
 		proxy.init();
