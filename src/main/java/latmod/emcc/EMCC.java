@@ -24,7 +24,7 @@ import cpw.mods.fml.common.event.*;
 public class EMCC
 {
 	protected static final String MODID = "EMCC";
-	protected static final String MODVERSION = "1.3.3";
+	protected static final String MODVERSION = "1.3.4";
 	
 	public static final String getModID()
 	{ return MODID; }
@@ -60,7 +60,9 @@ public class EMCC
 		mod.addBlock(EMCCItems.b_condenser = new BlockCondenser("condenser"));
 		
 		mod.addItem(EMCCItems.i_mat = new ItemMaterials("materials"));
-		mod.addItem(EMCCItems.i_emc_storage = new ItemEmcStorage("emcStorage"));
+		mod.addItem(EMCCItems.i_emc_battery = new ItemEmcBattery("battery"));
+		mod.addItem(EMCCItems.i_life_ring = new ItemLifeRing("lifeRing"));
+		mod.addItem(EMCCItems.i_black_hole_band = new ItemBlackHoleBand("blackHoleBand"));
 		
 		mod.addItem(EMCCItems.i_wrench = new ItemUUWrench("wrench"));
 		
@@ -73,7 +75,7 @@ public class EMCC
 		
 		mod.onPostLoaded();
 		
-		tab = LatCore.createTab(mod.assets + "tab", new ItemStack(EMCCItems.i_emc_storage, 1, 1));
+		tab = LatCore.createTab(mod.assets + "tab", new ItemStack(EMCCItems.i_emc_battery, 1, 1));
 		
 		LatCore.addGuiHandler(inst, proxy);
 		MinecraftForge.EVENT_BUS.register(new EMCCEventHandler());

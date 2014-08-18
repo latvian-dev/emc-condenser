@@ -6,8 +6,8 @@ emcc:item.miniumStar.name=Mīnija Zvaigzne
 emcc:item.nuggetEmerald.name=Smaragda Gabaliņš
 
 emcc:item.battery.name=EMC Baterija
-emcc:item.lifeStone.name=Dzīvības Akmens
-emcc:item.blackHoleStone.name=Melnā Cauruma Akmens
+emcc:item.lifeRing.name=Dzīvības Gredzens
+emcc:item.blackHoleBand.name=Melnā Cauruma Stīpa
 
 emcc:item.wrench.name=UnUnSeptija Atslēga
 emcc:item.sword.name=UnUnSeptija Zobens

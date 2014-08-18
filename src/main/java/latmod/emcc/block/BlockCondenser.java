@@ -47,7 +47,7 @@ public class BlockCondenser extends BlockEMCC
 		EMCC.recipes.addRecipe(EMCCItems.CONDENSER, "OBO", "OSO", "OIO",
 				'O', ODItems.OBSIDIAN,
 				'I', is,
-				'B', new ItemStack(EMCCItems.i_emc_storage, 1, 4),
+				'B', EMCCItems.i_black_hole_band,
 				'S', new ItemStack(ModItems.stoneMinium, 1, LatCore.ANY));
 	}
 	

@@ -11,7 +11,9 @@ public class EMCCItems
 	public static BlockUUBlock b_uu_block;
 	public static BlockCondenser b_condenser;
 	public static ItemMaterials i_mat;
-	public static ItemEmcStorage i_emc_storage;
+	public static ItemEmcBattery i_emc_battery;
+	public static ItemLifeRing i_life_ring;
+	public static ItemBlackHoleBand i_black_hole_band;
 	
 	public static ItemUUWrench i_wrench;
 	public static ItemUUSword i_sword;
