@@ -20,16 +20,16 @@ import com.pahimar.ee3.exchange.EnergyValueRegistry;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 
-@Mod(modid = EMCC.MODID, name = "EMC Condenser", version = EMCC.MODVERSION, dependencies = "required-after:LatCoreMC;required-after:EE3")
+@Mod(modid = EMCC.MOD_ID, name = "EMC Condenser", version = EMCC.MOD_VERSION, dependencies = "required-after:LatCoreMC;required-after:EE3")
 public class EMCC
 {
-	protected static final String MODID = "EMCC";
-	protected static final String MODVERSION = "1.3.4";
+	public static final String MOD_ID = "EMCC";
+	public static final String MOD_VERSION = "1.3.4";
 	
 	public static final String getModID()
-	{ return MODID; }
+	{ return MOD_ID; }
 	
-	@Mod.Instance(EMCC.MODID)
+	@Mod.Instance(EMCC.MOD_ID)
 	public static EMCC inst;
 	
 	@SidedProxy(clientSide = "latmod.emcc.EMCCClient", serverSide = "latmod.emcc.EMCCCommon")
@@ -50,7 +50,7 @@ public class EMCC
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
-		mod = new LMMod(MODID);
+		mod = new LMMod(MOD_ID);
 		config = new EMCCConfig(e);
 		blacklist = new EMCCBlacklist(e);
 		customEMC = new EMCCCustomEMC(e);
@@ -87,7 +87,7 @@ public class EMCC
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent e)
 	{
-		LC.versionsToCheck.put(MODID, MODVERSION);
+		LC.versionsToCheck.put(MOD_ID, MOD_VERSION);
 		EMCCItems.load();
 		customEMC.initRegNameItems();
 		proxy.init();
