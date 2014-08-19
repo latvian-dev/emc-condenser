@@ -31,7 +31,7 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 	public void loadRecipes()
 	{
 		if(EMCC.config.tools.blackHoleStone_item != -1D)
-		EMCC.recipes.addRecipe(new ItemStack(this, 1, 4), "OEO", "EBE", "OEO",
+		EMCC.recipes.addRecipe(new ItemStack(this), "OEO", "EBE", "OEO",
 				'O', EMCCItems.UU_BLOCK,
 				'B', EMCCItems.i_emc_battery,
 				'E', Items.ender_pearl);

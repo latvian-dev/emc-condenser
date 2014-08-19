@@ -29,7 +29,7 @@ public class ItemEmcBattery extends ItemEmcStorage
 	public void loadRecipes()
 	{
 		if(EMCC.config.tools.enableBattery)
-		EMCC.recipes.addRecipe(new ItemStack(this, 1, 0), "QRQ", "QUQ", "QGQ",
+		EMCC.recipes.addRecipe(new ItemStack(this), "QRQ", "QUQ", "QGQ",
 				'Q', ODItems.QUARTZ,
 				'R', ODItems.REDSTONE,
 				'G', ODItems.GLOWSTONE,

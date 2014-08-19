@@ -1,0 +1,40 @@
+itemGroup.emc_condenser:tab=EMC Condenser
+
+## Items ##
+emc_condenser:item.uu.name=UnUnSeptium
+emc_condenser:item.miniumStar.name=Minium Star
+emc_condenser:item.nuggetEmerald.name=Emerald Nugget
+
+emc_condenser:item.battery.name=EMC Battery
+emc_condenser:item.lifeRing.name=Ring of Life
+emc_condenser:item.blackHoleBand.name=Black Hole Band
+
+emc_condenser:item.wrench.name=UnUnSeptium Wrench
+emc_condenser:item.sword.name=UnUnSeptium Sword
+emc_condenser:item.pick.name=UnUnSeptium Pick
+emc_condenser:item.shovel.name=UnUnSeptium Shovel
+emc_condenser:item.axe.name=UnUnSeptium Axe
+emc_condenser:item.hoe.name=UnUnSeptium Hoe
+emc_condenser:item.smasher.name=UnUnSeptium Smasher
+
+## Blocks ##
+emc_condenser:tile.uub.name=UnUnSeptium Block
+emc_condenser:tile.condenser.name=EMC Condenser
+
+## Lang ##
+emc_condenser:repairing=Repairing...
+emc_condenser:charging=Charging...
+emc_condenser:notarget=No Target
+emc_condenser:storedEMC=Stored EMC: %s
+emc_condenser:repairEMC=Repair EMC: %s
+emc_condenser:removeFromList=Remove from this list
+
+emc_condenser:safemode=Safe Mode
+emc_condenser:safemode.disabled=Disabled
+emc_condenser:safemode.enabled=Enabled
+
+emc_condenser:repairtools=Repair Tools
+emc_condenser:repairtools.disabled=Disabled
+emc_condenser:repairtools.enabled=Enabled
+
+emc_condenser:takeitems=Take Items

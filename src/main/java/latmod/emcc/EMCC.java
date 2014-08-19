@@ -23,8 +23,8 @@ import cpw.mods.fml.common.event.*;
 @Mod(modid = EMCC.MOD_ID, name = "EMC Condenser", version = EMCC.MOD_VERSION, dependencies = "required-after:LatCoreMC;required-after:EE3")
 public class EMCC
 {
-	public static final String MOD_ID = "EMCC";
-	public static final String MOD_VERSION = "1.3.4";
+	public static final String MOD_ID = "EMC_Condenser";
+	public static final String MOD_VERSION = "1.3.5";
 	
 	public static final String getModID()
 	{ return MOD_ID; }
