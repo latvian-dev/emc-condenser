@@ -1,7 +1,7 @@
 package latmod.emcc.gui;
 import java.util.ArrayList;
 
-import latmod.core.LatCore;
+import latmod.core.LatCoreMC;
 import latmod.core.mod.*;
 import latmod.core.mod.gui.*;
 import latmod.emcc.*;
@@ -16,7 +16,7 @@ public class GuiCondenserSettings extends GuiLM
 	
 	public GuiCondenserSettings(ContainerCondenserSettings c)
 	{
-		super(c, LatCore.getLocation(EMCC.MOD_ID, "textures/gui/condenserSettings.png"));
+		super(c, LatCoreMC.getLocation(EMCC.MOD_ID, "textures/gui/condenserSettings.png"));
 		condenser = (TileCondenser)c.inv;
 		ySize = 205;
 		

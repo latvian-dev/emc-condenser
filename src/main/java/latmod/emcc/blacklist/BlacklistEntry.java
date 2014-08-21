@@ -1,7 +1,7 @@
 package latmod.emcc.blacklist;
 import java.util.List;
 
-import latmod.core.LatCore;
+import latmod.core.LatCoreMC;
 import latmod.core.util.FastList;
 import net.minecraft.item.ItemStack;
 
@@ -27,7 +27,7 @@ public class BlacklistEntry
 		public boolean equals(Object o)
 		{
 			ItemStack is = (ItemStack)o;
-			return is != null && is.getUnlocalizedName().equals(item) && (damage == LatCore.ANY || is.getItemDamage() == damage);
+			return is != null && is.getUnlocalizedName().equals(item) && (damage == LatCoreMC.ANY || is.getItemDamage() == damage);
 		}
 	}
 	
@@ -72,7 +72,7 @@ public class BlacklistEntry
 				dmg = Integer.parseInt(s1[1]);
 				
 				if(dmg == -1)
-					dmg = LatCore.ANY;
+					dmg = LatCoreMC.ANY;
 			}
 			
 			un_list.add(new ItemEntry(uName, dmg));

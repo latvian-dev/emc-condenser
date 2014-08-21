@@ -17,7 +17,7 @@ public class EMCCBlacklist
 		
 		list = null;
 		
-		try { list = LMUtils.fromJsonFromFile(file, Blacklist.class); }
+		try { list = LatCoreMC.fromJsonFromFile(file, Blacklist.class); }
 		catch(Exception ex) { list = null; }
 		
 		if(list == null)
@@ -57,7 +57,7 @@ public class EMCCBlacklist
 			list.example.addUName("item.withDamage", 3);
 			list.example.addUName("item.anyDamage", -1);
 			
-			LMUtils.toJsonFile(file, list);
+			LatCoreMC.toJsonFile(file, list);
 		}
 		
 		list.all.reloadList();

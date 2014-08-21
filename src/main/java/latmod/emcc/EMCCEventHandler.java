@@ -77,7 +77,7 @@ public class EMCCEventHandler
 			
 			if(s.equals("Black Wool")) s = "Wool";
 			
-			if(is.getItemDamage() == LatCore.ANY)
+			if(is.getItemDamage() == LatCoreMC.ANY)
 				s = "Any " + s;
 		}
 		else if(o instanceof OreStack)

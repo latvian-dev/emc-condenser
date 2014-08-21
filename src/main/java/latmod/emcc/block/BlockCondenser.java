@@ -48,7 +48,7 @@ public class BlockCondenser extends BlockEMCC
 				'O', ODItems.OBSIDIAN,
 				'I', is,
 				'B', EMCCItems.i_black_hole_band,
-				'S', new ItemStack(ModItems.stoneMinium, 1, LatCore.ANY));
+				'S', new ItemStack(ModItems.stoneMinium, 1, LatCoreMC.ANY));
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -61,7 +61,7 @@ public class BlockCondenser extends BlockEMCC
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int s, int m)
 	{ 
-		if(s == LatCore.TOP) return topIcon;
+		if(s == LatCoreMC.TOP) return topIcon;
 		return blockIcon;
 	}
 }

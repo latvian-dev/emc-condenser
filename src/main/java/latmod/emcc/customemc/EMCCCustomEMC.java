@@ -38,7 +38,7 @@ public class EMCCCustomEMC
 		
 		map = null;
 		
-		try { map = LMUtils.fromJsonFromFile(file, CustomEMC.class); }
+		try { map = LatCoreMC.fromJsonFromFile(file, CustomEMC.class); }
 		catch(Exception ex) { map = null; }
 		
 		if(map == null)
@@ -72,7 +72,7 @@ public class EMCCCustomEMC
 			map.addRegNameValue("item.skull.wither", 1, 1024F);
 			map.addRegNameValue("item.skull.zombie", 2, 1024F);
 			map.addRegNameValue("item.skull.creeper", 4, 1024F);
-			map.addRegNameValue("item.enchantedBook", LatCore.ANY, 2048F);
+			map.addRegNameValue("item.enchantedBook", LatCoreMC.ANY, 2048F);
 			
 			map.addRegNameValue("tile.projectred.exploration.stone.stonemarble", 0 ,1F);
 			map.addRegNameValue("tile.projectred.exploration.stone.cobblebasalt", 2, 1F);
@@ -81,7 +81,7 @@ public class EMCCCustomEMC
 			map.addRegNameValue("railcraft.cube.stone.abyssal", 6, 1F);
 			map.addRegNameValue("railcraft.cube.brick.abyssal.2", 2, 1F);
 			
-			LMUtils.toJsonFile(file, map);
+			LatCoreMC.toJsonFile(file, map);
 		}
 	}
 	
@@ -114,10 +114,10 @@ public class EMCCCustomEMC
 		{
 			for(RegNameValue v : map.registry_name)
 			{
-				int dmg = (v.damage == null) ? LatCore.ANY : v.damage;
-				ItemStack is = LMUtils.getStackFromRegName(v.name, dmg);
+				int dmg = (v.damage == null) ? LatCoreMC.ANY : v.damage;
+				ItemStack is = LatCoreMC.getStackFromRegName(v.name, dmg);
 				if(is != null && v.value > 0F)
-				LatCore.addOreDictionary("emcc_" + v.name, is);
+				LatCoreMC.addOreDictionary("emcc_" + v.name, is);
 				else System.out.println("Invalid REgistry Name: " + v.name + "@" + dmg + ", " + is);
 			}
 		}

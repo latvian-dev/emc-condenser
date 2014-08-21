@@ -55,10 +55,10 @@ public class EMCCUtils
 				if(is1 != null)
 				{
 					if(!w.isRemote) for(int s = 0; s < is.stackSize; s++)
-						LMUtils.dropItem(w, x + 0.5D, y + 0.5D, z + 0.5D, is1, 10);
+						InvUtils.dropItem(w, x + 0.5D, y + 0.5D, z + 0.5D, is1, 10);
 					flag = true;
 				}
-				else if(!w.isRemote) LMUtils.dropItem(w, x + 0.5D, y + 0.5D, z + 0.5D, is, 10);
+				else if(!w.isRemote) InvUtils.dropItem(w, x + 0.5D, y + 0.5D, z + 0.5D, is, 10);
 			}
 		}
 		

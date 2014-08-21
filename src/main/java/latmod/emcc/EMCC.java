@@ -1,5 +1,5 @@
 package latmod.emcc;
-import latmod.core.LatCore;
+import latmod.core.LatCoreMC;
 import latmod.core.mod.*;
 import latmod.emcc.blacklist.EMCCBlacklist;
 import latmod.emcc.block.*;
@@ -24,7 +24,7 @@ import cpw.mods.fml.common.event.*;
 public class EMCC
 {
 	public static final String MOD_ID = "EMC_Condenser";
-	public static final String MOD_VERSION = "1.3.5";
+	public static final String MOD_VERSION = "1.3.6";
 	
 	public static final String getModID()
 	{ return MOD_ID; }
@@ -75,9 +75,9 @@ public class EMCC
 		
 		mod.onPostLoaded();
 		
-		tab = LatCore.createTab(mod.assets + "tab", new ItemStack(EMCCItems.i_emc_battery, 1, 1));
+		tab = LatCoreMC.createTab(mod.assets + "tab", new ItemStack(EMCCItems.i_emc_battery, 1, 1));
 		
-		LatCore.addGuiHandler(inst, proxy);
+		LatCoreMC.addGuiHandler(inst, proxy);
 		MinecraftForge.EVENT_BUS.register(new EMCCEventHandler());
 		
 		proxy.preInit();
