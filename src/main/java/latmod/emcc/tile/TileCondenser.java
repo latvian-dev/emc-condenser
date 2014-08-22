@@ -60,7 +60,7 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 			{
 				cooldown = EMCC.config.condenser.condenserSleepDelay;
 				
-				if(redstoneMode != RedstoneMode.DISABLED && redstoneMode.cancel(isPowered(true)))
+				if(redstoneMode != RedstoneMode.DISABLED && redstoneMode.cancel(redstonePowered))
 					return;
 				
 				int limit = EMCC.config.condenser.condenserLimitPerTick;
