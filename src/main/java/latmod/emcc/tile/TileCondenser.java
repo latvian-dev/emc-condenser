@@ -282,7 +282,7 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 		else if(button.equals(LCGuis.Buttons.SECURITY))
 		{
 			if(ep != null && security.isOwner(ep))
-				security.level = security.level.next();
+				security.level = (mouseButton == 0) ? security.level.next() : security.level.prev();
 			else printOwner(ep);
 		}
 		

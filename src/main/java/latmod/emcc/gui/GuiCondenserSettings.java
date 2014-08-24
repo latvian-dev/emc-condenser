@@ -1,9 +1,8 @@
 package latmod.emcc.gui;
-import java.util.ArrayList;
-
 import latmod.core.LatCoreMC;
 import latmod.core.mod.*;
 import latmod.core.mod.gui.*;
+import latmod.core.util.FastList;
 import latmod.emcc.*;
 import latmod.emcc.tile.TileCondenser;
 import cpw.mods.fml.relauncher.*;
@@ -12,15 +11,18 @@ import cpw.mods.fml.relauncher.*;
 public class GuiCondenserSettings extends GuiLM
 {
 	public TileCondenser condenser;
-	public ButtonLM buttonSettings, buttonRedstone, buttonSecurity, buttonInvMode, buttonRepairItems;
+	public ButtonLM buttonSettings, buttonSecurity, buttonRedstone, buttonInvMode, buttonRepairItems;
 	
-	public GuiCondenserSettings(ContainerCondenserSettings c)
+	public GuiCondenserSettings(ContainerLM c)
 	{
 		super(c, LatCoreMC.getLocation(EMCC.MOD_ID, "textures/gui/condenserSettings.png"));
 		condenser = (TileCondenser)c.inv;
-		ySize = 205;
+		xSize = 102;
+		ySize = 106;
+		textureWidth = 128;
+		textureHeight = 128;
 		
-		widgets.add(buttonSettings = new ButtonLM(this, 153, 7, 16, 16)
+		widgets.add(buttonSettings = new ButtonLM(this, 78, 6, 16, 16)
 		{
 			public void onButtonPressed(int b)
 			{
@@ -29,16 +31,7 @@ public class GuiCondenserSettings extends GuiLM
 			}
 		});
 		
-		widgets.add(buttonRedstone = new ButtonLM(this, 71, 30, 16, 16)
-		{
-			public void onButtonPressed(int b)
-			{
-				condenser.clientPressButton(LCGuis.Buttons.REDSTONE, b);
-				playClickSound();
-			}
-		});
-		
-		widgets.add(buttonSecurity = new ButtonLM(this, 153, 30, 16, 16)
+		widgets.add(buttonSecurity = new ButtonLM(this, 78, 25, 16, 16)
 		{
 			public void onButtonPressed(int b)
 			{
@@ -47,7 +40,16 @@ public class GuiCondenserSettings extends GuiLM
 			}
 		});
 		
-		widgets.add(buttonInvMode = new ButtonLM(this, 71, 75, 16, 16)
+		widgets.add(buttonRedstone = new ButtonLM(this, 78, 44, 16, 16)
+		{
+			public void onButtonPressed(int b)
+			{
+				condenser.clientPressButton(LCGuis.Buttons.REDSTONE, b);
+				playClickSound();
+			}
+		});
+		
+		widgets.add(buttonInvMode = new ButtonLM(this, 78, 63, 16, 16)
 		{
 			public void onButtonPressed(int b)
 			{
@@ -56,7 +58,7 @@ public class GuiCondenserSettings extends GuiLM
 			}
 		});
 		
-		widgets.add(buttonRepairItems = new ButtonLM(this, 153, 75, 16, 16)
+		widgets.add(buttonRepairItems = new ButtonLM(this, 78, 82, 16, 16)
 		{
 			public void onButtonPressed(int b)
 			{
@@ -68,7 +70,11 @@ public class GuiCondenserSettings extends GuiLM
 	
 	public void drawGuiContainerBackgroundLayer(float f, int x, int y)
 	{
+		textureWidth = textureHeight = 128;
+		
 		super.drawGuiContainerBackgroundLayer(f, x, y);
+		
+		textureWidth = textureHeight = 256;
 		
 		buttonRedstone.render(button_redstone[condenser.redstoneMode.ID]);
 		buttonSecurity.render(button_security[condenser.security.level.ID]);
@@ -76,13 +82,15 @@ public class GuiCondenserSettings extends GuiLM
 		
 		if(condenser.repairTools.isOn())
 			buttonRepairItems.render(button_inner_pressed);
+		
+		buttonSettings.render(button_back);
 	}
 	
 	public void drawScreen(int mx, int my, float f)
 	{
 		super.drawScreen(mx, my, f);
 		
-		ArrayList<String> al = new ArrayList<String>();
+		FastList<String> al = new FastList<String>();
 		
 		if(buttonSettings.mouseOver(mx, my))
 			al.add(LC.mod.translate("back"));

@@ -1,5 +1,7 @@
 package latmod.emcc;
+import latmod.core.mod.gui.ContainerEmpty;
 import latmod.emcc.gui.*;
+import latmod.emcc.gui.container.ContainerCondenser;
 import latmod.emcc.tile.TileCondenser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -30,7 +32,7 @@ public class EMCCClient extends EMCCCommon
 		if(te != null)
 		{
 			if(ID == EMCCGuis.CONDENSER) return new GuiCondenser(new ContainerCondenser(ep, (TileCondenser)te));
-			else if(ID == EMCCGuis.COND_SETTINGS) return new GuiCondenserSettings(new ContainerCondenserSettings(ep, (TileCondenser)te));
+			else if(ID == EMCCGuis.COND_SETTINGS) return new GuiCondenserSettings(new ContainerEmpty(ep, (TileCondenser)te));
 		}
 		
 		return null;

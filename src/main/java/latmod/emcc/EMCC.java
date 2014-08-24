@@ -24,7 +24,7 @@ import cpw.mods.fml.common.event.*;
 public class EMCC
 {
 	public static final String MOD_ID = "EMC_Condenser";
-	public static final String MOD_VERSION = "1.3.6";
+	public static final String MOD_VERSION = "@VERSION@";
 	
 	public static final String getModID()
 	{ return MOD_ID; }
@@ -87,7 +87,7 @@ public class EMCC
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent e)
 	{
-		LC.versionsToCheck.put(MOD_ID, MOD_VERSION);
+		LC.modsToCheck.add(MOD_ID);
 		EMCCItems.load();
 		customEMC.initRegNameItems();
 		proxy.init();

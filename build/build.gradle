@@ -25,17 +25,20 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-version = config.version_mc + "-" + config.version_emcc
+version = config.version_mc + "-" + config.version_mods
 group = "latmod.emcc"
 archivesBaseName = config.name_emcc
 
 minecraft {
     version = config.version_mc + "-" + config.version_forge
     runDir = "eclipse/assets"
+    
+    replace "@VERSION@", config.version_mods
+    replaceIn "EMCC.java"
 }
 
 dependencies {
-    compile files("sources/Files/" + config.name_latcoremc + "/" + config.version_mc + "/" + config.name_latcoremc + "-" + config.version_mc + "-" + config.version_latcoremc + "-dev.jar")
+    compile files("sources/Files/" + config.name_latcoremc + "/" + config.version_mc + "/" + config.name_latcoremc + "-" + config.version_mc + "-" + config.version_mods + "-dev.jar")
     compile files("sources/EE3-dev.jar")
 }
 

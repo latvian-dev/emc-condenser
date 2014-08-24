@@ -6,6 +6,7 @@ import latmod.core.mod.LC;
 import latmod.core.mod.gui.*;
 import latmod.emcc.*;
 import latmod.emcc.api.IEmcStorageItem;
+import latmod.emcc.gui.container.ContainerCondenser;
 import latmod.emcc.tile.TileCondenser;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
@@ -110,6 +111,8 @@ public class GuiCondenser extends GuiLM
 		
 		if(buttonTransItems.mouseOver(mx, my) && Mouse.isButtonDown(0))
 			buttonTransItems.render(texTinyPressed);
+		
+		buttonSettings.render(button_settings);
 		
 		if(b) GL11.glEnable(GL11.GL_LIGHTING);
 	}
