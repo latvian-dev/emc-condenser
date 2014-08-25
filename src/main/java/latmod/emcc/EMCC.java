@@ -87,7 +87,6 @@ public class EMCC
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent e)
 	{
-		LC.modsToCheck.add(MOD_ID);
 		EMCCItems.load();
 		customEMC.initRegNameItems();
 		proxy.init();
