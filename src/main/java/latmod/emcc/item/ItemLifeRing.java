@@ -52,7 +52,7 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 			
 			if(EMCC.config.tools.lifeStone_food != -1D && emc >= EMCC.config.tools.lifeStone_food && ep.getFoodStats().needFood())
 			{
-				ep.getFoodStats().setFoodLevel(ep.getFoodStats().getFoodLevel() + 1);
+				ep.getFoodStats().addStats(1, 0.6F);
 				emc -= EMCC.config.tools.lifeStone_food;
 				setStoredEmc(is, emc);
 			}
