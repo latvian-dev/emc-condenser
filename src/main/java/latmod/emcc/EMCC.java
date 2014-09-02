@@ -20,14 +20,10 @@ import com.pahimar.ee3.exchange.EnergyValueRegistry;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 
-@Mod(modid = EMCC.MOD_ID, name = "EMC Condenser", version = EMCC.MOD_VERSION, dependencies = "required-after:LatCoreMC;required-after:EE3")
+@Mod(modid = EMCC.MOD_ID, name = "EMC Condenser", version = "@VERSION@", dependencies = "required-after:LatCoreMC;required-after:EE3")
 public class EMCC
 {
-	public static final String MOD_ID = "EMC_Condenser";
-	public static final String MOD_VERSION = "@VERSION@";
-	
-	public static final String getModID()
-	{ return MOD_ID; }
+	protected static final String MOD_ID = "EMC_Condenser";
 	
 	@Mod.Instance(EMCC.MOD_ID)
 	public static EMCC inst;
@@ -75,7 +71,7 @@ public class EMCC
 		
 		mod.onPostLoaded();
 		
-		tab = LatCoreMC.createTab(mod.assets + "tab", new ItemStack(EMCCItems.i_emc_battery, 1, 1));
+		tab = mod.createTab("tab", new ItemStack(EMCCItems.i_emc_battery, 1, 1));
 		
 		LatCoreMC.addGuiHandler(inst, proxy);
 		MinecraftForge.EVENT_BUS.register(new EMCCEventHandler());

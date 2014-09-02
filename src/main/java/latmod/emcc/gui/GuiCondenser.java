@@ -1,7 +1,6 @@
 package latmod.emcc.gui;
 import java.util.ArrayList;
 
-import latmod.core.LatCoreMC;
 import latmod.core.mod.LC;
 import latmod.core.mod.gui.*;
 import latmod.emcc.*;
@@ -19,7 +18,7 @@ import cpw.mods.fml.relauncher.*;
 @SideOnly(Side.CLIENT)
 public class GuiCondenser extends GuiLM
 {
-	public static final ResourceLocation texLoc = LatCoreMC.getLocation(EMCC.MOD_ID, "textures/gui/condenser.png");
+	public static final ResourceLocation texLoc = EMCC.mod.getLocation("textures/gui/condenser.png");
 	
 	public final TextureCoords
 	texBar = new TextureCoords(texLoc, 0, 240),
