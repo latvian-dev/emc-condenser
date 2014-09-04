@@ -43,19 +43,21 @@ public class EMCCBlacklist
 			list.all.addOreName("oreAluminum");
 			list.all.addOreName("oreFzDarkIron");
 			
-			list.all.addUName("item.expBottle", null);
+			// Items
 			
-			list.targets.addUName("item.netherStar", null);
-			list.targets.addUName("item.enchantedBook", null);
+			list.all.addRegistryName("experience_bottle", null);
+			
+			list.targets.addRegistryName("nether_star", null);
+			list.targets.addRegistryName("enchanted_book", null);
 			
 			list.fuels.addOreName("cobblestone");
 			list.fuels.addOreName("stone");
 			list.fuels.addOreName("foodSalt");
 			
 			list.example.addOreName("oreName");
-			list.example.addUName("item.noDamage", null);
-			list.example.addUName("item.withDamage", 3);
-			list.example.addUName("item.anyDamage", -1);
+			list.example.addRegistryName("itemNoDamage", null);
+			list.example.addRegistryName("itemWithDamage", 3);
+			list.example.addRegistryName("itemAnyDamage", -1);
 			
 			LatCoreMC.toJsonFile(file, list);
 		}
@@ -68,7 +70,7 @@ public class EMCCBlacklist
 	public boolean isBlacklistedFuel(ItemStack is)
 	{
 		if(!EMCC.config.general.enableBlacklist) return false;
-		if(list.fuels.isBlacklistedUN(is) || list.all.isBlacklistedUN(is)) return true;
+		if(list.fuels.isBlacklistedRegName(is) || list.all.isBlacklistedRegName(is)) return true;
 		
 		FastList<String> oreNames = ODItems.getOreNames(is);
 		
@@ -87,7 +89,7 @@ public class EMCCBlacklist
 		
 		if(!EMCC.config.general.enableBlacklist) return false;
 		
-		if(list.targets.isBlacklistedUN(is) || list.all.isBlacklistedUN(is)) return true;
+		if(list.targets.isBlacklistedRegName(is) || list.all.isBlacklistedRegName(is)) return true;
 		
 		FastList<String> oreNames = ODItems.getOreNames(is);
 		

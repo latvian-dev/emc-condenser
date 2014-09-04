@@ -10,51 +10,51 @@ import com.google.gson.annotations.Expose;
 public class BlacklistEntry
 {
 	@Expose public List<String> ore_dictionary;
-	@Expose public List<String> unlocazlied_name;
-	private FastList<ItemEntry> un_list;
+	@Expose public List<String> registry_name;
+	private FastList<ItemEntry> reg_list;
 	
 	public static class ItemEntry
 	{
-		public String item;
+		public String name;
 		public int damage;
 		
 		public ItemEntry(String s, int i)
 		{
-			item = s;
+			name = s;
 			damage = i;
 		}
 		
 		public boolean equals(Object o)
 		{
 			ItemStack is = (ItemStack)o;
-			return is != null && is.getUnlocalizedName().equals(item) && (damage == LatCoreMC.ANY || is.getItemDamage() == damage);
+			return is != null && (damage == -1 || is.getItemDamage() == damage) && LatCoreMC.getRegName(is).equals(name);
 		}
 	}
 	
 	public BlacklistEntry()
 	{
 		ore_dictionary = new FastList<String>();
-		unlocazlied_name = new FastList<String>();
-		un_list = new FastList<ItemEntry>();
+		registry_name = new FastList<String>();
+		reg_list = new FastList<ItemEntry>();
 	}
 	
 	public void addOreName(String s)
 	{ ore_dictionary.add(s); }
 	
-	public void addUName(String s, Integer dmg)
-	{ unlocazlied_name.add(s + (dmg == null ? "" : ("@" + dmg))); }
+	public void addRegistryName(String s, Integer dmg)
+	{ registry_name.add(s + (dmg == null ? "" : ("@" + dmg))); }
 	
 	public boolean isBlacklistedOre(FastList<String> s)
 	{ return !ore_dictionary.isEmpty() && s.containsAny(ore_dictionary); }
 
-	public boolean isBlacklistedUN(ItemStack is)
-	{ return !un_list.isEmpty() && un_list.contains(is); }
+	public boolean isBlacklistedRegName(ItemStack is)
+	{ return !reg_list.isEmpty() && reg_list.contains(is); }
 	
 	public void reloadList()
 	{
-		un_list.clear();
+		reg_list.clear();
 		
-		if(!unlocazlied_name.isEmpty()) for(String s : unlocazlied_name)
+		if(!registry_name.isEmpty()) for(String s : registry_name)
 		{
 			String[] s1 = s.split("@");
 			
@@ -75,7 +75,7 @@ public class BlacklistEntry
 					dmg = LatCoreMC.ANY;
 			}
 			
-			un_list.add(new ItemEntry(uName, dmg));
+			reg_list.add(new ItemEntry(uName, dmg));
 		}
 	}
 }

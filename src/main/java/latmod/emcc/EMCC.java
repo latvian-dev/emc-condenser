@@ -1,6 +1,6 @@
 package latmod.emcc;
 import latmod.core.LatCoreMC;
-import latmod.core.mod.*;
+import latmod.core.mod.LMMod;
 import latmod.emcc.blacklist.EMCCBlacklist;
 import latmod.emcc.block.*;
 import latmod.emcc.customemc.EMCCCustomEMC;
@@ -11,8 +11,6 @@ import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
-
-import org.apache.logging.log4j.*;
 
 import com.pahimar.ee3.api.EnergyValue;
 import com.pahimar.ee3.exchange.EnergyValueRegistry;
@@ -32,8 +30,6 @@ public class EMCC
 	public static EMCCCommon proxy;
 	
 	public static CreativeTabs tab = null;
-	
-	public static final Logger logger = LogManager.getLogger("EMC_Cond");
 	
 	public static LMMod mod;
 	public static EMCCConfig config;

@@ -16,19 +16,19 @@ public class EMCCCustomEMC
 	
 	public static class ItemEntry
 	{
-		public String item;
+		public String name;
 		public int damage;
 		
 		public ItemEntry(String s, int i)
 		{
-			item = s;
+			name = s;
 			damage = i;
 		}
 		
 		public boolean equals(Object o)
 		{
 			ItemStack is = (ItemStack)o;
-			return is != null && is.getUnlocalizedName().equals(item) && (damage == -1 || is.getItemDamage() == damage);
+			return is != null && (damage == -1 || is.getItemDamage() == damage) && LatCoreMC.getRegName(is).equals(name);
 		}
 	}
 	
@@ -68,18 +68,21 @@ public class EMCCCustomEMC
 			map.addOreValue("shardEntropy", 512F);
 			map.addOreValue("quicksilver", 512F);
 			
-			map.addRegNameValue("item.skull.skeleton", 0, 1024F);
-			map.addRegNameValue("item.skull.wither", 1, 1024F);
-			map.addRegNameValue("item.skull.zombie", 2, 1024F);
-			map.addRegNameValue("item.skull.creeper", 4, 1024F);
-			map.addRegNameValue("item.enchantedBook", LatCoreMC.ANY, 2048F);
+			//Items
 			
-			map.addRegNameValue("tile.projectred.exploration.stone.stonemarble", 0 ,1F);
+			map.addRegNameValue("minecraft:skull", 0, 1024F);
+			map.addRegNameValue("minecraft:skull", 1, 1024F);
+			map.addRegNameValue("minecraft:skull", 2, 1024F);
+			map.addRegNameValue("minecraft:skull", 4, 1024F);
+			map.addRegNameValue("minecraft:enchanted_book", LatCoreMC.ANY, 2048F);
+			
+			/*map.addRegNameValue("tile.projectred.exploration.stone.stonemarble", 0 ,1F);
 			map.addRegNameValue("tile.projectred.exploration.stone.cobblebasalt", 2, 1F);
 			map.addRegNameValue("tile.projectred.exploration.stone.stonebasalt", 3, 1F);
 			
 			map.addRegNameValue("railcraft.cube.stone.abyssal", 6, 1F);
 			map.addRegNameValue("railcraft.cube.brick.abyssal.2", 2, 1F);
+			*/
 			
 			LatCoreMC.toJsonFile(file, map);
 		}
