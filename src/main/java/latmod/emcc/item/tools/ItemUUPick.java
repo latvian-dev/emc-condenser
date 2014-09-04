@@ -27,8 +27,8 @@ public class ItemUUPick extends ItemToolEMCC
 	
 	public void loadRecipes()
 	{
-		if(EMCC.config.tools.enablePick)
-			EMCC.recipes.addRecipe(new ItemStack(this), "UUU", " S ", " S ",
+		if(EMCC.mod.config.tools.enablePick)
+			EMCC.mod.recipes.addRecipe(new ItemStack(this), "UUU", " S ", " S ",
 					'U', EMCCItems.UU_ITEM,
 					'S', ODItems.STICK);
 		

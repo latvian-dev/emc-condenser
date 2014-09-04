@@ -26,8 +26,8 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 	
 	public void loadRecipes()
 	{
-		if(EMCC.config.tools.lifeStone_1hp != -1D || EMCC.config.tools.lifeStone_food != -1D)
-		EMCC.recipes.addRecipe(new ItemStack(this), "SPS", "PBP", "SPS",
+		if(EMCC.mod.config.tools.lifeStone_1hp != -1D || EMCC.mod.config.tools.lifeStone_food != -1D)
+		EMCC.mod.recipes.addRecipe(new ItemStack(this), "SPS", "PBP", "SPS",
 				'S', Items.cooked_beef,
 				'B', EMCCItems.i_emc_battery,
 				'P', new ItemStack(Items.potionitem, 1, 8225));
@@ -42,7 +42,7 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 	public void onWornTick(ItemStack is, EntityLivingBase e)
 	{
 		if(e == null || e.worldObj.isRemote || !(e instanceof EntityPlayer)) return;
-		if(EMCC.config.tools.lifeStone_1hp == -1D && EMCC.config.tools.lifeStone_food == -1D) return;
+		if(EMCC.mod.config.tools.lifeStone_1hp == -1D && EMCC.mod.config.tools.lifeStone_food == -1D) return;
 		
 		EntityPlayer ep = (EntityPlayer)e;
 		
@@ -50,20 +50,20 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 		{
 			double emc = getStoredEmc(is);
 			
-			if(EMCC.config.tools.lifeStone_food != -1D && emc >= EMCC.config.tools.lifeStone_food && ep.getFoodStats().needFood())
+			if(EMCC.mod.config.tools.lifeStone_food != -1D && emc >= EMCC.mod.config.tools.lifeStone_food && ep.getFoodStats().needFood())
 			{
 				ep.getFoodStats().addStats(1, 0.6F);
-				emc -= EMCC.config.tools.lifeStone_food;
+				emc -= EMCC.mod.config.tools.lifeStone_food;
 				setStoredEmc(is, emc);
 			}
 			
 			float hp = ep.getHealth();
 			float maxHp = ep.getMaxHealth();
 			
-			if(EMCC.config.tools.lifeStone_1hp != -1D && hp < maxHp && emc >= EMCC.config.tools.lifeStone_1hp)
+			if(EMCC.mod.config.tools.lifeStone_1hp != -1D && hp < maxHp && emc >= EMCC.mod.config.tools.lifeStone_1hp)
 			{
 				ep.setHealth(hp + 1F);
-				emc -= EMCC.config.tools.lifeStone_1hp;
+				emc -= EMCC.mod.config.tools.lifeStone_1hp;
 				if(emc < 0D) emc = 0D;
 				setStoredEmc(is, emc);
 			}

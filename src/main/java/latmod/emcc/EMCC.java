@@ -31,9 +31,7 @@ public class EMCC
 	
 	public static CreativeTabs tab = null;
 	
-	public static LMMod mod;
-	public static EMCCConfig config;
-	public static EMCCRecipes recipes;
+	public static LMMod<EMCCConfig, EMCCRecipes> mod;
 	public static EMCCBlacklist blacklist;
 	public static EMCCCustomEMC customEMC;
 	
@@ -42,11 +40,9 @@ public class EMCC
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
-		mod = new LMMod(MOD_ID);
-		config = new EMCCConfig(e);
+		mod = new LMMod<EMCCConfig, EMCCRecipes>(MOD_ID, new EMCCConfig(e), new EMCCRecipes());
 		blacklist = new EMCCBlacklist(e);
 		customEMC = new EMCCCustomEMC(e);
-		recipes = new EMCCRecipes();
 		
 		mod.addBlock(EMCCItems.b_uu_block = new BlockUUBlock("uub"));
 		mod.addBlock(EMCCItems.b_condenser = new BlockCondenser("condenser"));
@@ -73,7 +69,7 @@ public class EMCC
 		MinecraftForge.EVENT_BUS.register(new EMCCEventHandler());
 		
 		proxy.preInit();
-		config.save();
+		mod.config.save();
 	}
 	
 	@Mod.EventHandler

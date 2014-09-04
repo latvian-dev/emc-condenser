@@ -28,8 +28,8 @@ public class ItemEmcBattery extends ItemEmcStorage
 	
 	public void loadRecipes()
 	{
-		if(EMCC.config.tools.enableBattery)
-		EMCC.recipes.addRecipe(new ItemStack(this), "QRQ", "QUQ", "QGQ",
+		if(EMCC.mod.config.tools.enableBattery)
+		EMCC.mod.recipes.addRecipe(new ItemStack(this), "QRQ", "QUQ", "QGQ",
 				'Q', ODItems.QUARTZ,
 				'R', ODItems.REDSTONE,
 				'G', ODItems.GLOWSTONE,
@@ -44,7 +44,7 @@ public class ItemEmcBattery extends ItemEmcStorage
 		
 		if(is.getItemDamage() == 1 && (w.getWorldTime() % 8 == 0))
 		{
-			if(!EMCC.config.tools.enableBattery) return;
+			if(!EMCC.mod.config.tools.enableBattery) return;
 			
 			double emc = getStoredEmc(is);
 			

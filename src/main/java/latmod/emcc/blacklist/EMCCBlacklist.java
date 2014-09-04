@@ -69,7 +69,7 @@ public class EMCCBlacklist
 	
 	public boolean isBlacklistedFuel(ItemStack is)
 	{
-		if(!EMCC.config.general.enableBlacklist) return false;
+		if(!EMCC.mod.config.general.enableBlacklist) return false;
 		if(list.fuels.isBlacklistedRegName(is) || list.all.isBlacklistedRegName(is)) return true;
 		
 		FastList<String> oreNames = ODItems.getOreNames(is);
@@ -87,7 +87,7 @@ public class EMCCBlacklist
 	{
 		if(is.getItem() == EMCCItems.i_wrench) return true;
 		
-		if(!EMCC.config.general.enableBlacklist) return false;
+		if(!EMCC.mod.config.general.enableBlacklist) return false;
 		
 		if(list.targets.isBlacklistedRegName(is) || list.all.isBlacklistedRegName(is)) return true;
 		

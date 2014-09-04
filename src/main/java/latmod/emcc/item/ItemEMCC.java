@@ -10,7 +10,7 @@ public class ItemEMCC extends ItemLM
 	public ItemEMCC(String s)
 	{ super(s); }
 	
-	public LMMod getMod()
+	public LMMod<?, ?> getMod()
 	{ return EMCC.mod; }
 	
 	@SideOnly(Side.CLIENT)

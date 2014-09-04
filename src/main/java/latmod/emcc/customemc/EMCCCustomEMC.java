@@ -90,7 +90,7 @@ public class EMCCCustomEMC
 	
 	public void initRegNameItems()
 	{
-		if(!EMCC.config.general.enableCustomEMC) return;
+		if(!EMCC.mod.config.general.enableCustomEMC) return;
 		
 		if(!map.ore_dictionary.isEmpty())
 		{

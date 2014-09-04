@@ -27,7 +27,7 @@ public class ItemMaterials extends ItemEMCC
 		
 		EMCCItems.UU_ITEM = new ItemStack(this, 1, 0);
 		EMCCItems.MINIUM_STAR = new ItemStack(this, 1, 1);
-		EMCC.recipes.addOre("nuggetEmerald", EMCCItems.NUGGET_EMERALD = new ItemStack(this, 1, 2));
+		EMCC.mod.recipes.addOre("nuggetEmerald", EMCCItems.NUGGET_EMERALD = new ItemStack(this, 1, 2));
 	}
 	
 	public void onPostLoaded()
@@ -37,7 +37,7 @@ public class ItemMaterials extends ItemEMCC
 	
 	public void loadRecipes()
 	{
-		EMCC.recipes.addShapelessRecipe(EMCCItems.UU_ITEM,
+		EMCC.mod.recipes.addShapelessRecipe(EMCCItems.UU_ITEM,
 				EMCCItems.DUST_VERDANT,
 				EMCCItems.DUST_AZURE,
 				EMCCItems.DUST_MINIUM,
@@ -48,21 +48,21 @@ public class ItemMaterials extends ItemEMCC
 				ODItems.GOLD,
 				ODItems.DIAMOND);
 		
-		if(EMCC.config.recipes.infuseMiniumStar)
-		EMCC.recipes.addInfusing(EMCCItems.MINIUM_STAR, new ItemStack(Items.nether_star), EMCC.recipes.size(EMCCItems.DUST_MINIUM, 8));
-		else EMCC.recipes.addRecipe(EMCCItems.MINIUM_STAR, "MMM", "MSM", "MMM",
+		if(EMCC.mod.config.recipes.infuseMiniumStar)
+		EMCC.mod.recipes.addInfusing(EMCCItems.MINIUM_STAR, new ItemStack(Items.nether_star), EMCC.mod.recipes.size(EMCCItems.DUST_MINIUM, 8));
+		else EMCC.mod.recipes.addRecipe(EMCCItems.MINIUM_STAR, "MMM", "MSM", "MMM",
 				Character.valueOf('M'), EMCCItems.DUST_MINIUM,
 				Character.valueOf('S'), Items.nether_star);
 		
-		if(EMCC.config.recipes.miniumToNetherStar == 1)
-			EMCC.recipes.addInfusing(new ItemStack(Items.nether_star), EMCCItems.MINIUM_STAR, new ItemStack(Items.glowstone_dust));
-		else if(EMCC.config.recipes.miniumToNetherStar == 2)
-			EMCC.recipes.addSmelting(new ItemStack(Items.nether_star), EMCCItems.MINIUM_STAR);
+		if(EMCC.mod.config.recipes.miniumToNetherStar == 1)
+			EMCC.mod.recipes.addInfusing(new ItemStack(Items.nether_star), EMCCItems.MINIUM_STAR, new ItemStack(Items.glowstone_dust));
+		else if(EMCC.mod.config.recipes.miniumToNetherStar == 2)
+			EMCC.mod.recipes.addSmelting(new ItemStack(Items.nether_star), EMCCItems.MINIUM_STAR);
 		
-		EMCC.recipes.addItemBlockRecipe(EMCCItems.NUGGET_EMERALD, new ItemStack(Items.emerald), true);
+		EMCC.mod.recipes.addItemBlockRecipe(EMCCItems.NUGGET_EMERALD, new ItemStack(Items.emerald), true);
 		
-		if(EMCC.config.recipes.infuseEnchBottle)
-			EMCC.recipes.addInfusing(new ItemStack(Items.experience_bottle), new ItemStack(Items.potionitem, 1, 32), EMCCItems.NUGGET_EMERALD);
+		if(EMCC.mod.config.recipes.infuseEnchBottle)
+			EMCC.mod.recipes.addInfusing(new ItemStack(Items.experience_bottle), new ItemStack(Items.potionitem, 1, 32), EMCCItems.NUGGET_EMERALD);
 	}
 	
 	public String getUnlocalizedName(ItemStack is)
