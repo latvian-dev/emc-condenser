@@ -2,6 +2,7 @@ package latmod.emcc.item.tools;
 import java.util.*;
 
 import latmod.core.mod.item.IItemLM;
+import latmod.core.mod.recipes.LMRecipes;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import net.minecraft.block.Block;
@@ -44,7 +45,7 @@ public class ItemToolEMCC extends ItemTool implements IItemLM, IEmcTool, IEffect
 	}
 	
 	public double getEmcPerDmg(ItemStack is)
-	{ return EMCC.mod.config.tools.toolEmcPerDamage; }
+	{ return EMCC.mod.config().tools.toolEmcPerDamage; }
 	
 	public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
 	{ return false; }
@@ -106,10 +107,10 @@ public class ItemToolEMCC extends ItemTool implements IItemLM, IEmcTool, IEffect
 	{ for(Material m1 : materials) { if(m1 == m) return true; } return false; }
 	
 	public static boolean isBlazing(ItemStack is)
-	{ return EMCC.mod.config.recipes.toolBlazingInfusion > 0 && EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, is) > 0; }
+	{ return EMCC.mod.config().recipes.toolBlazingInfusion > 0 && EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, is) > 0; }
 	
 	public static boolean isArea(ItemStack is)
-	{ return EMCC.mod.config.recipes.toolAreaInfusion > 0 && is.hasTagCompound() && is.stackTagCompound.getBoolean("AreaMode"); }
+	{ return EMCC.mod.config().recipes.toolAreaInfusion > 0 && is.hasTagCompound() && is.stackTagCompound.getBoolean("AreaMode"); }
 	
 	public static ItemStack setBlazing(ItemStack is)
 	{
@@ -128,8 +129,8 @@ public class ItemToolEMCC extends ItemTool implements IItemLM, IEmcTool, IEffect
 	}
 
 	public static void addBlazingRecipe(ItemStack is)
-	{ if(EMCC.mod.config.recipes.toolBlazingInfusion > 0) EMCC.mod.recipes.addInfusing(setBlazing(is.copy()), is.copy(), new ItemStack(Items.blaze_rod, EMCC.mod.config.recipes.toolBlazingInfusion)); }
+	{ if(EMCC.mod.config().recipes.toolBlazingInfusion > 0) EMCC.mod.recipes().addInfusing(setBlazing(is.copy()), is.copy(), new ItemStack(Items.blaze_rod, EMCC.mod.config().recipes.toolBlazingInfusion)); }
 	
 	public static void addAreaRecipe(ItemStack is)
-	{ if(EMCC.mod.config.recipes.toolAreaInfusion > 0) EMCC.mod.recipes.addInfusing(setArea(is.copy()), is.copy(), EMCC.mod.recipes.size(EMCCItems.UU_BLOCK, EMCC.mod.config.recipes.toolAreaInfusion)); }
+	{ if(EMCC.mod.config().recipes.toolAreaInfusion > 0) EMCC.mod.recipes().addInfusing(setArea(is.copy()), is.copy(), LMRecipes.size(EMCCItems.UU_BLOCK, EMCC.mod.config().recipes.toolAreaInfusion)); }
 }

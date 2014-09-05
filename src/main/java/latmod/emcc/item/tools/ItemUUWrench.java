@@ -31,8 +31,8 @@ public class ItemUUWrench extends ItemEMCC implements IEmcTool
 	
 	public void loadRecipes()
 	{
-		if(EMCC.mod.config.tools.enableWrench)
-			EMCC.mod.recipes.addRecipe(new ItemStack(this), "UBU", " S ", " S ",
+		if(EMCC.mod.config().tools.enableWrench)
+			EMCC.mod.recipes().addRecipe(new ItemStack(this), "UBU", " S ", " S ",
 					'U', EMCCItems.UU_BLOCK,
 					'S', ODItems.STICK,
 					'B', EMCCItems.i_emc_battery);
@@ -127,5 +127,5 @@ public class ItemUUWrench extends ItemEMCC implements IEmcTool
 	}
 
 	public double getEmcPerDmg(ItemStack is)
-	{ return EMCC.mod.config.tools.toolEmcPerDamage; }
+	{ return EMCC.mod.config().tools.toolEmcPerDamage; }
 }

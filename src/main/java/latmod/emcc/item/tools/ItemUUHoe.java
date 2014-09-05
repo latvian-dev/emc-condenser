@@ -31,8 +31,8 @@ public class ItemUUHoe extends ItemEMCC implements IEmcTool
 	
 	public void loadRecipes()
 	{
-		if(EMCC.mod.config.tools.enableHoe)
-			EMCC.mod.recipes.addRecipe(new ItemStack(this), "UU", " S", " S",
+		if(EMCC.mod.config().tools.enableHoe)
+			addRecipe(new ItemStack(this), "UU", " S", " S",
 					'U', EMCCItems.UU_ITEM,
 					'S', ODItems.STICK);
 		
@@ -40,7 +40,7 @@ public class ItemUUHoe extends ItemEMCC implements IEmcTool
 	}
 	
 	public double getEmcPerDmg(ItemStack is)
-	{ return EMCC.mod.config.tools.toolEmcPerDamage; }
+	{ return EMCC.mod.config().tools.toolEmcPerDamage; }
 	
 	public boolean onItemUse(ItemStack is, EntityPlayer ep, World w, int x, int y, int z, int side, float x1, float y1, float z1)
 	{

@@ -33,8 +33,8 @@ public class ItemUUSmasher extends ItemToolEMCC
 
 	public void loadRecipes()
 	{
-		if(EMCC.mod.config.tools.enableSmasher)
-			EMCC.mod.recipes.addRecipe(new ItemStack(this), "APA", "BVB", " S ",
+		if(EMCC.mod.config().tools.enableSmasher)
+			EMCC.mod.recipes().addRecipe(new ItemStack(this), "APA", "BVB", " S ",
 					'B', EMCCItems.UU_BLOCK,
 					'S', ODItems.STICK,
 					'P', EMCCItems.i_pick,

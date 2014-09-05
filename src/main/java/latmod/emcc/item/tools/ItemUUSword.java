@@ -27,8 +27,8 @@ public class ItemUUSword extends ItemSword implements IItemLM, IEmcTool
 	
 	public void loadRecipes()
 	{
-		if(EMCC.mod.config.tools.enableSword)
-			EMCC.mod.recipes.addRecipe(new ItemStack(this), "U", "U", "S",
+		if(EMCC.mod.config().tools.enableSword)
+			EMCC.mod.recipes().addRecipe(new ItemStack(this), "U", "U", "S",
 					'U', EMCCItems.UU_ITEM,
 					'S', ODItems.STICK);
 		
@@ -36,7 +36,7 @@ public class ItemUUSword extends ItemSword implements IItemLM, IEmcTool
 	}
 	
 	public double getEmcPerDmg(ItemStack is)
-	{ return EMCC.mod.config.tools.toolEmcPerDamage; }
+	{ return EMCC.mod.config().tools.toolEmcPerDamage; }
 	
 	public Item getItem()
 	{ return this; }

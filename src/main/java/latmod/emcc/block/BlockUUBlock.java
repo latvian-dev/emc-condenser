@@ -26,13 +26,13 @@ public class BlockUUBlock extends BlockEMCC
 	{ return null; }
 	
 	public float getEnchantPowerBonus(World w, int x, int y, int z)
-	{ return (float)EMCC.mod.config.general.ununblockEnchantPower; }
+	{ return (float)EMCC.mod.config().general.ununblockEnchantPower; }
 	
 	public void loadRecipes()
 	{
-		if(EMCC.mod.config.recipes.infuseUUBlock)
-		EMCC.mod.recipes.addInfusing(EMCCItems.UU_BLOCK, EMCCItems.UU_ITEM, new ItemStack(Blocks.obsidian, 8));
-		else EMCC.mod.recipes.addRecipe(EMCCItems.UU_BLOCK, "OOO", "OUO", "OOO",
+		if(EMCC.mod.config().recipes.infuseUUBlock)
+		EMCC.mod.recipes().addInfusing(EMCCItems.UU_BLOCK, EMCCItems.UU_ITEM, new ItemStack(Blocks.obsidian, 8));
+		else EMCC.mod.recipes().addRecipe(EMCCItems.UU_BLOCK, "OOO", "OUO", "OOO",
 			'U', EMCCItems.UU_ITEM,
 			'O', ODItems.OBSIDIAN);
 	}
