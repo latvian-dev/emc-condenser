@@ -2,8 +2,7 @@ package latmod.emcc.item.tools;
 import java.util.*;
 
 import latmod.core.mod.item.IItemLM;
-import latmod.core.mod.recipes.LMRecipes;
-import latmod.emcc.*;
+import latmod.emcc.EMCC;
 import latmod.emcc.api.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -11,7 +10,6 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
@@ -22,26 +20,15 @@ public class ItemToolEMCC extends ItemTool implements IItemLM, IEmcTool, IEffect
 {
 	public final String itemName;
 	
-	@SideOnly(Side.CLIENT)
-	public IIcon blazingIcon;
-	public final boolean isBlazing;
-	
-	@SideOnly(Side.CLIENT)
-	public IIcon areaIcon;
-	public final boolean isArea;
-	
 	public Set<Block> effectiveBlocks;
 	
-	public ItemToolEMCC(String s, Set<Block> b, boolean blaze, boolean area)
+	public ItemToolEMCC(String s, Set<Block> b)
 	{
 		super(4F, EMCC.toolMaterial, b);
 		setUnlocalizedName(s);
 		itemName = s;
 		effectiveBlocks = b;
 		setFull3D();
-		
-		isBlazing = blaze;
-		isArea = area;
 	}
 	
 	public double getEmcPerDmg(ItemStack is)
@@ -74,21 +61,11 @@ public class ItemToolEMCC extends ItemTool implements IItemLM, IEmcTool, IEffect
 	
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
-	{
-		itemIcon = ir.registerIcon(EMCC.mod.assets + "tools/def/" + itemName);
-		if(isBlazing) blazingIcon = ir.registerIcon(EMCC.mod.assets + "tools/blazing/" + itemName);
-		if(isArea) areaIcon = ir.registerIcon(EMCC.mod.assets + "tools/area/" + itemName);
-	}
+	{ itemIcon = ir.registerIcon(EMCC.mod.assets + "tools/" + itemName); }
 	
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(ItemStack is, int r)
-	{
-		if(isBlazing && ItemToolEMCC.isBlazing(is))
-			return blazingIcon;
-		if(isArea && ItemToolEMCC.isArea(is))
-			return areaIcon;
-		return itemIcon;
-	}
+	{ return itemIcon; }
 	
 	@SideOnly(Side.CLIENT)
 	public CreativeTabs getCreativeTab()
@@ -106,11 +83,8 @@ public class ItemToolEMCC extends ItemTool implements IItemLM, IEmcTool, IEffect
 	public static boolean isEffectiveAgainst(Material m, Material... materials)
 	{ for(Material m1 : materials) { if(m1 == m) return true; } return false; }
 	
-	public static boolean isBlazing(ItemStack is)
-	{ return EMCC.mod.config().recipes.toolBlazingInfusion > 0 && EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, is) > 0; }
-	
-	public static boolean isArea(ItemStack is)
-	{ return EMCC.mod.config().recipes.toolAreaInfusion > 0 && is.hasTagCompound() && is.stackTagCompound.getBoolean("AreaMode"); }
+	public static boolean hasEnchantment(ItemStack is, int id)
+	{ return EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, is) > 0; }
 	
 	public static ItemStack setBlazing(ItemStack is)
 	{
@@ -127,10 +101,4 @@ public class ItemToolEMCC extends ItemTool implements IItemLM, IEmcTool, IEffect
 		is.stackTagCompound.setBoolean("AreaMode", true);
 		return is;
 	}
-
-	public static void addBlazingRecipe(ItemStack is)
-	{ if(EMCC.mod.config().recipes.toolBlazingInfusion > 0) EMCC.mod.recipes().addInfusing(setBlazing(is.copy()), is.copy(), new ItemStack(Items.blaze_rod, EMCC.mod.config().recipes.toolBlazingInfusion)); }
-	
-	public static void addAreaRecipe(ItemStack is)
-	{ if(EMCC.mod.config().recipes.toolAreaInfusion > 0) EMCC.mod.recipes().addInfusing(setArea(is.copy()), is.copy(), LMRecipes.size(EMCCItems.UU_BLOCK, EMCC.mod.config().recipes.toolAreaInfusion)); }
 }

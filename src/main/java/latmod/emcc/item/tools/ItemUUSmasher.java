@@ -4,7 +4,6 @@ import java.util.Set;
 import latmod.core.*;
 import latmod.core.util.FastList;
 import latmod.emcc.*;
-import latmod.emcc.api.EMCCUtils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,7 +14,7 @@ public class ItemUUSmasher extends ItemToolEMCC
 {
 	public ItemUUSmasher(String s)
 	{
-		super(s, getEffectiveBlocks(), true, true);
+		super(s, getEffectiveBlocks());
 		
 		setHarvestLevel(EnumToolClass.PICKAXE.toolClass, EnumToolClass.ALUMITE);
 		setHarvestLevel(EnumToolClass.SHOVEL.toolClass, EnumToolClass.ALUMITE);
@@ -40,9 +39,6 @@ public class ItemUUSmasher extends ItemToolEMCC
 					'P', EMCCItems.i_pick,
 					'A', EMCCItems.i_axe,
 					'V', EMCCItems.i_shovel);
-		
-		ItemToolEMCC.addBlazingRecipe(new ItemStack(this));
-		ItemToolEMCC.addAreaRecipe(new ItemStack(this));
 	}
 	
 	public double getEmcPerDmg(ItemStack is)
@@ -57,18 +53,18 @@ public class ItemUUSmasher extends ItemToolEMCC
 	public boolean hitEntity(ItemStack is, EntityLivingBase el, EntityLivingBase el1)
 	{ is.damageItem(1, el1); return true; }
 	
-	public float getStrVsBlock(ItemStack is, Block b)
-	{ return efficiencyOnProperMaterial / (isArea(is) ? 8F : 1F); }
+	//public float getStrVsBlock(ItemStack is, Block b)
+	//{ return efficiencyOnProperMaterial / (isArea(is) ? 8F : 1F); }
 	
 	public boolean onBlockStartBreak(ItemStack tool, int x, int y, int z, EntityPlayer ep)
 	{
-		if(!isBlazing(tool)) return false;
-		return EMCCUtils.breakBlockWithBlazingItem(ep.worldObj, x, y, z, ep, tool, this);
+		return false;
+		//return EMCCUtils.breakBlockWithBlazingItem(ep.worldObj, x, y, z, ep, tool, this);
 	}
 	
 	public boolean onBlockDestroyed(ItemStack is, World w, Block bid, int x, int y, int z, EntityLivingBase el)
     {
-		if(!isArea(is)) return super.onBlockDestroyed(is, w, bid, x, y, z, el);
-		else return EMCCUtils.destroyBlockArea(w, x, y, z, el, is, bid, this);
+		return super.onBlockDestroyed(is, w, bid, x, y, z, el);
+		//else return EMCCUtils.destroyBlockArea(w, x, y, z, el, is, bid, this);
     }
 }

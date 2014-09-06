@@ -101,6 +101,7 @@ public class EMCCCustomEMC
 			EnergyValueRegistry.getInstance().addPreAssignedEnergyValue(new OreStack(keys.next()), values.next());
 		}
 		
+		/*
 		if(!map.registry_name.isEmpty())
 		{
 			for(RegNameValue v : map.registry_name)
@@ -108,21 +109,23 @@ public class EMCCCustomEMC
 				if(v.value > 0F)
 				EnergyValueRegistry.getInstance().addPreAssignedEnergyValue(new OreStack("emcc_" + v.name), v.value);
 			}
-		}
-	}
-	
-	public void postInitRegNameItems()
-	{
+		}*/
+		
 		if(!map.registry_name.isEmpty())
 		{
 			for(RegNameValue v : map.registry_name)
 			{
 				int dmg = (v.damage == null) ? LatCoreMC.ANY : v.damage;
 				ItemStack is = LatCoreMC.getStackFromRegName(v.name, dmg);
-				if(is != null && v.value > 0F)
-				LatCoreMC.addOreDictionary("emcc_" + v.name, is);
-				else System.out.println("Invalid REgistry Name: " + v.name + "@" + dmg + ", " + is);
+				if(is != null && is.getItem() != null && v.value > 0F)
+					//LatCoreMC.addOreDictionary("emcc_" + v.name, is);
+					EnergyValueRegistry.getInstance().addPreAssignedEnergyValue(new WrappedStack(is), v.value);
+				else EMCC.mod.logger.warn("Invalid Registry: " + v.name + "@" + dmg + ", " + is);
 			}
 		}
+	}
+	
+	public void postInitRegNameItems()
+	{
 	}
 }

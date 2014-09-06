@@ -16,9 +16,6 @@ public class ItemUUSword extends ItemSword implements IItemLM, IEmcTool
 {
 	public final String itemName;
 	
-	@SideOnly(Side.CLIENT)
-	public IIcon blazingIcon;
-	
 	public ItemUUSword(String s)
 	{
 		super(EMCC.toolMaterial);
@@ -31,8 +28,6 @@ public class ItemUUSword extends ItemSword implements IItemLM, IEmcTool
 			EMCC.mod.recipes().addRecipe(new ItemStack(this), "U", "U", "S",
 					'U', EMCCItems.UU_ITEM,
 					'S', ODItems.STICK);
-		
-		ItemToolEMCC.addBlazingRecipe(new ItemStack(this));
 	}
 	
 	public double getEmcPerDmg(ItemStack is)
@@ -57,11 +52,12 @@ public class ItemUUSword extends ItemSword implements IItemLM, IEmcTool
 	
 	public ItemStack onItemRightClick(ItemStack is, World w, EntityPlayer ep)
 	{
+		/*
 		if(!w.isRemote && ItemToolEMCC.isBlazing(is) && ep.isBurning())
 		{
 			ep.extinguish();
 			is.damageItem(2, ep);
-		}
+		}*/
 		
 		return is;
 	}
@@ -69,17 +65,14 @@ public class ItemUUSword extends ItemSword implements IItemLM, IEmcTool
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		itemIcon = ir.registerIcon(EMCC.mod.assets + "tools/def/" + itemName);
-		blazingIcon = ir.registerIcon(EMCC.mod.assets + "tools/blazing/" + itemName);
-		
-		ItemToolEMCC.addBlazingRecipe(new ItemStack(this));
+		itemIcon = ir.registerIcon(EMCC.mod.assets + "tools/" + itemName);
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(ItemStack is, int r)
 	{
-		if(ItemToolEMCC.isBlazing(is))
-			return blazingIcon;
+		//if(ItemToolEMCC.isBlazing(is))
+		//	return blazingIcon;
 		return itemIcon;
 	}
 	

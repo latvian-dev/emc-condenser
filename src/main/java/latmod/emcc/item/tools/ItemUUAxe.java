@@ -5,7 +5,6 @@ import latmod.core.*;
 import latmod.emcc.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -19,7 +18,7 @@ public class ItemUUAxe extends ItemToolEMCC
 	
 	public ItemUUAxe(String s)
 	{
-		super(s, effective, false, true);
+		super(s, effective);
 		
 		setHarvestLevel(EnumToolClass.AXE.toolClass, EnumToolClass.ALUMITE);
 	}
@@ -30,19 +29,18 @@ public class ItemUUAxe extends ItemToolEMCC
 			EMCC.mod.recipes().addRecipe(new ItemStack(this), "UU", "US", " S",
 					'U', EMCCItems.UU_ITEM,
 					'S', ODItems.STICK);
-		
-		ItemToolEMCC.addAreaRecipe(new ItemStack(this));
 	}
 	
 	public boolean isEffective(Block b)
 	{ return super.isEffective(b) || isEffectiveAgainst(b.getMaterial(), Material.wood, Material.plants, Material.vine, Material.gourd); }
 	
 	public float getStrVsBlock(ItemStack is, Block b)
-	{ return isEffective(b) ? (efficiencyOnProperMaterial / (isArea(is) ? 4F : 1F)) : 1F; }
+	{ return super.getStrVsBlock(is, b); }//{ return isEffective(b) ? (efficiencyOnProperMaterial / (isArea(is) ? 4F : 1F)) : 1F; }
 	
 	public boolean onBlockDestroyed(ItemStack is, World w, Block bid, int x, int y, int z, EntityLivingBase el)
     {
-		if(!isArea(is)) return super.onBlockDestroyed(is, w, bid, x, y, z, el);
+		return super.onBlockDestroyed(is, w, bid, x, y, z, el);
+		/*if(!isArea(is)) return super.onBlockDestroyed(is, w, bid, x, y, z, el);
 		else
 		{
 			if(!isEffective(bid)) return false;
@@ -79,5 +77,6 @@ public class ItemUUAxe extends ItemToolEMCC
 			
 			return b;
 		}
+		*/
     }
 }

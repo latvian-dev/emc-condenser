@@ -10,6 +10,7 @@ public class EMCCConfig extends LMConfig
 	public Recipes recipes;
 	public Condenser condenser;
 	public Tools tools;
+	public Infusion infusion;
 	
 	public EMCCConfig(FMLPreInitializationEvent e)
 	{
@@ -18,6 +19,7 @@ public class EMCCConfig extends LMConfig
 		add(recipes = new Recipes());
 		add(condenser = new Condenser());
 		add(tools = new Tools());
+		add(infusion = new Infusion());
 		save();
 	}
 	
@@ -46,8 +48,6 @@ public class EMCCConfig extends LMConfig
 		public boolean infuseMiniumStar;
 		public boolean infuseUUBlock;
 		public boolean infuseEnchBottle;
-		public int toolBlazingInfusion;
-		public int toolAreaInfusion;
 		
 		public Recipes()
 		{
@@ -67,14 +67,6 @@ public class EMCCConfig extends LMConfig
 			infuseMiniumStar = getBool("infuseMiniumStar", true);
 			infuseUUBlock = getBool("infuseUUBlock", true);
 			infuseEnchBottle = getBool("infuseEnchBottle", true);
-			
-			toolBlazingInfusion = getInt("toolBlazingInfusion", 16, 0, 64,
-					"Blaze rods required to add Fire Aspect to UU Tools.",
-					"0 will disable blazing tools");
-			
-			toolAreaInfusion = getInt("toolAreaInfusion", 8, 0, 64,
-					"UnUnSeptium blocks required to add Area Mode to UU Tools.",
-					"0 will disable Area Mode");
 		}
 	}
 	
@@ -170,11 +162,46 @@ public class EMCCConfig extends LMConfig
 			enableHoe = getBool("enableHoe", true);
 			enableSmasher = getBool("enableSmasher", true);
 			
+			enablePick = enableShovel = enableAxe = enableSmasher = false;
+			
 			lifeStone_1hp = getDouble("lifeStone_1hp", 24D);
 			lifeStone_food = getDouble("lifeStone_food", 128D);
 			blackHoleStone_item = getDouble("blackHoleStone_item", 48D);
 			blackHoleStone_range = getDouble("blackHoleStone_range", 4D);
 			toolEmcPerDamage = getDouble("toolEmcPerDamage", 64D);
+		}
+	}
+	
+	public class Infusion extends Category
+	{
+		//Enchantment
+		
+		public int fireAspect; // Flame for bow 
+		public int areaMode; // Thorns
+		public int fortune; // Looting for swords
+		public int unbreaking;
+		public int silkTouch;
+		public int sharpness; // Efficiency for tools
+		public int knockback; // Punch for bow
+		public int infinity;
+		public int allMax;
+		
+		public Infusion()
+		{
+			super("infusion");
+			setCategoryDesc(
+					"Infusion in UnUnSeptium Infuser",
+					"X Items [1 - 64] required to infuse, 0 - disabled");
+			
+			fireAspect = getInt("fireAspect", 16, 0, 64, "Blaze rods, default: 16");
+			areaMode = getInt("areaMode", 8, 0, 64, "UnUnSeptium Blocks, default: 8");
+			fortune = getInt("fortune", 8, 0, 64, "Gold Ingots [1 lvl], default: 8");
+			unbreaking = getInt("unbreaking", 8, 0, 64, "Obsidian [1 lvl], default: 8");
+			silkTouch = getInt("silkTouch", 32, 0, 64, "String, default: 32");
+			sharpness = getInt("sharpness", 16, 0, 64, "Iron Ingots [1 lvl], default: 16");
+			knockback = getInt("knockback", 4, 0, 64, "Piston [1 lvl], default: 4");
+			infinity = getInt("infinity", 16, 0, 64, "Diamonds, default: 16");
+			allMax = getInt("allMax", 4, 0, 64, "Nether Stars for all max level enchantments, default: 4");
 		}
 	}
 }

@@ -17,9 +17,6 @@ import cpw.mods.fml.relauncher.*;
 
 public class ItemUUHoe extends ItemEMCC implements IEmcTool
 {
-	@SideOnly(Side.CLIENT)
-	public IIcon areaIcon;
-	
 	public ItemUUHoe(String s)
 	{
 		super(s);
@@ -35,8 +32,6 @@ public class ItemUUHoe extends ItemEMCC implements IEmcTool
 			addRecipe(new ItemStack(this), "UU", " S", " S",
 					'U', EMCCItems.UU_ITEM,
 					'S', ODItems.STICK);
-		
-		ItemToolEMCC.addAreaRecipe(new ItemStack(this));
 	}
 	
 	public double getEmcPerDmg(ItemStack is)
@@ -48,7 +43,7 @@ public class ItemUUHoe extends ItemEMCC implements IEmcTool
 		
 		b = onItemUse2(is, ep, w, x, y, z, side, x1, y1, z1);
 		
-		if(ItemToolEMCC.isArea(is))
+		/*if(ItemToolEMCC.isArea(is))
 		{
 			for(int ox = -1; ox <= 1; ox++)
 			for(int oz = -1; oz <= 1; oz++)
@@ -59,7 +54,7 @@ public class ItemUUHoe extends ItemEMCC implements IEmcTool
 					b |= onItemUse2(is, ep, w, x + ox, y, z + oz, side, x1, y1, z1);
 				}
 			}
-		}
+		}*/
 		
 		return b;
 	}
@@ -97,11 +92,10 @@ public class ItemUUHoe extends ItemEMCC implements IEmcTool
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		itemIcon = ir.registerIcon(EMCC.mod.assets + "tools/def/" + itemName);
-		areaIcon = ir.registerIcon(EMCC.mod.assets + "tools/area/" + itemName);
+		itemIcon = ir.registerIcon(EMCC.mod.assets + "tools/" + itemName);
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(ItemStack is, int r)
-	{ return ItemToolEMCC.isArea(is) ? areaIcon : itemIcon; }
+	{ return itemIcon; }
 }
