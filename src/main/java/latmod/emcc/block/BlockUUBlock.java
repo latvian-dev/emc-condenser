@@ -19,7 +19,7 @@ public class BlockUUBlock extends BlockEMCC
 	{
 		super.onPostLoaded();
 		
-		EMCCItems.UU_BLOCK = new ItemStack(this);
+		EMCCItems.BLOCK_UUS = new ItemStack(this);
 	}
 	
 	public TileLM createNewTileEntity(World w, int m)
@@ -31,9 +31,9 @@ public class BlockUUBlock extends BlockEMCC
 	public void loadRecipes()
 	{
 		if(EMCC.mod.config().recipes.infuseUUBlock)
-		EMCC.mod.recipes().addInfusing(EMCCItems.UU_BLOCK, EMCCItems.UU_ITEM, new ItemStack(Blocks.obsidian, 8));
-		else EMCC.mod.recipes().addRecipe(EMCCItems.UU_BLOCK, "OOO", "OUO", "OOO",
-			'U', EMCCItems.UU_ITEM,
+		EMCC.mod.recipes().addInfusing(EMCCItems.BLOCK_UUS, EMCCItems.ITEM_UUS, new ItemStack(Blocks.obsidian, 8));
+		else EMCC.mod.recipes().addRecipe(EMCCItems.BLOCK_UUS, "OOO", "OUO", "OOO",
+			'U', EMCCItems.ITEM_UUS,
 			'O', ODItems.OBSIDIAN);
 	}
 }

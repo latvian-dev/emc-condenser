@@ -3,6 +3,7 @@ import java.util.Set;
 
 import latmod.core.*;
 import latmod.emcc.*;
+import latmod.emcc.api.ToolInfusion;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -28,7 +29,7 @@ public class ItemUUShovel extends ItemToolEMCC
 	{
 		if(EMCC.mod.config().tools.enableShovel)
 			EMCC.mod.recipes().addRecipe(new ItemStack(this), "U", "S", "S",
-					'U', EMCCItems.UU_ITEM,
+					'U', EMCCItems.ITEM_UUS,
 					'S', ODItems.STICK);
 	}
 	
@@ -52,4 +53,7 @@ public class ItemUUShovel extends ItemToolEMCC
 		return super.onBlockDestroyed(is, w, bid, x, y, z, el);
 		//else return EMCCUtils.destroyBlockArea(w, x, y, z, el, is, bid, this);
     }
+	
+	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
+	{ return t.is(ToolInfusion.SHARPNESS, ToolInfusion.UNBREAKING, ToolInfusion.AREA, ToolInfusion.FIRE, ToolInfusion.SILKTOUCH); }
 }

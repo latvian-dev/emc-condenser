@@ -1,41 +1,31 @@
 package latmod.emcc.item.tools;
 import latmod.core.ODItems;
 import latmod.emcc.*;
-import latmod.emcc.api.IEmcTool;
-import latmod.emcc.item.ItemEMCC;
+import latmod.emcc.api.ToolInfusion;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import cpw.mods.fml.common.eventhandler.Event.Result;
-import cpw.mods.fml.relauncher.*;
 
-public class ItemUUHoe extends ItemEMCC implements IEmcTool
+public class ItemUUHoe extends ItemToolEMCC
 {
 	public ItemUUHoe(String s)
 	{
-		super(s);
-		setMaxStackSize(1);
-		setMaxDamage(EMCC.toolMaterial.getMaxUses());
-		
-		setFull3D();
+		super(s, emptySet);
 	}
 	
 	public void loadRecipes()
 	{
 		if(EMCC.mod.config().tools.enableHoe)
 			addRecipe(new ItemStack(this), "UU", " S", " S",
-					'U', EMCCItems.UU_ITEM,
+					'U', EMCCItems.ITEM_UUS,
 					'S', ODItems.STICK);
 	}
-	
-	public double getEmcPerDmg(ItemStack is)
-	{ return EMCC.mod.config().tools.toolEmcPerDamage; }
 	
 	public boolean onItemUse(ItemStack is, EntityPlayer ep, World w, int x, int y, int z, int side, float x1, float y1, float z1)
 	{
@@ -43,18 +33,15 @@ public class ItemUUHoe extends ItemEMCC implements IEmcTool
 		
 		b = onItemUse2(is, ep, w, x, y, z, side, x1, y1, z1);
 		
-		/*if(ItemToolEMCC.isArea(is))
+		if(ItemToolEMCC.hasEnchantment(is, Enchantment.thorns))
 		{
 			for(int ox = -1; ox <= 1; ox++)
 			for(int oz = -1; oz <= 1; oz++)
 			{
 				if((ox == 0 && oz == 0) || is.getItemDamage() == is.getMaxDamage());
-				else
-				{
-					b |= onItemUse2(is, ep, w, x + ox, y, z + oz, side, x1, y1, z1);
-				}
+				else b |= onItemUse2(is, ep, w, x + ox, y, z + oz, side, x1, y1, z1);
 			}
-		}*/
+		}
 		
 		return b;
 	}
@@ -89,13 +76,6 @@ public class ItemUUHoe extends ItemEMCC implements IEmcTool
 		}
 	}
 	
-	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister ir)
-	{
-		itemIcon = ir.registerIcon(EMCC.mod.assets + "tools/" + itemName);
-	}
-	
-	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(ItemStack is, int r)
-	{ return itemIcon; }
+	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
+	{ return t.is(ToolInfusion.UNBREAKING, ToolInfusion.AREA); }
 }

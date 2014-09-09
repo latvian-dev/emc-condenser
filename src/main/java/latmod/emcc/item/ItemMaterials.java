@@ -12,9 +12,10 @@ public class ItemMaterials extends ItemEMCC
 {
 	public static final String[] names =
 	{
-		"uu",
+		"itemUUS",
 		"miniumStar",
-		"nuggetEmerald"
+		"nuggetEmerald",
+		"ingotUUS"
 	};
 	
 	@SideOnly(Side.CLIENT)
@@ -26,9 +27,10 @@ public class ItemMaterials extends ItemEMCC
 		setMaxDamage(0);
 		setHasSubtypes(true);
 		
-		EMCCItems.UU_ITEM = new ItemStack(this, 1, 0);
+		EMCC.mod.recipes().addOre("itemUUS", EMCCItems.ITEM_UUS = new ItemStack(this, 1, 0));
 		EMCCItems.MINIUM_STAR = new ItemStack(this, 1, 1);
 		EMCC.mod.recipes().addOre("nuggetEmerald", EMCCItems.NUGGET_EMERALD = new ItemStack(this, 1, 2));
+		EMCC.mod.recipes().addOre("ingotUUS", EMCCItems.INGOT_UUS = new ItemStack(this, 1, 3));
 	}
 	
 	public void onPostLoaded()
@@ -38,7 +40,7 @@ public class ItemMaterials extends ItemEMCC
 	
 	public void loadRecipes()
 	{
-		EMCC.mod.recipes().addShapelessRecipe(EMCCItems.UU_ITEM,
+		EMCC.mod.recipes().addShapelessRecipe(EMCCItems.ITEM_UUS,
 				EMCCItems.DUST_VERDANT,
 				EMCCItems.DUST_AZURE,
 				EMCCItems.DUST_MINIUM,

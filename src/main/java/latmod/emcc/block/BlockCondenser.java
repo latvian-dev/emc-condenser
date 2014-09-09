@@ -39,7 +39,7 @@ public class BlockCondenser extends BlockEMCC
 	
 	public void loadRecipes()
 	{
-		ItemStack is = EMCCItems.UU_BLOCK;
+		ItemStack is = EMCCItems.BLOCK_UUS;
 		
 		if(EMCC.mod.config().recipes.condenserRecipeDifficulty == 1) is = new ItemStack(Items.nether_star);
 		else if(EMCC.mod.config().recipes.condenserRecipeDifficulty == 2) is = EMCCItems.MINIUM_STAR;

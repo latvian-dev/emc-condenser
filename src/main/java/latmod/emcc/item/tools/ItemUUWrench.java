@@ -2,7 +2,6 @@ package latmod.emcc.item.tools;
 import latmod.core.ODItems;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
-import latmod.emcc.item.ItemEMCC;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,7 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.relauncher.*;
 
-public class ItemUUWrench extends ItemEMCC implements IEmcTool
+public class ItemUUWrench extends ItemToolEMCC implements IEmcTool
 {
 	private static final String NBT_KEY = "WrenchData";
 	
@@ -23,7 +22,7 @@ public class ItemUUWrench extends ItemEMCC implements IEmcTool
 	
 	public ItemUUWrench(String s)
 	{
-		super(s);
+		super(s, emptySet);
 		setMaxDamage(32);
 		setMaxStackSize(1);
 		setFull3D();
@@ -33,7 +32,7 @@ public class ItemUUWrench extends ItemEMCC implements IEmcTool
 	{
 		if(EMCC.mod.config().tools.enableWrench)
 			EMCC.mod.recipes().addRecipe(new ItemStack(this), "UBU", " S ", " S ",
-					'U', EMCCItems.UU_BLOCK,
+					'U', EMCCItems.BLOCK_UUS,
 					'S', ODItems.STICK,
 					'B', EMCCItems.i_emc_battery);
 	}
@@ -128,4 +127,7 @@ public class ItemUUWrench extends ItemEMCC implements IEmcTool
 
 	public double getEmcPerDmg(ItemStack is)
 	{ return EMCC.mod.config().tools.toolEmcPerDamage; }
+	
+	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
+	{ return t.is(ToolInfusion.UNBREAKING); }
 }

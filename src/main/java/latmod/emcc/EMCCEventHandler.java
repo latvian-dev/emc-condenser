@@ -25,13 +25,6 @@ public class EMCCEventHandler
 			e.toolTip.add(EMCC.mod.translate("storedEMC", num(((IEmcStorageItem)item).getStoredEmc(e.itemStack))));
 		}
 		
-		if(item instanceof IEmcTool)
-		{
-			String num = "" + ((IEmcTool)item).getEmcPerDmg(e.itemStack);
-			if(num.endsWith(".0")) num = num.substring(0, num.length() - 2);
-			e.toolTip.add(EMCC.mod.translate("repairEMC", num));
-		}
-		
 		for(int j = 0; j < e.toolTip.size(); j++)
 		{
 			String s = e.toolTip.get(j);

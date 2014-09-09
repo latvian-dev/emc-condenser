@@ -3,6 +3,7 @@ import java.util.Set;
 
 import latmod.core.*;
 import latmod.emcc.*;
+import latmod.emcc.api.ToolInfusion;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,18 +18,22 @@ public class ItemUUPick extends ItemToolEMCC
 {
 	public static final Set<Block> effective = Sets.newHashSet(new Block[] {Blocks.cobblestone, Blocks.double_stone_slab, Blocks.stone_slab, Blocks.stone, Blocks.sandstone, Blocks.mossy_cobblestone, Blocks.iron_ore, Blocks.iron_block, Blocks.coal_ore, Blocks.gold_block, Blocks.gold_ore, Blocks.diamond_ore, Blocks.diamond_block, Blocks.ice, Blocks.netherrack, Blocks.lapis_ore, Blocks.lapis_block, Blocks.redstone_ore, Blocks.lit_redstone_ore, Blocks.rail, Blocks.detector_rail, Blocks.golden_rail, Blocks.activator_rail});
 	
+	public ItemUUPick(String s, Set<Block> b)
+	{
+		super(s, b);
+		setHarvestLevel(EnumToolClass.PICKAXE.toolClass, EnumToolClass.ALUMITE);
+	}
+	
 	public ItemUUPick(String s)
 	{
-		super(s, effective);
-		
-		setHarvestLevel(EnumToolClass.PICKAXE.toolClass, EnumToolClass.ALUMITE);
+		this(s, effective);
 	}
 	
 	public void loadRecipes()
 	{
 		if(EMCC.mod.config().tools.enablePick)
 			EMCC.mod.recipes().addRecipe(new ItemStack(this), "UUU", " S ", " S ",
-					'U', EMCCItems.UU_ITEM,
+					'U', EMCCItems.ITEM_UUS,
 					'S', ODItems.STICK);
 	}
 	
@@ -55,4 +60,7 @@ public class ItemUUPick extends ItemToolEMCC
 		return super.onBlockDestroyed(is, w, bid, x, y, z, el);
 		//return EMCCUtils.destroyBlockArea(w, x, y, z, el, is, bid, this);
     }
+	
+	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
+	{ return t.is(ToolInfusion.SHARPNESS, ToolInfusion.UNBREAKING, ToolInfusion.FORTUNE, ToolInfusion.FIRE, ToolInfusion.AREA, ToolInfusion.SILKTOUCH); }
 }

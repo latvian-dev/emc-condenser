@@ -1,9 +1,10 @@
 itemGroup.emc_condenser:tab=EMC Kondenseris
 
 ## Items ##
-emc_condenser:item.uu.name=UnUnSeptijs
+emc_condenser:item.itemUUS.name=UnUnSeptijs
 emc_condenser:item.miniumStar.name=Mīnija Zvaigzne
 emc_condenser:item.nuggetEmerald.name=Smaragda Gabaliņš
+emc_condenser:item.ingotUUS.name=UnUnSeptija Stienis
 
 emc_condenser:item.battery.name=EMC Baterija
 emc_condenser:item.lifeRing.name=Dzīvības Gredzens

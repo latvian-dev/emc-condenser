@@ -18,8 +18,8 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 	public boolean canDischargeEmc(ItemStack is)
 	{ return false; }
 	
-	public double getMaxEmcChargeFromBattery(ItemStack is)
-	{ return 2048D; }
+	public double getMaxEmcCharge(ItemStack is, boolean battery)
+	{ return battery ? 2048D : Integer.MAX_VALUE; }
 	
 	public double getEmcTrasferLimit(ItemStack is)
 	{ return 128D; }

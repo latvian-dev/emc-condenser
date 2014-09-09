@@ -1,6 +1,7 @@
 package latmod.emcc;
 import latmod.core.LatCoreMC;
 import latmod.core.mod.LMMod;
+import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.blacklist.EMCCBlacklist;
 import latmod.emcc.block.*;
 import latmod.emcc.customemc.EMCCCustomEMC;
@@ -62,6 +63,8 @@ public class EMCC
 		mod.addItem(EMCCItems.i_smasher = new ItemUUSmasher("smasher"));
 		
 		mod.onPostLoaded();
+		
+		ToolInfusion.initAll();
 		
 		tab = mod.createTab("tab", new ItemStack(EMCCItems.i_emc_battery, 1, 1));
 		

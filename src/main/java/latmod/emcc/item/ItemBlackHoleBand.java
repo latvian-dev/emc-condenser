@@ -22,8 +22,8 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 	public boolean canDischargeEmc(ItemStack is)
 	{ return false; }
 	
-	public double getMaxEmcChargeFromBattery(ItemStack is)
-	{ return 1024D; }
+	public double getMaxEmcCharge(ItemStack is, boolean battery)
+	{ return battery ? 1024D : Integer.MAX_VALUE; }
 	
 	public double getEmcTrasferLimit(ItemStack is)
 	{ return 128D; }
@@ -32,7 +32,7 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 	{
 		if(EMCC.mod.config().tools.blackHoleStone_item != -1D)
 		EMCC.mod.recipes().addRecipe(new ItemStack(this), "OEO", "EBE", "OEO",
-				'O', EMCCItems.UU_BLOCK,
+				'O', EMCCItems.BLOCK_UUS,
 				'B', EMCCItems.i_emc_battery,
 				'E', Items.ender_pearl);
 	}

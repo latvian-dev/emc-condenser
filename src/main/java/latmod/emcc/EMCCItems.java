@@ -23,12 +23,13 @@ public class EMCCItems
 	public static ItemUUHoe i_hoe;
 	public static ItemUUSmasher i_smasher;
 	
-	public static ItemStack UU_BLOCK;
+	public static ItemStack BLOCK_UUS;
 	public static ItemStack CONDENSER;
 	
-	public static ItemStack UU_ITEM;
+	public static ItemStack ITEM_UUS;
 	public static ItemStack MINIUM_STAR;
 	public static ItemStack NUGGET_EMERALD;
+	public static ItemStack INGOT_UUS;
 	
 	public static ItemStack DUST_VERDANT;
 	public static ItemStack DUST_AZURE;

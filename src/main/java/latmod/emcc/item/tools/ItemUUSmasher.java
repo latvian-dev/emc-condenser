@@ -4,13 +4,14 @@ import java.util.Set;
 import latmod.core.*;
 import latmod.core.util.FastList;
 import latmod.emcc.*;
+import latmod.emcc.api.ToolInfusion;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemUUSmasher extends ItemToolEMCC
+public class ItemUUSmasher extends ItemUUPick
 {
 	public ItemUUSmasher(String s)
 	{
@@ -34,7 +35,7 @@ public class ItemUUSmasher extends ItemToolEMCC
 	{
 		if(EMCC.mod.config().tools.enableSmasher)
 			EMCC.mod.recipes().addRecipe(new ItemStack(this), "APA", "BVB", " S ",
-					'B', EMCCItems.UU_BLOCK,
+					'B', EMCCItems.BLOCK_UUS,
 					'S', ODItems.STICK,
 					'P', EMCCItems.i_pick,
 					'A', EMCCItems.i_axe,
@@ -43,9 +44,6 @@ public class ItemUUSmasher extends ItemToolEMCC
 	
 	public double getEmcPerDmg(ItemStack is)
 	{ return super.getEmcPerDmg(is) * 1.5D; }
-	
-	public boolean canHarvestBlock(Block b, ItemStack is)
-	{ return true; }
 	
 	public boolean isEffective(Block b)
 	{ return EMCCItems.i_pick.isEffective(b) || EMCCItems.i_shovel.isEffective(b) || EMCCItems.i_axe.isEffective(b); }
@@ -67,4 +65,7 @@ public class ItemUUSmasher extends ItemToolEMCC
 		return super.onBlockDestroyed(is, w, bid, x, y, z, el);
 		//else return EMCCUtils.destroyBlockArea(w, x, y, z, el, is, bid, this);
     }
+	
+	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
+	{ return t.is(ToolInfusion.SHARPNESS, ToolInfusion.UNBREAKING, ToolInfusion.FORTUNE, ToolInfusion.FIRE, ToolInfusion.AREA, ToolInfusion.SILKTOUCH); }
 }

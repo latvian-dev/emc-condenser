@@ -3,6 +3,7 @@ import java.util.Set;
 
 import latmod.core.*;
 import latmod.emcc.*;
+import latmod.emcc.api.ToolInfusion;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,7 +28,7 @@ public class ItemUUAxe extends ItemToolEMCC
 	{
 		if(EMCC.mod.config().tools.enableAxe)
 			EMCC.mod.recipes().addRecipe(new ItemStack(this), "UU", "US", " S",
-					'U', EMCCItems.UU_ITEM,
+					'U', EMCCItems.ITEM_UUS,
 					'S', ODItems.STICK);
 	}
 	
@@ -79,4 +80,7 @@ public class ItemUUAxe extends ItemToolEMCC
 		}
 		*/
     }
+	
+	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
+	{ return t.is(ToolInfusion.SHARPNESS, ToolInfusion.UNBREAKING, ToolInfusion.AREA); }
 }

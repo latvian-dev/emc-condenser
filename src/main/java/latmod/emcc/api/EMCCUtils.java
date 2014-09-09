@@ -65,7 +65,7 @@ public class EMCCUtils
 		return flag;
 	}
 	
-	public static boolean breakBlockWithBlazingItem(World w, int x, int y, int z, EntityPlayer ep, ItemStack is, IEffectiveTool ei)
+	public static boolean breakBlockWithBlazingItem(World w, int x, int y, int z, EntityPlayer ep, ItemStack is, IEmcTool ei)
 	{
 		Block b = w.getBlock(x, y, z);
 		if(b == Blocks.air || !ei.isEffective(b)) return false;
@@ -100,7 +100,7 @@ public class EMCCUtils
 		return true;
 	}
 	
-	public static boolean destroyBlockArea(World w, int x, int y, int z, EntityLivingBase el, ItemStack is, Block block, IEffectiveTool ei)
+	public static boolean destroyBlockArea(World w, int x, int y, int z, EntityLivingBase el, ItemStack is, Block block, IEmcTool ei)
 	{
 		boolean b = false;
 		
