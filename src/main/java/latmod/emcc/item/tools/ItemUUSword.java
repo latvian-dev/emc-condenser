@@ -27,15 +27,11 @@ public class ItemUUSword extends ItemToolEMCC // ItemSword
 					'S', ODItems.STICK);
 	}
 	
-	public double getEmcPerDmg(ItemStack is)
-	{ return EMCC.mod.config().tools.toolEmcPerDamage; }
-	
 	public ItemStack onItemRightClick(ItemStack is, World w, EntityPlayer ep)
 	{
 		if(!w.isRemote && hasInfusion(is, ToolInfusion.FIRE) && ep.isBurning())
 		{
 			ep.extinguish();
-			//is.damageItem(2, ep);
 		}
 		
 		return is;
@@ -43,6 +39,7 @@ public class ItemUUSword extends ItemToolEMCC // ItemSword
 	
 	public boolean hitEntity(ItemStack is, EntityLivingBase el, EntityLivingBase el1)
 	{
+		damageItem(is, false);
 		return true;
 	}
 	
@@ -50,10 +47,10 @@ public class ItemUUSword extends ItemToolEMCC // ItemSword
 	{ return t.is(ToolInfusion.SHARPNESS, ToolInfusion.UNBREAKING, ToolInfusion.AREA, ToolInfusion.FORTUNE, ToolInfusion.KNOCKBACK, ToolInfusion.FIRE); }
 	
 	@SuppressWarnings("all")
-	public Multimap getItemAttributeModifiers()
+	public Multimap getAttributeModifiers(ItemStack is)
     {
-        Multimap multimap = super.getItemAttributeModifiers();
-        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Weapon modifier", 7D, 0));
+        Multimap multimap = super.getAttributeModifiers(is);
+        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Weapon modifier", damageItem(is, true) ? 9D : 1D, 0));
         return multimap;
     }
 	

@@ -30,9 +30,6 @@ public class ItemUUSmasher extends ItemUUPick
 					'V', EMCCItems.i_shovel);
 	}
 	
-	public double getEmcPerDmg(ItemStack is)
-	{ return super.getEmcPerDmg(is) * 1.5D; }
-	
 	public boolean isEffective(Block b)
 	{ return EMCCItems.i_pick.isEffective(b) || EMCCItems.i_shovel.isEffective(b) || EMCCItems.i_axe.isEffective(b); }
 	

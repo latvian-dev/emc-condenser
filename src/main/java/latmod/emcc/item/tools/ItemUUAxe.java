@@ -33,9 +33,6 @@ public class ItemUUAxe extends ItemToolEMCC // ItemAxe
 	public boolean isEffective(Block b)
 	{ return isEffective(b, effectiveBlocks, effectiveMaterials); }
 	
-	public float getStrVsBlock(ItemStack is, Block b)
-	{ return super.getStrVsBlock(is, b); }//{ return isEffective(b) ? (efficiencyOnProperMaterial / (isArea(is) ? 4F : 1F)) : 1F; }
-	
 	public boolean onBlockDestroyed(ItemStack is, World w, Block bid, int x, int y, int z, EntityLivingBase el)
     {
 		return super.onBlockDestroyed(is, w, bid, x, y, z, el);

@@ -68,7 +68,11 @@ public class EMCCConfig extends LMConfig
 			infuseMiniumStar = getBool("infuseMiniumStar", true);
 			infuseEnchBottle = getBool("infuseEnchBottle", true);
 			infusedUUBlocks = getInt("infusedUUBlocks", 8, 0, 64);
-			infusedUUIngots = getInt("infusedUUIngots", 8, 0, 64);
+			
+			infusedUUIngots = getInt("infusedUUIngots", 8, -1, 64,
+					"0 - Recipe Disabled",
+					"-1 - Smelt UnUnSeptium in furnace",
+					"1-64 - Ingots per 1 UnUnSeptium in Aludel");
 		}
 	}
 	

@@ -8,15 +8,16 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.*;
 
 public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 {
-	public static final float efficiencyOnProperMaterial = 4F;
+	public static final float efficiencyOnProperMaterial = 9F;
 	
 	public ItemToolEMCC(String s)
 	{
@@ -26,8 +27,22 @@ public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 		setMaxDamage(0);
 	}
 	
-	public double getEmcPerDmg(ItemStack is)
-	{ return EMCC.mod.config().tools.toolEmcPerDamage; }
+	public boolean damageItem(ItemStack is, boolean simulate)
+	{
+		double emc = getStoredEmc(is);
+		double d = EMCC.mod.config().tools.toolEmcPerDamage;
+		
+		if(emc >= d)
+		{
+			if(!simulate) setStoredEmc(is, emc - d);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean onBlockDestroyed(ItemStack is, World w, Block b, int x, int y, int z, EntityLivingBase el)
+    { if(b.getBlockHardness(w, x, y, z) != 0D) damageItem(is, false); return true; }
 	
 	public boolean getIsRepairable(ItemStack is1, ItemStack is2)
 	{ return false; }
@@ -68,8 +83,8 @@ public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 	public String getUnlocalizedName(ItemStack is)
 	{ return EMCC.mod.getItemName(itemName); }
 	
-	public float getStrVsBlock(ItemStack is, Block b)
-	{ return isEffective(b) ? efficiencyOnProperMaterial : 1F; }
+	public float getDigSpeed(ItemStack is, Block b, int meta)
+	{ return (isEffective(b) && damageItem(is, true)) ? efficiencyOnProperMaterial : 1F; }
 	
 	public static int getInfusionLevel(ItemStack is, ToolInfusion t)
 	{ return EnchantmentHelper.getEnchantmentLevel(t.enchantment.effectId, is); }
@@ -81,7 +96,7 @@ public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 	{ return false; }
 	
 	public double getMaxStoredEmc(ItemStack is)
-	{ return EMCC.mod.config().tools.toolEmcPerDamage * 512D; }
+	{ return Short.MAX_VALUE; }
 	
 	public double getEmcTrasferLimit(ItemStack is)
 	{ return 4096D; }

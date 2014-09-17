@@ -53,8 +53,8 @@ public class ItemMaterials extends ItemEMCC
 		
 		EMCC.mod.recipes().addRecipe(EMCCItems.ITEM_UUS, "MRM", "VSA", "MGM",
 				'M', EMCCItems.DUST_MINIUM,
-				'V', EMCCItems.DUST_VERDANT,
-				'A', EMCCItems.DUST_AZURE,
+				'V', ODItems.EMERALD,
+				'A', ODItems.DIAMOND,
 				'R', ODItems.REDSTONE,
 				'G', ODItems.GLOWSTONE,
 				'S', Blocks.stone);

@@ -2,7 +2,7 @@ package latmod.emcc.item.tools;
 import latmod.core.*;
 import latmod.core.util.FastList;
 import latmod.emcc.*;
-import latmod.emcc.api.ToolInfusion;
+import latmod.emcc.api.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -47,8 +47,8 @@ public class ItemUUPick extends ItemToolEMCC
 	
 	public boolean onBlockDestroyed(ItemStack is, World w, Block bid, int x, int y, int z, EntityLivingBase el)
     {
-		return super.onBlockDestroyed(is, w, bid, x, y, z, el);
-		//return EMCCUtils.destroyBlockArea(w, x, y, z, el, is, bid, this);
+		//return super.onBlockDestroyed(is, w, bid, x, y, z, el);
+		return EMCCUtils.destroyBlockArea(w, x, y, z, el, is, bid, this);
     }
 	
 	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
