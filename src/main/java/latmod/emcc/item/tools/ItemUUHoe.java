@@ -3,7 +3,6 @@ import latmod.core.ODItems;
 import latmod.emcc.*;
 import latmod.emcc.api.ToolInfusion;
 import net.minecraft.block.Block;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -16,14 +15,14 @@ public class ItemUUHoe extends ItemToolEMCC
 {
 	public ItemUUHoe(String s)
 	{
-		super(s, emptySet);
+		super(s);
 	}
 	
 	public void loadRecipes()
 	{
 		if(EMCC.mod.config().tools.enableHoe)
 			addRecipe(new ItemStack(this), "UU", " S", " S",
-					'U', EMCCItems.ITEM_UUS,
+					'U', EMCCItems.INGOT_UUS,
 					'S', ODItems.STICK);
 	}
 	
@@ -33,7 +32,7 @@ public class ItemUUHoe extends ItemToolEMCC
 		
 		b = onItemUse2(is, ep, w, x, y, z, side, x1, y1, z1);
 		
-		if(ItemToolEMCC.hasEnchantment(is, Enchantment.thorns))
+		if(ItemToolEMCC.hasInfusion(is, ToolInfusion.AREA))
 		{
 			for(int ox = -1; ox <= 1; ox++)
 			for(int oz = -1; oz <= 1; oz++)
@@ -78,4 +77,7 @@ public class ItemUUHoe extends ItemToolEMCC
 	
 	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
 	{ return t.is(ToolInfusion.UNBREAKING, ToolInfusion.AREA); }
+	
+	public boolean isEffective(Block b)
+	{ return false; }
 }

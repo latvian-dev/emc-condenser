@@ -1,14 +1,13 @@
 package latmod.emcc.item.tools;
-import java.util.*;
-
+import latmod.core.util.FastList;
 import latmod.emcc.EMCC;
-import latmod.emcc.api.IEmcTool;
+import latmod.emcc.api.*;
 import latmod.emcc.item.ItemEmcStorage;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.enchantment.*;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -17,30 +16,35 @@ import cpw.mods.fml.relauncher.*;
 
 public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 {
-	public Set<Block> effectiveBlocks;
-	public static final Set<Block> emptySet = new HashSet<Block>();
+	public static final float efficiencyOnProperMaterial = 4F;
 	
-	public final float efficiencyOnProperMaterial = 4F;
-	
-	public ItemToolEMCC(String s, Set<Block> b)
+	public ItemToolEMCC(String s)
 	{
 		super(s);
-		effectiveBlocks = b;
 		setFull3D();
 		setHasSubtypes(false);
-		setMaxDamage(20);
+		setMaxDamage(0);
 	}
 	
 	public double getEmcPerDmg(ItemStack is)
 	{ return EMCC.mod.config().tools.toolEmcPerDamage; }
 	
-	public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
+	public boolean getIsRepairable(ItemStack is1, ItemStack is2)
 	{ return false; }
 	
 	public boolean isItemTool(ItemStack is)
 	{ return true; }
 	
-	public final void onPostLoaded() { }
+	public final void onPostLoaded()
+	{
+		ItemStack is0 = new ItemStack(this);
+		setStoredEmc(is0, 0);
+		itemsAdded.add(is0);
+		
+		ItemStack is1 = new ItemStack(this);
+		setStoredEmc(is1, getMaxStoredEmc(is1));
+		itemsAdded.add(is1);
+	}
 	
 	public void loadRecipes()
 	{
@@ -67,24 +71,36 @@ public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 	public float getStrVsBlock(ItemStack is, Block b)
 	{ return isEffective(b) ? efficiencyOnProperMaterial : 1F; }
 	
-	public boolean isEffective(Block b)
-	{ return effectiveBlocks.contains(b); }
+	public static int getInfusionLevel(ItemStack is, ToolInfusion t)
+	{ return EnchantmentHelper.getEnchantmentLevel(t.enchantment.effectId, is); }
 	
-	public boolean isEffectiveAgainst(Material m, Material... materials)
-	{ for(Material m1 : materials) { if(m1 == m) return true; } return false; }
-	
-	public static boolean hasEnchantment(ItemStack is, Enchantment e)
-	{ return EnchantmentHelper.getEnchantmentLevel(e.effectId, is) > 0; }
+	public static boolean hasInfusion(ItemStack is, ToolInfusion t)
+	{ return getInfusionLevel(is, t) > 0; }
 	
 	public boolean canDischargeEmc(ItemStack is)
 	{ return false; }
 	
-	public double getMaxEmcCharge(ItemStack is, boolean battery)
+	public double getMaxStoredEmc(ItemStack is)
 	{ return EMCC.mod.config().tools.toolEmcPerDamage * 512D; }
 	
 	public double getEmcTrasferLimit(ItemStack is)
-	{ return 32D; }
+	{ return 4096D; }
+	
+	public boolean showDurabilityBar(ItemStack is)
+	{ return true; }
 	
 	public double getDurabilityForDisplay(ItemStack is)
-	{ return 0.5D; }
+	{ return 1F - getStoredEmc(is) / getMaxStoredEmc(is); }
+	
+	public int getItemEnchantability(ItemStack is)
+	{ return 0; }
+	
+	public boolean isRepairable()
+	{ return false; }
+	
+	public boolean canHarvestBlock(Block b, ItemStack is)
+	{ return isEffective(b); }
+	
+	public static boolean isEffective(Block b, FastList<Block> bl, FastList<Material> ml)
+	{ return bl.contains(b) || ml.contains(b.getMaterial()); }
 }

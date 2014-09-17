@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.relauncher.*;
 
-public class ItemUUWrench extends ItemToolEMCC implements IEmcTool
+public class ItemUUWrench extends ItemToolEMCC
 {
 	private static final String NBT_KEY = "WrenchData";
 	
@@ -22,7 +22,7 @@ public class ItemUUWrench extends ItemToolEMCC implements IEmcTool
 	
 	public ItemUUWrench(String s)
 	{
-		super(s, emptySet);
+		super(s);
 		setMaxDamage(32);
 		setMaxStackSize(1);
 		setFull3D();
@@ -130,4 +130,7 @@ public class ItemUUWrench extends ItemToolEMCC implements IEmcTool
 	
 	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
 	{ return t.is(ToolInfusion.UNBREAKING); }
+	
+	public boolean isEffective(Block b)
+	{ return false; }
 }

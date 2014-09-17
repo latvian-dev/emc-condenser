@@ -22,6 +22,7 @@ public class EMCCItems
 	public static ItemUUAxe i_axe;
 	public static ItemUUHoe i_hoe;
 	public static ItemUUSmasher i_smasher;
+	public static ItemUUBow i_bow;
 	
 	public static ItemStack BLOCK_UUS;
 	public static ItemStack CONDENSER;
@@ -34,6 +35,27 @@ public class EMCCItems
 	public static ItemStack DUST_VERDANT;
 	public static ItemStack DUST_AZURE;
 	public static ItemStack DUST_MINIUM;
+	
+	public static void preInit()
+	{
+		EMCC.mod.addBlock(EMCCItems.b_uu_block = new BlockUUBlock("uub"));
+		EMCC.mod.addBlock(EMCCItems.b_condenser = new BlockCondenser("condenser"));
+		
+		EMCC.mod.addItem(EMCCItems.i_mat = new ItemMaterials("materials"));
+		EMCC.mod.addItem(EMCCItems.i_emc_battery = new ItemEmcBattery("battery"));
+		EMCC.mod.addItem(EMCCItems.i_life_ring = new ItemLifeRing("lifeRing"));
+		EMCC.mod.addItem(EMCCItems.i_black_hole_band = new ItemBlackHoleBand("blackHoleBand"));
+		
+		EMCC.mod.addItem(EMCCItems.i_wrench = new ItemUUWrench("wrench"));
+		
+		EMCC.mod.addItem(EMCCItems.i_sword = new ItemUUSword("sword"));
+		EMCC.mod.addItem(EMCCItems.i_pick = new ItemUUPick("pick"));
+		EMCC.mod.addItem(EMCCItems.i_shovel = new ItemUUShovel("shovel"));
+		EMCC.mod.addItem(EMCCItems.i_axe = new ItemUUAxe("axe"));
+		EMCC.mod.addItem(EMCCItems.i_hoe = new ItemUUHoe("hoe"));
+		EMCC.mod.addItem(EMCCItems.i_smasher = new ItemUUSmasher("smasher"));
+		EMCC.mod.addItem(EMCCItems.i_bow = new ItemUUBow("bow"));
+	}
 	
 	public static void load()
 	{

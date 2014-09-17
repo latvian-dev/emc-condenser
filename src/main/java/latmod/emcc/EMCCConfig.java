@@ -46,8 +46,9 @@ public class EMCCConfig extends LMConfig
 		public int condenserRecipeDifficulty;
 		public int miniumToNetherStar;
 		public boolean infuseMiniumStar;
-		public boolean infuseUUBlock;
 		public boolean infuseEnchBottle;
+		public int infusedUUBlocks;
+		public int infusedUUIngots;
 		
 		public Recipes()
 		{
@@ -65,8 +66,9 @@ public class EMCCConfig extends LMConfig
 					"2 - Minium Star in furnace > Nether Star");
 			
 			infuseMiniumStar = getBool("infuseMiniumStar", true);
-			infuseUUBlock = getBool("infuseUUBlock", true);
 			infuseEnchBottle = getBool("infuseEnchBottle", true);
+			infusedUUBlocks = getInt("infusedUUBlocks", 8, 0, 64);
+			infusedUUIngots = getInt("infusedUUIngots", 8, 0, 64);
 		}
 	}
 	
@@ -142,6 +144,7 @@ public class EMCCConfig extends LMConfig
 		public boolean enableAxe;
 		public boolean enableHoe;
 		public boolean enableSmasher;
+		public boolean enableBow;
 		
 		public double lifeStone_1hp;
 		public double lifeStone_food;
@@ -161,6 +164,7 @@ public class EMCCConfig extends LMConfig
 			enableAxe = getBool("enableAxe", true);
 			enableHoe = getBool("enableHoe", true);
 			enableSmasher = getBool("enableSmasher", true);
+			enableBow = getBool("enableBow", true);
 			
 			lifeStone_1hp = getDouble("lifeStone_1hp", 24D);
 			lifeStone_food = getDouble("lifeStone_food", 128D);

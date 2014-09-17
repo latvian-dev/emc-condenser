@@ -1,7 +1,6 @@
 package latmod.emcc.item.tools;
-import java.util.Set;
-
 import latmod.core.*;
+import latmod.core.util.FastList;
 import latmod.emcc.*;
 import latmod.emcc.api.ToolInfusion;
 import net.minecraft.block.Block;
@@ -11,29 +10,28 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import com.google.common.collect.Sets;
-
-public class ItemUUAxe extends ItemToolEMCC
+public class ItemUUAxe extends ItemToolEMCC // ItemAxe
 {
-	public static final Set<Block> effective = Sets.newHashSet(new Block[] {Blocks.planks, Blocks.bookshelf, Blocks.log, Blocks.log2, Blocks.chest, Blocks.pumpkin, Blocks.lit_pumpkin});
+	public static final FastList<Block> effectiveBlocks = new FastList<Block>(new Block[] { Blocks.planks, Blocks.bookshelf, Blocks.log, Blocks.log2, Blocks.chest, Blocks.pumpkin, Blocks.lit_pumpkin, Blocks.lit_pumpkin });
+	public static final FastList<Material> effectiveMaterials = new FastList<Material>(new Material[] { Material.wood, Material.plants, Material.vine, Material.gourd, Material.leaves });
 	
 	public ItemUUAxe(String s)
 	{
-		super(s, effective);
+		super(s);
 		
-		setHarvestLevel(EnumToolClass.AXE.toolClass, EnumToolClass.ALUMITE);
+		setHarvestLevel(EnumToolClass.AXE.toolClass, EnumToolClass.LEVEL_DIAMOND);
 	}
 	
 	public void loadRecipes()
 	{
 		if(EMCC.mod.config().tools.enableAxe)
 			EMCC.mod.recipes().addRecipe(new ItemStack(this), "UU", "US", " S",
-					'U', EMCCItems.ITEM_UUS,
+					'U', EMCCItems.INGOT_UUS,
 					'S', ODItems.STICK);
 	}
 	
 	public boolean isEffective(Block b)
-	{ return super.isEffective(b) || isEffectiveAgainst(b.getMaterial(), Material.wood, Material.plants, Material.vine, Material.gourd); }
+	{ return isEffective(b, effectiveBlocks, effectiveMaterials); }
 	
 	public float getStrVsBlock(ItemStack is, Block b)
 	{ return super.getStrVsBlock(is, b); }//{ return isEffective(b) ? (efficiencyOnProperMaterial / (isArea(is) ? 4F : 1F)) : 1F; }

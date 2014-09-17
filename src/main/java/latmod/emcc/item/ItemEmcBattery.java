@@ -20,8 +20,8 @@ public class ItemEmcBattery extends ItemEmcStorage
 	public boolean canDischargeEmc(ItemStack is)
 	{ return true; }
 	
-	public double getMaxEmcCharge(ItemStack is, boolean battery)
-	{ return battery ? 0D : Double.POSITIVE_INFINITY; }
+	public double getMaxStoredEmc(ItemStack is)
+	{ return Double.POSITIVE_INFINITY; }
 	
 	public double getEmcTrasferLimit(ItemStack is)
 	{ return Integer.MAX_VALUE; }
@@ -54,7 +54,7 @@ public class ItemEmcBattery extends ItemEmcStorage
 			{
 				ItemStack is1 = ep.inventory.getStackInSlot(i);
 				
-				if(is1 != null && is1.getItem() instanceof IEmcTool)
+				/*if(is1 != null && is1.getItem() instanceof IEmcTool)
 				{
 					int dmg = is1.getItemDamage();
 					
@@ -76,13 +76,13 @@ public class ItemEmcBattery extends ItemEmcStorage
 						if(emc < 1D) return;
 						continue;
 					}
-				}
+				}*/
 				
-				if(is1 != null && is1.getItem() instanceof IEmcStorageItem)
+				if(is1 != null && is1.getItem() instanceof IEmcStorageItem && is1.getItem() != this)
 				{
 					IEmcStorageItem si = (IEmcStorageItem)is1.getItem();
 					
-					double max = si.getMaxEmcCharge(is1, true);
+					double max = si.getMaxStoredEmc(is1);
 					
 					if(max > 0D)
 					{
@@ -116,7 +116,7 @@ public class ItemEmcBattery extends ItemEmcStorage
 					{
 						IEmcStorageItem si = (IEmcStorageItem)is1.getItem();
 						
-						double max = si.getMaxEmcCharge(is1, true);
+						double max = si.getMaxStoredEmc(is1);
 						
 						if(max > 0D)
 						{

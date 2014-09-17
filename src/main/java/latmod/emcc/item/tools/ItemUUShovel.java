@@ -1,7 +1,6 @@
 package latmod.emcc.item.tools;
-import java.util.Set;
-
 import latmod.core.*;
+import latmod.core.util.FastList;
 import latmod.emcc.*;
 import latmod.emcc.api.ToolInfusion;
 import net.minecraft.block.Block;
@@ -12,24 +11,23 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import com.google.common.collect.Sets;
-
 public class ItemUUShovel extends ItemToolEMCC
 {
-	public static final Set<Block> effective = Sets.newHashSet(new Block[] {Blocks.grass, Blocks.dirt, Blocks.sand, Blocks.gravel, Blocks.snow_layer, Blocks.snow, Blocks.clay, Blocks.farmland, Blocks.soul_sand, Blocks.mycelium});
+	public static final FastList<Block> effectiveBlocks = new FastList<Block>(new Block[] {Blocks.grass, Blocks.dirt, Blocks.sand, Blocks.gravel, Blocks.snow_layer, Blocks.snow, Blocks.clay, Blocks.farmland, Blocks.soul_sand, Blocks.mycelium});
+	public static final FastList<Material> effectiveMaterials = new FastList<Material>(new Material[] { Material.grass, Material.ground, Material.sand, Material.clay, Material.snow });
 	
 	public ItemUUShovel(String s)
 	{
-		super(s, effective);
+		super(s);
 		
-		setHarvestLevel(EnumToolClass.SHOVEL.toolClass, EnumToolClass.ALUMITE);
+		setHarvestLevel(EnumToolClass.SHOVEL.toolClass, EnumToolClass.LEVEL_DIAMOND);
 	}
 	
 	public void loadRecipes()
 	{
 		if(EMCC.mod.config().tools.enableShovel)
 			EMCC.mod.recipes().addRecipe(new ItemStack(this), "U", "S", "S",
-					'U', EMCCItems.ITEM_UUS,
+					'U', EMCCItems.INGOT_UUS,
 					'S', ODItems.STICK);
 	}
 	
@@ -37,7 +35,7 @@ public class ItemUUShovel extends ItemToolEMCC
 	{ return b == Blocks.snow_layer || b == Blocks.snow; }
 	
 	public boolean isEffective(Block b)
-	{ return super.isEffective(b) || isEffectiveAgainst(b.getMaterial(), Material.grass, Material.ground, Material.sand, Material.clay, Material.snow); }
+	{ return effectiveBlocks.contains(b) || effectiveMaterials.contains(b.getMaterial()); }
 	
 	//public float getStrVsBlock(ItemStack is, Block b)
 	//{ return isEffective(b) ? (efficiencyOnProperMaterial / (isArea(is) ? 8F : 1F)) : 1F; }

@@ -3,15 +3,10 @@ import latmod.core.LatCoreMC;
 import latmod.core.mod.LMMod;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.blacklist.EMCCBlacklist;
-import latmod.emcc.block.*;
 import latmod.emcc.customemc.EMCCCustomEMC;
-import latmod.emcc.item.*;
-import latmod.emcc.item.tools.*;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item.ToolMaterial;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.EnumHelper;
 
 import com.pahimar.ee3.api.EnergyValue;
 import com.pahimar.ee3.exchange.EnergyValueRegistry;
@@ -36,8 +31,6 @@ public class EMCC
 	public static EMCCBlacklist blacklist;
 	public static EMCCCustomEMC customEMC;
 	
-	public static final ToolMaterial toolMaterial = EnumHelper.addToolMaterial("ununseptium", ToolMaterial.EMERALD.getHarvestLevel() + 1, 512, ToolMaterial.EMERALD.getEfficiencyOnProperMaterial(), 7F, 20);
-	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
@@ -45,23 +38,7 @@ public class EMCC
 		blacklist = new EMCCBlacklist(e);
 		customEMC = new EMCCCustomEMC(e);
 		
-		mod.addBlock(EMCCItems.b_uu_block = new BlockUUBlock("uub"));
-		mod.addBlock(EMCCItems.b_condenser = new BlockCondenser("condenser"));
-		
-		mod.addItem(EMCCItems.i_mat = new ItemMaterials("materials"));
-		mod.addItem(EMCCItems.i_emc_battery = new ItemEmcBattery("battery"));
-		mod.addItem(EMCCItems.i_life_ring = new ItemLifeRing("lifeRing"));
-		mod.addItem(EMCCItems.i_black_hole_band = new ItemBlackHoleBand("blackHoleBand"));
-		
-		mod.addItem(EMCCItems.i_wrench = new ItemUUWrench("wrench"));
-		
-		mod.addItem(EMCCItems.i_sword = new ItemUUSword("sword"));
-		mod.addItem(EMCCItems.i_pick = new ItemUUPick("pick"));
-		mod.addItem(EMCCItems.i_shovel = new ItemUUShovel("shovel"));
-		mod.addItem(EMCCItems.i_axe = new ItemUUAxe("axe"));
-		mod.addItem(EMCCItems.i_hoe = new ItemUUHoe("hoe"));
-		mod.addItem(EMCCItems.i_smasher = new ItemUUSmasher("smasher"));
-		
+		EMCCItems.preInit();
 		mod.onPostLoaded();
 		
 		ToolInfusion.initAll();
@@ -79,6 +56,7 @@ public class EMCC
 	public void init(FMLInitializationEvent e)
 	{
 		EMCCItems.load();
+		ToolInfusion.initAll();
 		customEMC.initRegNameItems();
 		proxy.init();
 	}

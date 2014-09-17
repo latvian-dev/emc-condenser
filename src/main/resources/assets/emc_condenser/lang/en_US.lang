@@ -17,6 +17,7 @@ emc_condenser:item.shovel.name=[WIP] UnUnSeptium Shovel
 emc_condenser:item.axe.name=[WIP] UnUnSeptium Axe
 emc_condenser:item.hoe.name=[WIP] UnUnSeptium Hoe
 emc_condenser:item.smasher.name=[WIP] UnUnSeptium Smasher
+emc_condenser:item.bow.name=[WIP] UnUnSeptium Bow
 
 ## Blocks ##
 emc_condenser:tile.uub.name=UnUnSeptium Block

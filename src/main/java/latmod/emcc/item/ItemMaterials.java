@@ -3,7 +3,7 @@ import latmod.core.ODItems;
 import latmod.core.mod.recipes.LMRecipes;
 import latmod.emcc.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.init.Items;
+import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.*;
@@ -40,7 +40,7 @@ public class ItemMaterials extends ItemEMCC
 	
 	public void loadRecipes()
 	{
-		EMCC.mod.recipes().addShapelessRecipe(EMCCItems.ITEM_UUS,
+		/*EMCC.mod.recipes().addShapelessRecipe(EMCCItems.ITEM_UUS,
 				EMCCItems.DUST_VERDANT,
 				EMCCItems.DUST_AZURE,
 				EMCCItems.DUST_MINIUM,
@@ -49,7 +49,31 @@ public class ItemMaterials extends ItemEMCC
 				ODItems.QUARTZ,
 				ODItems.IRON,
 				ODItems.GOLD,
-				ODItems.DIAMOND);
+				ODItems.DIAMOND);*/
+		
+		EMCC.mod.recipes().addRecipe(EMCCItems.ITEM_UUS, "MRM", "VSA", "MGM",
+				'M', EMCCItems.DUST_MINIUM,
+				'V', EMCCItems.DUST_VERDANT,
+				'A', EMCCItems.DUST_AZURE,
+				'R', ODItems.REDSTONE,
+				'G', ODItems.GLOWSTONE,
+				'S', Blocks.stone);
+		
+		{
+			int in = EMCC.mod.config().recipes.infusedUUIngots;
+			if(in > 0) EMCC.mod.recipes().addInfusing(
+					LMRecipes.size(EMCCItems.INGOT_UUS, in),
+					new ItemStack(Items.iron_ingot, in),
+					EMCCItems.ITEM_UUS);
+		}
+		
+		{
+			int in = EMCC.mod.config().recipes.infusedUUBlocks;
+			if(in > 0) EMCC.mod.recipes().addInfusing(
+					LMRecipes.size(EMCCItems.BLOCK_UUS, in),
+					new ItemStack(Blocks.obsidian, in),
+					EMCCItems.ITEM_UUS);
+		}
 		
 		if(EMCC.mod.config().recipes.infuseMiniumStar)
 		EMCC.mod.recipes().addInfusing(EMCCItems.MINIUM_STAR, new ItemStack(Items.nether_star), LMRecipes.size(EMCCItems.DUST_MINIUM, 8));

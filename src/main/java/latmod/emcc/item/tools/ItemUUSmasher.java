@@ -1,8 +1,5 @@
 package latmod.emcc.item.tools;
-import java.util.Set;
-
 import latmod.core.*;
-import latmod.core.util.FastList;
 import latmod.emcc.*;
 import latmod.emcc.api.ToolInfusion;
 import net.minecraft.block.Block;
@@ -15,22 +12,13 @@ public class ItemUUSmasher extends ItemUUPick
 {
 	public ItemUUSmasher(String s)
 	{
-		super(s, getEffectiveBlocks());
+		super(s);
 		
-		setHarvestLevel(EnumToolClass.PICKAXE.toolClass, EnumToolClass.ALUMITE);
-		setHarvestLevel(EnumToolClass.SHOVEL.toolClass, EnumToolClass.ALUMITE);
-		setHarvestLevel(EnumToolClass.AXE.toolClass, EnumToolClass.ALUMITE);
+		setHarvestLevel(EnumToolClass.PICKAXE.toolClass, EnumToolClass.LEVEL_DIAMOND);
+		setHarvestLevel(EnumToolClass.SHOVEL.toolClass, EnumToolClass.LEVEL_DIAMOND);
+		setHarvestLevel(EnumToolClass.AXE.toolClass, EnumToolClass.LEVEL_DIAMOND);
 	}
 	
-	private static Set<Block> getEffectiveBlocks()
-	{
-		FastList<Block> blocks = new FastList<Block>();
-		blocks.addAll(ItemUUPick.effective);
-		blocks.addAll(ItemUUShovel.effective);
-		blocks.addAll(ItemUUAxe.effective);
-		return blocks;
-	}
-
 	public void loadRecipes()
 	{
 		if(EMCC.mod.config().tools.enableSmasher)

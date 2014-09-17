@@ -1,9 +1,7 @@
 package latmod.emcc.block;
-import latmod.core.ODItems;
 import latmod.core.mod.tile.TileLM;
 import latmod.emcc.*;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -30,10 +28,5 @@ public class BlockUUBlock extends BlockEMCC
 	
 	public void loadRecipes()
 	{
-		if(EMCC.mod.config().recipes.infuseUUBlock)
-		EMCC.mod.recipes().addInfusing(EMCCItems.BLOCK_UUS, EMCCItems.ITEM_UUS, new ItemStack(Blocks.obsidian, 8));
-		else EMCC.mod.recipes().addRecipe(EMCCItems.BLOCK_UUS, "OOO", "OUO", "OOO",
-			'U', EMCCItems.ITEM_UUS,
-			'O', ODItems.OBSIDIAN);
 	}
 }

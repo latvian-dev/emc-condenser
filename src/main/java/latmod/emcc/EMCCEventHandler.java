@@ -22,7 +22,35 @@ public class EMCCEventHandler
 		
 		if(item instanceof IEmcStorageItem)
 		{
-			e.toolTip.add(EMCC.mod.translate("storedEMC", num(((IEmcStorageItem)item).getStoredEmc(e.itemStack))));
+			IEmcStorageItem i = (IEmcStorageItem)item;
+			
+			double stored = i.getStoredEmc(e.itemStack);
+			
+			String s = "";
+			
+			if(LC.proxy.isShiftDown())
+			{
+				s += stored;
+				if(s.endsWith(".0")) s = s.substring(0, s.length() - 2);
+			}
+			else
+			{
+				double maxStored = i.getMaxStoredEmc(e.itemStack);
+				
+				if(maxStored == Double.POSITIVE_INFINITY)
+				{
+					s += stored;
+					if(s.endsWith(".0")) s = s.substring(0, s.length() - 2);
+				}
+				else
+				{
+					s += ( ((long)(stored / maxStored * 100D * 100D)) / 100D );
+					if(s.endsWith(".0")) s = s.substring(0, s.length() - 2);
+					s += " %";
+				}
+			}
+			
+			e.toolTip.add(EMCC.mod.translate("storedEMC", s));
 		}
 		
 		for(int j = 0; j < e.toolTip.size(); j++)
@@ -51,6 +79,7 @@ public class EMCCEventHandler
 				
 				List<WrappedStack> al1 = r.getRecipeInputsAsWrappedStacks();
 				String t = "> " + getItemName(al1.get(0)) + " with " + getItemName(al1.get(1));
+				if(r.getRecipeOutput().stackSize > 1) t += " [" + r.getRecipeOutput().stackSize + "]";
 				
 				if(!e.toolTip.contains(t)) e.toolTip.add(t);
 			}
@@ -87,35 +116,6 @@ public class EMCCEventHandler
 		
 		if(w.getStackSize() > 1)
 		s = w.getStackSize() + " x " + s;
-		
-		return s;
-	}
-	
-	private String num(double d)
-	{
-		d = ((long)(d * 1000D)) / 1000D;
-		
-		String s = "" + d;
-		
-		if(!LC.proxy.isShiftDown())
-		{
-			if(d > 1000)
-			{
-				double d1 = d / 1000D;
-				d1 = ((long)(d1 * 1000D)) / 1000D;
-				s = "" + d1 + "K";
-			}
-			
-			if(d > 1000000)
-			{
-				double d1 = d / 1000000D;
-				d1 = ((long)(d1 * 100D)) / 100D;
-				s = "" + d1 + "M";
-			}
-		}
-		
-		if(s.endsWith(".0"))
-			s = s.substring(0, s.length() - 2);
 		
 		return s;
 	}

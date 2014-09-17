@@ -115,7 +115,7 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 						if(storageItem.canChargeEmc(tar))
 						{
 							double ev = storageItem.getStoredEmc(tar);
-							double a = Math.min(storedEMC, storageItem.getEmcTrasferLimit(tar));
+							double a = Math.min(Math.min(storedEMC, storageItem.getEmcTrasferLimit(tar)), storageItem.getMaxStoredEmc(tar) - ev);
 							storageItem.setStoredEmc(items[SLOT_TARGET], ev + a);
 							storedEMC -= a;
 							markDirty();
