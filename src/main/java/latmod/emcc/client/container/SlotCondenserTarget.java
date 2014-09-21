@@ -1,4 +1,4 @@
-package latmod.emcc.gui.container;
+package latmod.emcc.client.container;
 import net.minecraft.inventory.*;
 
 public class SlotCondenserTarget extends Slot

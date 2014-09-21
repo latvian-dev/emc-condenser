@@ -1,11 +1,11 @@
-package latmod.emcc.gui;
+package latmod.emcc.client.gui;
 import java.util.ArrayList;
 
 import latmod.core.mod.LC;
 import latmod.core.mod.gui.*;
 import latmod.emcc.*;
 import latmod.emcc.api.IEmcStorageItem;
-import latmod.emcc.gui.container.ContainerCondenser;
+import latmod.emcc.client.container.ContainerCondenser;
 import latmod.emcc.tile.TileCondenser;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;

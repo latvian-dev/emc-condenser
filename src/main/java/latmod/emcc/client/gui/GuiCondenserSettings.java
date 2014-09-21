@@ -1,4 +1,4 @@
-package latmod.emcc.gui;
+package latmod.emcc.client.gui;
 import latmod.core.mod.*;
 import latmod.core.mod.gui.*;
 import latmod.core.util.FastList;

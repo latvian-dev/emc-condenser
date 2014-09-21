@@ -16,8 +16,10 @@ import cpw.mods.fml.relauncher.*;
 
 public class BlockCondenser extends BlockEMCC
 {
+	public static int renderID = -1;
+	
 	@SideOnly(Side.CLIENT)
-	public IIcon topIcon;
+	public IIcon icon_top_empty, icon_top_glow, icon_side_empty, icon_side_glow;
 	
 	public BlockCondenser(String s)
 	{
@@ -47,14 +49,15 @@ public class BlockCondenser extends BlockEMCC
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister ir)
 	{
-		blockIcon = ir.registerIcon(mod.assets + "condSide");
-		topIcon = ir.registerIcon(mod.assets + "condTop");
+		icon_top_empty = ir.registerIcon(mod.assets + "condTopEmpty");
+		icon_top_glow = ir.registerIcon(mod.assets + "condTopGlow");
+		icon_side_empty = ir.registerIcon(mod.assets + "condSideEmpty");
+		icon_side_glow = ir.registerIcon(mod.assets + "condSideGlow");
 	}
 	
-	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(int s, int m)
-	{ 
-		if(s == LatCoreMC.TOP) return topIcon;
-		return blockIcon;
-	}
+	public int getRenderType()
+	{ return renderID; }
+	
+	public boolean renderAsNormalBlock()
+	{ return false; }
 }

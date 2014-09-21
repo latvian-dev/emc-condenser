@@ -1,5 +1,4 @@
 package latmod.emcc.block;
-import latmod.core.LatCoreMC;
 import latmod.core.mod.tile.TileLM;
 import latmod.emcc.tile.TileInfuser;
 import net.minecraft.block.material.Material;
@@ -10,8 +9,10 @@ import cpw.mods.fml.relauncher.*;
 
 public class BlockInfuser extends BlockEMCC
 {
+	public static int renderID = -1;
+	
 	@SideOnly(Side.CLIENT)
-	public IIcon topIcon;
+	public IIcon icon_top_empty, icon_top_glow, icon_side_empty, icon_side_glow;
 	
 	public BlockInfuser(String s)
 	{
@@ -42,14 +43,15 @@ public class BlockInfuser extends BlockEMCC
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister ir)
 	{
-		blockIcon = ir.registerIcon(mod.assets + "infuserSide");
-		topIcon = ir.registerIcon(mod.assets + "infuserTop");
+		icon_top_empty = ir.registerIcon(mod.assets + "infuserTopEmpty");
+		icon_top_glow = ir.registerIcon(mod.assets + "infuserTopGlow");
+		icon_side_empty = ir.registerIcon(mod.assets + "infuserSideEmpty");
+		icon_side_glow = ir.registerIcon(mod.assets + "infuserSideGlow");
 	}
 	
-	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(int s, int m)
-	{ 
-		if(s == LatCoreMC.TOP) return topIcon;
-		return blockIcon;
-	}
+	public int getRenderType()
+	{ return renderID; }
+	
+	public boolean renderAsNormalBlock()
+	{ return false; }
 }

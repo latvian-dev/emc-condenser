@@ -1,4 +1,4 @@
-package latmod.emcc.gui.container;
+package latmod.emcc.client.container;
 import latmod.core.mod.gui.ContainerLM;
 import latmod.emcc.tile.TileCondenser;
 import net.minecraft.entity.player.EntityPlayer;

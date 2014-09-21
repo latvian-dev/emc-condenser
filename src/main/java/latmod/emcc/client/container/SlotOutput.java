@@ -1,4 +1,4 @@
-package latmod.emcc.gui.container;
+package latmod.emcc.client.container;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 

@@ -1,7 +1,10 @@
 package latmod.emcc;
+import latmod.core.client.LatCoreMCClient;
 import latmod.core.mod.gui.ContainerEmpty;
-import latmod.emcc.gui.*;
-import latmod.emcc.gui.container.ContainerCondenser;
+import latmod.emcc.block.*;
+import latmod.emcc.client.container.ContainerCondenser;
+import latmod.emcc.client.gui.*;
+import latmod.emcc.client.render.world.*;
 import latmod.emcc.tile.TileCondenser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -23,6 +26,8 @@ public class EMCCClient extends EMCCCommon
 
 	public void postInit()
 	{
+		LatCoreMCClient.addBlockRenderer(BlockCondenser.renderID = LatCoreMCClient.getNewBlockRenderID(), new RenderCondenser());
+		LatCoreMCClient.addBlockRenderer(BlockInfuser.renderID = LatCoreMCClient.getNewBlockRenderID(), new RenderInfuser());
 	}
 	
 	public Object getClientGuiElement(int ID, EntityPlayer ep, World world, int x, int y, int z)

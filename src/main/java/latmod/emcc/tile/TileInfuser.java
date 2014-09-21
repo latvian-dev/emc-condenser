@@ -1,4 +1,5 @@
 package latmod.emcc.tile;
+import latmod.core.ParticleHelper;
 import latmod.core.mod.tile.TileLM;
 import latmod.emcc.api.ToolInfusion;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,6 +29,8 @@ public class TileInfuser extends TileLM
 	
 	public void onUpdate()
 	{
+		worldObj.spawnParticle("townaura", xCoord + ParticleHelper.rand.nextFloat(), yCoord + 1.1F, zCoord + ParticleHelper.rand.nextFloat(), 0D, 0D, 0D);
+		
 		if(!worldObj.isRemote)
 		{
 		}
