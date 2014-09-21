@@ -7,27 +7,29 @@ import net.minecraft.init.*;
 
 public enum ToolInfusion
 {
-	FIRE(Enchantment.fireAspect),
-	AREA(Enchantment.thorns),
-	FORTUNE(Enchantment.fortune),
-	UNBREAKING(Enchantment.unbreaking),
-	SHARPNESS(Enchantment.sharpness),
-	KNOCKBACK(Enchantment.knockback),
-	SILKTOUCH(Enchantment.silkTouch),
-	INFINITY(Enchantment.infinity),
+	FIRE("fire", Enchantment.fireAspect),
+	AREA("area", Enchantment.thorns),
+	FORTUNE("fortune", Enchantment.fortune),
+	UNBREAKING("unbreaking", Enchantment.unbreaking),
+	SHARPNESS("sharpness", Enchantment.sharpness),
+	KNOCKBACK("knockback", Enchantment.knockback),
+	SILKTOUCH("silkTouch", Enchantment.silkTouch),
+	INFINITY("infinity", Enchantment.infinity),
 	
 	;
 	
 	public static final ToolInfusion[] VALUES = values();
 	
 	public final int ID;
+	public final String name;
 	public final Enchantment enchantment;
 	public StackEntry item;
 	public int requiredSize;
 	
-	ToolInfusion(Enchantment e)
+	ToolInfusion(String s, Enchantment e)
 	{
 		ID = ordinal();
+		name = s;
 		enchantment = e;
 		init(null, 0);
 	}
@@ -43,7 +45,7 @@ public enum ToolInfusion
 		//EMCCConfig
 		
 		FIRE.init(Items.blaze_rod, EMCC.mod.config().infusion.fire);
-		AREA.init(EMCCItems.BLOCK_UUS, EMCC.mod.config().infusion.area);
+		AREA.init(EMCCItems.b_uu_block, EMCC.mod.config().infusion.area);
 		FORTUNE.init(Items.gold_ingot, EMCC.mod.config().infusion.fortune);
 		UNBREAKING.init(Blocks.obsidian, EMCC.mod.config().infusion.unbreaking);
 		FORTUNE.init(Items.string, EMCC.mod.config().infusion.silkTouch);
@@ -57,5 +59,20 @@ public enum ToolInfusion
 		for(ToolInfusion t1 : t)
 		if(t1 == this) return true;
 		return false;
+	}
+	
+	public static final ToolInfusion get(Enchantment e)
+	{
+		for(ToolInfusion t : VALUES)
+			if(t.enchantment == e) return t;
+		return null;
+	}
+	
+	public static final ToolInfusion get(String s)
+	{
+		if(s == null || s.length() == 0) return null;
+		for(ToolInfusion t : VALUES)
+			if(t.name.equals(s)) return t;
+		return null;
 	}
 }

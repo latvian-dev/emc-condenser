@@ -70,7 +70,7 @@ public class ItemMaterials extends ItemEMCC
 		{
 			int in = EMCC.mod.config().recipes.infusedUUBlocks;
 			if(in > 0) EMCC.mod.recipes().addInfusing(
-					LMRecipes.size(EMCCItems.BLOCK_UUS, in),
+					new ItemStack(EMCCItems.b_uu_block, in),
 					new ItemStack(Blocks.obsidian, in),
 					EMCCItems.ITEM_UUS);
 		}

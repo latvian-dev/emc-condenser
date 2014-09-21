@@ -22,7 +22,7 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 	{ return Short.MAX_VALUE; }
 	
 	public double getEmcTrasferLimit(ItemStack is)
-	{ return 128D; }
+	{ return 1024D; }
 	
 	public void loadRecipes()
 	{

@@ -26,13 +26,13 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 	{ return Short.MAX_VALUE; }
 	
 	public double getEmcTrasferLimit(ItemStack is)
-	{ return 128D; }
+	{ return 1024D; }
 	
 	public void loadRecipes()
 	{
 		if(EMCC.mod.config().tools.blackHoleStone_item != -1D)
 		EMCC.mod.recipes().addRecipe(new ItemStack(this), "OEO", "EBE", "OEO",
-				'O', EMCCItems.BLOCK_UUS,
+				'O', EMCCItems.b_uu_block,
 				'B', EMCCItems.i_emc_battery,
 				'E', Items.ender_pearl);
 	}

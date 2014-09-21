@@ -10,18 +10,19 @@ emc_condenser:item.battery.name=EMC Baterija
 emc_condenser:item.lifeRing.name=Dzīvības Gredzens
 emc_condenser:item.blackHoleBand.name=Melnā Cauruma Stīpa
 
-emc_condenser:item.wrench.name=[WIP] UnUnSeptija Atslēga
-emc_condenser:item.sword.name=[WIP] UnUnSeptija Zobens
-emc_condenser:item.pick.name=[WIP] UnUnSeptija Cirtnis
-emc_condenser:item.shovel.name=[WIP] UnUnSeptija Lāpsta
-emc_condenser:item.axe.name=[WIP] UnUnSeptija Cirvis
-emc_condenser:item.hoe.name=[WIP] UnUnSeptija Kaplis
-emc_condenser:item.smasher.name=[WIP] UnUnSeptija Šķaidītājs
-emc_condenser:item.bow.name=[WIP] UnUnSeptija Loks
+emc_condenser:item.wrench.name=UnUnSeptija Atslēga
+emc_condenser:item.sword.name=UnUnSeptija Zobens
+emc_condenser:item.pick.name=UnUnSeptija Cirtnis
+emc_condenser:item.shovel.name=UnUnSeptija Lāpsta
+emc_condenser:item.axe.name=UnUnSeptija Cirvis
+emc_condenser:item.hoe.name=UnUnSeptija Kaplis
+emc_condenser:item.smasher.name=UnUnSeptija Šķaidītājs
+emc_condenser:item.bow.name=UnUnSeptija Loks
 
 ## Blocks ##
 emc_condenser:tile.uub.name=UnUnSeptija Bloks
 emc_condenser:tile.condenser.name=EMC Kondenseris
+emc_condenser:tile.infuser.name=[WIP] EMC Darbarīku Uzlabotājs
 
 ## Lang ##
 emc_condenser:repairing=Labo...

@@ -271,7 +271,7 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 	}
 	
 	public ItemStack getBlockToPlace()
-	{ return EMCCItems.CONDENSER; }
+	{ return new ItemStack(EMCCItems.b_uu_block); }
 	
 	public void handleButton(String button, int mouseButton, EntityPlayer ep)
 	{

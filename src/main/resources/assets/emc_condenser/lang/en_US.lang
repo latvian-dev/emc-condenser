@@ -12,16 +12,17 @@ emc_condenser:item.blackHoleBand.name=Black Hole Band
 
 emc_condenser:item.wrench.name=UnUnSeptium Wrench
 emc_condenser:item.sword.name=UnUnSeptium Sword
-emc_condenser:item.pick.name=[WIP] UnUnSeptium Pick
-emc_condenser:item.shovel.name=[WIP] UnUnSeptium Shovel
-emc_condenser:item.axe.name=[WIP] UnUnSeptium Axe
-emc_condenser:item.hoe.name=[WIP] UnUnSeptium Hoe
-emc_condenser:item.smasher.name=[WIP] UnUnSeptium Smasher
-emc_condenser:item.bow.name=[WIP] UnUnSeptium Bow
+emc_condenser:item.pick.name=UnUnSeptium Pick
+emc_condenser:item.shovel.name=UnUnSeptium Shovel
+emc_condenser:item.axe.name=UnUnSeptium Axe
+emc_condenser:item.hoe.name=UnUnSeptium Hoe
+emc_condenser:item.smasher.name=UnUnSeptium Smasher
+emc_condenser:item.bow.name=UnUnSeptium Bow
 
 ## Blocks ##
 emc_condenser:tile.uub.name=UnUnSeptium Block
 emc_condenser:tile.condenser.name=EMC Condenser
+emc_condenser:tile.infuser.name=[WIP] EMC Tool Infuser
 
 ## Lang ##
 emc_condenser:repairing=Repairing...

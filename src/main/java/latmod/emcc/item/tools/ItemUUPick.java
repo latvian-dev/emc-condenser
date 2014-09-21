@@ -47,8 +47,8 @@ public class ItemUUPick extends ItemToolEMCC
 	
 	public boolean onBlockDestroyed(ItemStack is, World w, Block bid, int x, int y, int z, EntityLivingBase el)
     {
-		//return super.onBlockDestroyed(is, w, bid, x, y, z, el);
-		return EMCCUtils.destroyBlockArea(w, x, y, z, el, is, bid, this);
+		EMCCUtils.destroyBlockArea(w, x, y, z, el, is, bid, this);
+		return super.onBlockDestroyed(is, w, bid, x, y, z, el);
     }
 	
 	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
