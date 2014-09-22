@@ -7,14 +7,14 @@ import net.minecraft.init.*;
 
 public enum ToolInfusion
 {
-	FIRE("fire", Enchantment.fireAspect),
-	AREA("area", Enchantment.thorns),
-	FORTUNE("fortune", Enchantment.fortune),
-	UNBREAKING("unbreaking", Enchantment.unbreaking),
-	SHARPNESS("sharpness", Enchantment.sharpness),
-	KNOCKBACK("knockback", Enchantment.knockback),
-	SILKTOUCH("silkTouch", Enchantment.silkTouch),
-	INFINITY("infinity", Enchantment.infinity),
+	FIRE("fire", Enchantment.fireAspect, 3),
+	AREA("area", Enchantment.thorns, 1),
+	FORTUNE("fortune", Enchantment.fortune, 5),
+	UNBREAKING("unbreaking", Enchantment.unbreaking, 10),
+	SHARPNESS("sharpness", Enchantment.sharpness, 10),
+	KNOCKBACK("knockback", Enchantment.knockback, 5),
+	SILKTOUCH("silkTouch", Enchantment.silkTouch, 1),
+	INFINITY("infinity", Enchantment.infinity, 1),
 	
 	;
 	
@@ -23,14 +23,16 @@ public enum ToolInfusion
 	public final int ID;
 	public final String name;
 	public final Enchantment enchantment;
+	public final int maxLevel;
 	public StackEntry item;
 	public int requiredSize;
 	
-	ToolInfusion(String s, Enchantment e)
+	ToolInfusion(String s, Enchantment e, int max)
 	{
 		ID = ordinal();
 		name = s;
 		enchantment = e;
+		maxLevel = max;
 		init(null, 0);
 	}
 	

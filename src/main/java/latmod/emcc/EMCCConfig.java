@@ -196,16 +196,16 @@ public class EMCCConfig extends LMConfig
 			super("infusion");
 			setCategoryDesc(
 					"Infusion in UnUnSeptium Infuser",
-					"X Items [1 - 64] required to infuse, 0 - disabled");
+					"X Items [1 - 256] required to infuse, 0 - disabled");
 			
-			fire = getInt("fire", 16, 0, 64, "Blaze rods, default: 16");
-			area = getInt("area", 8, 0, 64, "UnUnSeptium Blocks, default: 8");
-			fortune = getInt("fortune", 8, 0, 64, "Gold Ingots [1 lvl], default: 8");
-			unbreaking = getInt("unbreaking", 8, 0, 64, "Obsidian [1 lvl], default: 8");
-			silkTouch = getInt("silkTouch", 32, 0, 64, "String, default: 32");
-			sharpness = getInt("sharpness", 16, 0, 64, "Iron Ingots [1 lvl], default: 16");
-			knockback = getInt("knockback", 4, 0, 64, "Piston [1 lvl], default: 4");
-			infinity = getInt("infinity", 16, 0, 64, "Diamonds, default: 16");
+			fire = getInt("fire", 16, 0, 256, "Blaze rods, default: 16");
+			area = getInt("area", 8, 0, 256, "UnUnSeptium Blocks, default: 8");
+			fortune = getInt("fortune", 8, 0, 256, "Gold Ingots [1 lvl], default: 8");
+			unbreaking = getInt("unbreaking", 8, 0, 256, "Obsidian [1 lvl], default: 8");
+			silkTouch = getInt("silkTouch", 32, 0, 256, "String, default: 32");
+			sharpness = getInt("sharpness", 16, 0, 256, "Iron Ingots [1 lvl], default: 16");
+			knockback = getInt("knockback", 4, 0, 256, "Piston [1 lvl], default: 4");
+			infinity = getInt("infinity", 16, 0, 256, "Diamonds, default: 16");
 		}
 	}
 }

@@ -47,6 +47,7 @@ public class BlockInfuser extends BlockEMCC
 		icon_top_glow = ir.registerIcon(mod.assets + "infuserTopGlow");
 		icon_side_empty = ir.registerIcon(mod.assets + "infuserSideEmpty");
 		icon_side_glow = ir.registerIcon(mod.assets + "infuserSideGlow");
+		blockIcon = icon_side_empty;
 	}
 	
 	public int getRenderType()

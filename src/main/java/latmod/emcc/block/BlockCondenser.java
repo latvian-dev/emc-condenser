@@ -53,6 +53,7 @@ public class BlockCondenser extends BlockEMCC
 		icon_top_glow = ir.registerIcon(mod.assets + "condTopGlow");
 		icon_side_empty = ir.registerIcon(mod.assets + "condSideEmpty");
 		icon_side_glow = ir.registerIcon(mod.assets + "condSideGlow");
+		blockIcon = icon_side_empty;
 	}
 	
 	public int getRenderType()

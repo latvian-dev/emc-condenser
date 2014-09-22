@@ -33,9 +33,6 @@ public class ItemUUPick extends ItemToolEMCC
 	public boolean isEffective(Block b)
 	{ return effectiveBlocks.contains(b) || effectiveMaterials.contains(b.getMaterial()); }
 	
-	//public float getStrVsBlock(ItemStack is, Block b)
-	//{ return isEffective(b) ? (efficiencyOnProperMaterial / (isArea(is) ? 8F : 1F)) : 1F; }
-	
 	public boolean onBlockStartBreak(ItemStack tool, int x, int y, int z, EntityPlayer ep)
 	{
 		return false;

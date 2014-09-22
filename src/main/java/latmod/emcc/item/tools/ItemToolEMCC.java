@@ -102,7 +102,7 @@ public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 	{ return 4096D; }
 	
 	public boolean showDurabilityBar(ItemStack is)
-	{ return true; }
+	{ return getStoredEmc(is) != getMaxStoredEmc(is); }
 	
 	public double getDurabilityForDisplay(ItemStack is)
 	{ return 1F - getStoredEmc(is) / getMaxStoredEmc(is); }
