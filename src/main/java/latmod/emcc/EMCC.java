@@ -1,5 +1,4 @@
 package latmod.emcc;
-import latmod.core.LatCoreMC;
 import latmod.core.mod.LMMod;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.blacklist.EMCCBlacklist;
@@ -45,7 +44,6 @@ public class EMCC
 		
 		tab = mod.createTab("tab", new ItemStack(EMCCItems.i_emc_battery, 1, 1));
 		
-		LatCoreMC.addGuiHandler(inst, proxy);
 		MinecraftForge.EVENT_BUS.register(new EMCCEventHandler());
 		
 		proxy.preInit();

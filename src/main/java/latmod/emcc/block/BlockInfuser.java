@@ -9,7 +9,7 @@ import cpw.mods.fml.relauncher.*;
 
 public class BlockInfuser extends BlockEMCC
 {
-	public static int renderID = -1;
+	public static int renderID = 0;
 	
 	@SideOnly(Side.CLIENT)
 	public IIcon icon_top_empty, icon_top_glow, icon_side_empty, icon_side_glow;

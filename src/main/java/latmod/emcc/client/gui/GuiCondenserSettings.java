@@ -4,6 +4,8 @@ import latmod.core.mod.gui.*;
 import latmod.core.util.FastList;
 import latmod.emcc.*;
 import latmod.emcc.tile.TileCondenser;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
@@ -12,10 +14,10 @@ public class GuiCondenserSettings extends GuiLM
 	public TileCondenser condenser;
 	public ButtonLM buttonSettings, buttonSecurity, buttonRedstone, buttonInvMode, buttonRepairItems;
 	
-	public GuiCondenserSettings(ContainerLM c)
+	public GuiCondenserSettings(final EntityPlayer ep, IInventory inv)
 	{
-		super(c, EMCC.mod.getLocation("textures/gui/condenserSettings.png"));
-		condenser = (TileCondenser)c.inv;
+		super(new ContainerEmpty(ep, inv), EMCC.mod.getLocation("textures/gui/condenserSettings.png"));
+		condenser = (TileCondenser)inv;
 		xSize = 102;
 		ySize = 106;
 		textureWidth = 128;
@@ -25,7 +27,7 @@ public class GuiCondenserSettings extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.clientOpenGui(EMCCGuis.CONDENSER);
+				condenser.openGui(ep);
 				playClickSound();
 			}
 		});

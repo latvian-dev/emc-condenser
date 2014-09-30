@@ -29,6 +29,7 @@ public class EMCCConfig extends LMConfig
 		public boolean enableAludelRecipes;
 		public boolean enableBlacklist;
 		public double ununblockEnchantPower;
+		public boolean enableCustomRenderer;
 		
 		public General()
 		{
@@ -38,6 +39,9 @@ public class EMCCConfig extends LMConfig
 			enableAludelRecipes = getBool("enableAludelRecipes", true);
 			enableBlacklist = getBool("enableBlacklist", true);
 			ununblockEnchantPower = getDouble("ununblockEnchantPower", 3D);
+			
+			enableCustomRenderer = getBool("enableCustomRenderer", true,
+					"Disable this if you have problems with condenser rendering");
 		}
 	}
 	
