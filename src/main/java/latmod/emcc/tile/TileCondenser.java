@@ -1,11 +1,12 @@
 package latmod.emcc.tile;
 import latmod.core.*;
 import latmod.core.mod.LCGuis;
+import latmod.core.mod.gui.ContainerEmpty;
 import latmod.core.mod.tile.*;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.client.container.ContainerCondenser;
-import latmod.emcc.client.gui.GuiCondenser;
+import latmod.emcc.client.gui.*;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
@@ -52,7 +53,7 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
 	{
 		if(!worldObj.isRemote)
-			LatCoreMC.openGui(ep, this);
+			openGui(ep, 0);
 		return true;
 	}
 	
@@ -298,10 +299,10 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 		markDirty();
 	}
 	
-	public void openGui(EntityPlayer ep)
+	public void openGui(EntityPlayer ep, int ID)
 	{
 		if(security.canInteract(ep))
-			LatCoreMC.openGui(ep, this);
+			LatCoreMC.openGui(ep, this, ID);
 		else printOwner(ep);
 	}
 	
@@ -333,10 +334,18 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 		}
 	}
 	
-	public Container getContainer(EntityPlayer ep)
-	{ return new ContainerCondenser(ep, this); }
+	public Container getContainer(EntityPlayer ep, int ID)
+	{
+		if(ID == 0) return new ContainerCondenser(ep, this);
+		else if(ID == 1) new ContainerEmpty(ep, this);
+		return null;
+	}
 	
 	@SideOnly(Side.CLIENT)
-	public GuiScreen getGui(EntityPlayer ep)
-	{ return new GuiCondenser(new ContainerCondenser(ep, this)); }
+	public GuiScreen getGui(EntityPlayer ep, int ID)
+	{
+		if(ID == 0) return new GuiCondenser(new ContainerCondenser(ep, this));
+		else if(ID == 1) return new GuiCondenserSettings(ep, this);
+		return null;
+	}
 }

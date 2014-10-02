@@ -27,7 +27,7 @@ public class GuiCondenserSettings extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.openGui(ep);
+				condenser.clientOpenGui(0);
 				playClickSound();
 			}
 		});

@@ -7,7 +7,6 @@ import latmod.emcc.*;
 import latmod.emcc.api.IEmcStorageItem;
 import latmod.emcc.client.container.ContainerCondenser;
 import latmod.emcc.tile.TileCondenser;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 
@@ -40,7 +39,7 @@ public class GuiCondenser extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				Minecraft.getMinecraft().displayGuiScreen(new GuiCondenserSettings(c.player, condenser));
+				condenser.clientOpenGui(1);
 				playClickSound();
 			}
 		});
