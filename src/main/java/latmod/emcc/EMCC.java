@@ -47,7 +47,6 @@ public class EMCC
 		MinecraftForge.EVENT_BUS.register(new EMCCEventHandler());
 		
 		proxy.preInit();
-		mod.config().save();
 	}
 	
 	@Mod.EventHandler

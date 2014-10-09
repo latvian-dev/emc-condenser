@@ -15,11 +15,11 @@ public class EMCCConfig extends LMConfig
 	public EMCCConfig(FMLPreInitializationEvent e)
 	{
 		super(e, "/LatMod/EMC_Condenser.cfg");
-		add(general = new General());
-		add(recipes = new Recipes());
-		add(condenser = new Condenser());
-		add(tools = new Tools());
-		add(infusion = new Infusion());
+		general = new General();
+		recipes = new Recipes();
+		condenser = new Condenser();
+		tools = new Tools();
+		infusion = new Infusion();
 		save();
 	}
 	
