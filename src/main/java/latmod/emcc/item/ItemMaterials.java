@@ -1,6 +1,6 @@
 package latmod.emcc.item;
 import latmod.core.ODItems;
-import latmod.core.mod.recipes.LMRecipes;
+import latmod.core.recipes.LMRecipes;
 import latmod.emcc.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.*;

@@ -1,9 +1,10 @@
 package latmod.emcc.client.gui;
-import latmod.core.mod.*;
-import latmod.core.mod.gui.*;
+import latmod.core.client.LMGuiButtons;
+import latmod.core.gui.*;
 import latmod.core.util.FastList;
 import latmod.emcc.*;
 import latmod.emcc.tile.TileCondenser;
+import latmod.latcore.LC;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import cpw.mods.fml.relauncher.*;
@@ -36,7 +37,7 @@ public class GuiCondenserSettings extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.clientPressButton(LCGuis.Buttons.SECURITY, b);
+				condenser.clientPressButton(LMGuiButtons.SECURITY, b);
 				playClickSound();
 			}
 		});
@@ -45,7 +46,7 @@ public class GuiCondenserSettings extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.clientPressButton(LCGuis.Buttons.REDSTONE, b);
+				condenser.clientPressButton(LMGuiButtons.REDSTONE, b);
 				playClickSound();
 			}
 		});
@@ -54,7 +55,7 @@ public class GuiCondenserSettings extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.clientPressButton(LCGuis.Buttons.INV_MODE, b);
+				condenser.clientPressButton(LMGuiButtons.INV_MODE, b);
 				playClickSound();
 			}
 		});

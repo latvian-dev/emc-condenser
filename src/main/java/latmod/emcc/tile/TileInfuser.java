@@ -1,6 +1,6 @@
 package latmod.emcc.tile;
 import latmod.core.ParticleHelper;
-import latmod.core.mod.tile.TileLM;
+import latmod.core.tile.TileLM;
 import latmod.emcc.api.ToolInfusion;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

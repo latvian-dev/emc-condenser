@@ -1,6 +1,6 @@
 package latmod.emcc;
 
-import latmod.core.mod.recipes.LMRecipes;
+import latmod.core.recipes.LMRecipes;
 import net.minecraft.item.ItemStack;
 
 import com.pahimar.ee3.recipe.RecipesAludel;

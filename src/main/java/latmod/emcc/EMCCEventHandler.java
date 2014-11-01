@@ -2,8 +2,8 @@ package latmod.emcc;
 import java.util.List;
 
 import latmod.core.*;
-import latmod.core.mod.LC;
 import latmod.emcc.api.*;
+import latmod.latcore.LC;
 import net.minecraft.item.*;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 

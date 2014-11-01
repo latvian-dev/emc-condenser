@@ -1,7 +1,8 @@
 package latmod.emcc;
-import latmod.core.mod.LMMod;
+import latmod.core.LMMod;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.blacklist.EMCCBlacklist;
+import latmod.emcc.customemc.EMCCCustomEMC;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -27,12 +28,14 @@ public class EMCC
 	
 	public static LMMod<EMCCConfig, EMCCRecipes> mod;
 	public static EMCCBlacklist blacklist;
+	public static EMCCCustomEMC customEMC;
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
 		mod = new LMMod<EMCCConfig, EMCCRecipes>(MOD_ID, new EMCCConfig(e), new EMCCRecipes());
 		blacklist = new EMCCBlacklist(e);
+		customEMC = new EMCCCustomEMC(e);
 		
 		EMCCItems.preInit();
 		mod.onPostLoaded();
@@ -51,12 +54,14 @@ public class EMCC
 	{
 		EMCCItems.load();
 		ToolInfusion.initAll();
+		customEMC.initRegNameItems();
 		proxy.init();
 	}
 	
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
+		customEMC.postInitRegNameItems();
 		mod.loadRecipes();
 		proxy.postInit();
 	}

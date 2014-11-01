@@ -1,5 +1,5 @@
 package latmod.emcc.block;
-import latmod.core.mod.tile.TileLM;
+import latmod.core.tile.TileLM;
 import latmod.emcc.tile.TileInfuser;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;

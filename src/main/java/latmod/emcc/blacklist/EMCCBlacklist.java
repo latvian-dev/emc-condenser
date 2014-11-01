@@ -2,7 +2,7 @@ package latmod.emcc.blacklist;
 import java.io.File;
 
 import latmod.core.*;
-import latmod.core.util.FastList;
+import latmod.core.util.*;
 import latmod.emcc.*;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -17,7 +17,7 @@ public class EMCCBlacklist
 		
 		list = null;
 		
-		try { list = LatCoreMC.fromJsonFromFile(file, Blacklist.class); }
+		try { list = LatCore.fromJsonFromFile(file, Blacklist.class); }
 		catch(Exception ex) { list = null; }
 		
 		if(list == null)
@@ -59,7 +59,7 @@ public class EMCCBlacklist
 			list.example.addRegistryName("itemWithDamage", 3);
 			list.example.addRegistryName("itemAnyDamage", -1);
 			
-			LatCoreMC.toJsonFile(file, list);
+			LatCore.toJsonFile(file, list);
 		}
 		
 		list.all.reloadList();

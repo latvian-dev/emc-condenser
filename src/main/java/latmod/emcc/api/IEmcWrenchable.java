@@ -1,5 +1,5 @@
 package latmod.emcc.api;
-import latmod.core.mod.tile.ITileInterface;
+import latmod.core.tile.ITileInterface;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

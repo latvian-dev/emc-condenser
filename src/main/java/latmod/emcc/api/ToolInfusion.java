@@ -1,6 +1,6 @@
 package latmod.emcc.api;
 
-import latmod.core.mod.recipes.StackEntry;
+import latmod.core.recipes.StackEntry;
 import latmod.emcc.*;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.*;

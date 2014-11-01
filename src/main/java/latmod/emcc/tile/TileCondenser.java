@@ -1,8 +1,9 @@
 package latmod.emcc.tile;
 import latmod.core.*;
-import latmod.core.mod.LCGuis;
-import latmod.core.mod.gui.ContainerEmpty;
-import latmod.core.mod.tile.*;
+import latmod.core.client.LMGuiButtons;
+import latmod.core.gui.ContainerEmpty;
+import latmod.core.tile.*;
+import latmod.core.tile.enums.*;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.client.container.ContainerCondenser;
@@ -282,13 +283,13 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 	{
 		if(button.equals(EMCCGuis.Buttons.SAFE_MODE))
 			safeMode = safeMode.next();
-		else if(button.equals(LCGuis.Buttons.REDSTONE))
+		else if(button.equals(LMGuiButtons.REDSTONE))
 			redstoneMode = (mouseButton == 0) ? redstoneMode.next() : redstoneMode.prev();
-		else if(button.equals(LCGuis.Buttons.INV_MODE))
+		else if(button.equals(LMGuiButtons.INV_MODE))
 			invMode = (mouseButton == 0) ? invMode.next() : invMode.prev();
 		else if(button.equals(EMCCGuis.Buttons.REPAIR_TOOLS))
 			repairTools = repairTools.next();
-		else if(button.equals(LCGuis.Buttons.SECURITY))
+		else if(button.equals(LMGuiButtons.SECURITY))
 		{
 			if(ep != null && security.isOwner(ep))
 				security.level = (mouseButton == 0) ? security.level.next() : security.level.prev();

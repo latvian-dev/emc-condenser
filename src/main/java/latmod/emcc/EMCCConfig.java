@@ -1,6 +1,6 @@
 package latmod.emcc;
-import latmod.core.mod.*;
-import latmod.core.mod.tile.*;
+import latmod.core.*;
+import latmod.core.tile.enums.*;
 import latmod.emcc.tile.*;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
