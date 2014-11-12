@@ -1,36 +1,23 @@
 package latmod.emcc.client.render.world;
 
 import latmod.core.LatCoreMC;
-import latmod.core.client.RenderBlocksCustom;
+import latmod.core.client.BlockRendererLM;
 import latmod.emcc.EMCCItems;
-import latmod.emcc.block.BlockCondenser;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.*;
 import net.minecraft.world.IBlockAccess;
-
-import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
-public class RenderCondenser implements ISimpleBlockRenderingHandler
+public class RenderCondenser extends BlockRendererLM
 {
-	public RenderBlocksCustom renderBlocks = new RenderBlocksCustom();
+	public static final RenderCondenser instance = new RenderCondenser();
 	
-	public Block glow = new Block(Material.glass)
+	public Block glow = new BlockCustom()
 	{
-		@SideOnly(Side.CLIENT)
 		public int getMixedBrightnessForBlock(IBlockAccess iba, int x, int y, int z)
-		{ return 255; }
-		
-		public boolean isOpaqueCube()
-		{ return false; }
-		
-		public boolean renderAsNormalBlock()
-		{ return false; }
+		{ return iba.getLightBrightnessForSkyBlocks(x, y, z, 15); }
 		
 		public IIcon getIcon(int s, int m)
 		{
@@ -38,16 +25,13 @@ public class RenderCondenser implements ISimpleBlockRenderingHandler
 				return EMCCItems.b_condenser.icon_top_glow;
 			else return EMCCItems.b_condenser.icon_side_glow;
 		}
+		
+		public int getRenderBlockPass()
+		{ return 0; }
 	};
 	
-	public Block empty = new Block(Material.glass)
+	public Block empty = new BlockCustom()
 	{
-		public boolean isOpaqueCube()
-		{ return false; }
-		
-		public boolean renderAsNormalBlock()
-		{ return false; }
-		
 		public IIcon getIcon(int s, int m)
 		{
 			if(s == LatCoreMC.TOP)
@@ -56,7 +40,7 @@ public class RenderCondenser implements ISimpleBlockRenderingHandler
 		}
 	};
 	
-	public void renderInventoryBlock(Block b, int paramInt1, int paramInt2, RenderBlocks renderer)
+	public void renderInventoryBlock(Block b, int meta, int modelID, RenderBlocks rb)
 	{
 		renderBlocks.setRenderBounds(0D, 0D, 0D, 1D, 1D, 1D);
 		renderBlocks.clearOverrideBlockTexture();
@@ -64,23 +48,15 @@ public class RenderCondenser implements ISimpleBlockRenderingHandler
 		renderBlocks.renderBlockAsItem(glow, 0, 1F);
 	}
 	
-	public boolean renderWorldBlock(IBlockAccess iba, int x, int y, int z, Block b, int renderID, RenderBlocks renderer0)
+	public boolean renderWorldBlock(IBlockAccess iba, int x, int y, int z, Block b, int modelID, RenderBlocks rb)
 	{
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		
 		renderBlocks.blockAccess = iba;
 		
-		renderBlocks.setRenderBounds(0D, 0D, 0D, 1D, 1D, 1D);
+		renderBlocks.setRenderBounds(renderBlocks.fullBlock);
 		renderBlocks.clearOverrideBlockTexture();
-		renderBlocks.renderStandardBlock(empty, x, y, z);
 		renderBlocks.renderStandardBlock(glow, x, y, z);
+		renderBlocks.renderStandardBlock(empty, x, y, z);
 		
 		return true;
 	}
-	
-	public boolean shouldRender3DInInventory(int renderID)
-	{ return true; }
-	
-	public int getRenderId()
-	{ return BlockCondenser.renderID; }
 }

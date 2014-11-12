@@ -1,5 +1,6 @@
 package latmod.emcc.block;
 import latmod.core.tile.TileLM;
+import latmod.emcc.client.render.world.RenderInfuser;
 import latmod.emcc.tile.TileInfuser;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -9,8 +10,6 @@ import cpw.mods.fml.relauncher.*;
 
 public class BlockInfuser extends BlockEMCC
 {
-	public static int renderID = 0;
-	
 	@SideOnly(Side.CLIENT)
 	public IIcon icon_top_empty, icon_top_glow, icon_side_empty, icon_side_glow;
 	
@@ -50,8 +49,9 @@ public class BlockInfuser extends BlockEMCC
 		blockIcon = icon_side_empty;
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public int getRenderType()
-	{ return renderID; }
+	{ return RenderInfuser.instance.getRenderId(); }
 	
 	public boolean renderAsNormalBlock()
 	{ return false; }

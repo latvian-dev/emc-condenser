@@ -1,36 +1,23 @@
 package latmod.emcc.client.render.world;
 
 import latmod.core.LatCoreMC;
-import latmod.core.client.RenderBlocksCustom;
+import latmod.core.client.BlockRendererLM;
 import latmod.emcc.EMCCItems;
-import latmod.emcc.block.BlockInfuser;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
-
-import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
-public class RenderInfuser implements ISimpleBlockRenderingHandler
+public class RenderInfuser extends BlockRendererLM
 {
-public RenderBlocksCustom renderBlocks = new RenderBlocksCustom();
+	public static final RenderInfuser instance = new RenderInfuser();
 	
-	public Block glow = new Block(Material.glass)
+	public Block glow = new BlockCustom()
 	{
-		@SideOnly(Side.CLIENT)
 		public int getMixedBrightnessForBlock(IBlockAccess iba, int x, int y, int z)
-		{ return 255; }
-		
-		public boolean isOpaqueCube()
-		{ return false; }
-		
-		public boolean renderAsNormalBlock()
-		{ return false; }
+		{ return iba.getLightBrightnessForSkyBlocks(x, y, z, 15); }
 		
 		public IIcon getIcon(int s, int m)
 		{
@@ -40,14 +27,8 @@ public RenderBlocksCustom renderBlocks = new RenderBlocksCustom();
 		}
 	};
 	
-	public Block empty = new Block(Material.glass)
+	public Block empty = new BlockCustom()
 	{
-		public boolean isOpaqueCube()
-		{ return false; }
-		
-		public boolean renderAsNormalBlock()
-		{ return false; }
-		
 		public IIcon getIcon(int s, int m)
 		{
 			if(s == LatCoreMC.TOP)
@@ -66,8 +47,6 @@ public RenderBlocksCustom renderBlocks = new RenderBlocksCustom();
 	
 	public boolean renderWorldBlock(IBlockAccess iba, int x, int y, int z, Block b, int renderID, RenderBlocks renderer0)
 	{
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		
 		renderBlocks.blockAccess = iba;
 		
 		renderBlocks.setRenderBounds(0D, 0D, 0D, 1D, 1D, 1D);
@@ -80,7 +59,4 @@ public RenderBlocksCustom renderBlocks = new RenderBlocksCustom();
 	
 	public boolean shouldRender3DInInventory(int renderID)
 	{ return true; }
-	
-	public int getRenderId()
-	{ return BlockInfuser.renderID; }
 }

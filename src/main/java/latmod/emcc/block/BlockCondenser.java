@@ -2,6 +2,7 @@ package latmod.emcc.block;
 import latmod.core.*;
 import latmod.core.tile.TileLM;
 import latmod.emcc.*;
+import latmod.emcc.client.render.world.RenderCondenser;
 import latmod.emcc.tile.TileCondenser;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -16,8 +17,6 @@ import cpw.mods.fml.relauncher.*;
 
 public class BlockCondenser extends BlockEMCC
 {
-	public static int renderID = 0;
-	
 	@SideOnly(Side.CLIENT)
 	public IIcon icon_top_empty, icon_top_glow, icon_side_empty, icon_side_glow;
 	
@@ -56,8 +55,9 @@ public class BlockCondenser extends BlockEMCC
 		blockIcon = icon_side_empty;
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public int getRenderType()
-	{ return renderID; }
+	{ return RenderCondenser.instance.getRenderId(); }
 	
 	public boolean renderAsNormalBlock()
 	{ return false; }
