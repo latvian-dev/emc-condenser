@@ -35,23 +35,23 @@ public class EMCCItems
 	
 	public static void preInit()
 	{
-		EMCC.mod.addBlock(b_uu_block = new BlockUUBlock("uub"));
-		EMCC.mod.addBlock(b_condenser = new BlockCondenser("condenser"));
-		EMCC.mod.addBlock(b_infuser = new BlockInfuser("infuser"));
+		b_uu_block = new BlockUUBlock("uub").register();
+		b_condenser = new BlockCondenser("condenser").register();
+		b_infuser = new BlockInfuser("infuser").register();
 		
-		EMCC.mod.addItem(i_mat = new ItemMaterials("materials"));
-		EMCC.mod.addItem(i_emc_battery = new ItemEmcBattery("battery"));
-		EMCC.mod.addItem(i_life_ring = new ItemLifeRing("lifeRing"));
-		EMCC.mod.addItem(i_black_hole_band = new ItemBlackHoleBand("blackHoleBand"));
+		i_mat = new ItemMaterials("materials").register();
+		i_emc_battery = new ItemEmcBattery("battery").register();
+		i_life_ring = new ItemLifeRing("lifeRing").register();
+		i_black_hole_band = new ItemBlackHoleBand("blackHoleBand").register();
 		
-		EMCC.mod.addItem(i_wrench = new ItemUUWrench("wrench"));
-		EMCC.mod.addItem(i_sword = new ItemUUSword("sword"));
-		EMCC.mod.addItem(i_pick = new ItemUUPick("pick"));
-		EMCC.mod.addItem(i_shovel = new ItemUUShovel("shovel"));
-		EMCC.mod.addItem(i_axe = new ItemUUAxe("axe"));
-		EMCC.mod.addItem(i_hoe = new ItemUUHoe("hoe"));
-		EMCC.mod.addItem(i_smasher = new ItemUUSmasher("smasher"));
-		EMCC.mod.addItem(i_bow = new ItemUUBow("bow"));
+		i_wrench = new ItemUUWrench("wrench").register();
+		i_sword = new ItemUUSword("sword").register();
+		i_pick = new ItemUUPick("pick").register();
+		i_shovel = new ItemUUShovel("shovel").register();
+		i_axe = new ItemUUAxe("axe").register();
+		i_hoe = new ItemUUHoe("hoe").register();
+		i_smasher = new ItemUUSmasher("smasher").register();
+		i_bow = new ItemUUBow("bow").register();
 	}
 	
 	public static void load()
