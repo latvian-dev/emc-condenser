@@ -14,11 +14,8 @@ public class RenderInfuser extends BlockRendererLM
 {
 	public static final RenderInfuser instance = new RenderInfuser();
 	
-	public Block glow = new BlockCustom()
+	public Block glow = new BlockGlowing()
 	{
-		public int getMixedBrightnessForBlock(IBlockAccess iba, int x, int y, int z)
-		{ return iba.getLightBrightnessForSkyBlocks(x, y, z, 15); }
-		
 		public IIcon getIcon(int s, int m)
 		{
 			if(s == LatCoreMC.TOP)

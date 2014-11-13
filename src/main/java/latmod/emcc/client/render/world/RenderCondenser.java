@@ -14,20 +14,14 @@ public class RenderCondenser extends BlockRendererLM
 {
 	public static final RenderCondenser instance = new RenderCondenser();
 	
-	public Block glow = new BlockCustom()
+	public Block glow = new BlockGlowing()
 	{
-		public int getMixedBrightnessForBlock(IBlockAccess iba, int x, int y, int z)
-		{ return iba.getLightBrightnessForSkyBlocks(x, y, z, 15); }
-		
 		public IIcon getIcon(int s, int m)
 		{
 			if(s == LatCoreMC.TOP)
 				return EMCCItems.b_condenser.icon_top_glow;
 			else return EMCCItems.b_condenser.icon_side_glow;
 		}
-		
-		public int getRenderBlockPass()
-		{ return 0; }
 	};
 	
 	public Block empty = new BlockCustom()

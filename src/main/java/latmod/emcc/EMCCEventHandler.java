@@ -1,15 +1,11 @@
 package latmod.emcc;
-import java.util.List;
-
-import latmod.core.*;
-import latmod.emcc.api.*;
+import latmod.core.LatCoreMC;
+import latmod.emcc.api.IEmcStorageItem;
 import latmod.latcore.LC;
 import net.minecraft.item.*;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
 import com.pahimar.ee3.exchange.*;
-import com.pahimar.ee3.item.crafting.RecipeAludel;
-import com.pahimar.ee3.recipe.RecipesAludel;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -56,33 +52,8 @@ public class EMCCEventHandler
 		for(int j = 0; j < e.toolTip.size(); j++)
 		{
 			String s = e.toolTip.get(j);
-			if(s.startsWith("Infused with "))
-				e.toolTip.remove(j);
-			
 			if(s.equalsIgnoreCase("No Exchange Energy value"))
 				e.toolTip.remove(j);
-		}
-		
-		List<RecipeAludel> al = RecipesAludel.getInstance().getRecipes();
-		
-		boolean flag = false;
-		
-		for(RecipeAludel r : al)
-		{
-			if(InvUtils.itemsEquals(e.itemStack, r.getRecipeOutput(), false, true))
-			{
-				if(!flag)
-				{
-					e.toolTip.add("Aludel Infusion:");
-					flag = true;
-				}
-				
-				List<WrappedStack> al1 = r.getRecipeInputsAsWrappedStacks();
-				String t = "> " + getItemName(al1.get(0)) + " with " + getItemName(al1.get(1));
-				if(r.getRecipeOutput().stackSize > 1) t += " [" + r.getRecipeOutput().stackSize + "]";
-				
-				if(!e.toolTip.contains(t)) e.toolTip.add(t);
-			}
 		}
 	}
 	

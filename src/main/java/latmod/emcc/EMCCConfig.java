@@ -25,8 +25,6 @@ public class EMCCConfig extends LMConfig
 	
 	public class General extends Category
 	{
-		public boolean enableCustomEMC;
-		public boolean enableAludelRecipes;
 		public boolean enableBlacklist;
 		public double ununblockEnchantPower;
 		
@@ -34,8 +32,6 @@ public class EMCCConfig extends LMConfig
 		{
 			super("general");
 			
-			enableCustomEMC = getBool("enableCustomEMC", true);
-			enableAludelRecipes = getBool("enableAludelRecipes", true);
 			enableBlacklist = getBool("enableBlacklist", true);
 			ununblockEnchantPower = getDouble("ununblockEnchantPower", 3D);
 		}
