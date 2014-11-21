@@ -139,10 +139,7 @@ public class EMCCConfig extends LMConfig
 		public boolean enableWrench;
 		public boolean enableBattery;
 		public boolean enableSword;
-		public boolean enablePick;
-		public boolean enableShovel;
-		public boolean enableAxe;
-		public boolean enableHoe;
+		public boolean enableTools;
 		public boolean enableSmasher;
 		public boolean enableBow;
 		
@@ -159,10 +156,7 @@ public class EMCCConfig extends LMConfig
 			enableWrench = getBool("enableWrench", true);
 			enableBattery = getBool("enableBattery", true);
 			enableSword = getBool("enableSword", true);
-			enablePick = getBool("enablePick", true);
-			enableShovel = getBool("enableShovel", true);
-			enableAxe = getBool("enableAxe", true);
-			enableHoe = getBool("enableHoe", true);
+			enableTools = getBool("enableTools", true);
 			enableSmasher = getBool("enableSmasher", true);
 			enableBow = getBool("enableBow", true);
 			
