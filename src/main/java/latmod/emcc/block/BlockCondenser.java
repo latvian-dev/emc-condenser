@@ -38,7 +38,7 @@ public class BlockCondenser extends BlockEMCC
 		if(EMCC.mod.config().recipes.condenserRecipeDifficulty == 1) is = new ItemStack(Items.nether_star);
 		else if(EMCC.mod.config().recipes.condenserRecipeDifficulty == 2) is = EMCCItems.MINIUM_STAR;
 		
-		EMCC.mod.recipes().addRecipe(new ItemStack(this), "OBO", "OSO", "OIO",
+		EMCC.mod.recipes.addRecipe(new ItemStack(this), "OBO", "OSO", "OIO",
 				'O', ODItems.OBSIDIAN,
 				'I', is,
 				'B', EMCCItems.i_black_hole_band,

@@ -27,7 +27,7 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 	public void loadRecipes()
 	{
 		if(EMCC.mod.config().tools.lifeStone_1hp != -1D || EMCC.mod.config().tools.lifeStone_food != -1D)
-		EMCC.mod.recipes().addRecipe(new ItemStack(this), "SPS", "PBP", "SPS",
+			mod.recipes.addRecipe(new ItemStack(this), "SPS", "PBP", "SPS",
 				'S', Items.cooked_beef,
 				'B', EMCCItems.i_emc_battery,
 				'P', new ItemStack(Items.potionitem, 1, 8225));

@@ -140,7 +140,6 @@ public class EMCCConfig extends LMConfig
 		public boolean enableBattery;
 		public boolean enableSword;
 		public boolean enableTools;
-		public boolean enableSmasher;
 		public boolean enableBow;
 		
 		public double lifeStone_1hp;
@@ -157,7 +156,6 @@ public class EMCCConfig extends LMConfig
 			enableBattery = getBool("enableBattery", true);
 			enableSword = getBool("enableSword", true);
 			enableTools = getBool("enableTools", true);
-			enableSmasher = getBool("enableSmasher", true);
 			enableBow = getBool("enableBow", true);
 			
 			lifeStone_1hp = getDouble("lifeStone_1hp", 24D);
