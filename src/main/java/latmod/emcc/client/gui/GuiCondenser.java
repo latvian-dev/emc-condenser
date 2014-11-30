@@ -1,6 +1,7 @@
 package latmod.emcc.client.gui;
 import java.util.ArrayList;
 
+import latmod.core.LatCoreMC;
 import latmod.core.gui.*;
 import latmod.emcc.*;
 import latmod.emcc.api.IEmcStorageItem;
@@ -39,7 +40,7 @@ public class GuiCondenser extends GuiLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.clientOpenGui(1);
+				LatCoreMC.openClientGui(c.player, condenser, 1);
 				playClickSound();
 			}
 		});

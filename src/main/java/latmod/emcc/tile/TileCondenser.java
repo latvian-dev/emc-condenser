@@ -309,8 +309,6 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 	
 	public void onClientAction(EntityPlayer ep, String action, NBTTagCompound data)
 	{
-		super.onClientAction(ep, action, data);
-		
 		if(action.equals(ACTION_TRANS_ITEMS))
 		{
 			int[] invSlots = InvUtils.getPlayerSlots(ep);
@@ -333,6 +331,10 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 				}
 			}
 		}
+		else if(action.equals(ACTION_OPEN_GUI) && data.getByte("ID") == 1)
+			LatCoreMC.openClientGui(ep, this, 1);
+		else super.onClientAction(ep, action, data);
+			
 	}
 	
 	public Container getContainer(EntityPlayer ep, int ID)
