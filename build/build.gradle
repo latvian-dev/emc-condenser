@@ -1,3 +1,7 @@
+def mod_name = "EMC_Condenser";
+def mod_group = "latmod.emcc";
+def mod_class = "EMCC.java";
+
 buildscript {
     repositories {
         mavenCentral()
@@ -26,36 +30,36 @@ configFile.withReader {
 }
 
 version = config.version_mc + "-" + config.version_mods
-group = "latmod.emcc"
-archivesBaseName = config.name_emcc
+group = mod_group
+archivesBaseName = mod_name
 
 minecraft {
     version = config.version_mc + "-" + config.version_forge
     runDir = "eclipse/assets"
     
     replace "@VERSION@", config.version_mods
-    replaceIn "EMCC.java"
+    replaceIn mod_class
 }
 
 dependencies {
-    compile files("sources/Files/" + config.version_mc + "/" + config.name_latcoremc + "/" + config.name_latcoremc + "-" + config.version_mc + "-" + config.version_mods + "-dev.jar")
+    compile files("sources/Exported/LatCoreMC-" + config.version_mc + "-" + config.version_mods + "-dev.jar")
     compile files("sources/EE3-dev.jar")
 }
 
 sourceSets {
     main {
         java {
-            srcDir "sources/" + config.name_emcc + "/src/main/java"
+            srcDir "\\\\LATMODPC\\ProjMCP/" + mod_name + "/src/main/java"
         }
         resources {
-            srcDir "sources/" + config.name_emcc + "/src/main/resources"
+            srcDir "\\\\LATMODPC\\ProjMCP/" + mod_name + "/src/main/resources"
         }
     }
 }
 
 tasks.withType(Jar)
 {
-    destinationDir = file("$rootDir/sources/Files/" + config.version_mc + "/" + config.name_emcc)
+    destinationDir = file("$rootDir/sources/Exported")
 }
 
 processResources
