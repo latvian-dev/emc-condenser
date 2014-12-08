@@ -25,13 +25,13 @@ public class EMCC
 	
 	public static CreativeTabs tab = null;
 	
-	public static LMMod<EMCCConfig, EMCCRecipes> mod;
+	public static LMMod mod;
 	public static EMCCBlacklist blacklist;
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
-		mod = new LMMod<EMCCConfig, EMCCRecipes>(MOD_ID, new EMCCConfig(e), new EMCCRecipes());
+		mod = new LMMod(MOD_ID, new EMCCConfig(e), EMCCRecipes.instance);
 		blacklist = new EMCCBlacklist(e);
 		
 		EMCCItems.preInit();

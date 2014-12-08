@@ -60,36 +60,36 @@ public class ItemMaterials extends ItemEMCC
 				'S', Blocks.stone);
 		
 		{
-			int in = EMCC.mod.config().recipes.infusedUUIngots;
-			if(in > 0) EMCC.mod.recipes().addInfusing(
+			int in = EMCCConfig.Recipes.infusedUUIngots;
+			if(in > 0) EMCCRecipes.instance.addInfusing(
 					LMRecipes.size(EMCCItems.INGOT_UUS, in),
 					new ItemStack(Items.iron_ingot, in),
 					EMCCItems.ITEM_UUS);
 		}
 		
 		{
-			int in = EMCC.mod.config().recipes.infusedUUBlocks;
-			if(in > 0) EMCC.mod.recipes().addInfusing(
+			int in = EMCCConfig.Recipes.infusedUUBlocks;
+			if(in > 0) EMCCRecipes.instance.addInfusing(
 					new ItemStack(EMCCItems.b_uu_block, in),
 					new ItemStack(Blocks.obsidian, in),
 					EMCCItems.ITEM_UUS);
 		}
 		
-		if(EMCC.mod.config().recipes.infuseMiniumStar)
-		EMCC.mod.recipes().addInfusing(EMCCItems.MINIUM_STAR, new ItemStack(Items.nether_star), LMRecipes.size(EMCCItems.DUST_MINIUM, 8));
+		if(EMCCConfig.Recipes.infuseMiniumStar)
+			EMCCRecipes.instance.addInfusing(EMCCItems.MINIUM_STAR, new ItemStack(Items.nether_star), LMRecipes.size(EMCCItems.DUST_MINIUM, 8));
 		else mod.recipes.addRecipe(EMCCItems.MINIUM_STAR, "MMM", "MSM", "MMM",
 				Character.valueOf('M'), EMCCItems.DUST_MINIUM,
 				Character.valueOf('S'), Items.nether_star);
 		
-		if(EMCC.mod.config().recipes.miniumToNetherStar == 1)
-			EMCC.mod.recipes().addInfusing(new ItemStack(Items.nether_star), EMCCItems.MINIUM_STAR, new ItemStack(Items.glowstone_dust));
-		else if(EMCC.mod.config().recipes.miniumToNetherStar == 2)
+		if(EMCCConfig.Recipes.miniumToNetherStar == 1)
+			EMCCRecipes.instance.addInfusing(new ItemStack(Items.nether_star), EMCCItems.MINIUM_STAR, new ItemStack(Items.glowstone_dust));
+		else if(EMCCConfig.Recipes.miniumToNetherStar == 2)
 			mod.recipes.addSmelting(new ItemStack(Items.nether_star), EMCCItems.MINIUM_STAR);
 		
 		mod.recipes.addItemBlockRecipe(EMCCItems.NUGGET_EMERALD, new ItemStack(Items.emerald), true);
 		
-		if(EMCC.mod.config().recipes.infuseEnchBottle)
-			EMCC.mod.recipes().addInfusing(new ItemStack(Items.experience_bottle), new ItemStack(Items.potionitem, 1, 32), EMCCItems.NUGGET_EMERALD);
+		if(EMCCConfig.Recipes.infuseEnchBottle)
+			EMCCRecipes.instance.addInfusing(new ItemStack(Items.experience_bottle), new ItemStack(Items.potionitem, 1, 32), EMCCItems.NUGGET_EMERALD);
 	}
 	
 	public String getUnlocalizedName(ItemStack is)

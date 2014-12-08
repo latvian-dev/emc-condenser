@@ -64,12 +64,12 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 		{
 			if(cooldown <= 0)
 			{
-				cooldown = EMCC.mod.config().condenser.condenserSleepDelay;
+				cooldown = EMCCConfig.Condenser.condenserSleepDelay;
 				
 				if(redstoneMode != RedstoneMode.DISABLED && redstoneMode.cancel(redstonePowered))
 					return;
 				
-				int limit = EMCC.mod.config().condenser.condenserLimitPerTick;
+				int limit = EMCCConfig.Condenser.condenserLimitPerTick;
 				if(limit == -1) limit = INPUT_SLOTS.length * 64;
 				
 				for(int i = 0; i < INPUT_SLOTS.length; i++)
@@ -218,17 +218,17 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 	
 	public void checkForced()
 	{
-		if(EMCC.mod.config().condenser.forcedRedstoneControl != null && redstoneMode.ID != EMCC.mod.config().condenser.forcedRedstoneControl.ID)
-		{ redstoneMode = EMCC.mod.config().condenser.forcedRedstoneControl; markDirty(); }
+		if(EMCCConfig.Condenser.forcedRedstoneControl != null && redstoneMode.ID != EMCCConfig.Condenser.forcedRedstoneControl.ID)
+		{ redstoneMode = EMCCConfig.Condenser.forcedRedstoneControl; markDirty(); }
 		
-		if(EMCC.mod.config().condenser.forcedSecurity != null && security.level != EMCC.mod.config().condenser.forcedSecurity)
-		{ security.level = EMCC.mod.config().condenser.forcedSecurity; markDirty(); }
+		if(EMCCConfig.Condenser.forcedSecurity != null && security.level != EMCCConfig.Condenser.forcedSecurity)
+		{ security.level = EMCCConfig.Condenser.forcedSecurity; markDirty(); }
 		
-		if(EMCC.mod.config().condenser.forcedSafeMode != null && safeMode.ID != EMCC.mod.config().condenser.forcedSafeMode.ID)
-		{ safeMode = EMCC.mod.config().condenser.forcedSafeMode; markDirty(); }
+		if(EMCCConfig.Condenser.forcedSafeMode != null && safeMode.ID != EMCCConfig.Condenser.forcedSafeMode.ID)
+		{ safeMode = EMCCConfig.Condenser.forcedSafeMode; markDirty(); }
 		
-		if(EMCC.mod.config().condenser.forcedInvMode != null && invMode.ID != EMCC.mod.config().condenser.forcedInvMode.ID)
-		{ invMode = EMCC.mod.config().condenser.forcedInvMode; markDirty(); }
+		if(EMCCConfig.Condenser.forcedInvMode != null && invMode.ID != EMCCConfig.Condenser.forcedInvMode.ID)
+		{ invMode = EMCCConfig.Condenser.forcedInvMode; markDirty(); }
 	}
 	
 	@Override

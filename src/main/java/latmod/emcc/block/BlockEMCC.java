@@ -11,7 +11,7 @@ public abstract class BlockEMCC extends BlockLM
 	public BlockEMCC(String s, Material m)
 	{ super(s, m); }
 	
-	public LMMod<?, ?> getMod()
+	public LMMod getMod()
 	{ return EMCC.mod; }
 	
 	@SideOnly(Side.CLIENT)

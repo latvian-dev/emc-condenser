@@ -1,6 +1,6 @@
 package latmod.emcc.block;
 import latmod.core.tile.TileLM;
-import latmod.emcc.EMCC;
+import latmod.emcc.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
 
@@ -16,7 +16,7 @@ public class BlockUUBlock extends BlockEMCC
 	{ return null; }
 	
 	public float getEnchantPowerBonus(World w, int x, int y, int z)
-	{ return (float)EMCC.mod.config().general.ununblockEnchantPower; }
+	{ return (float)EMCCConfig.General.ununblockEnchantPower; }
 	
 	public void loadRecipes()
 	{

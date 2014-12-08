@@ -30,7 +30,7 @@ public class ItemUUWrench extends ItemToolEMCC
 	
 	public void loadRecipes()
 	{
-		if(EMCC.mod.config().tools.enableWrench)
+		if(EMCCConfig.Tools.enableWrench)
 			mod.recipes.addRecipe(new ItemStack(this), "UBU", " S ", " S ",
 					'U', EMCCItems.b_uu_block,
 					'S', ODItems.STICK,
@@ -126,7 +126,7 @@ public class ItemUUWrench extends ItemToolEMCC
 	}
 
 	public double getEmcPerDmg(ItemStack is)
-	{ return EMCC.mod.config().tools.toolEmcPerDamage; }
+	{ return EMCCConfig.Tools.toolEmcPerDamage; }
 	
 	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
 	{ return t.is(ToolInfusion.UNBREAKING); }

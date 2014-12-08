@@ -14,7 +14,7 @@ public class ItemUUBow extends ItemToolEMCC // ItemBow
 	
 	public void loadRecipes()
 	{
-		if(EMCC.mod.config().tools.enableBow)
+		if(EMCCConfig.Tools.enableBow)
 			mod.recipes.addRecipe(new ItemStack(this), " US", "U S", " US",
 					'U', EMCCItems.INGOT_UUS,
 					'S', Items.string);

@@ -21,7 +21,7 @@ public class ItemUUSword extends ItemToolEMCC // ItemSword
 	
 	public void loadRecipes()
 	{
-		if(EMCC.mod.config().tools.enableSword)
+		if(EMCCConfig.Tools.enableSword)
 			mod.recipes.addRecipe(new ItemStack(this), "U", "U", "S",
 					'U', EMCCItems.INGOT_UUS,
 					'S', ODItems.STICK);

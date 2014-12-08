@@ -26,7 +26,7 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 	
 	public void loadRecipes()
 	{
-		if(EMCC.mod.config().tools.lifeStone_1hp != -1D || EMCC.mod.config().tools.lifeStone_food != -1D)
+		if(EMCCConfig.Tools.lifeStone_1hp != -1D || EMCCConfig.Tools.lifeStone_food != -1D)
 			mod.recipes.addRecipe(new ItemStack(this), "SPS", "PBP", "SPS",
 				'S', Items.cooked_beef,
 				'B', EMCCItems.i_emc_battery,
@@ -42,7 +42,7 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 	public void onWornTick(ItemStack is, EntityLivingBase e)
 	{
 		if(e == null || e.worldObj.isRemote || !(e instanceof EntityPlayer)) return;
-		if(EMCC.mod.config().tools.lifeStone_1hp == -1D && EMCC.mod.config().tools.lifeStone_food == -1D) return;
+		if(EMCCConfig.Tools.lifeStone_1hp == -1D && EMCCConfig.Tools.lifeStone_food == -1D) return;
 		
 		EntityPlayer ep = (EntityPlayer)e;
 		
@@ -50,20 +50,20 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 		{
 			double emc = getStoredEmc(is);
 			
-			if(EMCC.mod.config().tools.lifeStone_food != -1D && emc >= EMCC.mod.config().tools.lifeStone_food && ep.getFoodStats().needFood())
+			if(EMCCConfig.Tools.lifeStone_food != -1D && emc >= EMCCConfig.Tools.lifeStone_food && ep.getFoodStats().needFood())
 			{
 				ep.getFoodStats().addStats(1, 0.6F);
-				emc -= EMCC.mod.config().tools.lifeStone_food;
+				emc -= EMCCConfig.Tools.lifeStone_food;
 				setStoredEmc(is, emc);
 			}
 			
 			float hp = ep.getHealth();
 			float maxHp = ep.getMaxHealth();
 			
-			if(EMCC.mod.config().tools.lifeStone_1hp != -1D && hp < maxHp && emc >= EMCC.mod.config().tools.lifeStone_1hp)
+			if(EMCCConfig.Tools.lifeStone_1hp != -1D && hp < maxHp && emc >= EMCCConfig.Tools.lifeStone_1hp)
 			{
 				ep.setHealth(hp + 1F);
-				emc -= EMCC.mod.config().tools.lifeStone_1hp;
+				emc -= EMCCConfig.Tools.lifeStone_1hp;
 				if(emc < 0D) emc = 0D;
 				setStoredEmc(is, emc);
 			}

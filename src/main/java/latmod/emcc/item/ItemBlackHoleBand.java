@@ -30,7 +30,7 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 	
 	public void loadRecipes()
 	{
-		if(EMCC.mod.config().tools.blackHoleStone_item != -1D)
+		if(EMCCConfig.Tools.blackHoleStone_item != -1D)
 			mod.recipes.addRecipe(new ItemStack(this), "OEO", "EBE", "OEO",
 				'O', EMCCItems.b_uu_block,
 				'B', EMCCItems.i_emc_battery,
@@ -50,9 +50,9 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 		{
 			double emc = getStoredEmc(is);
 			
-			if(EMCC.mod.config().tools.blackHoleStone_item == -1D || emc < EMCC.mod.config().tools.blackHoleStone_item) return;
+			if(EMCCConfig.Tools.blackHoleStone_item == -1D || emc < EMCCConfig.Tools.blackHoleStone_item) return;
 			
-			double r = EMCC.mod.config().tools.blackHoleStone_range;
+			double r = EMCCConfig.Tools.blackHoleStone_range;
 			
 			@SuppressWarnings("unchecked")
 			List<EntityItem> items = ep.worldObj.getEntitiesWithinAABB(EntityItem.class, ep.boundingBox.expand(r, r, r));
@@ -69,7 +69,7 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 							item.delayBeforeCanPickup = 4;
 						if(item.delayBeforeCanPickup != 0) continue;
 						
-						emc -= EMCC.mod.config().tools.blackHoleStone_item;
+						emc -= EMCCConfig.Tools.blackHoleStone_item;
 						setStoredEmc(is, emc);
 						
 						item.setLocationAndAngles(ep.posX, ep.posY, ep.posZ, 0F, 0F);

@@ -46,14 +46,14 @@ public enum ToolInfusion
 	{
 		//EMCCConfig
 		
-		FIRE.init(Items.blaze_rod, EMCC.mod.config().infusion.fire);
-		AREA.init(EMCCItems.b_uu_block, EMCC.mod.config().infusion.area);
-		FORTUNE.init(Items.gold_ingot, EMCC.mod.config().infusion.fortune);
-		UNBREAKING.init(Blocks.obsidian, EMCC.mod.config().infusion.unbreaking);
-		FORTUNE.init(Items.string, EMCC.mod.config().infusion.silkTouch);
-		SHARPNESS.init(Items.iron_ingot, EMCC.mod.config().infusion.sharpness);
-		KNOCKBACK.init(Blocks.piston, EMCC.mod.config().infusion.knockback);
-		INFINITY.init(Items.diamond, EMCC.mod.config().infusion.infinity);
+		FIRE.init(Items.blaze_rod, EMCCConfig.Infusion.fire);
+		AREA.init(EMCCItems.b_uu_block, EMCCConfig.Infusion.area);
+		FORTUNE.init(Items.gold_ingot, EMCCConfig.Infusion.fortune);
+		UNBREAKING.init(Blocks.obsidian, EMCCConfig.Infusion.unbreaking);
+		FORTUNE.init(Items.string, EMCCConfig.Infusion.silkTouch);
+		SHARPNESS.init(Items.iron_ingot, EMCCConfig.Infusion.sharpness);
+		KNOCKBACK.init(Blocks.piston, EMCCConfig.Infusion.knockback);
+		INFINITY.init(Items.diamond, EMCCConfig.Infusion.infinity);
 	}
 	
 	public boolean is(ToolInfusion... t)
