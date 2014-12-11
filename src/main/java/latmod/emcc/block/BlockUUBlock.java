@@ -16,7 +16,7 @@ public class BlockUUBlock extends BlockEMCC
 	{ return null; }
 	
 	public float getEnchantPowerBonus(World w, int x, int y, int z)
-	{ return (float)EMCCConfig.General.ununblockEnchantPower; }
+	{ return EMCCConfig.General.ununblockEnchantPower; }
 	
 	public void loadRecipes()
 	{
