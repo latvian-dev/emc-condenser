@@ -1,5 +1,5 @@
 package latmod.emcc.item.tools;
-import latmod.core.util.FastList;
+import latmod.core.FastList;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.item.ItemEmcStorage;
@@ -10,7 +10,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.*;

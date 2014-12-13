@@ -2,7 +2,6 @@ package latmod.emcc.blacklist;
 import java.io.File;
 
 import latmod.core.*;
-import latmod.core.util.*;
 import latmod.emcc.*;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;

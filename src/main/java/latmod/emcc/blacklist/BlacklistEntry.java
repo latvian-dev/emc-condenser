@@ -1,8 +1,7 @@
 package latmod.emcc.blacklist;
 import java.util.List;
 
-import latmod.core.LatCoreMC;
-import latmod.core.util.FastList;
+import latmod.core.*;
 import net.minecraft.item.ItemStack;
 
 import com.google.gson.annotations.Expose;

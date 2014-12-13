@@ -5,7 +5,7 @@ import latmod.core.client.BlockRendererLM;
 import latmod.emcc.EMCCItems;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.util.*;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.relauncher.*;
 
