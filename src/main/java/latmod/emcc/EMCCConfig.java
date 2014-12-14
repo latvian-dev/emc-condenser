@@ -25,8 +25,8 @@ public class EMCCConfig extends LMConfig
 		
 		public static void load(Category c)
 		{
-			enableBlacklist = c.getBool("enableBlacklist", true, "Enable Blacklist");
-			ununblockEnchantPower = c.getFloat("ununblockEnchantPower", 3F, 0F, 100F, "UUS Block Enchant Power");
+			enableBlacklist = c.getBool("enableBlacklist", true);
+			ununblockEnchantPower = c.getFloat("ununblockEnchantPower", 3F, 0F, 100F);
 		}
 	}
 	
@@ -41,24 +41,24 @@ public class EMCCConfig extends LMConfig
 		
 		public static void load(Category c)
 		{
-			condenserRecipeDifficulty = c.getInt("condenserRecipeDifficulty", 2, 0, 2, "Condenser Recipe Difficulty");
+			condenserRecipeDifficulty = c.getInt("condenserRecipeDifficulty", 2, 0, 2);
 			c.setComment("condenserRecipeDifficulty",
 					"This changed the item used in EMC Condenser's crafting recipe",
 					"0 - UnUnSeptium Block",
 					"1 - Nether Star",
 					"2 - Minium Star");
 			
-			miniumToNetherStar = c.getInt("miniumToNetherStar", 1, 0, 2, "Convert Minium Star to Nether Star");
+			miniumToNetherStar = c.getInt("miniumToNetherStar", 1, 0, 2);
 			c.setComment("miniumToNetherStar",
 					"0 - Minium Star can't be converted back to Nether Star",
 					"1 - Minium Star + Glowstone Dust > Nether Star",
 					"2 - Minium Star in furnace > Nether Star");
 			
-			infuseMiniumStar = c.getBool("infuseMiniumStar", true, "Infuse Minium Star");
-			infuseEnchBottle = c.getBool("infuseEnchBottle", true, "Infuse Ench. Bottle");
-			infusedUUBlocks = c.getInt("infusedUUBlocks", 8, 0, 64, "Infused UUS Blocks");
+			infuseMiniumStar = c.getBool("infuseMiniumStar", true);
+			infuseEnchBottle = c.getBool("infuseEnchBottle", true);
+			infusedUUBlocks = c.getInt("infusedUUBlocks", 8, 0, 64);
 			
-			infusedUUIngots = c.getInt("infusedUUIngots", 8, -1, 64, "Infused UUS Ingots");
+			infusedUUIngots = c.getInt("infusedUUIngots", 8, -1, 64);
 			c.setComment("infusedUUIngots",
 					"0 - Recipe Disabled",
 					"-1 - Smelt UnUnSeptium in furnace",
@@ -78,20 +78,20 @@ public class EMCCConfig extends LMConfig
 		
 		public static void load(Category c)
 		{
-			condenserSleepDelay = c.getInt("condenserSleepDelay", 10, 0, Short.MAX_VALUE, "Sleep Delay");
+			condenserSleepDelay = c.getInt("condenserSleepDelay", 10, 0, Short.MAX_VALUE);
 			c.setComment("condenserSleepDelay",
 					"Longer delay - Less condenser updates",
 					"Min value - 0, instant condensing",
 					"Max value - 32767, that's more than 1.5 days in Minecraft",
 					"Default value - 10 (0.5 seconds)");
 			
-			condenserLimitPerTick = c.getInt("condenserLimitPerTick", 8, -1, 2048, "Limit Per Tick");
+			condenserLimitPerTick = c.getInt("condenserLimitPerTick", 8, -1, 2048);
 			c.setComment("condenserLimitPerTick",
 					"How many items can be condensed every <condenserSleepDelay> ticks",
 					"Max = 2048, Min = 1",
 					"-1 = Condense all (first release version)");
 			
-			int i_forcedInvMode = c.getInt("forcedInvMode", -1, -1, 3, "Forced Inv Mode");
+			int i_forcedInvMode = c.getInt("forcedInvMode", -1, -1, 3);
 			c.setComment("forcedInvMode",
 					"-1 - Choosed by user",
 					"0 - Items can be go both ways",
@@ -100,7 +100,7 @@ public class EMCCConfig extends LMConfig
 					"3 - Automatization disabled");
 			forcedInvMode = (i_forcedInvMode == -1) ? null : InvMode.VALUES[i_forcedInvMode];
 			
-			int i_forcedSecurity = c.getInt("forcedSecurity", -1, -1, 3, "Forced Security Level");
+			int i_forcedSecurity = c.getInt("forcedSecurity", -1, -1, 3);
 			c.setComment("forcedSecurity",
 					"-1 - Choosed by user",
 					"0 - Public",
@@ -109,7 +109,7 @@ public class EMCCConfig extends LMConfig
 					"3 - Blacklist");
 			forcedSecurity = (i_forcedSecurity == -1) ? null : LMSecurity.Level.VALUES[i_forcedSecurity];
 			
-			int i_forcedRedstoneControl = c.getInt( "forcedRedstoneControl", -1, -1, 2, "Forced Redstone Mode");
+			int i_forcedRedstoneControl = c.getInt( "forcedRedstoneControl", -1, -1, 2);
 			c.setComment("forcedRedstoneControl",
 					"-1 - Choosed by user",
 					"0 - No Redstone Control",
@@ -117,14 +117,14 @@ public class EMCCConfig extends LMConfig
 					"2 - Required Low signal");
 			forcedRedstoneControl = (i_forcedRedstoneControl == -1) ? null : RedstoneMode.VALUES[i_forcedRedstoneControl];
 			
-			int i_forcedSafeMode = c.getInt("forcedSafeMode", -1, -1, 1, "Forced Safe Mode");
+			int i_forcedSafeMode = c.getInt("forcedSafeMode", -1, -1, 1);
 			c.setComment("forcedSafeMode",
 					"-1 - Choosed by user",
 					"0 - Safe Mode always off",
 					"1 - Safe Mode always on");
 			forcedSafeMode = (i_forcedSafeMode == -1) ? null : SafeMode.VALUES[i_forcedSafeMode];
 			
-			int i_forcedRepairItems = c.getInt("forcedRepairItems", -1, -1, 1, "Forced Repair Items");
+			int i_forcedRepairItems = c.getInt("forcedRepairItems", -1, -1, 1);
 			c.setComment("forcedRepairItems",
 					"-1 - Choosed by user",
 					"0 - Repair Items always off",
@@ -149,17 +149,17 @@ public class EMCCConfig extends LMConfig
 		
 		public static void load(Category c)
 		{
-			enableWrench = c.getBool("enableWrench", true, "Enable Wrench");
-			enableBattery = c.getBool("enableBattery", true, "Enable Battery");
-			enableSword = c.getBool("enableSword", true, "Enable Sword");
-			enableBow = c.getBool("enableBow", true, "Enable Bow");
-			enableTools = c.getBool("enableTools", true, "Enable Other Tools");
+			enableWrench = c.getBool("enableWrench", true);
+			enableBattery = c.getBool("enableBattery", true);
+			enableSword = c.getBool("enableSword", true);
+			enableBow = c.getBool("enableBow", true);
+			enableTools = c.getBool("enableTools", true);
 			
-			toolEmcPerDamage = c.getFloat("toolEmcPerDamage", 64F, "[Tools] EMC for 1 damage point");
-			lifeStone_1hp = c.getFloat("lifeStone_1hp", 24F, "[LifeStone] EMC for 1 health point");
-			lifeStone_food = c.getFloat("lifeStone_food", 128F, "[LifeStone] EMC for 1 food point");
-			blackHoleStone_item = c.getFloat("blackHoleStone_item", 48F, "[BH Band] EMC for 1 item");
-			blackHoleStone_range = c.getFloat("blackHoleStone_range", 4F, "[BH Band] Range");
+			toolEmcPerDamage = c.getFloat("toolEmcPerDamage", 64F);
+			lifeStone_1hp = c.getFloat("lifeStone_1hp", 24F);
+			lifeStone_food = c.getFloat("lifeStone_food", 128F);
+			blackHoleStone_item = c.getFloat("blackHoleStone_item", 48F);
+			blackHoleStone_range = c.getFloat("blackHoleStone_range", 4F);
 		}
 	}
 	
@@ -176,18 +176,16 @@ public class EMCCConfig extends LMConfig
 		
 		public static void load(Category c)
 		{
-			c.setCategoryComment(
-					"Infusion in UnUnSeptium Infuser",
-					"X Items [1 - 256] required to infuse, 0 - disabled");
+			c.setCategoryComment("Infusion in UnUnSeptium Infuser", "X Items [1 - 256] required to infuse, 0 - disabled");
 			
-			fire = c.getInt("fire", 16, 0, 256, "Blaze rods, default: 16");
-			area = c.getInt("area", 8, 0, 256, "UnUnSeptium Blocks, default: 8");
-			fortune = c.getInt("fortune", 8, 0, 256, "Gold Ingots [1 lvl], default: 8");
-			unbreaking = c.getInt("unbreaking", 8, 0, 256, "Obsidian [1 lvl], default: 8");
-			silkTouch = c.getInt("silkTouch", 32, 0, 256, "String, default: 32");
-			sharpness = c.getInt("sharpness", 16, 0, 256, "Iron Ingots [1 lvl], default: 16");
-			knockback = c.getInt("knockback", 4, 0, 256, "Piston [1 lvl], default: 4");
-			infinity = c.getInt("infinity", 16, 0, 256, "Diamonds, default: 16");
+			fire = c.getInt("fire", 16, 0, 256); c.setComment("fire", "Blaze rods, default: 16");
+			area = c.getInt("area", 8, 0, 256); c.setComment("area", "UnUnSeptium Blocks, default: 8");
+			fortune = c.getInt("fortune", 8, 0, 256); c.setComment("fortune", "Gold Ingots [1 lvl], default: 8");
+			unbreaking = c.getInt("unbreaking", 8, 0, 256); c.setComment("unbreaking", "Obsidian [1 lvl], default: 8");
+			silkTouch = c.getInt("silkTouch", 32, 0, 256); c.setComment("silkTouch", "String, default: 32");
+			sharpness = c.getInt("sharpness", 16, 0, 256); c.setComment("sharpness", "Iron Ingots [1 lvl], default: 16");
+			knockback = c.getInt("knockback", 4, 0, 256); c.setComment("knockback", "Piston [1 lvl], default: 4");
+			infinity = c.getInt("infinity", 16, 0, 256); c.setComment("infinity", "Diamonds, default: 16");
 		}
 	}
 }
