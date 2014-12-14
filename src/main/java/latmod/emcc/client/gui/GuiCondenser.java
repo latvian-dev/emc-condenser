@@ -3,11 +3,11 @@ import java.util.ArrayList;
 
 import latmod.core.LatCoreMC;
 import latmod.core.gui.*;
+import latmod.core.mod.LC;
 import latmod.emcc.*;
 import latmod.emcc.api.IEmcStorageItem;
 import latmod.emcc.client.container.ContainerCondenser;
 import latmod.emcc.tile.TileCondenser;
-import latmod.latcore.LC;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 

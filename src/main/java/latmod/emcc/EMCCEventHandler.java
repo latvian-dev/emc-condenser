@@ -1,7 +1,7 @@
 package latmod.emcc;
 import latmod.core.LatCoreMC;
+import latmod.core.mod.LC;
 import latmod.emcc.api.IEmcStorageItem;
-import latmod.latcore.LC;
 import net.minecraft.item.*;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
