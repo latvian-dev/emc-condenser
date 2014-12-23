@@ -1,20 +1,15 @@
 package latmod.emcc;
+import latmod.core.*;
 import latmod.emcc.client.render.world.*;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
-public class EMCCClient extends EMCCCommon
+public class EMCCClient extends LMProxy
 {
-	public void preInit()
+	public void preInit(FMLPreInitializationEvent e)
 	{
-	}
-
-	public void init()
-	{
-	}
-
-	public void postInit()
-	{
+		LatCoreMC.addEventHandler(EMCCClientEventHandler.instance, true, false, false);
 		RenderCondenser.instance.register();
 		RenderInfuser.instance.register();
 	}

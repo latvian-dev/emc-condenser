@@ -22,11 +22,13 @@ public class EMCCConfig extends LMConfig
 	{
 		public static boolean enableBlacklist;
 		public static float ununblockEnchantPower;
+		public static boolean removeNoEMCTooltip;
 		
 		public static void load(Category c)
 		{
 			enableBlacklist = c.getBool("enableBlacklist", true);
 			ununblockEnchantPower = c.getFloat("ununblockEnchantPower", 3F, 0F, 100F);
+			removeNoEMCTooltip = c.getBool("removeNoEMCTooltip", true);
 		}
 	}
 	

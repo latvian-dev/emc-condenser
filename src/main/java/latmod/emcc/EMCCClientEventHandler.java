@@ -7,11 +7,15 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
 import com.pahimar.ee3.exchange.*;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.eventhandler.*;
+import cpw.mods.fml.relauncher.*;
 
-public class EMCCEventHandler
+@SideOnly(Side.CLIENT)
+public class EMCCClientEventHandler
 {
-	@SubscribeEvent
+	public static final EMCCClientEventHandler instance = new EMCCClientEventHandler();
+	
+	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onItemTooltip(ItemTooltipEvent e)
 	{
 		Item item = e.itemStack.getItem();
@@ -49,10 +53,11 @@ public class EMCCEventHandler
 			e.toolTip.add(EMCC.mod.translate("storedEMC", s));
 		}
 		
+		if(EMCCConfig.General.removeNoEMCTooltip)
 		for(int j = 0; j < e.toolTip.size(); j++)
 		{
 			String s = e.toolTip.get(j);
-			if(s.equalsIgnoreCase("No Exchange Energy value"))
+			if(s != null && !s.isEmpty() && s.contains("No Exchange Energy value"))
 				e.toolTip.remove(j);
 		}
 	}

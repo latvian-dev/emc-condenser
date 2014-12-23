@@ -1,10 +1,9 @@
 package latmod.emcc;
-import latmod.core.LMMod;
+import latmod.core.*;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.blacklist.EMCCBlacklist;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 
 import com.pahimar.ee3.api.EnergyValue;
 import com.pahimar.ee3.exchange.EnergyValueRegistry;
@@ -20,8 +19,8 @@ public class EMCC
 	@Mod.Instance(EMCC.MOD_ID)
 	public static EMCC inst;
 	
-	@SidedProxy(clientSide = "latmod.emcc.EMCCClient", serverSide = "latmod.emcc.EMCCCommon")
-	public static EMCCCommon proxy;
+	@SidedProxy(clientSide = "latmod.emcc.EMCCClient", serverSide = "latmod.core.LMProxy")
+	public static LMProxy proxy;
 	
 	public static CreativeTabs tab = null;
 	
@@ -41,9 +40,7 @@ public class EMCC
 		
 		tab = mod.createTab("tab", new ItemStack(EMCCItems.i_emc_battery, 1, 1));
 		
-		MinecraftForge.EVENT_BUS.register(new EMCCEventHandler());
-		
-		proxy.preInit();
+		proxy.preInit(e);
 	}
 	
 	@Mod.EventHandler
@@ -51,14 +48,14 @@ public class EMCC
 	{
 		EMCCItems.load();
 		ToolInfusion.initAll();
-		proxy.init();
+		proxy.init(e);
 	}
 	
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
 		mod.loadRecipes();
-		proxy.postInit();
+		proxy.postInit(e);
 	}
 	
 	public static float getEMC(ItemStack is)
