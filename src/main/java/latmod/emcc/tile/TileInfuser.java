@@ -1,38 +1,132 @@
 package latmod.emcc.tile;
-import latmod.core.ParticleHelper;
+import latmod.core.*;
 import latmod.core.tile.TileLM;
-import latmod.emcc.api.ToolInfusion;
+import latmod.emcc.EMCCConfig;
+import latmod.emcc.api.*;
+import latmod.emcc.item.tools.ItemToolEMCC;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.AxisAlignedBB;
 
 public class TileInfuser extends TileLM
 {
-	public ItemStack itemInfusing;
-	public ToolInfusion infusion;
-	public int level;
-	public int timer;
+	public ItemStack itemInfusing = null;
+	public int timer = 0;
 	
 	public TileInfuser()
 	{
 		items = null;
 	}
 	
+	public void spawnPart(boolean good)
+	{
+		double px = ParticleHelper.rand.nextFloat();
+		double py = ParticleHelper.rand.nextFloat();
+		double pz = ParticleHelper.rand.nextFloat();
+		worldObj.spawnParticle("reddust", xCoord + px, yCoord + py + 1, zCoord + pz, 0D, 0D, 0D);
+	}
+	
+	@SuppressWarnings("unchecked")
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
 	{
-		if(!worldObj.isRemote)
+		if(timer == 0)
 		{
+			if(!worldObj.isRemote)
+			{
+				timer = EMCCConfig.General.ticksToInfuse;
+				
+				FastList<EntityItem> itemList = new FastList<EntityItem>();
+				itemList.addAll(worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(0D, 1D, 0D, 1D, 2D, 1D).getOffsetBoundingBox(xCoord, yCoord, zCoord)));
+				itemInfusing = infuse(itemList);
+			}
+			
+			for(int i = 0; i < 10; i++)
+				spawnPart(true);
+			
+			markDirty();
 		}
 		
 		return true;
 	}
 	
+	private ItemStack infuse(FastList<EntityItem> itemList)
+	{
+		for(int i = 0; i < itemList.size(); i++)
+		{
+			EntityItem eiI = itemList.get(i);
+			ItemStack itemI = eiI.getEntityItem();
+			
+			if(itemI != null && itemI.stackSize > 0)
+			{
+				if(itemI.getItem() instanceof IEmcTool)
+				{
+					IEmcTool tool = (IEmcTool)itemI.getItem();
+					
+					for(int j = 0; j < itemList.size(); j++)
+					{
+						if(j != i)
+						{
+							EntityItem eiJ = itemList.get(j);
+							ItemStack itemJ = eiJ.getEntityItem();
+							
+							ToolInfusion ti = ToolInfusion.get(itemJ.getItem());
+							
+							if(ti != null && tool.canEnchantWith(itemI, ti))
+							{
+								int addedLvls = (itemJ.stackSize / ti.requiredSize);
+								if(addedLvls > 0) addedLvls = Math.min(addedLvls, ti.maxLevel - ItemToolEMCC.getInfusionLevel(itemI, ti));
+								
+								if(addedLvls > 0 && itemJ.stackSize >= addedLvls * ti.requiredSize)
+								{
+									ItemStack is1 = eiJ.getEntityItem().copy();
+									is1.stackSize -= addedLvls * ti.requiredSize;
+									if(is1.stackSize == 0) eiJ.setDead();
+									else eiJ.setEntityItemStack(is1);
+									
+									ItemStack itemI1 = itemI.copy();
+									ItemToolEMCC.setInfusionLevel(itemI1, ti, addedLvls + ItemToolEMCC.getInfusionLevel(itemI, ti));
+									eiI.setDead();
+									return itemI1;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return null;
+	}
+	
 	public void onUpdate()
 	{
-		worldObj.spawnParticle("townaura", xCoord + ParticleHelper.rand.nextFloat(), yCoord + 1.1F, zCoord + ParticleHelper.rand.nextFloat(), 0D, 0D, 0D);
+		boolean canUpdate = !worldObj.isRemote;
 		
-		if(!worldObj.isRemote)
+		if(timer > 0)
 		{
+			timer--;
+			
+			if(timer == 0)
+			{
+				if(itemInfusing != null)
+				{
+					for(int i = 0; i < 100; i++)
+						spawnPart(true);
+					
+					if(canUpdate)
+					{
+						InvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 1.5D, zCoord + 0.5D, 0D, 0.1D, 0D, itemInfusing, 20);
+						itemInfusing = null;
+						markDirty();
+					}
+				}
+			}
+			else
+			{
+				spawnPart(true);
+			}
 		}
 	}
 	
@@ -43,8 +137,6 @@ public class TileInfuser extends TileLM
 		if(tag.hasKey("ItemInfusing"))
 		{
 			itemInfusing = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("ItemInfusing"));
-			infusion = ToolInfusion.get(tag.getString("Infusion"));
-			level = tag.getByte("Level");
 			timer = tag.getShort("Timer");
 		}
 	}
@@ -59,8 +151,6 @@ public class TileInfuser extends TileLM
 			itemInfusing.writeToNBT(tag1);
 			
 			tag.setTag("ItemInfusing", tag1);
-			tag.setString("Infusion", infusion.name);
-			tag.setByte("Level", (byte)level);
 			tag.setShort("Timer", (short)timer);
 		}
 	}

@@ -1,9 +1,9 @@
 package latmod.emcc.api;
 
-import latmod.core.recipes.StackEntry;
 import latmod.emcc.*;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.*;
+import net.minecraft.item.Item;
 
 public enum ToolInfusion
 {
@@ -24,7 +24,7 @@ public enum ToolInfusion
 	public final String name;
 	public final Enchantment enchantment;
 	public final int maxLevel;
-	public StackEntry item;
+	public Item item;
 	public int requiredSize;
 	
 	ToolInfusion(String s, Enchantment e, int max)
@@ -36,23 +36,20 @@ public enum ToolInfusion
 		init(null, 0);
 	}
 	
-	public void init(Object o, int i)
-	{
-		item = new StackEntry(o);
-		requiredSize = i;
-	}
+	public void init(Item it, int i)
+	{ item = it; requiredSize = i; }
 	
 	public static void initAll()
 	{
 		//EMCCConfig
 		
 		FIRE.init(Items.blaze_rod, EMCCConfig.Infusion.fire);
-		AREA.init(EMCCItems.b_uu_block, EMCCConfig.Infusion.area);
+		AREA.init(EMCCItems.b_uu_block.getItem(), EMCCConfig.Infusion.area);
 		FORTUNE.init(Items.gold_ingot, EMCCConfig.Infusion.fortune);
-		UNBREAKING.init(Blocks.obsidian, EMCCConfig.Infusion.unbreaking);
+		UNBREAKING.init(Item.getItemFromBlock(Blocks.obsidian), EMCCConfig.Infusion.unbreaking);
 		FORTUNE.init(Items.string, EMCCConfig.Infusion.silkTouch);
 		SHARPNESS.init(Items.iron_ingot, EMCCConfig.Infusion.sharpness);
-		KNOCKBACK.init(Blocks.piston, EMCCConfig.Infusion.knockback);
+		KNOCKBACK.init(Item.getItemFromBlock(Blocks.piston), EMCCConfig.Infusion.knockback);
 		INFINITY.init(Items.diamond, EMCCConfig.Infusion.infinity);
 	}
 	
@@ -76,5 +73,11 @@ public enum ToolInfusion
 		for(ToolInfusion t : VALUES)
 			if(t.name.equals(s)) return t;
 		return null;
+	}
+	
+	public static final ToolInfusion get(Item i)
+	{
+		for(ToolInfusion t : VALUES)
+		if(t.item == i) return t; return null;
 	}
 }

@@ -1,4 +1,6 @@
 package latmod.emcc.item.tools;
+import java.util.Map;
+
 import latmod.core.FastList;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
@@ -91,6 +93,10 @@ public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 	
 	public static boolean hasInfusion(ItemStack is, ToolInfusion t)
 	{ return getInfusionLevel(is, t) > 0; }
+	
+	@SuppressWarnings("all")
+	public static void setInfusionLevel(ItemStack is, ToolInfusion t, int lvl)
+	{ Map m = EnchantmentHelper.getEnchantments(is); m.put(t.enchantment.effectId, lvl); EnchantmentHelper.setEnchantments(m, is); }
 	
 	public boolean canDischargeEmc(ItemStack is)
 	{ return false; }
