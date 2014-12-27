@@ -21,8 +21,6 @@ public class GuiCondenserSettings extends GuiLM
 		condenser = (TileCondenser)inv;
 		xSize = 102;
 		ySize = 106;
-		textureWidth = 128;
-		textureHeight = 128;
 		
 		widgets.add(buttonSettings = new ButtonLM(this, 78, 6, 16, 16)
 		{
@@ -72,11 +70,7 @@ public class GuiCondenserSettings extends GuiLM
 	
 	public void drawGuiContainerBackgroundLayer(float f, int x, int y)
 	{
-		textureWidth = textureHeight = 128;
-		
 		super.drawGuiContainerBackgroundLayer(f, x, y);
-		
-		textureWidth = textureHeight = 256;
 		
 		buttonRedstone.render(button_redstone[condenser.redstoneMode.ID]);
 		buttonSecurity.render(button_security[condenser.security.level.ID]);

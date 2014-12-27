@@ -1,7 +1,5 @@
 package latmod.emcc.client.gui;
-import java.util.ArrayList;
-
-import latmod.core.LatCoreMC;
+import latmod.core.*;
 import latmod.core.gui.*;
 import latmod.core.mod.LC;
 import latmod.emcc.*;
@@ -121,7 +119,7 @@ public class GuiCondenser extends GuiLM
 	{
 		super.drawScreen(mx, my, f);
 		
-		ArrayList<String> al = new ArrayList<String>();
+		FastList<String> al = new FastList<String>();
 		
 		if(barEMC.mouseOver(mx, my))
 		{
