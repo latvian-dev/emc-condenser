@@ -28,7 +28,7 @@ public class ItemMaterials extends ItemEMCC
 		setHasSubtypes(true);
 		
 		LatCoreMC.addOreDictionary("itemUUS", EMCCItems.ITEM_UUS = new ItemStack(this, 1, 0));
-		EMCCItems.MINIUM_STAR = new ItemStack(this, 1, 1);
+		LatCoreMC.addOreDictionary("miniumStar", EMCCItems.MINIUM_STAR = new ItemStack(this, 1, 1));
 		LatCoreMC.addOreDictionary("nuggetEmerald", EMCCItems.NUGGET_EMERALD = new ItemStack(this, 1, 2));
 		LatCoreMC.addOreDictionary("ingotUUS", EMCCItems.INGOT_UUS = new ItemStack(this, 1, 3));
 	}
