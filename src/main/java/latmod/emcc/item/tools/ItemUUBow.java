@@ -72,10 +72,59 @@ public class ItemUUBow extends ItemToolEMCC // ItemBow
 			if(!ep.capabilities.isCreativeMode) damageItem(is, false);
 			w.playSoundAtEntity(ep, "random.bow", 1F, 1F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 			
-			if (flag) ea.canBePickedUp = 2;
+			if(flag) ea.canBePickedUp = 2;
 			else ep.inventory.consumeInventoryItem(Items.arrow);
 			
-			if (!w.isRemote) w.spawnEntityInWorld(ea);
+			if(!w.isRemote) w.spawnEntityInWorld(ea);
+			
+			if(hasInfusion(is, ToolInfusion.AREA))
+			{
+				float rot0 = ep.rotationYaw;
+				
+				{
+					ep.rotationYaw += 3;
+					
+					EntityArrow ea1 = new EntityArrow(w, ep, f * 2F);
+					
+					if (f == 1F) ea1.setIsCritical(true);
+					
+					if (k > 0) ea1.setDamage(ea1.getDamage() + (double)k * 0.5D + 0.5D);
+					if (l > 0) ea1.setKnockbackStrength(l);
+					
+					if (hasInfusion(is, ToolInfusion.FIRE)) ea1.setFire(100);
+					
+					if(!ep.capabilities.isCreativeMode) damageItem(is, false);
+					
+					if(flag) ea1.canBePickedUp = 2;
+					else ep.inventory.consumeInventoryItem(Items.arrow);
+					
+					if(!w.isRemote) w.spawnEntityInWorld(ea1);
+					
+					ep.rotationYaw = rot0;
+				}
+				
+				{
+					ep.rotationYaw -= 3;
+					
+					EntityArrow ea2 = new EntityArrow(w, ep, f * 2F);
+					
+					if (f == 1F) ea2.setIsCritical(true);
+					
+					if (k > 0) ea2.setDamage(ea2.getDamage() + (double)k * 0.5D + 0.5D);
+					if (l > 0) ea2.setKnockbackStrength(l);
+					
+					if (hasInfusion(is, ToolInfusion.FIRE)) ea2.setFire(100);
+					
+					if(!ep.capabilities.isCreativeMode) damageItem(is, false);
+					
+					if(flag) ea2.canBePickedUp = 2;
+					else ep.inventory.consumeInventoryItem(Items.arrow);
+					
+					if(!w.isRemote) w.spawnEntityInWorld(ea2);
+					
+					ep.rotationYaw = rot0;
+				}
+			}
 		}
 	}
 	
@@ -114,7 +163,9 @@ public class ItemUUBow extends ItemToolEMCC // ItemBow
 	public IIcon getIcon(ItemStack is, int r, EntityPlayer ep, ItemStack is1, int t)
 	{
 		if(t == 0) return itemIcon;
-		int i = (getMaxItemUseDuration(is1) - t) / 8;
-		return pullIcons[Math.min(pullIcons.length - 1, i)];
+		int i = getMaxItemUseDuration(is1) - t;
+		if (i > 17) return pullIcons[2];
+		if (i > 13) return pullIcons[1];
+		return pullIcons[0];
 	}
 }
