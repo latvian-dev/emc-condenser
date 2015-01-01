@@ -1,16 +1,16 @@
 package latmod.emcc.item;
 
 import latmod.core.ODItems;
-import latmod.emcc.*;
+import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.IEmcStorageItem;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import baubles.api.BaublesApi;
+import baubles.api.*;
 
-public class ItemEmcBattery extends ItemEmcStorage
+public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 {
 	public ItemEmcBattery(String s)
 	{
@@ -33,106 +33,60 @@ public class ItemEmcBattery extends ItemEmcStorage
 				'Q', ODItems.QUARTZ,
 				'R', ODItems.REDSTONE,
 				'G', ODItems.GLOWSTONE,
-				'U', EMCCItems.ITEM_UUS);
+				'U', ItemMaterialsEMCC.ITEM_UUS);
 	}
 	
 	public void onUpdate(ItemStack is, World w, Entity e, int t, boolean b)
+	{ if(!w.isRemote && e instanceof EntityPlayer) onWornTick(is, (EntityPlayer)e); }
+
+	public BaubleType getBaubleType(ItemStack is)
+	{ return BaubleType.AMULET; }
+	
+	public void onWornTick(ItemStack is, EntityLivingBase el)
 	{
-		if(w.isRemote || !(e instanceof EntityPlayer)) return;
+		if(el.worldObj.isRemote || !(el instanceof EntityPlayer)) return;
 		
-		EntityPlayer ep = (EntityPlayer)e;
+		EntityPlayer ep = (EntityPlayer)el;
 		
-		if(is.getItemDamage() == 1 && (w.getWorldTime() % 8 == 0))
+		if(is.getItemDamage() == 1 && (el.worldObj.getWorldTime() % 8 == 0))
 		{
 			if(!EMCCConfig.Tools.enableBattery) return;
 			
-			double emc = getStoredEmc(is);
-			
-			if(emc < 1D) return;
-			
-			for(int i = 0; i < ep.inventory.getSizeInventory(); i++)
-			{
-				ItemStack is1 = ep.inventory.getStackInSlot(i);
-				
-				/*if(is1 != null && is1.getItem() instanceof IEmcTool)
-				{
-					int dmg = is1.getItemDamage();
-					
-					if(dmg > 0 && is1.isItemStackDamageable())
-					{
-						double perDmg = EMCC.mod.config().tools.toolEmcPerDamage;
-						
-						if(perDmg < 1D) continue;
-						
-						if(emc >= perDmg)
-						{
-							emc -= perDmg;
-							is1.setItemDamage(is1.getItemDamage() - 1);
-							ep.inventory.markDirty();
-						}
-						
-						setStoredEmc(is, emc);
-						
-						if(emc < 1D) return;
-						continue;
-					}
-				}*/
-				
-				if(is1 != null && is1.getItem() instanceof IEmcStorageItem && is1.getItem() != this)
-				{
-					IEmcStorageItem si = (IEmcStorageItem)is1.getItem();
-					
-					double max = si.getMaxStoredEmc(is1);
-					
-					if(max > 0D)
-					{
-						double siEmc = si.getStoredEmc(is1);
-						
-						double a = Math.min(si.getEmcTrasferLimit(is1), max - siEmc);
-						
-						if(a > 0D && emc >= a)
-						{
-							emc -= a;
-							setStoredEmc(is, emc);
-							si.setStoredEmc(is1, siEmc + a);
-							ep.inventory.setInventorySlotContents(i, is1);
-							ep.inventory.markDirty();
-						}
-					}
-				}
-			}
-			
+			chargeInv(is, ep, ep.inventory);
 			IInventory baubInv = BaublesApi.getBaubles(ep);
+			if(baubInv != null) chargeInv(is, ep, baubInv);
+		}
+	}
+	
+	public void chargeInv(ItemStack is, EntityPlayer ep, IInventory inv)
+	{
+		double emc = getStoredEmc(is);
+		
+		if(emc <= 0D) return;
+		
+		for(int i = 0; i < inv.getSizeInventory(); i++)
+		{
+			ItemStack is1 = inv.getStackInSlot(i);
 			
-			if(baubInv != null)
+			if(is1 != null && is1.getItem() instanceof IEmcStorageItem && is1.getItem() != this)
 			{
-				if(emc < 1D) return;
+				IEmcStorageItem si = (IEmcStorageItem)is1.getItem();
 				
-				for(int i = 0; i < baubInv.getSizeInventory(); i++)
+				double max = si.getMaxStoredEmc(is1);
+				
+				if(max > 0D)
 				{
-					ItemStack is1 = baubInv.getStackInSlot(i);
+					double siEmc = si.getStoredEmc(is1);
 					
-					if(is1 != null && is1.getItem() instanceof IEmcStorageItem)
+					double a = Math.min(si.getEmcTrasferLimit(is1), max - siEmc);
+					
+					if(a > 0D && emc >= a)
 					{
-						IEmcStorageItem si = (IEmcStorageItem)is1.getItem();
-						
-						double max = si.getMaxStoredEmc(is1);
-						
-						if(max > 0D)
-						{
-							double siEmc = si.getStoredEmc(is1);
-							
-							double a = Math.min(si.getEmcTrasferLimit(is1), max - siEmc);
-							
-							if(a > 0D && emc >= a)
-							{
-								emc -= a;
-								setStoredEmc(is, emc);
-								si.setStoredEmc(is1, siEmc + a);
-								baubInv.setInventorySlotContents(i, is1);
-								baubInv.markDirty();
-							}
-						}
+						emc -= a;
+						setStoredEmc(is, emc);
+						si.setStoredEmc(is1, siEmc + a);
+						inv.setInventorySlotContents(i, is1);
+						inv.markDirty();
 					}
 				}
 			}

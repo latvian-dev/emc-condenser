@@ -81,14 +81,4 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 	
 	public BaubleType getBaubleType(ItemStack is)
 	{ return BaubleType.BELT; }
-	
-	public void onEquipped(ItemStack is, EntityLivingBase ep) { }
-	
-	public void onUnequipped(ItemStack is, EntityLivingBase ep) { }
-	
-	public boolean canEquip(ItemStack is, EntityLivingBase ep)
-	{ return is.getItemDamage() == 1; }
-	
-	public boolean canUnequip(ItemStack is, EntityLivingBase ep)
-	{ return true; }
 }

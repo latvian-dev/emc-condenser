@@ -3,6 +3,7 @@ import latmod.core.*;
 import latmod.core.tile.TileLM;
 import latmod.emcc.*;
 import latmod.emcc.client.render.world.RenderCondenser;
+import latmod.emcc.item.ItemMaterialsEMCC;
 import latmod.emcc.tile.TileCondenser;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -36,7 +37,7 @@ public class BlockCondenser extends BlockEMCC
 		ItemStack is = new ItemStack(EMCCItems.b_uu_block);
 		
 		if(EMCCConfig.Recipes.condenserRecipeDifficulty == 1) is = new ItemStack(Items.nether_star);
-		else if(EMCCConfig.Recipes.condenserRecipeDifficulty == 2) is = EMCCItems.MINIUM_STAR;
+		else if(EMCCConfig.Recipes.condenserRecipeDifficulty == 2) is = ItemMaterialsEMCC.MINIUM_STAR;
 		
 		EMCC.mod.recipes.addRecipe(new ItemStack(this), "OBO", "OSO", "OIO",
 				'O', ODItems.OBSIDIAN,

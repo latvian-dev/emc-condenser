@@ -1,7 +1,8 @@
 package latmod.emcc.item.tools;
 import latmod.core.ODItems;
-import latmod.emcc.*;
+import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.ToolInfusion;
+import latmod.emcc.item.ItemMaterialsEMCC;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.*;
@@ -23,7 +24,7 @@ public class ItemUUSword extends ItemToolEMCC // ItemSword
 	{
 		if(EMCCConfig.Tools.enableSword)
 			mod.recipes.addRecipe(new ItemStack(this), "U", "U", "S",
-					'U', EMCCItems.INGOT_UUS,
+					'U', ItemMaterialsEMCC.INGOT_UUS,
 					'S', ODItems.STICK);
 	}
 	

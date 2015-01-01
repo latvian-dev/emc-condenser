@@ -27,6 +27,10 @@ public class EMCC
 	public static LMMod mod;
 	public static EMCCBlacklist blacklist;
 	
+	public static ItemStack DUST_VERDANT;
+	public static ItemStack DUST_AZURE;
+	public static ItemStack DUST_MINIUM;
+	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
@@ -46,7 +50,6 @@ public class EMCC
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent e)
 	{
-		EMCCItems.load();
 		ToolInfusion.initAll();
 		proxy.init(e);
 	}
@@ -54,6 +57,10 @@ public class EMCC
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
+		DUST_VERDANT = new ItemStack(com.pahimar.ee3.init.ModItems.alchemicalDust, 1, 1);
+		DUST_AZURE = new ItemStack(com.pahimar.ee3.init.ModItems.alchemicalDust, 1, 2);
+		DUST_MINIUM = new ItemStack(com.pahimar.ee3.init.ModItems.alchemicalDust, 1, 3);
+		
 		mod.loadRecipes();
 		proxy.postInit(e);
 	}

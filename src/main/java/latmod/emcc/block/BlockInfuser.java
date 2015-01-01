@@ -1,9 +1,12 @@
 package latmod.emcc.block;
 import latmod.core.tile.TileLM;
+import latmod.emcc.EMCCItems;
 import latmod.emcc.client.render.world.RenderInfuser;
 import latmod.emcc.tile.TileInfuser;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.*;
@@ -26,17 +29,11 @@ public class BlockInfuser extends BlockEMCC
 	
 	public void loadRecipes()
 	{
-		/*ItemStack is = new ItemStack(EMCCItems.b_uu_block);
-		
-		if(EMCC.mod.config().recipes.condenserRecipeDifficulty == 1) is = new ItemStack(Items.nether_star);
-		else if(EMCC.mod.config().recipes.condenserRecipeDifficulty == 2) is = EMCCItems.MINIUM_STAR;
-		
-		EMCC.mod.recipes().addRecipe(new ItemStack(this), "OBO", "OSO", "OIO",
-				'O', ODItems.OBSIDIAN,
-				'I', is,
-				'B', EMCCItems.i_black_hole_band,
-				'S', new ItemStack(ModItems.stoneMinium, 1, LatCoreMC.ANY));
-				*/
+		mod.recipes.addRecipe(new ItemStack(this), "UEU", "UCU", "UDU",
+				'U', EMCCItems.b_uu_block,
+				'E', Blocks.enchanting_table,
+				'C', EMCCItems.b_condenser,
+				'D', Blocks.diamond_block);
 	}
 	
 	@SideOnly(Side.CLIENT)

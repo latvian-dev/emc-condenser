@@ -1,6 +1,7 @@
 package latmod.emcc.item.tools;
-import latmod.emcc.*;
+import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.ToolInfusion;
+import latmod.emcc.item.ItemMaterialsEMCC;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,7 +28,7 @@ public class ItemUUBow extends ItemToolEMCC // ItemBow
 	{
 		if(EMCCConfig.Tools.enableBow)
 			mod.recipes.addRecipe(new ItemStack(this), " US", "U S", " US",
-					'U', EMCCItems.INGOT_UUS,
+					'U', ItemMaterialsEMCC.INGOT_UUS,
 					'S', Items.string);
 	}
 	

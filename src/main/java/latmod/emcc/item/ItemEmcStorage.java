@@ -1,6 +1,7 @@
 package latmod.emcc.item;
 import latmod.emcc.api.IEmcStorageItem;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -72,4 +73,14 @@ public abstract class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 	
 	public double getStoredEmc(ItemStack is)
 	{ return is.hasTagCompound() ? is.stackTagCompound.getDouble(NBT_KEY) : 0D; }
+	
+	public void onEquipped(ItemStack is, EntityLivingBase ep) { }
+	
+	public void onUnequipped(ItemStack is, EntityLivingBase ep) { }
+	
+	public boolean canEquip(ItemStack is, EntityLivingBase ep)
+	{ return true; }
+	
+	public boolean canUnequip(ItemStack is, EntityLivingBase ep)
+	{ return true; }
 }

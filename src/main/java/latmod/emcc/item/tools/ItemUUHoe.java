@@ -1,7 +1,8 @@
 package latmod.emcc.item.tools;
 import latmod.core.ODItems;
-import latmod.emcc.*;
+import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.ToolInfusion;
+import latmod.emcc.item.ItemMaterialsEMCC;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -22,7 +23,7 @@ public class ItemUUHoe extends ItemToolEMCC
 	{
 		if(EMCCConfig.Tools.enableTools)
 			mod.recipes.addRecipe(new ItemStack(this), "UU", " S", " S",
-					'U', EMCCItems.INGOT_UUS,
+					'U', ItemMaterialsEMCC.INGOT_UUS,
 					'S', ODItems.STICK);
 	}
 	

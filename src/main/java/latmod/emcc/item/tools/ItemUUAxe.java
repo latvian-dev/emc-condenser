@@ -1,7 +1,8 @@
 package latmod.emcc.item.tools;
 import latmod.core.*;
-import latmod.emcc.*;
+import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.ToolInfusion;
+import latmod.emcc.item.ItemMaterialsEMCC;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,7 +26,7 @@ public class ItemUUAxe extends ItemToolEMCC // ItemAxe
 	{
 		if(EMCCConfig.Tools.enableTools)
 			mod.recipes.addRecipe(new ItemStack(this), "UU", "US", " S",
-					'U', EMCCItems.INGOT_UUS,
+					'U', ItemMaterialsEMCC.INGOT_UUS,
 					'S', ODItems.STICK);
 	}
 	

@@ -78,7 +78,7 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 	public void onUnequipped(ItemStack is, EntityLivingBase ep) { }
 	
 	public boolean canEquip(ItemStack is, EntityLivingBase ep)
-	{ return is.getItemDamage() == 1; }
+	{ return true; }
 	
 	public boolean canUnequip(ItemStack is, EntityLivingBase ep)
 	{ return true; }
