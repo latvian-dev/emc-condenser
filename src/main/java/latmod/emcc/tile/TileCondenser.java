@@ -221,7 +221,7 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 		if(EMCCConfig.Condenser.forcedRedstoneControl != null && redstoneMode.ID != EMCCConfig.Condenser.forcedRedstoneControl.ID)
 		{ redstoneMode = EMCCConfig.Condenser.forcedRedstoneControl; markDirty(); }
 		
-		if(EMCCConfig.Condenser.forcedSecurity != null && security.level != EMCCConfig.Condenser.forcedSecurity)
+		if(EMCCConfig.Condenser.forcedSecurity != null && security.level.ID != EMCCConfig.Condenser.forcedSecurity.ID)
 		{ security.level = EMCCConfig.Condenser.forcedSecurity; markDirty(); }
 		
 		if(EMCCConfig.Condenser.forcedSafeMode != null && safeMode.ID != EMCCConfig.Condenser.forcedSafeMode.ID)
@@ -252,14 +252,48 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 	
 	@Override
 	public String getInventoryName()
-	{ return "Condenser"; }
+	{ return hasCustomInventoryName() ? customName : "Inventory"; }
 	
 	@Override
-	public boolean isItemValidForSlot(int i, ItemStack is)
-	{ return true; }
+	public boolean hasCustomInventoryName()
+	{ return customName != null; }
+	
+	@Override
+	public void openInventory() { }
+	
+	@Override
+	public void closeInventory() { }
+	
+	@Override
+	public ItemStack decrStackSize(int i, int j)
+	{ return InvUtils.decrStackSize(this, i, j); }
+	
+	@Override
+	public int getInventoryStackLimit()
+	{ return 64; }
+	
+	@Override
+	public int getSizeInventory()
+	{ return items.length; }
+	
+	@Override
+	public ItemStack getStackInSlot(int i)
+	{ return items[i]; }
+	
+	@Override
+	public ItemStack getStackInSlotOnClosing(int i)
+	{ return InvUtils.getStackInSlotOnClosing(this, i); }
+	
+	@Override
+	public void setInventorySlotContents(int i, ItemStack is)
+	{ items[i] = is; }
 	
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer ep)
+	{ return security.canInteract(ep); }
+	
+	@Override
+	public boolean isItemValidForSlot(int i, ItemStack is)
 	{ return true; }
 	
 	public boolean canWrench(EntityPlayer ep)
