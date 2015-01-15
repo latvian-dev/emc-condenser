@@ -1,5 +1,5 @@
 package latmod.emcc.block;
-import latmod.core.tile.TileLM;
+import latmod.core.tile.*;
 import latmod.emcc.EMCCItems;
 import latmod.emcc.client.render.world.RenderInfuser;
 import latmod.emcc.tile.TileInfuser;
@@ -8,10 +8,10 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 import cpw.mods.fml.relauncher.*;
 
-public class BlockInfuser extends BlockEMCC
+public class BlockInfuser extends BlockEMCC implements IPaintable.INoPaint
 {
 	@SideOnly(Side.CLIENT)
 	public IIcon icon_top_empty, icon_top_glow, icon_side_empty, icon_side_glow;
@@ -51,5 +51,8 @@ public class BlockInfuser extends BlockEMCC
 	{ return RenderInfuser.instance.getRenderId(); }
 	
 	public boolean renderAsNormalBlock()
+	{ return false; }
+	
+	public boolean hasPaint(IBlockAccess iba, int x, int y, int z, int s)
 	{ return false; }
 }

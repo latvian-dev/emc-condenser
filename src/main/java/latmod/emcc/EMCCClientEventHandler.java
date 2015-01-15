@@ -1,5 +1,5 @@
 package latmod.emcc;
-import latmod.core.LatCoreMC;
+import latmod.core.ODItems;
 import latmod.core.mod.LC;
 import latmod.emcc.api.IEmcStorageItem;
 import net.minecraft.item.*;
@@ -75,7 +75,7 @@ public class EMCCClientEventHandler
 			
 			if(s.equals("Black Wool")) s = "Wool";
 			
-			if(is.getItemDamage() == LatCoreMC.ANY)
+			if(is.getItemDamage() == ODItems.ANY)
 				s = "Any " + s;
 		}
 		else if(o instanceof OreStack)

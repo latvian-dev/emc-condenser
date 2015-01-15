@@ -1,6 +1,6 @@
 package latmod.emcc.block;
 import latmod.core.*;
-import latmod.core.tile.TileLM;
+import latmod.core.tile.*;
 import latmod.emcc.*;
 import latmod.emcc.client.render.world.RenderCondenser;
 import latmod.emcc.item.ItemMaterialsEMCC;
@@ -10,13 +10,13 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 
 import com.pahimar.ee3.init.ModItems;
 
 import cpw.mods.fml.relauncher.*;
 
-public class BlockCondenser extends BlockEMCC
+public class BlockCondenser extends BlockEMCC implements IPaintable.INoPaint
 {
 	@SideOnly(Side.CLIENT)
 	public IIcon icon_top_empty, icon_top_glow, icon_side_empty, icon_side_glow;
@@ -43,7 +43,7 @@ public class BlockCondenser extends BlockEMCC
 				'O', ODItems.OBSIDIAN,
 				'I', is,
 				'B', EMCCItems.i_black_hole_band,
-				'S', new ItemStack(ModItems.stoneMinium, 1, LatCoreMC.ANY));
+				'S', new ItemStack(ModItems.stoneMinium, 1, ODItems.ANY));
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -61,5 +61,8 @@ public class BlockCondenser extends BlockEMCC
 	{ return RenderCondenser.instance.getRenderId(); }
 	
 	public boolean renderAsNormalBlock()
+	{ return false; }
+	
+	public boolean hasPaint(IBlockAccess iba, int x, int y, int z, int s)
 	{ return false; }
 }

@@ -94,13 +94,8 @@ public class ItemUUBow extends ItemToolEMCC // ItemBow
 					
 					if (hasInfusion(is, ToolInfusion.FIRE)) ea1.setFire(100);
 					
-					if(!ep.capabilities.isCreativeMode) damageItem(is, false);
-					
-					if(flag) ea1.canBePickedUp = 2;
-					else ep.inventory.consumeInventoryItem(Items.arrow);
-					
+					ea1.canBePickedUp = 2;
 					if(!w.isRemote) w.spawnEntityInWorld(ea1);
-					
 					ep.rotationYaw = rot0;
 				}
 				
@@ -116,13 +111,8 @@ public class ItemUUBow extends ItemToolEMCC // ItemBow
 					
 					if (hasInfusion(is, ToolInfusion.FIRE)) ea2.setFire(100);
 					
-					if(!ep.capabilities.isCreativeMode) damageItem(is, false);
-					
-					if(flag) ea2.canBePickedUp = 2;
-					else ep.inventory.consumeInventoryItem(Items.arrow);
-					
+					ea2.canBePickedUp = 2;
 					if(!w.isRemote) w.spawnEntityInWorld(ea2);
-					
 					ep.rotationYaw = rot0;
 				}
 			}

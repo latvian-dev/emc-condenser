@@ -117,6 +117,7 @@ public class GuiCondenser extends GuiLM
 	
 	public void drawScreen(int mx, int my, float f)
 	{
+		try{
 		super.drawScreen(mx, my, f);
 		
 		FastList<String> al = new FastList<String>();
@@ -167,6 +168,7 @@ public class GuiCondenser extends GuiLM
 			al.add(EMCC.mod.translate("notarget"));
 		
 		if(!al.isEmpty()) drawHoveringText(al, mx, my, fontRendererObj);
+		}catch(Exception e) { e.printStackTrace(); }
 	}
 	
 	public static String formatEMC(double d)

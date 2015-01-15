@@ -69,9 +69,7 @@ public class BlacklistEntry
 			{
 				uName = s1[0];
 				dmg = Integer.parseInt(s1[1]);
-				
-				if(dmg == -1)
-					dmg = LatCoreMC.ANY;
+				if(dmg == -1) dmg = ODItems.ANY;
 			}
 			
 			reg_list.add(new ItemEntry(uName, dmg));

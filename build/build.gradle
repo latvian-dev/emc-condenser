@@ -49,10 +49,10 @@ dependencies {
 sourceSets {
     main {
         java {
-            srcDir "\\\\LATMODPC\\ProjMCP/" + mod_name + "/src/main/java"
+            srcDir config.source_dir + mod_name + "/src/main/java"
         }
         resources {
-            srcDir "\\\\LATMODPC\\ProjMCP/" + mod_name + "/src/main/resources"
+            srcDir config.source_dir + mod_name + "/src/main/resources"
         }
     }
 }

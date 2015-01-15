@@ -41,10 +41,10 @@ public class ItemMaterialsEMCC extends ItemMaterials
 	{
 		super.onPostLoaded();
 		
-		LatCoreMC.addOreDictionary("itemUUS", ITEM_UUS = new ItemStack(this, 1, 0));
-		LatCoreMC.addOreDictionary("miniumStar", MINIUM_STAR = new ItemStack(this, 1, 1));
-		LatCoreMC.addOreDictionary("nuggetEmerald", NUGGET_EMERALD = new ItemStack(this, 1, 2));
-		LatCoreMC.addOreDictionary("ingotUUS", INGOT_UUS = new ItemStack(this, 1, 3));
+		ODItems.add("itemUUS", ITEM_UUS = new ItemStack(this, 1, 0));
+		ODItems.add("miniumStar", MINIUM_STAR = new ItemStack(this, 1, 1));
+		ODItems.add("nuggetEmerald", NUGGET_EMERALD = new ItemStack(this, 1, 2));
+		ODItems.add("ingotUUS", INGOT_UUS = new ItemStack(this, 1, 3));
 	}
 	
 	public void loadRecipes()
