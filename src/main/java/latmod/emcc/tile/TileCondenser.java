@@ -15,7 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.relauncher.*;
 
-public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrenchable, IClientActionTile, IGuiTile
+public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWrenchable, IClientActionTile, IGuiTile
 {
 	public static final String ACTION_TRANS_ITEMS = "transItems";
 	
@@ -43,7 +43,7 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 	
 	public TileCondenser()
 	{
-		items = new ItemStack[SLOT_COUNT];
+		super(SLOT_COUNT);
 		safeMode = SafeMode.DISABLED;
 		redstoneMode = RedstoneMode.DISABLED;
 		invMode = InvMode.ENABLED;
@@ -250,49 +250,6 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 		return false;
 	}
 	
-	@Override
-	public String getInventoryName()
-	{ return hasCustomInventoryName() ? customName : "Inventory"; }
-	
-	@Override
-	public boolean hasCustomInventoryName()
-	{ return customName != null; }
-	
-	@Override
-	public void openInventory() { }
-	
-	@Override
-	public void closeInventory() { }
-	
-	@Override
-	public ItemStack decrStackSize(int i, int j)
-	{ return InvUtils.decrStackSize(this, i, j); }
-	
-	@Override
-	public int getInventoryStackLimit()
-	{ return 64; }
-	
-	@Override
-	public int getSizeInventory()
-	{ return items.length; }
-	
-	@Override
-	public ItemStack getStackInSlot(int i)
-	{ return items[i]; }
-	
-	@Override
-	public ItemStack getStackInSlotOnClosing(int i)
-	{ return InvUtils.getStackInSlotOnClosing(this, i); }
-	
-	@Override
-	public void setInventorySlotContents(int i, ItemStack is)
-	{ items[i] = is; }
-	
-	@Override
-	public boolean isUseableByPlayer(EntityPlayer ep)
-	{ return security.canInteract(ep); }
-	
-	@Override
 	public boolean isItemValidForSlot(int i, ItemStack is)
 	{ return true; }
 	
@@ -326,7 +283,7 @@ public class TileCondenser extends TileLM implements ISidedInventory, IEmcWrench
 		else if(button.equals(LMGuiButtons.SECURITY))
 		{
 			if(ep != null && security.isOwner(ep))
-				security.level = (mouseButton == 0) ? security.level.next() : security.level.prev();
+				security.level = (mouseButton == 0) ? security.level.next(LMSecurity.Level.VALUES) : security.level.prev(LMSecurity.Level.VALUES);
 			else printOwner(ep);
 		}
 		

@@ -1,5 +1,6 @@
 package latmod.emcc.tile;
 import latmod.core.*;
+import latmod.core.mod.LC;
 import latmod.core.tile.TileLM;
 import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.*;
@@ -15,17 +16,12 @@ public class TileInfuser extends TileLM
 	public ItemStack itemInfusing = null;
 	public int timer = 0;
 	
-	public TileInfuser()
-	{
-		items = null;
-	}
-	
 	public void spawnPart(boolean good)
 	{
 		double px = ParticleHelper.rand.nextFloat();
 		double py = ParticleHelper.rand.nextFloat();
 		double pz = ParticleHelper.rand.nextFloat();
-		worldObj.spawnParticle("reddust", xCoord + px, yCoord + py + 1, zCoord + pz, 0D, 0D, 0D);
+		LC.proxy.spawnDust(worldObj, xCoord + px, yCoord + py + 1, zCoord + pz, good ? 0xFF3333FF : 0xFFFF1111);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -33,7 +29,7 @@ public class TileInfuser extends TileLM
 	{
 		if(timer == 0)
 		{
-			if(!worldObj.isRemote)
+			if(isServer())
 			{
 				timer = EMCCConfig.General.ticksToInfuse;
 				
@@ -43,7 +39,7 @@ public class TileInfuser extends TileLM
 			}
 			
 			for(int i = 0; i < 10; i++)
-				spawnPart(true);
+				spawnPart(false);
 			
 			markDirty();
 		}
@@ -133,25 +129,14 @@ public class TileInfuser extends TileLM
 	public void readTileData(NBTTagCompound tag)
 	{
 		super.readTileData(tag);
-		
-		if(tag.hasKey("ItemInfusing"))
-		{
-			itemInfusing = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("ItemInfusing"));
-			timer = tag.getShort("Timer");
-		}
+		timer = tag.getShort("Timer");
+		itemInfusing = InvUtils.loadStack(tag, "");
 	}
 	
 	public void writeTileData(NBTTagCompound tag)
 	{
 		super.writeTileData(tag);
-		
-		if(itemInfusing != null)
-		{
-			NBTTagCompound tag1 = new NBTTagCompound();
-			itemInfusing.writeToNBT(tag1);
-			
-			tag.setTag("ItemInfusing", tag1);
-			tag.setShort("Timer", (short)timer);
-		}
+		tag.setShort("Timer", (short)timer);
+		InvUtils.saveStack(tag, "ItemInfusing", itemInfusing);
 	}
 }

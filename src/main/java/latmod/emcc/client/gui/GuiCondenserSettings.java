@@ -31,6 +31,8 @@ public class GuiCondenserSettings extends GuiLM
 			}
 		});
 		
+		buttonSettings.title = LC.mod.translate("button.back");
+		
 		widgets.add(buttonSecurity = new ButtonLM(this, 78, 25, 16, 16)
 		{
 			public void onButtonPressed(int b)
@@ -77,32 +79,25 @@ public class GuiCondenserSettings extends GuiLM
 		buttonInvMode.render(button_inv[condenser.invMode.ID]);
 		
 		if(condenser.repairTools.isOn())
-			buttonRepairItems.render(button_inner_pressed);
+			buttonRepairItems.render(button_toggle_on);
 		
 		buttonSettings.render(button_back);
 	}
 	
-	public void drawScreen(int mx, int my, float f)
+	public void addMouseText(int mx, int my, FastList<String> l)
 	{
-		super.drawScreen(mx, my, f);
-		
-		FastList<String> al = new FastList<String>();
-		
-		if(buttonSettings.mouseOver(mx, my))
-			al.add(LC.mod.translate("back"));
+		super.addMouseText(mx, my, l);
 		
 		if(buttonRedstone.mouseOver(mx, my))
-			al.add(condenser.redstoneMode.getText());
+			l.add(condenser.redstoneMode.getText());
 		
 		if(buttonSecurity.mouseOver(mx, my))
-			al.add(condenser.security.level.getText());
+			l.add(condenser.security.level.getText());
 		
 		if(buttonInvMode.mouseOver(mx, my))
-			al.add(condenser.invMode.getText());
+			l.add(condenser.invMode.getText());
 		
 		if(buttonRepairItems.mouseOver(mx, my))
-			al.add(condenser.repairTools.getText());
-		
-		if(!al.isEmpty()) drawHoveringText(al, mx, my, fontRendererObj);
+			l.add(condenser.repairTools.getText());
 	}
 }

@@ -14,9 +14,9 @@ public class ItemUUSmasher extends ItemUUPick
 	{
 		super(s);
 		
-		setHarvestLevel(EnumToolClass.PICKAXE.toolClass, EnumToolClass.LEVEL_DIAMOND);
-		setHarvestLevel(EnumToolClass.SHOVEL.toolClass, EnumToolClass.LEVEL_DIAMOND);
-		setHarvestLevel(EnumToolClass.AXE.toolClass, EnumToolClass.LEVEL_DIAMOND);
+		setHarvestLevel(ToolClass.PICK, ToolClass.LEVEL_ALUMITE);
+		setHarvestLevel(ToolClass.SHOVEL, ToolClass.LEVEL_ALUMITE);
+		setHarvestLevel(ToolClass.AXE, ToolClass.LEVEL_ALUMITE);
 	}
 	
 	public void loadRecipes()

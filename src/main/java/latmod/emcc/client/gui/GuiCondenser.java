@@ -43,12 +43,20 @@ public class GuiCondenser extends GuiLM
 			}
 		});
 		
+		buttonSettings.title = LC.mod.translate("button.settings");
+		
 		widgets.add(buttonSafeMode = new ButtonLM(this, 153, 25, 7, 6)
 		{
 			public void onButtonPressed(int b)
 			{
 				condenser.clientPressButton(EMCCGuis.Buttons.SAFE_MODE, b);
 				playClickSound();
+			}
+			
+			public void addMouseOverText(FastList<String> l)
+			{
+				l.add(condenser.safeMode.getTitle());
+				l.add(condenser.safeMode.getText());
 			}
 		});
 		
@@ -64,8 +72,43 @@ public class GuiCondenser extends GuiLM
 			}
 		});
 		
-		barEMC = new WidgetLM(this, 30, 9, 118, 16);
+		buttonTransItems.title = EMCC.mod.translate("takeitems");
+		
+		barEMC = new WidgetLM(this, 30, 9, 118, 16)
+		{
+			public void addMouseOverText(FastList<String> l)
+			{
+				ItemStack tar = condenser.items[TileCondenser.SLOT_TARGET];
+				
+				double emc1 =  EMCC.getEMC(tar);
+				
+				boolean charging = tar != null && tar.getItem() instanceof IEmcStorageItem;
+				
+				boolean repairing = tar != null && !charging && condenser.repairTools.isOn() && tar.isItemStackDamageable() && !tar.isStackable();
+				
+				if(repairing && tar.getItemDamage() > 0)
+				{
+					ItemStack tar1 = tar.copy();
+					if(tar1.hasTagCompound())
+						tar1.stackTagCompound.removeTag("ench");
+					
+					ItemStack tar2 = tar1.copy();
+					tar2.setItemDamage(tar1.getItemDamage() - 1);
+					
+					double ev = EMCC.getEMC(tar1);
+					double ev2 = EMCC.getEMC(tar2);
+					
+					emc1 = ev2 - ev;
+				}
+				
+				l.add(EnumChatFormatting.GOLD.toString() + "" + formatEMC(condenser.storedEMC) + (emc1 <= 0D ? "" : (" / " + formatEMC(emc1))));
+				if(charging && condenser.storedEMC > 0D) l.add(EMCC.mod.translate("charging"));
+				else if(emc1 > 0D && repairing && tar.getItemDamage() > 0) l.add(EMCC.mod.translate("repairing"));
+			}
+		};
+		
 		targetIcon = new WidgetLM(this, 8, 9, 16, 16);
+		targetIcon.title = EMCC.mod.translate("notarget");
 	}
 	
 	public void drawGuiContainerBackgroundLayer(float f, int mx, int my)
@@ -117,58 +160,12 @@ public class GuiCondenser extends GuiLM
 	
 	public void drawScreen(int mx, int my, float f)
 	{
-		try{
+		String s = targetIcon.title + "";
+		targetIcon.title = (condenser.items[TileCondenser.SLOT_TARGET] == null) ? s : null;
+		
 		super.drawScreen(mx, my, f);
 		
-		FastList<String> al = new FastList<String>();
-		
-		if(barEMC.mouseOver(mx, my))
-		{
-			ItemStack tar = condenser.items[TileCondenser.SLOT_TARGET];
-			
-			double emc1 =  EMCC.getEMC(tar);
-			
-			boolean charging = tar != null && tar.getItem() instanceof IEmcStorageItem;
-			
-			boolean repairing = tar != null && !charging && condenser.repairTools.isOn() && tar.isItemStackDamageable() && !tar.isStackable();
-			
-			if(repairing && tar.getItemDamage() > 0)
-			{
-				ItemStack tar1 = tar.copy();
-				if(tar1.hasTagCompound())
-					tar1.stackTagCompound.removeTag("ench");
-				
-				ItemStack tar2 = tar1.copy();
-				tar2.setItemDamage(tar1.getItemDamage() - 1);
-				
-				double ev = EMCC.getEMC(tar1);
-				double ev2 = EMCC.getEMC(tar2);
-				
-				emc1 = ev2 - ev;
-			}
-			
-			al.add(EnumChatFormatting.GOLD.toString() + "" + formatEMC(condenser.storedEMC) + (emc1 <= 0D ? "" : (" / " + formatEMC(emc1))));
-			if(charging && condenser.storedEMC > 0D) al.add(EMCC.mod.translate("charging"));
-			else if(emc1 > 0D && repairing && tar.getItemDamage() > 0) al.add(EMCC.mod.translate("repairing"));
-		}
-		
-		if(buttonSettings.mouseOver(mx, my))
-			al.add(LC.mod.translate("settings"));
-		
-		if(buttonSafeMode.mouseOver(mx, my))
-		{
-			al.add(condenser.safeMode.getTitle());
-			al.add(condenser.safeMode.getText());
-		}
-		
-		if(buttonTransItems.mouseOver(mx, my))
-			al.add(EMCC.mod.translate("takeitems"));
-		
-		if(targetIcon.mouseOver(mx, my) && condenser.items[TileCondenser.SLOT_TARGET] == null)
-			al.add(EMCC.mod.translate("notarget"));
-		
-		if(!al.isEmpty()) drawHoveringText(al, mx, my, fontRendererObj);
-		}catch(Exception e) { e.printStackTrace(); }
+		targetIcon.title = s;
 	}
 	
 	public static String formatEMC(double d)

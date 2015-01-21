@@ -19,7 +19,7 @@ public class ItemUUAxe extends ItemToolEMCC // ItemAxe
 	{
 		super(s);
 		
-		setHarvestLevel(EnumToolClass.AXE.toolClass, EnumToolClass.LEVEL_DIAMOND);
+		setHarvestLevel(ToolClass.AXE, ToolClass.LEVEL_ALUMITE);
 	}
 	
 	public void loadRecipes()

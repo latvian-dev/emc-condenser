@@ -19,7 +19,7 @@ public class ItemUUPick extends ItemToolEMCC
 	public ItemUUPick(String s)
 	{
 		super(s);
-		setHarvestLevel(EnumToolClass.PICKAXE.toolClass, EnumToolClass.LEVEL_DIAMOND);
+		setHarvestLevel(ToolClass.PICK, ToolClass.LEVEL_ALUMITE);
 	}
 	
 	public void loadRecipes()
