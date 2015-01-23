@@ -16,12 +16,12 @@ public class TileInfuser extends TileLM
 	public ItemStack itemInfusing = null;
 	public int timer = 0;
 	
-	public void spawnPart(boolean good)
+	public void spawnPart()
 	{
 		double px = ParticleHelper.rand.nextFloat();
 		double py = ParticleHelper.rand.nextFloat();
 		double pz = ParticleHelper.rand.nextFloat();
-		LC.proxy.spawnDust(worldObj, xCoord + px, yCoord + py + 1, zCoord + pz, good ? 0xFF3333FF : 0xFFFF1111);
+		LC.proxy.spawnDust(worldObj, xCoord + px, yCoord + py + 1, zCoord + pz, 0xFF33FFFF);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -39,7 +39,7 @@ public class TileInfuser extends TileLM
 			}
 			
 			for(int i = 0; i < 10; i++)
-				spawnPart(false);
+				spawnPart();
 			
 			markDirty();
 		}
@@ -98,8 +98,6 @@ public class TileInfuser extends TileLM
 	
 	public void onUpdate()
 	{
-		boolean canUpdate = !worldObj.isRemote;
-		
 		if(timer > 0)
 		{
 			timer--;
@@ -109,9 +107,9 @@ public class TileInfuser extends TileLM
 				if(itemInfusing != null)
 				{
 					for(int i = 0; i < 100; i++)
-						spawnPart(true);
+						spawnPart();
 					
-					if(canUpdate)
+					if(isServer())
 					{
 						InvUtils.dropItem(worldObj, xCoord + 0.5D, yCoord + 1.5D, zCoord + 0.5D, 0D, 0.1D, 0D, itemInfusing, 20);
 						itemInfusing = null;
@@ -119,10 +117,7 @@ public class TileInfuser extends TileLM
 					}
 				}
 			}
-			else
-			{
-				spawnPart(true);
-			}
+			else spawnPart();
 		}
 	}
 	
