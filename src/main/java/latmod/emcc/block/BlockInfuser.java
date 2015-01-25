@@ -11,7 +11,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.*;
 import cpw.mods.fml.relauncher.*;
 
-public class BlockInfuser extends BlockEMCC implements IPaintable.INoPaint
+public class BlockInfuser extends BlockEMCC
 {
 	@SideOnly(Side.CLIENT)
 	public IIcon icon_top_empty, icon_top_glow, icon_side_empty, icon_side_glow;
@@ -51,8 +51,5 @@ public class BlockInfuser extends BlockEMCC implements IPaintable.INoPaint
 	{ return RenderInfuser.instance.getRenderId(); }
 	
 	public boolean renderAsNormalBlock()
-	{ return false; }
-	
-	public boolean hasPaint(IBlockAccess iba, int x, int y, int z, int s)
 	{ return false; }
 }

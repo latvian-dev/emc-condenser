@@ -13,7 +13,7 @@ import cpw.mods.fml.relauncher.*;
 public class GuiCondenserSettings extends GuiLM
 {
 	public TileCondenser condenser;
-	public ButtonLM buttonSettings, buttonSecurity, buttonRedstone, buttonInvMode, buttonRepairItems;
+	public ButtonLM buttonBack, buttonSecurity, buttonRedstone, buttonInvMode, buttonRepairItems;
 	
 	public GuiCondenserSettings(final EntityPlayer ep, IInventory inv)
 	{
@@ -22,7 +22,7 @@ public class GuiCondenserSettings extends GuiLM
 		xSize = 102;
 		ySize = 106;
 		
-		widgets.add(buttonSettings = new ButtonLM(this, 78, 6, 16, 16)
+		widgets.add(buttonBack = new ButtonLM(this, 78, 6, 16, 16)
 		{
 			public void onButtonPressed(int b)
 			{
@@ -31,7 +31,7 @@ public class GuiCondenserSettings extends GuiLM
 			}
 		});
 		
-		buttonSettings.title = LC.mod.translate("button.back");
+		buttonBack.title = LC.mod.translate("button.back");
 		
 		widgets.add(buttonSecurity = new ButtonLM(this, 78, 25, 16, 16)
 		{
@@ -74,14 +74,14 @@ public class GuiCondenserSettings extends GuiLM
 	{
 		super.drawGuiContainerBackgroundLayer(f, x, y);
 		
-		buttonRedstone.render(button_redstone[condenser.redstoneMode.ID]);
-		buttonSecurity.render(button_security[condenser.security.level.ID]);
-		buttonInvMode.render(button_inv[condenser.invMode.ID]);
+		buttonRedstone.render(Icons.redstone[condenser.redstoneMode.ID]);
+		buttonSecurity.render(Icons.security[condenser.security.level.ID]);
+		buttonInvMode.render(Icons.inv[condenser.invMode.ID]);
 		
 		if(condenser.repairTools.isOn())
-			buttonRepairItems.render(button_toggle_on);
+			buttonRepairItems.render(Icons.toggle_on);
 		
-		buttonSettings.render(button_back);
+		buttonBack.render(Icons.back);
 	}
 	
 	public void addMouseText(int mx, int my, FastList<String> l)

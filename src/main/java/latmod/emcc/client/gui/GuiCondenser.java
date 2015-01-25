@@ -153,7 +153,7 @@ public class GuiCondenser extends GuiLM
 		if(buttonTransItems.mouseOver(mx, my) && Mouse.isButtonDown(0))
 			buttonTransItems.render(texTinyPressed);
 		
-		buttonSettings.render(button_settings);
+		buttonSettings.render(Icons.settings);
 		
 		if(b) GL11.glEnable(GL11.GL_LIGHTING);
 	}

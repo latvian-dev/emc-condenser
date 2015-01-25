@@ -16,7 +16,7 @@ import com.pahimar.ee3.init.ModItems;
 
 import cpw.mods.fml.relauncher.*;
 
-public class BlockCondenser extends BlockEMCC implements IPaintable.INoPaint
+public class BlockCondenser extends BlockEMCC
 {
 	@SideOnly(Side.CLIENT)
 	public IIcon icon_top_empty, icon_top_glow, icon_side_empty, icon_side_glow;
@@ -61,8 +61,5 @@ public class BlockCondenser extends BlockEMCC implements IPaintable.INoPaint
 	{ return RenderCondenser.instance.getRenderId(); }
 	
 	public boolean renderAsNormalBlock()
-	{ return false; }
-	
-	public boolean hasPaint(IBlockAccess iba, int x, int y, int z, int s)
 	{ return false; }
 }
