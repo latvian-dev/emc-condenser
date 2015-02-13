@@ -16,7 +16,7 @@ public class EMCCBlacklist
 		
 		list = null;
 		
-		try { list = LatCore.fromJsonFromFile(file, Blacklist.class); }
+		if(file.exists()) try { list = LatCore.fromJsonFromFile(file, Blacklist.class); }
 		catch(Exception ex) { list = null; }
 		
 		if(list == null)

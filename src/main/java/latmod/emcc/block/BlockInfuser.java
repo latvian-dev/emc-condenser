@@ -1,5 +1,5 @@
 package latmod.emcc.block;
-import latmod.core.tile.*;
+import latmod.core.tile.TileLM;
 import latmod.emcc.EMCCItems;
 import latmod.emcc.client.render.world.RenderInfuser;
 import latmod.emcc.tile.TileInfuser;
@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.*;
+import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.*;
 
 public class BlockInfuser extends BlockEMCC

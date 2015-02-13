@@ -2,12 +2,9 @@ package latmod.emcc;
 import latmod.core.*;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.blacklist.EMCCBlacklist;
+import latmod.emcc.item.ItemMaterialsEMCC;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-
-import com.pahimar.ee3.api.EnergyValue;
-import com.pahimar.ee3.exchange.EnergyValueRegistry;
-
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 
@@ -27,15 +24,15 @@ public class EMCC
 	public static LMMod mod;
 	public static EMCCBlacklist blacklist;
 	
-	public static ItemStack DUST_VERDANT;
-	public static ItemStack DUST_AZURE;
-	public static ItemStack DUST_MINIUM;
+	private static boolean hasEE3 = false;
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
 		mod = new LMMod(MOD_ID, new EMCCConfig(e), EMCCRecipes.instance);
 		blacklist = new EMCCBlacklist(e);
+		
+		hasEE3 = LatCoreMC.isModInstalled("EE3");
 		
 		EMCCItems.preInit();
 		mod.onPostLoaded();
@@ -47,6 +44,9 @@ public class EMCC
 		proxy.preInit(e);
 	}
 	
+	public static final boolean hasEE3()
+	{ return hasEE3; }
+	
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent e)
 	{
@@ -57,9 +57,7 @@ public class EMCC
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
-		DUST_VERDANT = new ItemStack(com.pahimar.ee3.init.ModItems.alchemicalDust, 1, 1);
-		DUST_AZURE = new ItemStack(com.pahimar.ee3.init.ModItems.alchemicalDust, 1, 2);
-		DUST_MINIUM = new ItemStack(com.pahimar.ee3.init.ModItems.alchemicalDust, 1, 3);
+		ItemMaterialsEMCC.loadEE3Items();
 		
 		mod.loadRecipes();
 		proxy.postInit(e);
@@ -68,7 +66,15 @@ public class EMCC
 	public static float getEMC(ItemStack is)
 	{
 		if(is == null) return 0F;
-		EnergyValue e = EnergyValueRegistry.getInstance().getEnergyValue(is);
-		return (e == null) ? 0F : e.getEnergyValue();
+		
+		if(hasEE3())
+		{
+			com.pahimar.ee3.api.EnergyValue e = com.pahimar.ee3.exchange.EnergyValueRegistry.getInstance().getEnergyValue(is);
+			return (e == null) ? 0F : e.getEnergyValue();
+		}
+		else
+		{
+			return 0F;
+		}
 	}
 }

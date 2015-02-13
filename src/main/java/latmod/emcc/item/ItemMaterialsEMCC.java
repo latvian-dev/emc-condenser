@@ -14,6 +14,10 @@ public class ItemMaterialsEMCC extends ItemMaterials
 	public static ItemStack NUGGET_EMERALD;
 	public static ItemStack INGOT_UUS;
 	
+	public static ItemStack DUST_VERDANT;
+	public static ItemStack DUST_AZURE;
+	public static ItemStack DUST_MINIUM;
+	
 	public ItemMaterialsEMCC(String s)
 	{ super(s); }
 	
@@ -50,7 +54,7 @@ public class ItemMaterialsEMCC extends ItemMaterials
 	public void loadRecipes()
 	{
 		mod.recipes.addRecipe(ITEM_UUS, "MRM", "VSA", "MGM",
-				'M', EMCC.DUST_MINIUM,
+				'M', DUST_MINIUM,
 				'V', ODItems.EMERALD,
 				'A', ODItems.DIAMOND,
 				'R', ODItems.REDSTONE,
@@ -74,9 +78,9 @@ public class ItemMaterialsEMCC extends ItemMaterials
 		}
 		
 		if(EMCCConfig.Recipes.infuseMiniumStar)
-			EMCCRecipes.instance.addInfusing(MINIUM_STAR, new ItemStack(Items.nether_star), LMRecipes.size(EMCC.DUST_MINIUM, 8));
+			EMCCRecipes.instance.addInfusing(MINIUM_STAR, new ItemStack(Items.nether_star), LMRecipes.size(DUST_MINIUM, 8));
 		else mod.recipes.addRecipe(MINIUM_STAR, "MMM", "MSM", "MMM",
-				Character.valueOf('M'), EMCC.DUST_MINIUM,
+				Character.valueOf('M'), DUST_MINIUM,
 				Character.valueOf('S'), Items.nether_star);
 		
 		if(EMCCConfig.Recipes.miniumToNetherStar == 1)
@@ -88,5 +92,15 @@ public class ItemMaterialsEMCC extends ItemMaterials
 		
 		if(EMCCConfig.Recipes.infuseEnchBottle)
 			EMCCRecipes.instance.addInfusing(new ItemStack(Items.experience_bottle), new ItemStack(Items.potionitem, 1, 32), NUGGET_EMERALD);
+	}
+
+	public static void loadEE3Items()
+	{
+		if(EMCC.hasEE3())
+		{
+			DUST_VERDANT = new ItemStack(com.pahimar.ee3.init.ModItems.alchemicalDust, 1, 1);
+			DUST_AZURE = new ItemStack(com.pahimar.ee3.init.ModItems.alchemicalDust, 1, 2);
+			DUST_MINIUM = new ItemStack(com.pahimar.ee3.init.ModItems.alchemicalDust, 1, 3);
+		}
 	}
 }

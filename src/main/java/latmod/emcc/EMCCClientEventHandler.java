@@ -1,12 +1,8 @@
 package latmod.emcc;
-import latmod.core.ODItems;
 import latmod.core.mod.LC;
 import latmod.emcc.api.IEmcStorageItem;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-
-import com.pahimar.ee3.exchange.*;
-
 import cpw.mods.fml.common.eventhandler.*;
 import cpw.mods.fml.relauncher.*;
 
@@ -60,39 +56,5 @@ public class EMCCClientEventHandler
 			if(s != null && !s.isEmpty() && s.contains("No Exchange Energy value"))
 				e.toolTip.remove(j);
 		}
-	}
-	
-	public String getItemName(WrappedStack w)
-	{
-		Object o = w.getWrappedStack();
-		
-		String s = "" + o;
-		
-		if(o instanceof ItemStack)
-		{
-			ItemStack is = (ItemStack)o;
-			s = is.getDisplayName();
-			
-			if(s.equals("Black Wool")) s = "Wool";
-			
-			if(is.getItemDamage() == ODItems.ANY)
-				s = "Any " + s;
-		}
-		else if(o instanceof OreStack)
-		{
-			s = ((OreStack)o).oreName;
-			
-			if(s == "logWood") s = "Wood";
-			if(s == "plankWood") s = "Planks";
-			if(s == "stickWood") s = "Stick";
-			
-			s = "Any " + s;
-			//OreDictionary.getOreID(itemStack);
-		}
-		
-		if(w.getStackSize() > 1)
-		s = w.getStackSize() + " x " + s;
-		
-		return s;
 	}
 }
