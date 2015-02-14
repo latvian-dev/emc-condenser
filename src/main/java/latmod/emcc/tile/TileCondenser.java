@@ -3,7 +3,6 @@ import latmod.core.*;
 import latmod.core.client.LMGuiButtons;
 import latmod.core.gui.ContainerEmpty;
 import latmod.core.tile.*;
-import latmod.core.tile.enums.*;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.client.container.ContainerCondenser;
