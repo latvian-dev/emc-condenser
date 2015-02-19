@@ -2,6 +2,7 @@ package latmod.emcc.tile;
 import latmod.core.*;
 import latmod.core.mod.LC;
 import latmod.core.tile.TileLM;
+import latmod.core.util.FastList;
 import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.*;
 import latmod.emcc.item.tools.ItemToolEMCC;

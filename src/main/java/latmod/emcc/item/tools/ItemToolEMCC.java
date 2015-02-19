@@ -1,7 +1,7 @@
 package latmod.emcc.item.tools;
 import java.util.Map;
 
-import latmod.core.FastList;
+import latmod.core.util.FastList;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.item.ItemEmcStorage;

@@ -1,8 +1,8 @@
 package latmod.emcc.client.gui;
-import latmod.core.FastList;
 import latmod.core.client.LMGuiButtons;
 import latmod.core.gui.*;
 import latmod.core.mod.LC;
+import latmod.core.util.FastList;
 import latmod.emcc.*;
 import latmod.emcc.tile.TileCondenser;
 import net.minecraft.entity.player.EntityPlayer;

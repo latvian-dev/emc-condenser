@@ -1,7 +1,8 @@
 package latmod.emcc.client.gui;
-import latmod.core.*;
+import latmod.core.LatCoreMC;
 import latmod.core.gui.*;
 import latmod.core.mod.LC;
+import latmod.core.util.FastList;
 import latmod.emcc.*;
 import latmod.emcc.api.IEmcStorageItem;
 import latmod.emcc.client.container.ContainerCondenser;
