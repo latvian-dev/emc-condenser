@@ -6,6 +6,7 @@ import latmod.core.util.FastList;
 import latmod.emcc.*;
 import latmod.emcc.api.IEmcStorageItem;
 import latmod.emcc.client.container.ContainerCondenser;
+import latmod.emcc.emc.EMCHandler;
 import latmod.emcc.tile.TileCondenser;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
@@ -81,7 +82,7 @@ public class GuiCondenser extends GuiLM
 			{
 				ItemStack tar = condenser.items[TileCondenser.SLOT_TARGET];
 				
-				double emc1 =  EMCC.getEMC(tar);
+				double emc1 =  EMCHandler.instance().getEMC(tar);
 				
 				boolean charging = tar != null && tar.getItem() instanceof IEmcStorageItem;
 				
@@ -96,8 +97,8 @@ public class GuiCondenser extends GuiLM
 					ItemStack tar2 = tar1.copy();
 					tar2.setItemDamage(tar1.getItemDamage() - 1);
 					
-					double ev = EMCC.getEMC(tar1);
-					double ev2 = EMCC.getEMC(tar2);
+					double ev = EMCHandler.instance().getEMC(tar1);
+					double ev2 = EMCHandler.instance().getEMC(tar2);
 					
 					emc1 = ev2 - ev;
 				}
@@ -121,7 +122,7 @@ public class GuiCondenser extends GuiLM
 		
 		ItemStack tar = condenser.items[TileCondenser.SLOT_TARGET];
 		
-		double emc1 =  EMCC.getEMC(tar);
+		double emc1 =  EMCHandler.instance().getEMC(tar);
 		
 		boolean charging = tar != null && tar.getItem() instanceof IEmcStorageItem;
 		
@@ -136,8 +137,8 @@ public class GuiCondenser extends GuiLM
 			ItemStack tar2 = tar1.copy();
 			tar2.setItemDamage(tar1.getItemDamage() - 1);
 			
-			double ev = EMCC.getEMC(tar1);
-			double ev2 = EMCC.getEMC(tar2);
+			double ev = EMCHandler.instance().getEMC(tar1);
+			double ev2 = EMCHandler.instance().getEMC(tar2);
 			
 			emc1 = ev2 - ev;
 		}

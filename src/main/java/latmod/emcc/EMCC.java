@@ -2,13 +2,13 @@ package latmod.emcc;
 import latmod.core.*;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.blacklist.EMCCBlacklist;
-import latmod.emcc.item.ItemMaterialsEMCC;
+import latmod.emcc.emc.EMCHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 
-@Mod(modid = EMCC.MOD_ID, name = "EMC Condenser", version = "@VERSION@", dependencies = "required-after:LatCoreMC;required-after:EE3")
+@Mod(modid = EMCC.MOD_ID, name = "EMC Condenser", version = "@VERSION@", dependencies = "required-after:LatCoreMC;after:EE3")
 public class EMCC
 {
 	protected static final String MOD_ID = "EMC_Condenser";
@@ -24,15 +24,13 @@ public class EMCC
 	public static LMMod mod;
 	public static EMCCBlacklist blacklist;
 	
-	private static boolean hasEE3 = false;
-	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
-		mod = new LMMod(MOD_ID, new EMCCConfig(e), EMCCRecipes.instance);
+		mod = new LMMod(MOD_ID, new EMCCConfig(e), null);
 		blacklist = new EMCCBlacklist(e);
 		
-		hasEE3 = LatCoreMC.isModInstalled("EE3");
+		EMCHandler.init();
 		
 		EMCCItems.preInit();
 		mod.onPostLoaded();
@@ -44,12 +42,10 @@ public class EMCC
 		proxy.preInit(e);
 	}
 	
-	public static final boolean hasEE3()
-	{ return hasEE3; }
-	
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent e)
 	{
+		EMCHandler.instance().modInited();
 		ToolInfusion.initAll();
 		proxy.init(e);
 	}
@@ -57,24 +53,8 @@ public class EMCC
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
-		ItemMaterialsEMCC.loadEE3Items();
-		
 		mod.loadRecipes();
+		EMCHandler.instance().loadRecipes();
 		proxy.postInit(e);
-	}
-	
-	public static float getEMC(ItemStack is)
-	{
-		if(is == null) return 0F;
-		
-		if(hasEE3())
-		{
-			com.pahimar.ee3.api.EnergyValue e = com.pahimar.ee3.exchange.EnergyValueRegistry.getInstance().getEnergyValue(is);
-			return (e == null) ? 0F : e.getEnergyValue();
-		}
-		else
-		{
-			return 0F;
-		}
 	}
 }

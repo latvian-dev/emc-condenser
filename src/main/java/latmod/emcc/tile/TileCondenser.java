@@ -7,6 +7,7 @@ import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.client.container.ContainerCondenser;
 import latmod.emcc.client.gui.*;
+import latmod.emcc.emc.EMCHandler;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
@@ -87,7 +88,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 							continue;
 						}
 						
-						double iev = EMCC.getEMC(items[INPUT_SLOTS[i]]);
+						double iev = EMCHandler.instance().getEMC(items[INPUT_SLOTS[i]]);
 						
 						if(iev > 0D && !EMCC.blacklist.isBlacklistedFuel(items[INPUT_SLOTS[i]]))
 						{
@@ -141,8 +142,8 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 							ItemStack tar2 = tar1.copy();
 							tar2.setItemDamage(tar1.getItemDamage() - 1);
 							
-							double ev = EMCC.getEMC(tar1);
-							double ev2 = EMCC.getEMC(tar2);
+							double ev = EMCHandler.instance().getEMC(tar1);
+							double ev2 = EMCHandler.instance().getEMC(tar2);
 							
 							double a = ev2 - ev;
 							
@@ -156,7 +157,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 					}
 					else
 					{
-						double ev = EMCC.getEMC(tar);
+						double ev = EMCHandler.instance().getEMC(tar);
 						
 						if(ev > 0D && !EMCC.blacklist.isBlacklistedTarget(tar))
 						{

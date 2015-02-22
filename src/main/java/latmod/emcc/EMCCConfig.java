@@ -1,10 +1,11 @@
 package latmod.emcc;
+import net.minecraft.nbt.NBTTagCompound;
 import latmod.core.*;
 import latmod.core.tile.*;
 import latmod.emcc.tile.*;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-public class EMCCConfig extends LMConfig
+public class EMCCConfig extends LMConfig implements IServerConfig
 {
 	public EMCCConfig(FMLPreInitializationEvent e)
 	{ super(e, "/LatMod/EMC_Condenser.cfg"); }
@@ -12,10 +13,21 @@ public class EMCCConfig extends LMConfig
 	public void load()
 	{
 		General.load(get("general"));
-		Recipes.load(get("recipes"));
 		Condenser.load(get("condenser"));
 		Tools.load(get("tools"));
 		Infusion.load(get("infusion"));
+	}
+	
+	public void readConfig(NBTTagCompound tag)
+	{
+		General.forceVanillaRecipes = tag.getBoolean("Recipes");
+		General.forceVanillaEMC = tag.getBoolean("EMC");
+	}
+	
+	public void writeConfig(NBTTagCompound tag)
+	{
+		tag.setBoolean("Recipes", General.forceVanillaRecipes);
+		tag.setBoolean("EMC", General.forceVanillaEMC);
 	}
 	
 	public static class General
@@ -24,6 +36,8 @@ public class EMCCConfig extends LMConfig
 		public static float ununblockEnchantPower;
 		public static boolean removeNoEMCTooltip;
 		public static int ticksToInfuse;
+		public static boolean forceVanillaRecipes;
+		public static boolean forceVanillaEMC;
 		
 		public static void load(Category c)
 		{
@@ -31,42 +45,8 @@ public class EMCCConfig extends LMConfig
 			ununblockEnchantPower = c.getFloat("ununblockEnchantPower", 3F, 0F, 100F);
 			removeNoEMCTooltip = c.getBool("removeNoEMCTooltip", true);
 			ticksToInfuse = c.getInt("ticksToInfuse", 400, 0, 32767);
-		}
-	}
-	
-	public static class Recipes
-	{
-		public static int condenserRecipeDifficulty;
-		public static int miniumToNetherStar;
-		public static boolean infuseMiniumStar;
-		public static boolean infuseEnchBottle;
-		public static int infusedUUBlocks;
-		public static int infusedUUIngots;
-		
-		public static void load(Category c)
-		{
-			condenserRecipeDifficulty = c.getInt("condenserRecipeDifficulty", 2, 0, 2);
-			c.setComment("condenserRecipeDifficulty",
-					"This changed the item used in EMC Condenser's crafting recipe",
-					"0 - UnUnSeptium Block",
-					"1 - Nether Star",
-					"2 - Minium Star");
-			
-			miniumToNetherStar = c.getInt("miniumToNetherStar", 1, 0, 2);
-			c.setComment("miniumToNetherStar",
-					"0 - Minium Star can't be converted back to Nether Star",
-					"1 - Minium Star + Glowstone Dust > Nether Star",
-					"2 - Minium Star in furnace > Nether Star");
-			
-			infuseMiniumStar = c.getBool("infuseMiniumStar", true);
-			infuseEnchBottle = c.getBool("infuseEnchBottle", true);
-			infusedUUBlocks = c.getInt("infusedUUBlocks", 8, 0, 64);
-			
-			infusedUUIngots = c.getInt("infusedUUIngots", 8, -1, 64);
-			c.setComment("infusedUUIngots",
-					"0 - Recipe Disabled",
-					"-1 - Smelt UnUnSeptium in furnace",
-					"1-64 - Ingots per 1 UnUnSeptium in Aludel");
+			forceVanillaRecipes = c.getBool("forceVanillaRecipes", false);
+			forceVanillaEMC = c.getBool("forceVanillaEMC", false);
 		}
 	}
 	
