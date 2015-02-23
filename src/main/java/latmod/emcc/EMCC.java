@@ -30,7 +30,7 @@ public class EMCC
 		mod = new LMMod(MOD_ID, new EMCCConfig(e), null);
 		blacklist = new EMCCBlacklist(e);
 		
-		EMCHandler.init();
+		EMCHandler.init(e);
 		
 		EMCCItems.preInit();
 		mod.onPostLoaded();

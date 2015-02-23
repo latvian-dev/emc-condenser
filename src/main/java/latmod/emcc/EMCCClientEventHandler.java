@@ -1,6 +1,7 @@
 package latmod.emcc;
 import latmod.core.mod.LC;
 import latmod.emcc.api.IEmcStorageItem;
+import latmod.emcc.emc.EMCHandler;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import cpw.mods.fml.common.eventhandler.*;
@@ -49,12 +50,31 @@ public class EMCCClientEventHandler
 			e.toolTip.add(EMCC.mod.translate("storedEMC", s));
 		}
 		
-		if(EMCCConfig.General.removeNoEMCTooltip)
-		for(int j = 0; j < e.toolTip.size(); j++)
+		if(EMCHandler.hasEE3())
 		{
-			String s = e.toolTip.get(j);
-			if(s != null && !s.isEmpty() && s.contains("No Exchange Energy value"))
-				e.toolTip.remove(j);
+			if(EMCCConfig.General.removeNoEMCTooltip || EMCCConfig.General.forceVanillaEMC)
+			for(int j = 0; j < e.toolTip.size(); j++)
+			{
+				String s = e.toolTip.get(j);
+				if(s != null && !s.isEmpty())
+				{
+					if((EMCCConfig.General.removeNoEMCTooltip && s.contains("No Exchange Energy value"))
+					|| (EMCCConfig.General.forceVanillaEMC && s.contains("Exchange Energy")))
+						e.toolTip.remove(j);
+				}
+			}
+		}
+		
+		if(!EMCHandler.hasEE3() || EMCCConfig.General.forceVanillaEMC && LC.proxy.isShiftDown())
+		{
+			float f = EMCHandler.instance().getEMC(e.itemStack);
+			if(f > 0)
+			{
+				f = ((int)(f * 1000F)) / 1000F;
+				String s = "" + f;
+				if(s.endsWith(".0")) s = s.substring(0, s.length() - 2);
+				e.toolTip.add("EMC: " + s);
+			}
 		}
 	}
 }

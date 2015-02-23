@@ -1,8 +1,8 @@
 package latmod.emcc;
-import net.minecraft.nbt.NBTTagCompound;
 import latmod.core.*;
 import latmod.core.tile.*;
 import latmod.emcc.tile.*;
+import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class EMCCConfig extends LMConfig implements IServerConfig

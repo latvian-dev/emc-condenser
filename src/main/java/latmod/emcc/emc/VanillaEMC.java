@@ -1,0 +1,221 @@
+package latmod.emcc.emc;
+
+import java.util.*;
+
+import latmod.core.*;
+import latmod.core.util.*;
+import net.minecraft.block.Block;
+import net.minecraft.init.*;
+import net.minecraft.item.*;
+
+import com.google.gson.annotations.Expose;
+
+public class VanillaEMC
+{
+	private final FastList<RegEntry> regEntries;
+	private final FastMap<String, Float> oreEntries;
+	
+	public VanillaEMC()
+	{
+		regEntries = new FastList<RegEntry>();
+		oreEntries = new FastMap<String, Float>();
+	}
+	
+	public void clear()
+	{
+		regEntries.clear();
+		oreEntries.clear();
+	}
+	
+	public void loadDefaults()
+	{
+		addOre(ODItems.COBBLE, 1);
+		addOre(ODItems.STONE, 1);
+		addReg(Blocks.dirt, -1, 1);
+		addReg(Blocks.sand, -1, 1);
+		addReg(Blocks.gravel, 0, 4);
+		
+		addOre(ODItems.GLASS, 1);
+		addReg(Blocks.sandstone, -1, 4);
+		addReg(Blocks.netherrack, 0, 1);
+		addReg(Blocks.nether_brick, 0, 4);
+		addReg(Blocks.stonebrick, -1, 4);
+		addReg(Blocks.end_stone, 0, 1);
+		
+		addReg(Blocks.yellow_flower, -1, 16);
+		addReg(Blocks.red_flower, -1, 16);
+		addReg(Blocks.cactus, 0, 8);
+		addReg(Blocks.vine, 0, 8);
+        addReg(Blocks.waterlily, 0, 16);
+        addReg(Blocks.double_plant, -1, 8);
+		
+		addOre(ODItems.WOOD, 32);
+		addOre(ODItems.PLANKS, 8);
+		addOre(ODItems.STICK, 4);
+		
+		addOre(ODItems.PERIDOT, 1024);
+		addOre(ODItems.SAPPHIRE, 1024);
+		addOre(ODItems.RUBY, 1024);
+		
+		addOre(ODItems.IRON, 256);
+		addOre(ODItems.GOLD, 2048);
+		addOre(ODItems.DIAMOND, 8192);
+		addOre(ODItems.EMERALD, 8192);
+		
+		addOre(ODItems.TIN, 256);
+		addOre(ODItems.COPPER, 64);
+		addOre(ODItems.SILVER, 512);
+		addOre(ODItems.LEAD, 256);
+		
+		addOre(ODItems.REDSTONE, 32);
+		addOre(ODItems.GLOWSTONE, 256);
+		addOre(ODItems.QUARTZ, 256);
+		addOre(ODItems.LAPIS, 256);
+		
+		addOre(ODItems.SLIMEBALL, 24);
+		addReg(Items.bone, 0, 24);
+		addReg(Items.ender_pearl, 0, 1024);
+		addReg(Items.coal, -1, 32);
+		addReg(Items.string, 0, 32);
+		
+		addReg(Items.string, 0, 12);
+		addReg(Items.feather, 0, 48);
+		addReg(Items.gunpowder, 0, 192);
+		addReg(Items.wheat_seeds, 0, 16);
+		addReg(Items.wheat, 0, 24);
+		addReg(Items.flint, 0, 4);
+		addReg(Items.leather, 0, 64);
+		addReg(Items.brick, 0, 64);
+		addReg(Items.clay_ball, 0, 64);
+		addReg(Items.reeds, 0, 32);
+		addReg(Items.egg, 0, 32);
+		addReg(Items.glowstone_dust, 0, 384);
+		addReg(new ItemStack(Items.dye, 1, 4), 864);
+		addReg(Items.blaze_rod, 0, 1536);
+		addReg(Items.nether_wart, 0, 24);
+		addReg(Items.nether_star, 0, 24576);
+	}
+	
+	
+	private void addOre(String s, float v)
+	{ if(s != null && !s.isEmpty() && v > 0F) oreEntries.put(s, v); }
+	
+	private void addReg(ItemStack is, float v)
+	{ if(is != null && v > 0F) regEntries.add(new RegEntry(is, v)); }
+	
+	private void addReg(Block b, int dmg, float v)
+	{ addReg(new ItemStack(b, 1, dmg), v); }
+	
+	private void addReg(Item b, int dmg, float v)
+	{ addReg(new ItemStack(b, 1, dmg), v); }
+	
+	private void addReg(String s, float v)
+	{
+		if(s != null && !s.isEmpty() && v > 0F)
+		{
+			String[] s1 = LatCore.split(s, "@");
+			Item i = LatCoreMC.getItemFromRegName(s1[0]);
+			int dmg = (s1.length > 1) ? Integer.parseInt(s1[1]) : 0;
+			if(i != null) addReg(i, dmg, v);
+		}
+	}
+	
+	public float getEMC(ItemStack is)
+	{
+		if(is == null || is.getItem() == null) return 0F;
+		
+		for(int i = 0; i < regEntries.size(); i++)
+		{
+			RegEntry e = regEntries.get(i);
+			if(e.equalsItem(is)) return e.value;
+		}
+		
+		FastList<String> ores = ODItems.getOreNames(is);
+		
+		if(!ores.isEmpty()) for(int i = 0; i < oreEntries.size(); i++)
+		{
+			String k = oreEntries.keys.get(i);
+			Float v = oreEntries.values.get(i);
+			
+			if(ores.contains(k)) return v.floatValue();
+		}
+		
+		return 0F;
+	}
+	
+	private static class RegEntry
+	{
+		public final Item item;
+		public final int damage;
+		public final float value;
+		
+		public RegEntry(ItemStack is, float v)
+		{
+			item = is.getItem();
+			damage = is.getItemDamage();
+			value = v;
+		}
+		
+		public boolean equalsItem(ItemStack is)
+		{ return is != null && item == is.getItem() && (damage == ODItems.ANY || damage == -1 || damage == is.getItemDamage()); }
+		
+		public String toString()
+		{ return LatCoreMC.getRegName(item) + ((damage == 0) ? "" : ("@" + damage)); }
+	}
+	
+	public static class EMCFile
+	{
+		@Expose public Map<String, Float> regNames;
+		@Expose public Map<String, Float> oreNames;
+		
+		public void loadFrom(VanillaEMC e)
+		{
+			if(regNames == null || oreNames == null)
+			{
+				regNames = new HashMap<String, Float>();
+				oreNames = new HashMap<String, Float>();
+			}
+			else
+			{
+				regNames.clear();
+				oreNames.clear();
+			}
+			
+			for(int i = 0; i < e.regEntries.size(); i++)
+			{
+				RegEntry r = e.regEntries.get(i);
+				regNames.put(r.toString(), r.value);
+			}
+			
+			for(int i = 0; i < e.oreEntries.size(); i++)
+				oreNames.put(e.oreEntries.keys.get(i), e.oreEntries.values.get(i));
+		}
+		
+		public void saveTo(VanillaEMC e)
+		{
+			Iterator<String> keys = regNames.keySet().iterator();
+			Iterator<Float> values = regNames.values().iterator();
+			
+			while(keys.hasNext() && values.hasNext())
+			{
+				String k = keys.next();
+				Float v = values.next();
+				
+				if(k != null && v != null && !k.isEmpty() && v.floatValue() > 0F)
+					e.addReg(k, v);
+			}
+			
+			keys = oreNames.keySet().iterator();
+			values = oreNames.values().iterator();
+			
+			while(keys.hasNext() && values.hasNext())
+			{
+				String k = keys.next();
+				Float v = values.next();
+				
+				if(k != null && v != null && !k.isEmpty() && v.floatValue() > 0F)
+					e.addOre(k, v);
+			}
+		}
+	}
+}

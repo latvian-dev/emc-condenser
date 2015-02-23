@@ -18,10 +18,19 @@ public class EMCHandlerEE3 extends EMCHandler
 		DUST_VERDANT = new ItemStack(com.pahimar.ee3.init.ModItems.alchemicalDust, 1, 1);
 		DUST_AZURE = new ItemStack(com.pahimar.ee3.init.ModItems.alchemicalDust, 1, 2);
 		DUST_MINIUM = new ItemStack(com.pahimar.ee3.init.ModItems.alchemicalDust, 1, 3);
+		
+		if(EMCCConfig.General.forceVanillaEMC)
+			EMCHandlerDef.instance.modInited();
 	}
 	
 	public void loadRecipes()
 	{
+		if(EMCCConfig.General.forceVanillaRecipes)
+		{
+			EMCHandlerDef.instance.loadRecipes();
+			return;
+		}
+		
 		// Material recipes //
 		
 		EMCC.mod.recipes.addRecipe(ItemMaterialsEMCC.ITEM_UUS, "MRM", "VSA", "MGM",
@@ -57,6 +66,10 @@ public class EMCHandlerEE3 extends EMCHandler
 	public float getEMC(ItemStack is)
 	{
 		if(is == null || is.stackSize <= 0) return 0F;
+		
+		if(EMCCConfig.General.forceVanillaEMC)
+			return EMCHandlerDef.instance.getEMC(is);
+		
 		com.pahimar.ee3.api.EnergyValue e = com.pahimar.ee3.exchange.EnergyValueRegistry.getInstance().getEnergyValue(is);
 		return (e == null) ? 0F : e.getEnergyValue();
 	}

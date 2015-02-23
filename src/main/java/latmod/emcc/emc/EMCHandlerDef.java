@@ -1,7 +1,10 @@
 package latmod.emcc.emc;
 
+import java.io.File;
+
 import latmod.core.ODItems;
 import latmod.core.recipes.LMRecipes;
+import latmod.core.util.LatCore;
 import latmod.emcc.*;
 import latmod.emcc.item.ItemMaterialsEMCC;
 import net.minecraft.init.*;
@@ -10,9 +13,28 @@ import net.minecraft.item.ItemStack;
 public class EMCHandlerDef extends EMCHandler
 {
 	public static final EMCHandlerDef instance = new EMCHandlerDef();
+	public final VanillaEMC vanillaEMC = new VanillaEMC();
+	public File vanillaEMCFile = null;
 	
 	public void modInited()
 	{
+		if(vanillaEMCFile == null) return;
+		
+		vanillaEMC.clear();
+		
+		if(vanillaEMCFile.exists())
+		{
+			VanillaEMC.EMCFile f = LatCore.fromJsonFromFile(vanillaEMCFile, VanillaEMC.EMCFile.class);
+			if(f != null) f.saveTo(vanillaEMC);
+			else vanillaEMC.loadDefaults();
+		}
+		else
+		{
+			vanillaEMC.loadDefaults();
+			VanillaEMC.EMCFile f = new VanillaEMC.EMCFile();
+			f.loadFrom(vanillaEMC);
+			LatCore.toJsonFile(vanillaEMCFile, f);
+		}
 	}
 	
 	public void loadRecipes()
@@ -48,7 +70,5 @@ public class EMCHandlerDef extends EMCHandler
 	}
 	
 	public float getEMC(ItemStack is)
-	{
-		return 0;
-	}
+	{ return vanillaEMC.getEMC(is); }
 }
