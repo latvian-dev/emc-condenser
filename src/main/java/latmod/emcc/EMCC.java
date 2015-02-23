@@ -16,7 +16,7 @@ public class EMCC
 	@Mod.Instance(EMCC.MOD_ID)
 	public static EMCC inst;
 	
-	@SidedProxy(clientSide = "latmod.emcc.EMCCClient", serverSide = "latmod.core.LMProxy")
+	@SidedProxy(clientSide = "latmod.emcc.client.EMCCClient", serverSide = "latmod.core.LMProxy")
 	public static LMProxy proxy;
 	
 	public static CreativeTabs tab = null;
