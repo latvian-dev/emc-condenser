@@ -58,7 +58,6 @@ public class EMCCConfig extends LMConfig implements IServerConfig
 		public static LMSecurity.Level forcedSecurity;
 		public static RedstoneMode forcedRedstoneControl;
 		public static SafeMode forcedSafeMode;
-		public static RepairTools forcedRepairItems;
 		
 		public static void load(Category c)
 		{
@@ -107,13 +106,6 @@ public class EMCCConfig extends LMConfig implements IServerConfig
 					"0 - Safe Mode always off",
 					"1 - Safe Mode always on");
 			forcedSafeMode = (i_forcedSafeMode == -1) ? null : SafeMode.VALUES[i_forcedSafeMode];
-			
-			int i_forcedRepairItems = c.getInt("forcedRepairItems", -1, -1, 1);
-			c.setComment("forcedRepairItems",
-					"-1 - Choosed by user",
-					"0 - Repair Items always off",
-					"1 - Repair Items always on");
-			forcedRepairItems = (i_forcedRepairItems == -1) ? null : RepairTools.VALUES[i_forcedRepairItems];
 		}
 	}
 	

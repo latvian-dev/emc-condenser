@@ -18,7 +18,7 @@ public class ContainerCondenser extends ContainerLM
 			int x = i % 9;
 			int y = i / 9;
 			
-			addSlotToContainer(new Slot(t, TileCondenser.INPUT_SLOTS[i], 8 + x * 18, 36 + y * 18));
+			addSlotToContainer(new Slot(t, TileCondenser.INPUT_SLOTS[i], 8 + x * 18, 32 + y * 18));
 		}
 		
 		for(int i = 0; i < TileCondenser.OUTPUT_SLOTS.length; i++)
@@ -26,10 +26,10 @@ public class ContainerCondenser extends ContainerLM
 			int x = i % 9;
 			int y = i / 9;
 			
-			addSlotToContainer(new SlotOutput(t, TileCondenser.OUTPUT_SLOTS[i], 8 + x * 18, 111 + y * 18));
+			addSlotToContainer(new SlotOutput(t, TileCondenser.OUTPUT_SLOTS[i], 8 + x * 18, 107 + y * 18));
 		}
 		
-		addPlayerSlots(158);
+		addPlayerSlots(154);
 	}
 	
 	@Override
@@ -53,7 +53,7 @@ public class ContainerCondenser extends ContainerLM
 				if (!mergeItemStack(is1, maxSlot, inventorySlots.size(), true))
 					return null;
 			}
-			else if (!mergeItemStack(is1, 0, maxSlot, false))
+			else if (!mergeItemStack(is1, 1, maxSlot, false))
 				return null;
 			
 			if (is1.stackSize == 0)

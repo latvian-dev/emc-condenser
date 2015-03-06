@@ -1,5 +1,5 @@
 package latmod.emcc.client.gui;
-import latmod.core.LatCoreMC;
+import latmod.core.client.LMGuiButtons;
 import latmod.core.gui.*;
 import latmod.core.mod.LC;
 import latmod.core.util.FastList;
@@ -11,7 +11,6 @@ import latmod.emcc.tile.TileCondenser;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.*;
@@ -22,32 +21,81 @@ public class GuiCondenser extends GuiLM
 	public static final ResourceLocation texLoc = EMCC.mod.getLocation("textures/gui/condenser.png");
 	
 	public final TextureCoords
-	texBar = new TextureCoords(texLoc, 0, 240),
+	texBar = new TextureCoords(texLoc, 0, 236),
 	texTarget = new TextureCoords(texLoc, 176, 0),
-	texTinyPressed = new TextureCoords(texLoc, 176, 16);
+	texSidebar = new TextureCoords(texLoc, 176, 26);
 	
 	public TileCondenser condenser;
-	public ButtonLM buttonSettings, buttonSafeMode, buttonTransItems;
-	public WidgetLM barEMC, targetIcon;
+	public ButtonLM buttonTransItems, buttonSecurity, buttonRedstone, buttonInvMode, buttonSafeMode;
+	public WidgetLM barEMC, targetIcon, sidebar;
 	
 	public GuiCondenser(final ContainerCondenser c)
 	{
 		super(c, texLoc);
 		condenser = (TileCondenser)c.inv;
-		ySize = 240;
+		xSize = 176;
+		ySize = 236;
 		
-		widgets.add(buttonSettings = new ButtonLM(this, 153, 7, 16, 16)
+		widgets.add(buttonTransItems = new ButtonLM(this, 153, 9, 16, 16)
 		{
 			public void onButtonPressed(int b)
 			{
-				LatCoreMC.openClientGui(c.player, condenser, 1);
-				playClickSound();
+				if(b == 0)
+				{
+					condenser.sendClientAction(TileCondenser.ACTION_TRANS_ITEMS, null);
+					playClickSound();
+				}
 			}
 		});
 		
-		buttonSettings.title = LC.mod.translate("button.settings");
+		buttonTransItems.title = EMCC.mod.translate("takeitems");
 		
-		widgets.add(buttonSafeMode = new ButtonLM(this, 153, 25, 7, 6)
+		widgets.add(buttonSecurity = new ButtonLM(this, -19, 32, 16, 16)
+		{
+			public void onButtonPressed(int b)
+			{
+				condenser.clientPressButton(LMGuiButtons.SECURITY, b);
+				playClickSound();
+			}
+			
+			public void addMouseOverText(FastList<String> l)
+			{
+				l.add(condenser.security.level.getTitle());
+				l.add(condenser.security.level.getText());
+			}
+		});
+		
+		widgets.add(buttonRedstone = new ButtonLM(this, -19, 50, 16, 16)
+		{
+			public void onButtonPressed(int b)
+			{
+				condenser.clientPressButton(LMGuiButtons.REDSTONE, b);
+				playClickSound();
+			}
+			
+			public void addMouseOverText(FastList<String> l)
+			{
+				l.add(condenser.redstoneMode.getTitle());
+				l.add(condenser.redstoneMode.getText());
+			}
+		});
+		
+		widgets.add(buttonInvMode = new ButtonLM(this, -19, 68, 16, 16)
+		{
+			public void onButtonPressed(int b)
+			{
+				condenser.clientPressButton(LMGuiButtons.INV_MODE, b);
+				playClickSound();
+			}
+			
+			public void addMouseOverText(FastList<String> l)
+			{
+				l.add(condenser.invMode.getTitle());
+				l.add(condenser.invMode.getText());
+			}
+		});
+		
+		widgets.add(buttonSafeMode = new ButtonLM(this, -19, 86, 16, 16)
 		{
 			public void onButtonPressed(int b)
 			{
@@ -62,21 +110,7 @@ public class GuiCondenser extends GuiLM
 			}
 		});
 		
-		widgets.add(buttonTransItems = new ButtonLM(this, 162, 25, 7, 6)
-		{
-			public void onButtonPressed(int b)
-			{
-				if(b == 0)
-				{
-					condenser.sendClientAction(TileCondenser.ACTION_TRANS_ITEMS, null);
-					playClickSound();
-				}
-			}
-		});
-		
-		buttonTransItems.title = EMCC.mod.translate("takeitems");
-		
-		barEMC = new WidgetLM(this, 30, 9, 118, 16)
+		widgets.add(barEMC = new WidgetLM(this, 30, 9, 118, 16)
 		{
 			public void addMouseOverText(FastList<String> l)
 			{
@@ -86,31 +120,14 @@ public class GuiCondenser extends GuiLM
 				
 				boolean charging = tar != null && tar.getItem() instanceof IEmcStorageItem;
 				
-				boolean repairing = tar != null && !charging && condenser.repairTools.isOn() && tar.isItemStackDamageable() && !tar.isStackable();
-				
-				if(repairing && tar.getItemDamage() > 0)
-				{
-					ItemStack tar1 = tar.copy();
-					if(tar1.hasTagCompound())
-						tar1.stackTagCompound.removeTag("ench");
-					
-					ItemStack tar2 = tar1.copy();
-					tar2.setItemDamage(tar1.getItemDamage() - 1);
-					
-					double ev = EMCHandler.instance().getEMC(tar1);
-					double ev2 = EMCHandler.instance().getEMC(tar2);
-					
-					emc1 = ev2 - ev;
-				}
-				
 				l.add(EnumChatFormatting.GOLD.toString() + "" + formatEMC(condenser.storedEMC) + (emc1 <= 0D ? "" : (" / " + formatEMC(emc1))));
 				if(charging && condenser.storedEMC > 0D) l.add(EMCC.mod.translate("charging"));
-				else if(emc1 > 0D && repairing && tar.getItemDamage() > 0) l.add(EMCC.mod.translate("repairing"));
 			}
-		};
+		});
 		
-		targetIcon = new WidgetLM(this, 8, 9, 16, 16);
+		widgets.add(targetIcon = new WidgetLM(this, 8, 9, 16, 16));
 		targetIcon.title = EMCC.mod.translate("notarget");
+		sidebar = new WidgetLM(this, -25, 26, 25, 83);
 	}
 	
 	public void drawGuiContainerBackgroundLayer(float f, int mx, int my)
@@ -124,38 +141,20 @@ public class GuiCondenser extends GuiLM
 		
 		double emc1 =  EMCHandler.instance().getEMC(tar);
 		
-		boolean charging = tar != null && tar.getItem() instanceof IEmcStorageItem;
-		
-		boolean repairing = tar != null && !charging && condenser.repairTools.isOn() && tar.isItemStackDamageable() && !tar.isStackable();
-		
-		if(repairing && tar.getItemDamage() > 0)
-		{
-			ItemStack tar1 = tar.copy();
-			if(tar1.hasTagCompound())
-				tar1.stackTagCompound.removeTag("ench");
-			
-			ItemStack tar2 = tar1.copy();
-			tar2.setItemDamage(tar1.getItemDamage() - 1);
-			
-			double ev = EMCHandler.instance().getEMC(tar1);
-			double ev2 = EMCHandler.instance().getEMC(tar2);
-			
-			emc1 = ev2 - ev;
-		}
-		
 		if(emc1 > 0L)
 			barEMC.render(texBar, (condenser.storedEMC % emc1) / emc1, 1D);
 		
 		if(condenser.items[TileCondenser.SLOT_TARGET] == null)
 			targetIcon.render(texTarget);
 		
-		if(condenser.safeMode.isOn())
-			buttonSafeMode.render(texTinyPressed);
+		buttonTransItems.render(Icons.down);
 		
-		if(buttonTransItems.mouseOver(mx, my) && Mouse.isButtonDown(0))
-			buttonTransItems.render(texTinyPressed);
+		sidebar.render(texSidebar);
 		
-		buttonSettings.render(Icons.settings);
+		buttonRedstone.render(Icons.redstone[condenser.redstoneMode.ID]);
+		buttonSecurity.render(Icons.security[condenser.security.level.ID]);
+		buttonInvMode.render(Icons.inv[condenser.invMode.ID]);
+		buttonSafeMode.render(condenser.safeMode.isOn() ? Icons.accept : Icons.accept_gray);
 		
 		if(b) GL11.glEnable(GL11.GL_LIGHTING);
 	}

@@ -36,6 +36,7 @@ public class VanillaEMC
 		addReg(Blocks.gravel, 0, 4);
 		
 		addOre(ODItems.GLASS, 1);
+		addOre(ODItems.GLASS_PANE, 6F / 16F);
 		addReg(Blocks.sandstone, -1, 4);
 		addReg(Blocks.netherrack, 0, 1);
 		addReg(Blocks.nether_brick, 0, 4);

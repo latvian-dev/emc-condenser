@@ -78,7 +78,7 @@ public class ItemUUWrench extends ItemToolEMCC
 							wr.writeToWrench(tag);
 							
 							if(!is.hasTagCompound()) is.stackTagCompound = new NBTTagCompound();
-							tag.setInteger("PlaceID", Item.getIdFromItem(Item.getItemFromBlock(w.getBlock(x, y, z))));
+							tag.setString("PlaceBlock", Block.blockRegistry.getNameForObject(w.getBlock(x, y, z)));
 							tag.setShort("PlaceMetadata", (short)w.getBlockMetadata(x, y, z));
 							is.stackTagCompound.setTag(NBT_KEY, tag);
 							
@@ -95,10 +95,13 @@ public class ItemUUWrench extends ItemToolEMCC
 					
 					if(w.isAirBlock(x, y, z))
 					{
-						int placeId = tag.getInteger("PlaceID");
+						String placeId = tag.getString("PlaceBlock");
+						
+						if(placeId.isEmpty()) return true;
+						
 						int placeMeta = tag.getShort("PlaceMetadata");
 						
-						Block b = Block.getBlockById(placeId);
+						Block b = (Block)Block.blockRegistry.getObject(placeId);
 						
 						w.setBlock(x, y, z, b);
 						w.setBlockMetadataWithNotify(x, y, z, placeMeta, 3);

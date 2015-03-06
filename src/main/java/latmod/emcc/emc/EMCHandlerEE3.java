@@ -20,14 +20,14 @@ public class EMCHandlerEE3 extends EMCHandler
 		DUST_MINIUM = new ItemStack(com.pahimar.ee3.init.ModItems.alchemicalDust, 1, 3);
 		
 		if(EMCCConfig.General.forceVanillaEMC)
-			EMCHandlerDef.instance.modInited();
+			super.modInited();
 	}
 	
 	public void loadRecipes()
 	{
 		if(EMCCConfig.General.forceVanillaRecipes)
 		{
-			EMCHandlerDef.instance.loadRecipes();
+			super.loadRecipes();
 			return;
 		}
 		
@@ -61,14 +61,14 @@ public class EMCHandlerEE3 extends EMCHandler
 	}
 	
 	public void addInfusing(ItemStack out, ItemStack in, ItemStack with)
-	{ com.pahimar.ee3.recipe.RecipesAludel.getInstance().addRecipe(out, in, with); }
+	{ com.pahimar.ee3.recipe.AludelRecipeManager.getInstance().addRecipe(out, in, with); }
 	
 	public float getEMC(ItemStack is)
 	{
 		if(is == null || is.stackSize <= 0) return 0F;
 		
 		if(EMCCConfig.General.forceVanillaEMC)
-			return EMCHandlerDef.instance.getEMC(is);
+			return super.getEMC(is);
 		
 		com.pahimar.ee3.api.EnergyValue e = com.pahimar.ee3.exchange.EnergyValueRegistry.getInstance().getEnergyValue(is);
 		return (e == null) ? 0F : e.getEnergyValue();

@@ -1,12 +1,11 @@
 package latmod.emcc.tile;
 import latmod.core.*;
 import latmod.core.client.LMGuiButtons;
-import latmod.core.gui.ContainerEmpty;
 import latmod.core.tile.*;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.client.container.ContainerCondenser;
-import latmod.emcc.client.gui.*;
+import latmod.emcc.client.gui.GuiCondenser;
 import latmod.emcc.emc.EMCHandler;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,7 +38,6 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	public SafeMode safeMode;
 	public RedstoneMode redstoneMode;
 	public InvMode invMode;
-	public RepairTools repairTools;
 	
 	public TileCondenser()
 	{
@@ -47,20 +45,15 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 		safeMode = SafeMode.DISABLED;
 		redstoneMode = RedstoneMode.DISABLED;
 		invMode = InvMode.ENABLED;
-		repairTools = RepairTools.DISABLED;
 		checkForced();
 	}
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
-	{
-		if(!worldObj.isRemote)
-			openGui(ep, 0);
-		return true;
-	}
+	{ if(isServer()) openGui(ep, 0); return true; }
 	
 	public void onUpdate()
 	{
-		if(!worldObj.isRemote)
+		if(isServer())
 		{
 			if(cooldown <= 0)
 			{
@@ -131,30 +124,6 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 							}
 						}
 					}
-					else if(repairTools.isOn() && tar.isItemStackDamageable() && !tar.isStackable())
-					{
-						if(tar.getItemDamage() > 0)
-						{
-							ItemStack tar1 = tar.copy();
-							if(tar1.hasTagCompound())
-								tar1.stackTagCompound.removeTag("ench");
-							
-							ItemStack tar2 = tar1.copy();
-							tar2.setItemDamage(tar1.getItemDamage() - 1);
-							
-							double ev = EMCHandler.instance().getEMC(tar1);
-							double ev2 = EMCHandler.instance().getEMC(tar2);
-							
-							double a = ev2 - ev;
-							
-							if(storedEMC >= a && a > 0D)
-							{
-								storedEMC -= a;
-								items[SLOT_TARGET].setItemDamage(tar2.getItemDamage());
-								markDirty();
-							}
-						}
-					}
 					else
 					{
 						double ev = EMCHandler.instance().getEMC(tar);
@@ -198,7 +167,6 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 		safeMode = SafeMode.VALUES[tag.getByte("SafeMode")];
 		redstoneMode = RedstoneMode.VALUES[tag.getByte("RSMode")];
 		invMode = InvMode.VALUES[tag.getByte("InvMode")];
-		repairTools = RepairTools.VALUES[tag.getByte("RepairTools")];
 		cooldown = tag.getShort("Cooldown");
 		
 		checkForced();
@@ -212,7 +180,6 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 		tag.setByte("SafeMode", (byte)safeMode.ID);
 		tag.setByte("RSMode", (byte)redstoneMode.ID);
 		tag.setByte("InvMode", (byte)invMode.ID);
-		tag.setByte("RepairTools", (byte)repairTools.ID);
 		tag.setShort("Cooldown", (short)cooldown);
 	}
 	
@@ -263,12 +230,10 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	{ writeTileData(tag); }
 	
 	public void onWrenched(EntityPlayer ep, ItemStack is)
-	{
-		dropItems = false;
-	}
+	{ dropItems = false; }
 	
 	public ItemStack getBlockToPlace()
-	{ return new ItemStack(EMCCItems.b_uu_block); }
+	{ return new ItemStack(EMCCItems.b_condenser); }
 	
 	public void handleButton(String button, int mouseButton, EntityPlayer ep)
 	{
@@ -278,8 +243,6 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 			redstoneMode = (mouseButton == 0) ? redstoneMode.next() : redstoneMode.prev();
 		else if(button.equals(LMGuiButtons.INV_MODE))
 			invMode = (mouseButton == 0) ? invMode.next() : invMode.prev();
-		else if(button.equals(EMCCGuis.Buttons.REPAIR_TOOLS))
-			repairTools = repairTools.next();
 		else if(button.equals(LMGuiButtons.SECURITY))
 		{
 			if(ep != null && security.isOwner(ep))
@@ -329,17 +292,9 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	}
 	
 	public Container getContainer(EntityPlayer ep, int ID)
-	{
-		if(ID == 0) return new ContainerCondenser(ep, this);
-		else if(ID == 1) new ContainerEmpty(ep, this);
-		return null;
-	}
+	{  return new ContainerCondenser(ep, this); }
 	
 	@SideOnly(Side.CLIENT)
 	public GuiScreen getGui(EntityPlayer ep, int ID)
-	{
-		if(ID == 0) return new GuiCondenser(new ContainerCondenser(ep, this));
-		else if(ID == 1) return new GuiCondenserSettings(ep, this);
-		return null;
-	}
+	{ return new GuiCondenser(new ContainerCondenser(ep, this)); }
 }

@@ -28,11 +28,13 @@ public class TileInfuser extends TileLM
 	@SuppressWarnings("unchecked")
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
 	{
+		if(EMCCConfig.General.ticksToInfuse < 0) return true;
+		
 		if(timer == 0)
 		{
 			if(isServer())
 			{
-				timer = EMCCConfig.General.ticksToInfuse;
+				timer = Math.max(1, EMCCConfig.General.ticksToInfuse);
 				
 				FastList<EntityItem> itemList = new FastList<EntityItem>();
 				itemList.addAll(worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(0D, 1D, 0D, 1D, 2D, 1D).getOffsetBoundingBox(xCoord, yCoord, zCoord)));

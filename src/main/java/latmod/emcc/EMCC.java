@@ -27,7 +27,7 @@ public class EMCC
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
-		mod = new LMMod(MOD_ID, new EMCCConfig(e), null);
+		mod = new LMMod(e, new EMCCConfig(e), null);
 		blacklist = new EMCCBlacklist(e);
 		
 		EMCHandler.init(e);
