@@ -43,7 +43,7 @@ minecraft {
 
 dependencies {
     compile files("sources/Exported/LatCoreMC-" + config.version_mc + "-" + config.version_mods + "-dev.jar")
-    compile files("C:/LatvianModder/ProjMCP/eclipse/mods/unused/EE3-dev.jar")
+    compile files(config.mods_dir + "unused/EE3-dev.jar")
 }
 
 sourceSets {

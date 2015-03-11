@@ -51,9 +51,8 @@ public class EMCCClientEventHandler
 			e.toolTip.add(EMCC.mod.translate("storedEMC", s));
 		}
 		
-		if(EMCHandler.hasEE3())
+		if(EMCHandler.hasEE3() && (EMCCConfig.General.removeNoEMCTooltip || EMCCConfig.General.forceVanillaEMC))
 		{
-			if(EMCCConfig.General.removeNoEMCTooltip || EMCCConfig.General.forceVanillaEMC)
 			for(int j = 0; j < e.toolTip.size(); j++)
 			{
 				String s = e.toolTip.get(j);
@@ -66,7 +65,7 @@ public class EMCCClientEventHandler
 			}
 		}
 		
-		if(!EMCHandler.hasEE3() || EMCCConfig.General.forceVanillaEMC && LC.proxy.isShiftDown())
+		if((!EMCHandler.hasEE3() || EMCCConfig.General.forceVanillaEMC) && LC.proxy.isShiftDown())
 		{
 			float f = EMCHandler.instance().getEMC(e.itemStack);
 			if(f > 0)

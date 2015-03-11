@@ -1,12 +1,15 @@
 package latmod.emcc;
 import latmod.core.*;
 import latmod.core.tile.*;
-import latmod.emcc.tile.*;
+import latmod.emcc.emc.VanillaEMC;
+import latmod.emcc.tile.SafeMode;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class EMCCConfig extends LMConfig implements IServerConfig
 {
+	public static VanillaEMC localEMCValues;
+	
 	public EMCCConfig(FMLPreInitializationEvent e)
 	{ super(e, "/LatMod/EMC_Condenser.cfg"); }
 	
@@ -44,7 +47,7 @@ public class EMCCConfig extends LMConfig implements IServerConfig
 			enableBlacklist = c.getBool("enableBlacklist", true);
 			ununblockEnchantPower = c.getFloat("ununblockEnchantPower", 3F, 0F, 100F);
 			removeNoEMCTooltip = c.getBool("removeNoEMCTooltip", true);
-			ticksToInfuse = c.getInt("ticksToInfuse", 400, 0, 32767);
+			ticksToInfuse = c.getInt("ticksToInfuse", 400, -1, 32767);
 			forceVanillaRecipes = c.getBool("forceVanillaRecipes", false);
 			forceVanillaEMC = c.getBool("forceVanillaEMC", false);
 		}
@@ -76,25 +79,24 @@ public class EMCCConfig extends LMConfig implements IServerConfig
 			
 			int i_forcedInvMode = c.getInt("forcedInvMode", -1, -1, 3);
 			c.setComment("forcedInvMode",
-					"-1 - Choosed by user",
+					"-1 - User defined",
 					"0 - Items can be go both ways",
 					"1 - Items can only go in",
 					"2 - Items can only go out",
 					"3 - Automatization disabled");
 			forcedInvMode = (i_forcedInvMode == -1) ? null : InvMode.VALUES[i_forcedInvMode];
 			
-			int i_forcedSecurity = c.getInt("forcedSecurity", -1, -1, 3);
+			int i_forcedSecurity = c.getInt("forcedSecurity", -1, -1, 2);
 			c.setComment("forcedSecurity",
-					"-1 - Choosed by user",
+					"-1 - User defined",
 					"0 - Public",
 					"1 - Private",
-					"2 - Whitelist",
-					"3 - Blacklist");
+					"2 - Friends");
 			forcedSecurity = (i_forcedSecurity == -1) ? null : LMSecurity.Level.VALUES[i_forcedSecurity];
 			
 			int i_forcedRedstoneControl = c.getInt( "forcedRedstoneControl", -1, -1, 2);
 			c.setComment("forcedRedstoneControl",
-					"-1 - Choosed by user",
+					"-1 - User defined",
 					"0 - No Redstone Control",
 					"1 - Required High signal",
 					"2 - Required Low signal");
@@ -102,7 +104,7 @@ public class EMCCConfig extends LMConfig implements IServerConfig
 			
 			int i_forcedSafeMode = c.getInt("forcedSafeMode", -1, -1, 1);
 			c.setComment("forcedSafeMode",
-					"-1 - Choosed by user",
+					"-1 - User defined",
 					"0 - Safe Mode always off",
 					"1 - Safe Mode always on");
 			forcedSafeMode = (i_forcedSafeMode == -1) ? null : SafeMode.VALUES[i_forcedSafeMode];
