@@ -31,9 +31,14 @@ public class VanillaEMC
 	{
 		addOre(ODItems.COBBLE, 1);
 		addOre(ODItems.STONE, 1);
+		addOre(ODItems.SAND, 4);
 		addReg(Blocks.dirt, -1, 1);
-		addReg(Blocks.sand, -1, 1);
+		addReg(ODItems.WOOL_WHITE, 48);
 		addReg(Blocks.gravel, 0, 4);
+		addReg(ODItems.OBSIDIAN, 64);
+		addReg(Blocks.tnt, 0, 964);
+		addReg(Blocks.rail, 0, 96.25F);
+		addReg(Blocks.dragon_egg, 0, 196608);
 		
 		addOre(ODItems.GLASS, 1);
 		addOre(ODItems.GLASS_PANE, 6F / 16F);
@@ -51,6 +56,7 @@ public class VanillaEMC
         addReg(Blocks.double_plant, -1, 8);
 		
 		addOre(ODItems.WOOD, 32);
+		addOre(ODItems.SAPLING, 32);
 		addOre(ODItems.PLANKS, 8);
 		addOre(ODItems.STICK, 4);
 		
@@ -58,25 +64,37 @@ public class VanillaEMC
 		addOre(ODItems.SAPPHIRE, 1024);
 		addOre(ODItems.RUBY, 1024);
 		
+		addReg(Items.coal, -1, 32);
 		addOre(ODItems.IRON, 256);
 		addOre(ODItems.GOLD, 2048);
 		addOre(ODItems.DIAMOND, 8192);
 		addOre(ODItems.EMERALD, 8192);
-		
-		addOre(ODItems.TIN, 256);
-		addOre(ODItems.COPPER, 64);
-		addOre(ODItems.SILVER, 512);
-		addOre(ODItems.LEAD, 256);
-		
+		addReg(new ItemStack(Items.dye, 1, 4), 864);
 		addOre(ODItems.REDSTONE, 32);
 		addOre(ODItems.GLOWSTONE, 256);
 		addOre(ODItems.QUARTZ, 256);
-		addOre(ODItems.LAPIS, 256);
+		
+		addReg(Blocks.coal_block, 0, 32 * 9);
+		addReg(Blocks.iron_block, 0, 256 * 9);
+		addReg(Blocks.gold_block, 0, 2048 * 9);
+		addReg(Blocks.diamond_block, 0, 8192 * 9);
+		addReg(Blocks.emerald_block, 0, 8192 * 9);
+		addReg(Blocks.lapis_block, 0, 864 * 9);
+		addReg(Blocks.redstone_block, 0, 32 * 9);
+		addReg(Blocks.glowstone, 0, 384 * 4);
+		addReg(Blocks.quartz_block, -1, 256 * 4);
+		
+		addOre(ODItems.TIN, 256);
+		addOre(ODItems.COPPER, 85);
+		addOre(ODItems.SILVER, 512);
+		addOre(ODItems.LEAD, 256);
+		addOre(ODItems.RUBBER, 32);
 		
 		addOre(ODItems.SLIMEBALL, 24);
+		addOre(ODItems.MEAT_RAW, 64);
+		addOre(ODItems.MEAT_COOKED, 64);
 		addReg(Items.bone, 0, 24);
 		addReg(Items.ender_pearl, 0, 1024);
-		addReg(Items.coal, -1, 32);
 		addReg(Items.string, 0, 32);
 		
 		addReg(Items.string, 0, 12);
@@ -89,12 +107,13 @@ public class VanillaEMC
 		addReg(Items.brick, 0, 64);
 		addReg(Items.clay_ball, 0, 64);
 		addReg(Items.reeds, 0, 32);
+		addReg(Items.paper, 0, 32);
+		addReg(Items.sugar, 0, 32);
 		addReg(Items.egg, 0, 32);
-		addReg(Items.glowstone_dust, 0, 384);
-		addReg(new ItemStack(Items.dye, 1, 4), 864);
 		addReg(Items.blaze_rod, 0, 1536);
 		addReg(Items.nether_wart, 0, 24);
 		addReg(Items.nether_star, 0, 24576);
+		addReg(Items.ghast_tear, 0, 4096);
 	}
 	
 	

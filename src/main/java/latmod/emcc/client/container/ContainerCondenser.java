@@ -53,7 +53,7 @@ public class ContainerCondenser extends ContainerLM
 				if (!mergeItemStack(is1, maxSlot, inventorySlots.size(), true))
 					return null;
 			}
-			else if (!mergeItemStack(is1, 1, maxSlot, false))
+			else if (!mergeItemStack(is1, 0, maxSlot, false))
 				return null;
 			
 			if (is1.stackSize == 0)

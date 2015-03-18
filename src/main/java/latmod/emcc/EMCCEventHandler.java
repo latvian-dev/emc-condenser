@@ -1,6 +1,7 @@
-package latmod.emcc.client;
+package latmod.emcc;
+
+import latmod.core.event.ReloadEvent;
 import latmod.core.mod.LC;
-import latmod.emcc.*;
 import latmod.emcc.api.IEmcStorageItem;
 import latmod.emcc.emc.EMCHandler;
 import net.minecraft.item.Item;
@@ -8,47 +9,34 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import cpw.mods.fml.common.eventhandler.*;
 import cpw.mods.fml.relauncher.*;
 
-@SideOnly(Side.CLIENT)
-public class EMCCClientEventHandler
+public class EMCCEventHandler
 {
-	public static final EMCCClientEventHandler instance = new EMCCClientEventHandler();
+	public static final EMCCEventHandler instance = new EMCCEventHandler();
 	
+	@SubscribeEvent
+	public void onReloaded(ReloadEvent e)
+	{
+		EMCHandler.instance().reloadEMCValues();
+	}
+	
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onItemTooltip(ItemTooltipEvent e)
 	{
 		Item item = e.itemStack.getItem();
 		
-		if(item instanceof IEmcStorageItem)
+		if(item instanceof IEmcStorageItem && LC.proxy.isShiftDown())
 		{
 			IEmcStorageItem i = (IEmcStorageItem)item;
 			
 			double stored = i.getStoredEmc(e.itemStack);
+			double maxStored = i.getMaxStoredEmc(e.itemStack);
 			
-			String s = "";
-			
-			if(LC.proxy.isShiftDown())
-			{
-				s += stored;
-				if(s.endsWith(".0")) s = s.substring(0, s.length() - 2);
-			}
+			if(maxStored == Double.POSITIVE_INFINITY)
+				e.toolTip.add("EMC: " + formDouble(stored, 100D));
 			else
-			{
-				double maxStored = i.getMaxStoredEmc(e.itemStack);
-				
-				if(maxStored == Double.POSITIVE_INFINITY)
-				{
-					s += stored;
-					if(s.endsWith(".0")) s = s.substring(0, s.length() - 2);
-				}
-				else
-				{
-					s += ( ((long)(stored / maxStored * 100D * 100D)) / 100D );
-					if(s.endsWith(".0")) s = s.substring(0, s.length() - 2);
-					s += " %";
-				}
-			}
+				e.toolTip.add("EMC: " + formDouble(stored, 100D) + " [ " + formDouble(stored * 100D / maxStored, 100D) + "% ]");
 			
-			e.toolTip.add(EMCC.mod.translate("storedEMC", s));
 		}
 		
 		if(EMCHandler.hasEE3() && (EMCCConfig.General.removeNoEMCTooltip || EMCCConfig.General.forceVanillaEMC))
@@ -70,11 +58,18 @@ public class EMCCClientEventHandler
 			float f = EMCHandler.instance().getEMC(e.itemStack);
 			if(f > 0)
 			{
-				f = ((int)(f * 1000F)) / 1000F;
-				String s = "" + f;
-				if(s.endsWith(".0")) s = s.substring(0, s.length() - 2);
-				e.toolTip.add("EMC: " + s);
+				e.toolTip.add("EMC: " + formDouble(f, 1000D));
+				if(e.itemStack.stackSize > 1)
+					e.toolTip.add("Total EMC: " + formDouble(f * e.itemStack.stackSize, 1000D));
 			}
 		}
+	}
+	
+	private static String formDouble(double d, double d1)
+	{
+		if(d1 > 0D) d = ((long)(d * d1)) / d1;
+		String s = "" + d;
+		if(s.endsWith(".0")) s = s.substring(0, s.length() - 2);
+		return s;
 	}
 }

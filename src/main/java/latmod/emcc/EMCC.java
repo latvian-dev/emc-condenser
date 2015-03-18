@@ -30,6 +30,8 @@ public class EMCC
 		mod = new LMMod(e, new EMCCConfig(e), null);
 		blacklist = new EMCCBlacklist(e);
 		
+		LatCoreMC.addEventHandler(EMCCEventHandler.instance, true, false, true);
+		
 		EMCHandler.init(e);
 		
 		EMCCItems.preInit();

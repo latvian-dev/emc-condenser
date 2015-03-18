@@ -48,6 +48,11 @@ public class EMCHandler
 	
 	public void modInited()
 	{
+		reloadEMCValues();
+	}
+	
+	public void reloadEMCValues()
+	{
 		if(vanillaEMCFile == null) return;
 		
 		vanillaEMC.clear();
