@@ -23,14 +23,16 @@ public class EMCCConfig extends LMConfig implements IServerConfig
 	
 	public void readConfig(NBTTagCompound tag)
 	{
-		General.forceVanillaRecipes = tag.getBoolean("Recipes");
-		General.forceVanillaEMC = tag.getBoolean("EMC");
+		boolean[] b = readBools(tag, "C");
+		General.forceVanillaRecipes = b[0];
+		General.forceVanillaEMC = b[1];
 	}
 	
 	public void writeConfig(NBTTagCompound tag)
 	{
-		tag.setBoolean("Recipes", General.forceVanillaRecipes);
-		tag.setBoolean("EMC", General.forceVanillaEMC);
+		writeBools(tag, "C",
+		General.forceVanillaRecipes,
+		General.forceVanillaEMC);
 	}
 	
 	public static class General
