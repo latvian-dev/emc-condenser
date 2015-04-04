@@ -48,6 +48,6 @@ public class ItemMaterialsEMCC extends ItemMaterials
 	
 	public void loadRecipes()
 	{
-		mod.recipes.addItemBlockRecipe(ItemMaterialsEMCC.NUGGET_EMERALD, new ItemStack(Items.emerald), true);
+		mod.recipes.addItemBlockRecipe(new ItemStack(Items.emerald), ItemMaterialsEMCC.NUGGET_EMERALD, true, false);
 	}
 }
