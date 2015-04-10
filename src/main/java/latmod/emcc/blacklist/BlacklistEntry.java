@@ -3,7 +3,7 @@ import java.util.List;
 
 import latmod.core.*;
 import latmod.core.util.FastList;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 
 import com.google.gson.annotations.Expose;
 
@@ -15,19 +15,19 @@ public class BlacklistEntry
 	
 	public static class ItemEntry
 	{
-		public String name;
+		public Item item;
 		public int damage;
 		
-		public ItemEntry(String s, int i)
+		public ItemEntry(Item s, int i)
 		{
-			name = s;
+			item = s;
 			damage = i;
 		}
 		
 		public boolean equals(Object o)
 		{
 			ItemStack is = (ItemStack)o;
-			return is != null && (damage == -1 || is.getItemDamage() == damage) && LatCoreMC.getRegName(is).equals(name);
+			return is != null && (damage == -1 || is.getItemDamage() == damage) && is.getItem() == item;
 		}
 	}
 	
@@ -73,7 +73,8 @@ public class BlacklistEntry
 				if(dmg == -1) dmg = ODItems.ANY;
 			}
 			
-			reg_list.add(new ItemEntry(uName, dmg));
+			Item i = InvUtils.getItemFromRegName(uName);
+			if(i != null) reg_list.add(new ItemEntry(i, dmg));
 		}
 	}
 }

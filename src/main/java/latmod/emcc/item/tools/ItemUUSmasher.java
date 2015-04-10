@@ -1,5 +1,5 @@
 package latmod.emcc.item.tools;
-import latmod.core.*;
+import latmod.core.ODItems;
 import latmod.core.item.ToolClass;
 import latmod.emcc.*;
 import latmod.emcc.api.ToolInfusion;
