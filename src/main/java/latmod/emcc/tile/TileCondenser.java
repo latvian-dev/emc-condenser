@@ -49,7 +49,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	}
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
-	{ if(isServer()) openGui(ep, 0); return true; }
+	{ if(isServer()) openGui(ep, null); return true; }
 	
 	public void onUpdate()
 	{
@@ -254,12 +254,8 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 		markDirty();
 	}
 	
-	public void openGui(EntityPlayer ep, int ID)
-	{
-		if(security.canInteract(ep))
-			LatCoreMC.openGui(ep, this, ID);
-		else printOwner(ep);
-	}
+	public void openGui(EntityPlayer ep, NBTTagCompound data)
+	{ if(security.canInteract(ep)) LatCoreMC.openGui(ep, this, data); else printOwner(ep); }
 	
 	public void onClientAction(EntityPlayer ep, String action, NBTTagCompound data)
 	{
@@ -285,16 +281,14 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 				}
 			}
 		}
-		else if(action.equals(ACTION_OPEN_GUI) && data.getByte("ID") == 1)
-			LatCoreMC.openClientGui(ep, this, 1);
 		else super.onClientAction(ep, action, data);
 			
 	}
 	
-	public Container getContainer(EntityPlayer ep, int ID)
-	{  return new ContainerCondenser(ep, this); }
+	public Container getContainer(EntityPlayer ep, NBTTagCompound data)
+	{ return new ContainerCondenser(ep, this); }
 	
 	@SideOnly(Side.CLIENT)
-	public GuiScreen getGui(EntityPlayer ep, int ID)
+	public GuiScreen getGui(EntityPlayer ep, NBTTagCompound data)
 	{ return new GuiCondenser(new ContainerCondenser(ep, this)); }
 }
