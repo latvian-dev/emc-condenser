@@ -71,6 +71,6 @@ public class EMCHandlerEE3 extends EMCHandler
 			return super.getEMC(is);
 		
 		com.pahimar.ee3.api.EnergyValue e = com.pahimar.ee3.exchange.EnergyValueRegistry.getInstance().getEnergyValue(is);
-		return (e == null) ? 0F : e.getEnergyValue();
+		return (e == null) ? 0F : e.getValue();
 	}
 }
