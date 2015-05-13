@@ -1,7 +1,6 @@
 package latmod.emcc.api;
-import latmod.core.tile.ITileInterface;
 
-public interface IEmcMachine extends ITileInterface
+public interface IEmcMachine
 {
 	public double getEmcCapacity();
 	public double getStoredEmc();
