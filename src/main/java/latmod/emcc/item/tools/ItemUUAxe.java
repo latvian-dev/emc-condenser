@@ -1,6 +1,6 @@
 package latmod.emcc.item.tools;
 import latmod.core.ODItems;
-import latmod.core.item.ToolClass;
+import latmod.core.item.Tool;
 import latmod.core.util.FastList;
 import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.ToolInfusion;
@@ -21,7 +21,7 @@ public class ItemUUAxe extends ItemToolEMCC // ItemAxe
 	{
 		super(s);
 		
-		setHarvestLevel(ToolClass.AXE, ToolClass.LEVEL_ALUMITE);
+		setHarvestLevel(Tool.Type.AXE, Tool.Level.ALUMITE);
 	}
 	
 	public void loadRecipes()

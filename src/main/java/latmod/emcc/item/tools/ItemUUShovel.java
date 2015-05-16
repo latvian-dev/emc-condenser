@@ -1,6 +1,6 @@
 package latmod.emcc.item.tools;
 import latmod.core.ODItems;
-import latmod.core.item.ToolClass;
+import latmod.core.item.Tool;
 import latmod.core.util.FastList;
 import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.ToolInfusion;
@@ -22,7 +22,7 @@ public class ItemUUShovel extends ItemToolEMCC
 	{
 		super(s);
 		
-		setHarvestLevel(ToolClass.SHOVEL, ToolClass.LEVEL_ALUMITE);
+		setHarvestLevel(Tool.Type.SHOVEL, Tool.Level.ALUMITE);
 	}
 	
 	public void loadRecipes()

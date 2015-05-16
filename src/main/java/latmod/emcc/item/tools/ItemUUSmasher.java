@@ -1,6 +1,6 @@
 package latmod.emcc.item.tools;
 import latmod.core.ODItems;
-import latmod.core.item.ToolClass;
+import latmod.core.item.Tool;
 import latmod.emcc.*;
 import latmod.emcc.api.ToolInfusion;
 import net.minecraft.block.Block;
@@ -15,9 +15,9 @@ public class ItemUUSmasher extends ItemUUPick
 	{
 		super(s);
 		
-		setHarvestLevel(ToolClass.PICK, ToolClass.LEVEL_ALUMITE);
-		setHarvestLevel(ToolClass.SHOVEL, ToolClass.LEVEL_ALUMITE);
-		setHarvestLevel(ToolClass.AXE, ToolClass.LEVEL_ALUMITE);
+		setHarvestLevel(Tool.Type.PICK, Tool.Level.ALUMITE);
+		setHarvestLevel(Tool.Type.SHOVEL, Tool.Level.ALUMITE);
+		setHarvestLevel(Tool.Type.AXE, Tool.Level.ALUMITE);
 	}
 	
 	public void loadRecipes()
