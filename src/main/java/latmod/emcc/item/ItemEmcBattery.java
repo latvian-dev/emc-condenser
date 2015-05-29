@@ -7,6 +7,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import baubles.api.*;
 
@@ -34,6 +35,15 @@ public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 				'R', ODItems.REDSTONE,
 				'G', ODItems.GLOWSTONE,
 				'U', ItemMaterialsEMCC.ITEM_UUS);
+	}
+	
+	public void onPostLoaded()
+	{
+		itemsAdded.add(new ItemStack(this, 1, 0));
+		ItemStack is1 = new ItemStack(this, 1, 1);
+		is1.stackTagCompound = new NBTTagCompound();
+		setStoredEmc(is1, Double.POSITIVE_INFINITY);
+		itemsAdded.add(is1);
 	}
 	
 	public void onUpdate(ItemStack is, World w, Entity e, int t, boolean b)

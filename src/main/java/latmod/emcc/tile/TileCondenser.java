@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.relauncher.*;
 
-public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWrenchable, IClientActionTile, IGuiTile
+public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWrenchable, IClientActionTile, IGuiTile, ISecureTile
 {
 	public static final String ACTION_TRANS_ITEMS = "transItems";
 	
@@ -49,7 +49,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	}
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
-	{ if(isServer()) openGui(ep, null); return true; }
+	{ if(isServer()) LatCoreMC.openGui(ep, this, null); return true; }
 	
 	public void onUpdate()
 	{
@@ -254,9 +254,6 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 		markDirty();
 	}
 	
-	public void openGui(EntityPlayer ep, NBTTagCompound data)
-	{ if(security.canInteract(ep)) LatCoreMC.openGui(ep, this, data); else printOwner(ep); }
-	
 	public void onClientAction(EntityPlayer ep, String action, NBTTagCompound data)
 	{
 		if(action.equals(ACTION_TRANS_ITEMS))
@@ -291,4 +288,10 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	@SideOnly(Side.CLIENT)
 	public GuiScreen getGui(EntityPlayer ep, NBTTagCompound data)
 	{ return new GuiCondenser(new ContainerCondenser(ep, this)); }
+	
+	public boolean canPlayerInteract(EntityPlayer ep, boolean breakBlock)
+	{ return security.canInteract(ep); }
+	
+	public void onPlayerNotOwner(EntityPlayer ep, boolean breakBlock)
+	{ printOwner(ep); }
 }

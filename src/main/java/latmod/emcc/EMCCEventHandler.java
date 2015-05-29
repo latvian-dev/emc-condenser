@@ -32,7 +32,9 @@ public class EMCCEventHandler
 			double stored = i.getStoredEmc(e.itemStack);
 			double maxStored = i.getMaxStoredEmc(e.itemStack);
 			
-			if(maxStored == Double.POSITIVE_INFINITY)
+			if(stored == Double.POSITIVE_INFINITY)
+				e.toolTip.add("EMC: Infinite");
+			else if(maxStored == Double.POSITIVE_INFINITY)
 				e.toolTip.add("EMC: " + formDouble(stored, 100D));
 			else
 				e.toolTip.add("EMC: " + formDouble(stored, 100D) + " [ " + formDouble(stored * 100D / maxStored, 100D) + "% ]");

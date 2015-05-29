@@ -17,6 +17,7 @@ public class BlockCondenser extends BlockEMCC
 	{
 		super(s, Material.rock);
 		isBlockContainer = true;
+		setResistance(100000F);
 		
 		mod.addTile(TileCondenser.class, s);
 	}
