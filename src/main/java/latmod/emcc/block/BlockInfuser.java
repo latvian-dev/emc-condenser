@@ -39,10 +39,10 @@ public class BlockInfuser extends BlockEMCC
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister ir)
 	{
-		icon_top_empty = ir.registerIcon(mod.assets + "infuserTopEmpty");
-		icon_top_glow = ir.registerIcon(mod.assets + "infuserTopGlow");
-		icon_side_empty = ir.registerIcon(mod.assets + "infuserSideEmpty");
-		icon_side_glow = ir.registerIcon(mod.assets + "infuserSideGlow");
+		icon_top_empty = ir.registerIcon(mod.assets + "infuser_top_empty");
+		icon_top_glow = ir.registerIcon(mod.assets + "infuser_top_glow");
+		icon_side_empty = ir.registerIcon(mod.assets + "infuser_side_empty");
+		icon_side_glow = ir.registerIcon(mod.assets + "infuser_side_glow");
 		blockIcon = icon_side_empty;
 	}
 	

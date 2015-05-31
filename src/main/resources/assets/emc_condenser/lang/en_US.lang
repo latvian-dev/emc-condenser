@@ -1,10 +1,9 @@
 itemGroup.emc_condenser:tab=EMC Condenser
 
 ## Items ##
-emc_condenser:item.itemUUS.name=UnUnSeptium
-emc_condenser:item.miniumStar.name=Minium Star
-emc_condenser:item.nuggetEmerald.name=Emerald Nugget
-emc_condenser:item.ingotUUS.name=UnUnSeptium Ingot
+emc_condenser:item.item_uus.name=UnUnSeptium
+emc_condenser:item.minium_star.name=Minium Star
+emc_condenser:item.ingot_uus.name=UnUnSeptium Ingot
 
 emc_condenser:item.battery.name=EMC Battery
 emc_condenser:item.lifeRing.name=Ring of Life

@@ -32,10 +32,10 @@ public class BlockCondenser extends BlockEMCC
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister ir)
 	{
-		icon_top_empty = ir.registerIcon(mod.assets + "condTopEmpty");
-		icon_top_glow = ir.registerIcon(mod.assets + "condTopGlow");
-		icon_side_empty = ir.registerIcon(mod.assets + "condSideEmpty");
-		icon_side_glow = ir.registerIcon(mod.assets + "condSideGlow");
+		icon_top_empty = ir.registerIcon(mod.assets + "cond_top_empty");
+		icon_top_glow = ir.registerIcon(mod.assets + "cond_top_glow");
+		icon_side_empty = ir.registerIcon(mod.assets + "cond_side_empty");
+		icon_side_glow = ir.registerIcon(mod.assets + "cond_side_glow");
 		blockIcon = icon_side_empty;
 	}
 	
