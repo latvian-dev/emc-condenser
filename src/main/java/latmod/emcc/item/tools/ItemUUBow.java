@@ -1,6 +1,6 @@
 package latmod.emcc.item.tools;
 import latmod.emcc.EMCCConfig;
-import latmod.emcc.api.ToolInfusion;
+import latmod.emcc.api.*;
 import latmod.emcc.item.ItemMaterialsEMCC;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -37,6 +37,9 @@ public class ItemUUBow extends ItemToolEMCC // ItemBow
 	
 	public boolean isEffective(Block b)
 	{ return false; }
+	
+	public EnumToolType getToolType(ItemStack is)
+	{ return EnumToolType.BOW; }
 	
 	public void onPlayerStoppedUsing(ItemStack is, World w, EntityPlayer ep, int itemInUseCount)
 	{
@@ -77,45 +80,6 @@ public class ItemUUBow extends ItemToolEMCC // ItemBow
 			else ep.inventory.consumeInventoryItem(Items.arrow);
 			
 			if(!w.isRemote) w.spawnEntityInWorld(ea);
-			
-			if(hasInfusion(is, ToolInfusion.AREA))
-			{
-				float rot0 = ep.rotationYaw;
-				
-				{
-					ep.rotationYaw += 3;
-					
-					EntityArrow ea1 = new EntityArrow(w, ep, f * 2F);
-					
-					if (f == 1F) ea1.setIsCritical(true);
-					
-					if (k > 0) ea1.setDamage(ea1.getDamage() + (double)k * 0.5D + 0.5D);
-					if (l > 0) ea1.setKnockbackStrength(l);
-					
-					if (hasInfusion(is, ToolInfusion.FIRE)) ea1.setFire(100);
-					
-					ea1.canBePickedUp = 2;
-					if(!w.isRemote) w.spawnEntityInWorld(ea1);
-					ep.rotationYaw = rot0;
-				}
-				
-				{
-					ep.rotationYaw -= 3;
-					
-					EntityArrow ea2 = new EntityArrow(w, ep, f * 2F);
-					
-					if (f == 1F) ea2.setIsCritical(true);
-					
-					if (k > 0) ea2.setDamage(ea2.getDamage() + (double)k * 0.5D + 0.5D);
-					if (l > 0) ea2.setKnockbackStrength(l);
-					
-					if (hasInfusion(is, ToolInfusion.FIRE)) ea2.setFire(100);
-					
-					ea2.canBePickedUp = 2;
-					if(!w.isRemote) w.spawnEntityInWorld(ea2);
-					ep.rotationYaw = rot0;
-				}
-			}
 		}
 	}
 	

@@ -88,15 +88,19 @@ public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 	public float getDigSpeed(ItemStack is, Block b, int meta)
 	{ return (isEffective(b) && damageItem(is, true)) ? efficiencyOnProperMaterial : 1F; }
 	
-	public static int getInfusionLevel(ItemStack is, ToolInfusion t)
-	{ return EnchantmentHelper.getEnchantmentLevel(t.enchantment.effectId, is); }
+	public int getInfusionLevel(ItemStack is, ToolInfusion t)
+	{ return EnchantmentHelper.getEnchantmentLevel(t.getEnchantment(getToolType(is)).effectId, is); }
 	
-	public static boolean hasInfusion(ItemStack is, ToolInfusion t)
+	public boolean hasInfusion(ItemStack is, ToolInfusion t)
 	{ return getInfusionLevel(is, t) > 0; }
 	
 	@SuppressWarnings("all")
-	public static void setInfusionLevel(ItemStack is, ToolInfusion t, int lvl)
-	{ Map m = EnchantmentHelper.getEnchantments(is); m.put(t.enchantment.effectId, lvl); EnchantmentHelper.setEnchantments(m, is); }
+	public void setInfusionLevel(ItemStack is, ToolInfusion t, int lvl)
+	{
+		Map m = EnchantmentHelper.getEnchantments(is);
+		m.put(t.getEnchantment(getToolType(is)).effectId, lvl);
+		EnchantmentHelper.setEnchantments(m, is);
+	}
 	
 	public boolean canDischargeEmc(ItemStack is)
 	{ return false; }
@@ -106,6 +110,9 @@ public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 	
 	public double getEmcTrasferLimit(ItemStack is)
 	{ return 4096D; }
+	
+	public EnumToolType getToolType(ItemStack is)
+	{ return EnumToolType.TOOL; }
 	
 	public boolean showDurabilityBar(ItemStack is)
 	{ return getStoredEmc(is) != getMaxStoredEmc(is); }

@@ -28,10 +28,10 @@ public abstract class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 	{
 		if(!w.isRemote)
 		{
-			int dmg = is.getItemDamage();
-			
 			if(ep.isSneaking())
 			{
+				int dmg = is.getItemDamage();
+				
 				if(dmg == 0 || dmg == 1)
 					is.setItemDamage(dmg == 0 ? 1 : 0);
 				

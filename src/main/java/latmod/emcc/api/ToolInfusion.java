@@ -1,56 +1,99 @@
 package latmod.emcc.api;
 
-import latmod.emcc.*;
+import latmod.emcc.EMCCConfig;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.*;
-import net.minecraft.item.Item;
+import net.minecraft.item.*;
 
 public enum ToolInfusion
 {
-	FIRE("fire", Enchantment.fireAspect, 3),
-	AREA("area", Enchantment.thorns, 1),
-	FORTUNE("fortune", Enchantment.fortune, 5),
-	UNBREAKING("unbreaking", Enchantment.unbreaking, 10),
-	SHARPNESS("sharpness", Enchantment.sharpness, 10),
-	KNOCKBACK("knockback", Enchantment.knockback, 5),
-	SILKTOUCH("silkTouch", Enchantment.silkTouch, 1),
-	INFINITY("infinity", Enchantment.infinity, 1),
+	FIRE("fire", 3),
+	FORTUNE("fortune", 5),
+	UNBREAKING("unbreaking", 10),
+	SHARPNESS("sharpness", 10),
+	KNOCKBACK("knockback", 5),
+	SILKTOUCH("silkTouch", 1),
+	INFINITY("infinity", 1),
 	
-	;
-	
-	public static final ToolInfusion[] VALUES = values();
+	; public static final ToolInfusion[] VALUES = values();
 	
 	public final int ID;
 	public final String name;
-	public final Enchantment enchantment;
 	public final int maxLevel;
 	public Item item;
-	public int requiredSize;
+	public int requiredLevel;
 	
-	ToolInfusion(String s, Enchantment e, int max)
+	ToolInfusion(String s, int max)
 	{
 		ID = ordinal();
 		name = s;
-		enchantment = e;
 		maxLevel = max;
 		init(null, 0);
 	}
 	
+	public Enchantment getEnchantment(EnumToolType t)
+	{
+		if(this == FIRE)
+		{
+			if(t == EnumToolType.BOW)
+				return Enchantment.flame;
+			else if(t == EnumToolType.SWORD)
+				return Enchantment.fireAspect;
+		}
+		else if(this == FORTUNE)
+		{
+			if(t == EnumToolType.TOOL)
+				return Enchantment.fortune;
+			if(t == EnumToolType.SWORD)
+				return Enchantment.looting;
+			return Enchantment.fireAspect;
+		}
+		else if(this == UNBREAKING)
+		{
+			return Enchantment.unbreaking;
+		}
+		else if(this == SHARPNESS)
+		{
+			if(t == EnumToolType.TOOL)
+				return Enchantment.efficiency;
+			if(t == EnumToolType.SWORD)
+				return Enchantment.sharpness;
+			return Enchantment.power;
+		}
+		else if(this == KNOCKBACK)
+		{
+			if(t == EnumToolType.SWORD)
+				return Enchantment.knockback;
+			return Enchantment.punch;
+		}
+		else if(this == SILKTOUCH)
+		{
+			if(t == EnumToolType.TOOL)
+				return Enchantment.silkTouch;
+		}
+		else if(this == INFINITY)
+		{
+			if(t == EnumToolType.BOW)
+				return Enchantment.infinity;
+		}
+		
+		return null;
+	}
+	
 	public void init(Item it, int i)
-	{ item = it; requiredSize = i; }
+	{ item = it; requiredLevel = i; }
 	
 	public static void initAll()
 	{
 		//EMCCConfig
 		
-		FIRE.init(Items.blaze_rod, EMCCConfig.Infusion.fire);
-		AREA.init(EMCCItems.b_uu_block.getItem(), EMCCConfig.Infusion.area);
-		FORTUNE.init(Items.gold_ingot, EMCCConfig.Infusion.fortune);
-		UNBREAKING.init(Item.getItemFromBlock(Blocks.obsidian), EMCCConfig.Infusion.unbreaking);
-		FORTUNE.init(Items.string, EMCCConfig.Infusion.silkTouch);
-		SHARPNESS.init(Items.iron_ingot, EMCCConfig.Infusion.sharpness);
-		KNOCKBACK.init(Item.getItemFromBlock(Blocks.piston), EMCCConfig.Infusion.knockback);
-		INFINITY.init(Items.diamond, EMCCConfig.Infusion.infinity);
+		FIRE.init(Items.blaze_rod, EMCCConfig.InfusionLevels.fire);
+		FORTUNE.init(Items.gold_ingot, EMCCConfig.InfusionLevels.fortune);
+		UNBREAKING.init(Item.getItemFromBlock(Blocks.obsidian), EMCCConfig.InfusionLevels.unbreaking);
+		FORTUNE.init(Items.string, EMCCConfig.InfusionLevels.silk_touch);
+		SHARPNESS.init(Items.iron_ingot, EMCCConfig.InfusionLevels.sharpness);
+		KNOCKBACK.init(Item.getItemFromBlock(Blocks.piston), EMCCConfig.InfusionLevels.knockback);
+		INFINITY.init(Items.diamond, EMCCConfig.InfusionLevels.infinity);
 	}
 	
 	public boolean is(ToolInfusion... t)
@@ -60,10 +103,10 @@ public enum ToolInfusion
 		return false;
 	}
 	
-	public static final ToolInfusion get(Enchantment e)
+	public static final ToolInfusion get(EnumToolType type, Enchantment e)
 	{
 		for(ToolInfusion t : VALUES)
-			if(t.enchantment == e) return t;
+			if(t.getEnchantment(type) == e) return t;
 		return null;
 	}
 	
@@ -75,8 +118,9 @@ public enum ToolInfusion
 		return null;
 	}
 	
-	public static final ToolInfusion get(Item i)
+	public static final ToolInfusion get(ItemStack is)
 	{
+		Item i = is.getItem();
 		for(ToolInfusion t : VALUES)
 		if(t.item == i) return t; return null;
 	}

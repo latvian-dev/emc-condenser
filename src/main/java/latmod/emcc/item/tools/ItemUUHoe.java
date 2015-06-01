@@ -29,25 +29,6 @@ public class ItemUUHoe extends ItemToolEMCC
 	
 	public boolean onItemUse(ItemStack is, EntityPlayer ep, World w, int x, int y, int z, int side, float x1, float y1, float z1)
 	{
-		boolean b = false;
-		
-		b = onItemUse2(is, ep, w, x, y, z, side, x1, y1, z1);
-		
-		if(ItemToolEMCC.hasInfusion(is, ToolInfusion.AREA))
-		{
-			for(int ox = -1; ox <= 1; ox++)
-			for(int oz = -1; oz <= 1; oz++)
-			{
-				if((ox == 0 && oz == 0) || is.getItemDamage() == is.getMaxDamage());
-				else b |= onItemUse2(is, ep, w, x + ox, y, z + oz, side, x1, y1, z1);
-			}
-		}
-		
-		return b;
-	}
-	
-	public boolean onItemUse2(ItemStack is, EntityPlayer ep, World w, int x, int y, int z, int side, float x1, float y1, float z1)
-	{
 		if (!ep.canPlayerEdit(x, y, z, side, is) || ep.isSneaking()) return false;
 		else
 		{
@@ -77,7 +58,7 @@ public class ItemUUHoe extends ItemToolEMCC
 	}
 	
 	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
-	{ return t.is(ToolInfusion.UNBREAKING, ToolInfusion.AREA); }
+	{ return t.is(ToolInfusion.UNBREAKING); }
 	
 	public boolean isEffective(Block b)
 	{ return false; }

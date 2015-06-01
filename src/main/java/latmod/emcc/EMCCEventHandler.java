@@ -2,9 +2,12 @@ package latmod.emcc;
 
 import latmod.core.event.ReloadEvent;
 import latmod.core.mod.LC;
-import latmod.emcc.api.IEmcStorageItem;
+import latmod.emcc.api.*;
 import latmod.emcc.emc.EMCHandler;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import cpw.mods.fml.common.eventhandler.*;
 import cpw.mods.fml.relauncher.*;
@@ -65,6 +68,18 @@ public class EMCCEventHandler
 					e.toolTip.add("Total EMC: " + formDouble(f * e.itemStack.stackSize, 1000D));
 			}
 		}
+		
+		/*
+		if(item instanceof IEmcTool)
+		{
+			IEmcTool i = (IEmcTool)item;
+			
+			for(ToolInfusion t : ToolInfusion.VALUES)
+			{
+				int l = i.getInfusionLevel(e.itemStack, t);
+				if(l > 0) e.toolTip.add(t.getEnchantment(i.getToolType(e.itemStack)).getTranslatedName(l));
+			}
+		}*/
 	}
 	
 	private static String formDouble(double d, double d1)
@@ -73,5 +88,36 @@ public class EMCCEventHandler
 		String s = "" + d;
 		if(s.endsWith(".0")) s = s.substring(0, s.length() - 2);
 		return s;
+	}
+	
+	@SubscribeEvent
+	public void onAnvilEvent(AnvilUpdateEvent e)
+	{
+		if(e.left != null && e.right != null && e.left.getItem() instanceof IEmcTool)
+		{
+			IEmcTool i = (IEmcTool)e.left.getItem();
+			ToolInfusion t = ToolInfusion.get(e.right);
+			
+			if(t != null && i.canEnchantWith(e.left, t))
+			{
+				int l = i.getInfusionLevel(e.left, t);
+				
+				if(l + 1 <= t.maxLevel)
+				{
+					e.materialCost = 1;
+					e.cost = t.requiredLevel;
+					e.output = e.left.copy();
+					i.setInfusionLevel(e.output, t, l + 1);
+				}
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onPlayerDamaged(LivingAttackEvent e)
+	{
+		if(e.entity instanceof EntityPlayer)
+		{
+		}
 	}
 }

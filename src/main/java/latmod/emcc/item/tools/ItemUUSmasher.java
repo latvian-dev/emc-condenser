@@ -53,5 +53,5 @@ public class ItemUUSmasher extends ItemUUPick
     }
 	
 	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
-	{ return t.is(ToolInfusion.SHARPNESS, ToolInfusion.UNBREAKING, ToolInfusion.FORTUNE, ToolInfusion.FIRE, ToolInfusion.AREA, ToolInfusion.SILKTOUCH); }
+	{ return t.is(ToolInfusion.SHARPNESS, ToolInfusion.UNBREAKING, ToolInfusion.FORTUNE, ToolInfusion.FIRE, ToolInfusion.SILKTOUCH); }
 }

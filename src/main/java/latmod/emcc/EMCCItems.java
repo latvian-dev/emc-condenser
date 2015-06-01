@@ -7,7 +7,6 @@ public class EMCCItems
 {
 	public static BlockUUBlock b_uu_block;
 	public static BlockCondenser b_condenser;
-	public static BlockInfuser b_infuser;
 	
 	public static ItemMaterialsEMCC i_mat;
 	public static ItemEmcBattery i_emc_battery;
@@ -27,7 +26,6 @@ public class EMCCItems
 	{
 		b_uu_block = new BlockUUBlock("uub").register();
 		b_condenser = new BlockCondenser("condenser").register();
-		b_infuser = new BlockInfuser("infuser").register();
 		
 		i_mat = new ItemMaterialsEMCC("materials").register();
 		i_emc_battery = new ItemEmcBattery("battery").register();

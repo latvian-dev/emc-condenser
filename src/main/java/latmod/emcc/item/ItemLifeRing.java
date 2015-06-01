@@ -33,12 +33,32 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 				'P', new ItemStack(Items.potionitem, 1, 8225));
 	}
 	
+	public ItemStack onItemRightClick(ItemStack is, World w, EntityPlayer ep)
+	{
+		if(!w.isRemote && !ep.isSneaking())
+		{
+			if(ep.isBurning())
+			{
+				double emc = getStoredEmc(is);
+				
+				if(emc >= EMCCConfig.Tools.lifeStone_extinguish)
+				{
+					setStoredEmc(is, emc - EMCCConfig.Tools.lifeStone_food);
+					ep.extinguish();
+					w.playSoundAtEntity(ep, "random.fizz", 1F, 1F);
+				}
+			}
+		}
+		
+		return super.onItemRightClick(is, w, ep);
+	}
+	
 	public void onUpdate(ItemStack is, World w, Entity e, int t, boolean b)
 	{
 		if(w.isRemote || !(e instanceof EntityPlayer)) return;
 		onWornTick(is, (EntityPlayer)e);
 	}
-
+	
 	public void onWornTick(ItemStack is, EntityLivingBase e)
 	{
 		if(e == null || e.worldObj.isRemote || !(e instanceof EntityPlayer)) return;

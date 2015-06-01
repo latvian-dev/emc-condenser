@@ -10,6 +10,5 @@ public class EMCCClient extends LMProxy
 	public void preInit(FMLPreInitializationEvent e)
 	{
 		RenderCondenser.instance.register();
-		RenderInfuser.instance.register();
 	}
 }

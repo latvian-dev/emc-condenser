@@ -55,5 +55,5 @@ public class ItemUUShovel extends ItemToolEMCC
     }
 	
 	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
-	{ return t.is(ToolInfusion.SHARPNESS, ToolInfusion.UNBREAKING, ToolInfusion.AREA, ToolInfusion.FIRE, ToolInfusion.SILKTOUCH); }
+	{ return t.is(ToolInfusion.SHARPNESS, ToolInfusion.UNBREAKING, ToolInfusion.FIRE, ToolInfusion.SILKTOUCH); }
 }

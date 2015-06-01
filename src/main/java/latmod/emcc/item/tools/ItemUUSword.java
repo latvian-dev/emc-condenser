@@ -1,7 +1,8 @@
 package latmod.emcc.item.tools;
 import latmod.core.ODItems;
+import latmod.core.item.ICreativeSafeItem;
 import latmod.emcc.EMCCConfig;
-import latmod.emcc.api.ToolInfusion;
+import latmod.emcc.api.*;
 import latmod.emcc.item.ItemMaterialsEMCC;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -13,7 +14,7 @@ import net.minecraft.world.World;
 
 import com.google.common.collect.Multimap;
 
-public class ItemUUSword extends ItemToolEMCC // ItemSword
+public class ItemUUSword extends ItemToolEMCC implements ICreativeSafeItem // ItemSword
 {
 	public ItemUUSword(String s)
 	{
@@ -45,7 +46,10 @@ public class ItemUUSword extends ItemToolEMCC // ItemSword
 	}
 	
 	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
-	{ return t.is(ToolInfusion.SHARPNESS, ToolInfusion.UNBREAKING, ToolInfusion.AREA, ToolInfusion.FORTUNE, ToolInfusion.KNOCKBACK, ToolInfusion.FIRE); }
+	{ return t.is(ToolInfusion.SHARPNESS, ToolInfusion.UNBREAKING, ToolInfusion.FORTUNE, ToolInfusion.KNOCKBACK, ToolInfusion.FIRE); }
+	
+	public EnumToolType getToolType(ItemStack is)
+	{ return EnumToolType.SWORD; }
 	
 	@SuppressWarnings("all")
 	public Multimap getAttributeModifiers(ItemStack is)

@@ -18,7 +18,7 @@ public class EMCCConfig extends LMConfig implements IServerConfig
 		General.load(get("general"));
 		Condenser.load(get("condenser"));
 		Tools.load(get("tools"));
-		Infusion.load(get("infusion"));
+		InfusionLevels.load(get("infusion_levels"));
 	}
 	
 	public void readConfig(NBTTagCompound tag)
@@ -124,6 +124,7 @@ public class EMCCConfig extends LMConfig implements IServerConfig
 		public static float toolEmcPerDamage;
 		public static float lifeStone_1hp;
 		public static float lifeStone_food;
+		public static float lifeStone_extinguish;
 		public static float blackHoleStone_item;
 		public static float blackHoleStone_range;
 		
@@ -138,34 +139,40 @@ public class EMCCConfig extends LMConfig implements IServerConfig
 			toolEmcPerDamage = c.getFloat("toolEmcPerDamage", 64F);
 			lifeStone_1hp = c.getFloat("lifeStone_1hp", 24F);
 			lifeStone_food = c.getFloat("lifeStone_food", 128F);
+			lifeStone_extinguish = c.getFloat("lifeStone_extinguish", 64F);
 			blackHoleStone_item = c.getFloat("blackHoleStone_item", 48F);
 			blackHoleStone_range = c.getFloat("blackHoleStone_range", 4F);
 		}
 	}
 	
-	public static class Infusion //Enchantment
+	public static class InfusionLevels // Enchantment
 	{
 		public static int fire; // Flame for bow 
-		public static int area; // Thorns
 		public static int fortune; // Looting for swords
 		public static int unbreaking;
-		public static int silkTouch;
+		public static int silk_touch;
 		public static int sharpness; // Efficiency for tools
 		public static int knockback; // Punch for bow
 		public static int infinity;
 		
 		public static void load(Category c)
 		{
-			c.setCategoryComment("Infusion in UnUnSeptium Infuser", "X Items [1 - 256] required to infuse, 0 - disabled");
+			c.setCategoryComment("Infusion in Anvil", "1 ~ 50 - required to infuse", "0 - disabled");
 			
-			fire = c.getInt("fire", 16, 0, 256); c.setComment("fire", "Blaze rods, default: 16");
-			area = c.getInt("area", 8, 0, 256); c.setComment("area", "UnUnSeptium Blocks, default: 8");
-			fortune = c.getInt("fortune", 8, 0, 256); c.setComment("fortune", "Gold Ingots [1 lvl], default: 8");
-			unbreaking = c.getInt("unbreaking", 8, 0, 256); c.setComment("unbreaking", "Obsidian [1 lvl], default: 8");
-			silkTouch = c.getInt("silkTouch", 32, 0, 256); c.setComment("silkTouch", "String, default: 32");
-			sharpness = c.getInt("sharpness", 16, 0, 256); c.setComment("sharpness", "Iron Ingots [1 lvl], default: 16");
-			knockback = c.getInt("knockback", 4, 0, 256); c.setComment("knockback", "Piston [1 lvl], default: 4");
-			infinity = c.getInt("infinity", 16, 0, 256); c.setComment("infinity", "Diamonds, default: 16");
+			fire = getLevel(c, "fire", 20, "Blaze rod");
+			fortune = getLevel(c, "fortune", 25, "Gold Ingot [1 lvl]");
+			unbreaking = getLevel(c, "unbreaking", 20, "Obsidian [1 lvl]");
+			silk_touch = getLevel(c, "silk_touch", 40, "String");
+			sharpness = getLevel(c, "sharpness", 15, "Iron Sword [1 lvl]");
+			knockback = getLevel(c, "knockback", 15, "Piston [1 lvl]");
+			infinity = getLevel(c, "infinity", 50, "Diamond");
+		}
+		
+		private static int getLevel(Category c, String s, int def, String comment)
+		{
+			int i = c.getInt(s, def, 0, 50);
+			c.setComment(s, comment + ", default: " + def);
+			return i;
 		}
 	}
 }
