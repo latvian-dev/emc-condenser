@@ -3,7 +3,7 @@ import latmod.core.ODItems;
 import latmod.core.item.Tool;
 import latmod.core.util.FastList;
 import latmod.emcc.EMCCConfig;
-import latmod.emcc.api.*;
+import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.item.ItemMaterialsEMCC;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
