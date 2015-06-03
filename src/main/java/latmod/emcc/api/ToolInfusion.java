@@ -31,6 +31,19 @@ public enum ToolInfusion
 		init(null, 0);
 	}
 	
+	public static void initAll()
+	{
+		//EMCCConfig
+		
+		FIRE.init(Items.blaze_rod, EMCCConfig.Enchanting.fire);
+		FORTUNE.init(Items.gold_ingot, EMCCConfig.Enchanting.fortune);
+		UNBREAKING.init(Item.getItemFromBlock(Blocks.obsidian), EMCCConfig.Enchanting.unbreaking);
+		SILKTOUCH.init(Items.string, EMCCConfig.Enchanting.silk_touch);
+		SHARPNESS.init(Items.iron_ingot, EMCCConfig.Enchanting.sharpness);
+		KNOCKBACK.init(Item.getItemFromBlock(Blocks.piston), EMCCConfig.Enchanting.knockback);
+		INFINITY.init(Items.diamond, EMCCConfig.Enchanting.infinity);
+	}
+	
 	public Enchantment getEnchantment(EnumToolType t)
 	{
 		if(this == FIRE)
@@ -82,19 +95,6 @@ public enum ToolInfusion
 	
 	public void init(Item it, int i)
 	{ item = it; requiredLevel = i; }
-	
-	public static void initAll()
-	{
-		//EMCCConfig
-		
-		FIRE.init(Items.blaze_rod, EMCCConfig.InfusionLevels.fire);
-		FORTUNE.init(Items.gold_ingot, EMCCConfig.InfusionLevels.fortune);
-		UNBREAKING.init(Item.getItemFromBlock(Blocks.obsidian), EMCCConfig.InfusionLevels.unbreaking);
-		FORTUNE.init(Items.string, EMCCConfig.InfusionLevels.silk_touch);
-		SHARPNESS.init(Items.iron_ingot, EMCCConfig.InfusionLevels.sharpness);
-		KNOCKBACK.init(Item.getItemFromBlock(Blocks.piston), EMCCConfig.InfusionLevels.knockback);
-		INFINITY.init(Items.diamond, EMCCConfig.InfusionLevels.infinity);
-	}
 	
 	public boolean is(ToolInfusion... t)
 	{

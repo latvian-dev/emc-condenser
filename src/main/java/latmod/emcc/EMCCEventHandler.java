@@ -101,13 +101,14 @@ public class EMCCEventHandler
 			if(t != null && i.canEnchantWith(e.left, t))
 			{
 				int l = i.getInfusionLevel(e.left, t);
+				int lvlsToAdd = Math.min(e.right.stackSize, t.maxLevel - l);
 				
-				if(l + 1 <= t.maxLevel)
+				if(lvlsToAdd > 0)
 				{
-					e.materialCost = 1;
-					e.cost = t.requiredLevel;
+					e.materialCost = lvlsToAdd;
+					e.cost = t.requiredLevel * lvlsToAdd;
 					e.output = e.left.copy();
-					i.setInfusionLevel(e.output, t, l + 1);
+					i.setInfusionLevel(e.output, t, l + lvlsToAdd);
 				}
 			}
 		}

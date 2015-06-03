@@ -18,21 +18,23 @@ public class EMCCConfig extends LMConfig implements IServerConfig
 		General.load(get("general"));
 		Condenser.load(get("condenser"));
 		Tools.load(get("tools"));
-		InfusionLevels.load(get("infusion_levels"));
+		Enchanting.load(get("enchanting"));
 	}
 	
 	public void readConfig(NBTTagCompound tag)
 	{
-		boolean[] b = readBools(tag, "C");
-		General.forceVanillaRecipes = b[0];
-		General.forceVanillaEMC = b[1];
+		int[] b = tag.getIntArray("C");
+		General.forceVanillaRecipes = b[0] == 1;
+		General.forceVanillaEMC = b[1] == 1;
 	}
 	
 	public void writeConfig(NBTTagCompound tag)
 	{
-		writeBools(tag, "C",
-		General.forceVanillaRecipes,
-		General.forceVanillaEMC);
+		tag.setIntArray("C", new int[]
+		{
+			General.forceVanillaRecipes ? 1 : 0,
+			General.forceVanillaEMC ? 1 : 0,
+		});
 	}
 	
 	public static class General
@@ -145,7 +147,7 @@ public class EMCCConfig extends LMConfig implements IServerConfig
 		}
 	}
 	
-	public static class InfusionLevels // Enchantment
+	public static class Enchanting // Enchantment
 	{
 		public static int fire; // Flame for bow 
 		public static int fortune; // Looting for swords
