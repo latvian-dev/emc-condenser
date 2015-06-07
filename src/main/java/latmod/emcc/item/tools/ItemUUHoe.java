@@ -1,8 +1,8 @@
 package latmod.emcc.item.tools;
-import latmod.core.ODItems;
 import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.item.ItemMaterialsEMCC;
+import latmod.ftbu.core.ODItems;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;

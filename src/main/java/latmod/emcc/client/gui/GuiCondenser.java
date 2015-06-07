@@ -1,13 +1,13 @@
 package latmod.emcc.client.gui;
-import latmod.core.client.LMGuiButtons;
-import latmod.core.gui.*;
-import latmod.core.mod.LC;
-import latmod.core.util.FastList;
 import latmod.emcc.*;
 import latmod.emcc.api.IEmcStorageItem;
 import latmod.emcc.client.container.ContainerCondenser;
 import latmod.emcc.emc.EMCHandler;
 import latmod.emcc.tile.TileCondenser;
+import latmod.ftbu.FTBU;
+import latmod.ftbu.core.client.LMGuiButtons;
+import latmod.ftbu.core.gui.*;
+import latmod.ftbu.core.util.FastList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 
@@ -175,7 +175,7 @@ public class GuiCondenser extends GuiLM
 		
 		String s = "" + d;
 		
-		if(!LC.proxy.isShiftDown())
+		if(!FTBU.proxy.isShiftDown())
 		{
 			if(d > 1000)
 			{

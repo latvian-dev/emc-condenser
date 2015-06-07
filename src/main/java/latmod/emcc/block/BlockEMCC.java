@@ -1,7 +1,7 @@
 package latmod.emcc.block;
-import latmod.core.LMMod;
-import latmod.core.block.BlockLM;
 import latmod.emcc.EMCC;
+import latmod.ftbu.core.LMMod;
+import latmod.ftbu.core.block.BlockLM;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import cpw.mods.fml.relauncher.*;

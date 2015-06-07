@@ -1,6 +1,6 @@
 package latmod.emcc.client.container;
-import latmod.core.gui.ContainerLM;
 import latmod.emcc.tile.TileCondenser;
+import latmod.ftbu.core.gui.ContainerLM;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;

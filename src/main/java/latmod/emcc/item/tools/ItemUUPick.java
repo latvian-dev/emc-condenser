@@ -1,10 +1,10 @@
 package latmod.emcc.item.tools;
-import latmod.core.ODItems;
-import latmod.core.item.Tool;
-import latmod.core.util.FastList;
 import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.*;
 import latmod.emcc.item.ItemMaterialsEMCC;
+import latmod.ftbu.core.ODItems;
+import latmod.ftbu.core.item.Tool;
+import latmod.ftbu.core.util.FastList;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;

@@ -2,8 +2,8 @@ package latmod.emcc.item;
 
 import java.util.List;
 
-import latmod.core.InvUtils;
 import latmod.emcc.*;
+import latmod.ftbu.core.InvUtils;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;

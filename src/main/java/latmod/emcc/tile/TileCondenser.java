@@ -1,12 +1,12 @@
 package latmod.emcc.tile;
-import latmod.core.*;
-import latmod.core.client.LMGuiButtons;
-import latmod.core.tile.*;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.client.container.ContainerCondenser;
 import latmod.emcc.client.gui.GuiCondenser;
 import latmod.emcc.emc.EMCHandler;
+import latmod.ftbu.core.*;
+import latmod.ftbu.core.client.LMGuiButtons;
+import latmod.ftbu.core.tile.*;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;

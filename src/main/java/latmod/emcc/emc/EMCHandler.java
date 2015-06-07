@@ -2,11 +2,11 @@ package latmod.emcc.emc;
 
 import java.io.File;
 
-import latmod.core.*;
-import latmod.core.recipes.LMRecipes;
-import latmod.core.util.LatCore;
 import latmod.emcc.*;
 import latmod.emcc.item.ItemMaterialsEMCC;
+import latmod.ftbu.core.*;
+import latmod.ftbu.core.recipes.LMRecipes;
+import latmod.ftbu.core.util.LatCore;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;

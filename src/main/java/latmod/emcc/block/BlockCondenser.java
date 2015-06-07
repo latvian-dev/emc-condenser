@@ -1,7 +1,7 @@
 package latmod.emcc.block;
-import latmod.core.tile.TileLM;
 import latmod.emcc.client.render.world.RenderCondenser;
 import latmod.emcc.tile.TileCondenser;
+import latmod.ftbu.core.tile.TileLM;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;

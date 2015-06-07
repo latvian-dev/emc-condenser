@@ -1,10 +1,10 @@
 package latmod.emcc.item.tools;
 import java.util.Map;
 
-import latmod.core.util.FastList;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.item.ItemEmcStorage;
+import latmod.ftbu.core.util.FastList;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;

@@ -1,5 +1,6 @@
 package latmod.emcc.item;
-import latmod.core.*;
+import latmod.ftbu.core.ODItems;
+import latmod.ftbu.core.client.LatCoreMCClient;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -52,5 +53,5 @@ public class ItemMaterialsEMCC extends ItemEMCC
 	
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamageForRenderPass(int m, int r)
-	{ return (m >= 0 && m < icons.length) ? icons[m] : LatCoreMC.Client.unknownItemIcon; }
+	{ return (m >= 0 && m < icons.length) ? icons[m] : LatCoreMCClient.unknownItemIcon; }
 }

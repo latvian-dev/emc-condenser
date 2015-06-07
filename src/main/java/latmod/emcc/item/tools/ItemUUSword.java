@@ -1,9 +1,9 @@
 package latmod.emcc.item.tools;
-import latmod.core.ODItems;
-import latmod.core.item.ICreativeSafeItem;
 import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.*;
 import latmod.emcc.item.ItemMaterialsEMCC;
+import latmod.ftbu.core.ODItems;
+import latmod.ftbu.core.item.ICreativeSafeItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.*;

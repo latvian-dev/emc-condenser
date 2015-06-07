@@ -1,8 +1,8 @@
 package latmod.emcc;
-import latmod.core.*;
-import latmod.core.tile.*;
 import latmod.emcc.emc.VanillaEMC;
 import latmod.emcc.tile.SafeMode;
+import latmod.ftbu.core.*;
+import latmod.ftbu.core.tile.*;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 

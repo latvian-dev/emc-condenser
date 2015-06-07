@@ -1,14 +1,14 @@
 package latmod.emcc;
-import latmod.core.*;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.blacklist.EMCCBlacklist;
 import latmod.emcc.emc.EMCHandler;
+import latmod.ftbu.core.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 
-@Mod(modid = EMCC.MOD_ID, name = "EMC Condenser", version = "@VERSION@", dependencies = "required-after:LatCoreMC;after:EE3")
+@Mod(modid = EMCC.MOD_ID, name = "EMC Condenser", version = "@VERSION@", dependencies = "required-after:FTBU;after:EE3")
 public class EMCC
 {
 	protected static final String MOD_ID = "EMC_Condenser";
@@ -21,13 +21,14 @@ public class EMCC
 	
 	public static CreativeTabs tab = null;
 	
+	@LMMod.Instance(MOD_ID)
 	public static LMMod mod;
 	public static EMCCBlacklist blacklist;
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
-		mod = new LMMod(e, new EMCCConfig(e), null);
+		LMMod.init(this, new EMCCConfig(e), null);
 		blacklist = new EMCCBlacklist(e);
 		
 		LatCoreMC.addEventHandler(EMCCEventHandler.instance, true, false, true);

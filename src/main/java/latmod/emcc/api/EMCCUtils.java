@@ -1,7 +1,7 @@
 package latmod.emcc.api;
 import java.util.ArrayList;
 
-import latmod.core.*;
+import latmod.ftbu.core.*;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;

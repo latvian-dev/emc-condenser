@@ -1,9 +1,9 @@
 package latmod.emcc;
 
-import latmod.core.event.ReloadEvent;
-import latmod.core.mod.LC;
 import latmod.emcc.api.*;
 import latmod.emcc.emc.EMCHandler;
+import latmod.ftbu.FTBU;
+import latmod.ftbu.core.event.ReloadEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.AnvilUpdateEvent;
@@ -28,7 +28,7 @@ public class EMCCEventHandler
 	{
 		Item item = e.itemStack.getItem();
 		
-		if(item instanceof IEmcStorageItem && LC.proxy.isShiftDown())
+		if(item instanceof IEmcStorageItem && FTBU.proxy.isShiftDown())
 		{
 			IEmcStorageItem i = (IEmcStorageItem)item;
 			
@@ -58,7 +58,7 @@ public class EMCCEventHandler
 			}
 		}
 		
-		if((!EMCHandler.hasEE3() || EMCCConfig.General.forceVanillaEMC) && LC.proxy.isShiftDown())
+		if((!EMCHandler.hasEE3() || EMCCConfig.General.forceVanillaEMC) && FTBU.proxy.isShiftDown())
 		{
 			float f = EMCHandler.instance().getEMC(e.itemStack);
 			if(f > 0)

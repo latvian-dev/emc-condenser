@@ -1,8 +1,8 @@
 package latmod.emcc.client.render.world;
 
-import latmod.core.LatCoreMC;
-import latmod.core.client.BlockRendererLM;
 import latmod.emcc.EMCCItems;
+import latmod.ftbu.core.LatCoreMC;
+import latmod.ftbu.core.client.BlockRendererLM;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.util.IIcon;
