@@ -2,8 +2,8 @@ package latmod.emcc;
 
 import latmod.emcc.api.*;
 import latmod.emcc.emc.EMCHandler;
-import latmod.ftbu.FTBU;
 import latmod.ftbu.core.event.ReloadEvent;
+import latmod.ftbu.mod.FTBU;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.AnvilUpdateEvent;

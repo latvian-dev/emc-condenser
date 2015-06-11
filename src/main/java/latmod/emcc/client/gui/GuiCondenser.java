@@ -4,10 +4,10 @@ import latmod.emcc.api.IEmcStorageItem;
 import latmod.emcc.client.container.ContainerCondenser;
 import latmod.emcc.emc.EMCHandler;
 import latmod.emcc.tile.TileCondenser;
-import latmod.ftbu.FTBU;
 import latmod.ftbu.core.client.LMGuiButtons;
 import latmod.ftbu.core.gui.*;
 import latmod.ftbu.core.util.FastList;
+import latmod.ftbu.mod.FTBU;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 
