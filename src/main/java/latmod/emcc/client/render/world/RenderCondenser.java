@@ -1,7 +1,6 @@
 package latmod.emcc.client.render.world;
 
 import latmod.emcc.EMCCItems;
-import latmod.ftbu.core.LatCoreMC;
 import latmod.ftbu.core.client.BlockRendererLM;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -17,21 +16,13 @@ public class RenderCondenser extends BlockRendererLM
 	public Block glow = new BlockGlowing()
 	{
 		public IIcon getIcon(int s, int m)
-		{
-			if(s == LatCoreMC.TOP)
-				return EMCCItems.b_condenser.icon_top_glow;
-			else return EMCCItems.b_condenser.icon_side_glow;
-		}
+		{ return (s == 1) ? EMCCItems.b_condenser.icon_top_glow : EMCCItems.b_condenser.icon_side_glow; }
 	};
 	
 	public Block empty = new BlockCustom()
 	{
 		public IIcon getIcon(int s, int m)
-		{
-			if(s == LatCoreMC.TOP)
-				return EMCCItems.b_condenser.icon_top_empty;
-			else return EMCCItems.b_condenser.icon_side_empty;
-		}
+		{ return (s == 1) ? EMCCItems.b_condenser.icon_top_empty : EMCCItems.b_condenser.icon_side_empty; }
 	};
 	
 	public void renderInventoryBlock(Block b, int meta, int modelID, RenderBlocks rb)

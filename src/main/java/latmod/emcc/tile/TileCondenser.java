@@ -200,7 +200,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	
 	@Override
 	public int[] getAccessibleSlotsFromSide(int s)
-	{ return (invMode == InvMode.DISABLED) ? NO_SLOTS : ((s == LatCoreMC.BOTTOM) ? OUTPUT_SLOTS : INPUT_SLOTS); }
+	{ return (invMode == InvMode.DISABLED) ? NO_SLOTS : ((s == 0) ? OUTPUT_SLOTS : INPUT_SLOTS); }
 	
 	@Override
 	public boolean canInsertItem(int i, ItemStack is, int j)
