@@ -21,9 +21,9 @@ public class GuiCondenser extends GuiLM
 	public static final ResourceLocation texLoc = EMCC.mod.getLocation("textures/gui/condenser.png");
 	
 	public final TextureCoords
-	texBar = new TextureCoords(texLoc, 0, 236),
-	texTarget = new TextureCoords(texLoc, 176, 0),
-	texSidebar = new TextureCoords(texLoc, 176, 26);
+	texBar = new TextureCoords(texLoc, 0, 236, 118, 16),
+	texTarget = new TextureCoords(texLoc, 176, 0, 16, 16),
+	texSidebar = new TextureCoords(texLoc, 176, 26, 25, 83);
 	
 	public TileCondenser condenser;
 	public ButtonLM buttonTransItems, buttonSecurity, buttonRedstone, buttonInvMode, buttonSafeMode;
@@ -110,7 +110,7 @@ public class GuiCondenser extends GuiLM
 			}
 		});
 		
-		widgets.add(barEMC = new WidgetLM(this, 30, 9, 118, 16)
+		widgets.add(barEMC = new WidgetLM(this, 30, 9, texBar.width, texBar.height)
 		{
 			public void addMouseOverText(FastList<String> l)
 			{
@@ -127,7 +127,7 @@ public class GuiCondenser extends GuiLM
 		
 		widgets.add(targetIcon = new WidgetLM(this, 8, 9, 16, 16));
 		targetIcon.title = EMCC.mod.translate("notarget");
-		sidebar = new WidgetLM(this, -25, 26, 25, 83);
+		sidebar = new WidgetLM(this, -25, 26, texSidebar.width, texSidebar.height);
 	}
 	
 	public void drawGuiContainerBackgroundLayer(float f, int mx, int my)
