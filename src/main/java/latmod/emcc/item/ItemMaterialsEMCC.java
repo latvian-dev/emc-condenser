@@ -23,7 +23,11 @@ public class ItemMaterialsEMCC extends ItemEMCC
 	public IIcon[] icons;
 	
 	public ItemMaterialsEMCC(String s)
-	{ super(s); }
+	{
+		super(s);
+		setHasSubtypes(true);
+		setMaxDamage(0);
+	}
 	
 	public void onPostLoaded()
 	{
