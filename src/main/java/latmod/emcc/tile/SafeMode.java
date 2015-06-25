@@ -1,5 +1,6 @@
 package latmod.emcc.tile;
 import latmod.emcc.EMCC;
+import cpw.mods.fml.relauncher.*;
 
 public enum SafeMode
 {
@@ -23,9 +24,11 @@ public enum SafeMode
 	public SafeMode next()
 	{ return isOn() ? DISABLED : ENABLED; }
 	
+	@SideOnly(Side.CLIENT)
 	public String getText()
-	{ return EMCC.mod.translate("safemode." + uname); }
+	{ return EMCC.mod.translateClient("safemode." + uname); }
 	
+	@SideOnly(Side.CLIENT)
 	public String getTitle()
-	{ return EMCC.mod.translate("safemode"); }
+	{ return EMCC.mod.translateClient("safemode"); }
 }

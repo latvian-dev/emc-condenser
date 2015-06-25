@@ -44,7 +44,7 @@ public class GuiCondenser extends GuiLM
 			}
 		};
 		
-		buttonTransItems.title = EMCC.mod.translate("takeitems");
+		buttonTransItems.title = EMCC.mod.translateClient("takeitems");
 		
 		buttonSecurity = new ButtonLM(this, -19, 32, 16, 16)
 		{
@@ -117,12 +117,12 @@ public class GuiCondenser extends GuiLM
 				boolean charging = tar != null && tar.getItem() instanceof IEmcStorageItem;
 				
 				l.add(EnumChatFormatting.GOLD.toString() + "" + formatEMC(condenser.storedEMC) + (emc1 <= 0D ? "" : (" / " + formatEMC(emc1))));
-				if(charging && condenser.storedEMC > 0D) l.add(EMCC.mod.translate("charging"));
+				if(charging && condenser.storedEMC > 0D) l.add(EMCC.mod.translateClient("charging"));
 			}
 		};
 		
 		targetIcon = new WidgetLM(this, 8, 9, 16, 16);
-		noTargetLang = EMCC.mod.translate("notarget");
+		noTargetLang = EMCC.mod.translateClient("notarget");
 		sidebar = new WidgetLM(this, -25, 26, texSidebar.width, texSidebar.height);
 	}
 	
