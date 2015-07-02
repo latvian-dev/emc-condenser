@@ -235,7 +235,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	public ItemStack getBlockToPlace()
 	{ return new ItemStack(EMCCItems.b_condenser); }
 	
-	public void handleButton(String button, int mouseButton, EntityPlayer ep)
+	public void handleButton(String button, int mouseButton, NBTTagCompound data, EntityPlayer ep)
 	{
 		if(button.equals(EMCCGuis.Buttons.SAFE_MODE))
 			safeMode = safeMode.next();
