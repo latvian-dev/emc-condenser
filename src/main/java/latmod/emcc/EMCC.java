@@ -31,7 +31,7 @@ public class EMCC
 		LMMod.init(this, new EMCCConfig(e), null);
 		blacklist = new EMCCBlacklist(e);
 		
-		LatCoreMC.addEventHandler(EMCCEventHandler.instance, true, false, true);
+		LatCoreMC.addEventHandler(EMCCEventHandler.instance, LatCoreMC.BusType.FORGE, LatCoreMC.BusType.LATMOD);
 		
 		EMCHandler.init(e);
 		

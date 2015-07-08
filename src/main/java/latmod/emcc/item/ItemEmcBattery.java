@@ -73,6 +73,7 @@ public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 		double emc = getStoredEmc(is);
 		
 		if(emc <= 0D) return;
+		boolean changed = false;
 		
 		for(int i = 0; i < inv.getSizeInventory(); i++)
 		{
@@ -96,10 +97,16 @@ public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 						setStoredEmc(is, emc);
 						si.setStoredEmc(is1, siEmc + a);
 						inv.setInventorySlotContents(i, is1);
-						inv.markDirty();
+						changed = true;
 					}
 				}
 			}
+		}
+		
+		if(changed)
+		{
+			inv.markDirty();
+			ep.openContainer.detectAndSendChanges();
 		}
 	}
 }
