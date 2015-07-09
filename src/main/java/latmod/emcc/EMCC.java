@@ -41,8 +41,6 @@ public class EMCC
 		ToolInfusion.initAll();
 		
 		tab = mod.createTab("tab", new ItemStack(EMCCItems.i_emc_battery, 1, 1));
-		
-		proxy.preInit(e);
 	}
 	
 	@Mod.EventHandler
@@ -50,7 +48,7 @@ public class EMCC
 	{
 		EMCHandler.instance().modInited();
 		ToolInfusion.initAll();
-		proxy.init(e);
+		proxy.init();
 	}
 	
 	@Mod.EventHandler
@@ -58,6 +56,5 @@ public class EMCC
 	{
 		mod.loadRecipes();
 		EMCHandler.instance().loadRecipes();
-		proxy.postInit(e);
 	}
 }
