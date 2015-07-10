@@ -59,7 +59,7 @@ public class EMCHandler
 		
 		if(vanillaEMCFile.exists())
 		{
-			VanillaEMC.EMCFile f = LatCore.fromJsonFromFile(vanillaEMCFile, VanillaEMC.EMCFile.class);
+			VanillaEMC.EMCFile f = LatCore.fromJsonFile(vanillaEMCFile, VanillaEMC.EMCFile.class);
 			if(f != null) f.saveTo(vanillaEMC);
 			else vanillaEMC.loadDefaults();
 		}

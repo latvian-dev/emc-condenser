@@ -3,6 +3,7 @@ import latmod.emcc.emc.VanillaEMC;
 import latmod.emcc.tile.SafeMode;
 import latmod.ftbu.core.*;
 import latmod.ftbu.core.tile.*;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
@@ -28,7 +29,7 @@ public class EMCCConfig extends LMConfig implements IServerConfig
 		General.forceVanillaEMC = b[1] == 1;
 	}
 	
-	public void writeConfig(NBTTagCompound tag)
+	public void writeConfig(NBTTagCompound tag, EntityPlayerMP ep)
 	{
 		tag.setIntArray("C", new int[]
 		{
