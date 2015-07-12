@@ -108,7 +108,6 @@ public class VanillaEMC
 		addReg(Items.clay_ball, 0, 64);
 		addReg(Items.reeds, 0, 32);
 		addReg(Items.paper, 0, 32);
-		addReg(Items.sugar, 0, 32);
 		addReg(Items.egg, 0, 32);
 		addReg(Items.blaze_rod, 0, 1536);
 		addReg(Items.nether_wart, 0, 24);
