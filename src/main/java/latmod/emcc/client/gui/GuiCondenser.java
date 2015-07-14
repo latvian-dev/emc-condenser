@@ -146,7 +146,11 @@ public class GuiCondenser extends GuiLM
 		double emc1 =  EMCHandler.instance().getEMC(tar);
 		
 		if(emc1 > 0L)
-			barEMC.render(texBar, (condenser.storedEMC % emc1) / emc1, 1D);
+		{
+			setTexture(texLoc);
+			double d = (condenser.storedEMC % emc1) / (double)emc1;
+			drawTexturedRectD(guiLeft + barEMC.posX, guiTop + barEMC.posY, zLevel, texBar.width * d, texBar.height, texBar.minU, texBar.minV, texBar.minU + (texBar.maxU - texBar.minU) * d, texBar.maxV);
+		}
 		
 		if(condenser.items[TileCondenser.SLOT_TARGET] == null)
 			targetIcon.render(texTarget);
