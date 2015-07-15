@@ -4,7 +4,8 @@ import java.io.File;
 
 import latmod.emcc.*;
 import latmod.emcc.item.ItemMaterialsEMCC;
-import latmod.ftbu.core.*;
+import latmod.ftbu.core.LatCoreMC;
+import latmod.ftbu.core.inv.ODItems;
 import latmod.ftbu.core.recipes.LMRecipes;
 import latmod.ftbu.core.util.LatCore;
 import net.minecraft.init.*;

@@ -1,7 +1,6 @@
 package latmod.emcc.client.gui;
 import latmod.emcc.*;
 import latmod.emcc.api.IEmcStorageItem;
-import latmod.emcc.client.container.ContainerCondenser;
 import latmod.emcc.emc.EMCHandler;
 import latmod.emcc.tile.TileCondenser;
 import latmod.ftbu.core.client.LMGuiButtons;

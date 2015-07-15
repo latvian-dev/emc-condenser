@@ -2,7 +2,7 @@ package latmod.emcc.emc;
 
 import latmod.emcc.*;
 import latmod.emcc.item.ItemMaterialsEMCC;
-import latmod.ftbu.core.ODItems;
+import latmod.ftbu.core.inv.ODItems;
 import latmod.ftbu.core.recipes.LMRecipes;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;

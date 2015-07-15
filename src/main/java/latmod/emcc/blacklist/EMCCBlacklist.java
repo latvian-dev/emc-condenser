@@ -2,7 +2,7 @@ package latmod.emcc.blacklist;
 import java.io.File;
 
 import latmod.emcc.*;
-import latmod.ftbu.core.ODItems;
+import latmod.ftbu.core.inv.ODItems;
 import latmod.ftbu.core.util.*;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;

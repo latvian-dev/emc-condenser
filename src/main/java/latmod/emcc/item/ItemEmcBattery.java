@@ -2,7 +2,7 @@ package latmod.emcc.item;
 
 import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.IEmcStorageItem;
-import latmod.ftbu.core.ODItems;
+import latmod.ftbu.core.inv.ODItems;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

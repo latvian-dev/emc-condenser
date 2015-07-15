@@ -1,7 +1,8 @@
 package latmod.emcc.api;
 import java.util.ArrayList;
 
-import latmod.ftbu.core.*;
+import latmod.ftbu.core.LatCoreMC;
+import latmod.ftbu.core.inv.InvUtils;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -76,9 +77,9 @@ public class EMCCUtils
 		{
 			for(int i = 0; i < 20; i++)
 			{
-				double ox = ParticleHelper.rand.nextFloat();
-				double oy = ParticleHelper.rand.nextFloat();
-				double oz = ParticleHelper.rand.nextFloat();
+				double ox = LatCoreMC.rand.nextFloat();
+				double oy = LatCoreMC.rand.nextFloat();
+				double oz = LatCoreMC.rand.nextFloat();
 				
 				w.spawnParticle("flame", x + ox, y + oy, z + oz, 0D, 0D, 0D);
 			}
@@ -87,9 +88,9 @@ public class EMCCUtils
 		{
 			for(int i = 0; i < 40; i++)
 			{
-				double ox = ParticleHelper.rand.nextFloat();
-				double oy = ParticleHelper.rand.nextFloat();
-				double oz = ParticleHelper.rand.nextFloat();
+				double ox = LatCoreMC.rand.nextFloat();
+				double oy = LatCoreMC.rand.nextFloat();
+				double oz = LatCoreMC.rand.nextFloat();
 				
 				w.spawnParticle("tilecrack_" + Item.getIdFromItem(Item.getItemFromBlock(b)) + "_" + meta, x + ox, y + oy, z + oz, 0D, 0D, 0D);
 			}

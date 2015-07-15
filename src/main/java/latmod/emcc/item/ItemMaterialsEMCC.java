@@ -1,6 +1,6 @@
 package latmod.emcc.item;
-import latmod.ftbu.core.ODItems;
 import latmod.ftbu.core.client.LatCoreMCClient;
+import latmod.ftbu.core.inv.ODItems;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;

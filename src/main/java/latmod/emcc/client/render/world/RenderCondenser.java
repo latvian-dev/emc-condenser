@@ -1,7 +1,7 @@
 package latmod.emcc.client.render.world;
 
 import latmod.emcc.EMCCItems;
-import latmod.ftbu.core.client.BlockRendererLM;
+import latmod.ftbu.core.client.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.util.IIcon;
@@ -30,7 +30,9 @@ public class RenderCondenser extends BlockRendererLM
 		renderBlocks.setRenderBounds(0D, 0D, 0D, 1D, 1D, 1D);
 		renderBlocks.clearOverrideBlockTexture();
 		renderBlocks.renderBlockAsItem(empty, 0, 1F);
+		LatCoreMCClient.pushMaxBrightness();
 		renderBlocks.renderBlockAsItem(glow, 0, 1F);
+		LatCoreMCClient.popMaxBrightness();
 	}
 	
 	public boolean renderWorldBlock(IBlockAccess iba, int x, int y, int z, Block b, int modelID, RenderBlocks rb)

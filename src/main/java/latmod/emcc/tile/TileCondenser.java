@@ -1,11 +1,11 @@
 package latmod.emcc.tile;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
-import latmod.emcc.client.container.ContainerCondenser;
-import latmod.emcc.client.gui.GuiCondenser;
+import latmod.emcc.client.gui.*;
 import latmod.emcc.emc.EMCHandler;
 import latmod.ftbu.core.*;
 import latmod.ftbu.core.client.LMGuiButtons;
+import latmod.ftbu.core.inv.InvUtils;
 import latmod.ftbu.core.tile.*;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -218,7 +218,13 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	}
 	
 	public boolean isItemValidForSlot(int i, ItemStack is)
-	{ return true; }
+	{
+		if(i == SLOT_TARGET)
+			return is == null || EMCHandler.instance().getEMC(is) > 0F;
+		else if(anyEquals(i, INPUT_SLOTS))
+			return is != null && EMCHandler.instance().getEMC(is) > 0F;
+		return false;
+	}
 	
 	public boolean canWrench(EntityPlayer ep)
 	{ return security.canInteract(ep); }
