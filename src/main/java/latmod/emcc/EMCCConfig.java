@@ -1,5 +1,5 @@
 package latmod.emcc;
-import latmod.emcc.emc.VanillaEMC;
+import latmod.emcc.emc.*;
 import latmod.emcc.tile.SafeMode;
 import latmod.ftbu.core.*;
 import latmod.ftbu.core.tile.*;
@@ -27,6 +27,17 @@ public class EMCCConfig extends LMConfig implements IServerConfig
 		int[] b = tag.getIntArray("C");
 		General.forceVanillaRecipes = b[0] == 1;
 		General.forceVanillaEMC = b[1] == 1;
+		
+		if(tag.hasKey("B"))
+		{
+			try
+			{
+				byte[] b1 = tag.getByteArray("B");
+				EMCHandler.instance().vanillaEMC.fromBytes(b1);
+			}
+			catch(Exception e)
+			{ e.printStackTrace(); }
+		}
 	}
 	
 	public void writeConfig(NBTTagCompound tag, EntityPlayerMP ep)
@@ -36,6 +47,10 @@ public class EMCCConfig extends LMConfig implements IServerConfig
 			General.forceVanillaRecipes ? 1 : 0,
 			General.forceVanillaEMC ? 1 : 0,
 		});
+		
+		if(EMCCConfig.General.forceVanillaEMC || !EMCHandler.hasEE3()) try
+		{ byte[] b1 = EMCHandler.instance().vanillaEMC.toBytes(); tag.setByteArray("B", b1); }
+		catch(Exception e) { e.printStackTrace(); }
 	}
 	
 	public static class General

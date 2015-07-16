@@ -54,7 +54,7 @@ public class VanillaEMC
 		
 		dis.close();
 		
-		EMCC.mod.logger.info("Loaded VanillaEMC from " + b.length + " bytes: " + LMStringUtils.stripI(Converter.toInts(b)));
+		EMCC.mod.logger.info("Loaded VanillaEMC from " + b.length + " bytes");
 	}
 	
 	public byte[] toBytes() throws Exception

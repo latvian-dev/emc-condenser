@@ -3,7 +3,6 @@ import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.blacklist.EMCCBlacklist;
 import latmod.emcc.emc.EMCHandler;
 import latmod.ftbu.core.*;
-import latmod.ftbu.core.event.CustomAction;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.*;
@@ -56,7 +55,6 @@ public class EMCC
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
-		CustomAction.register(MOD_ID, EMCCNetHandler.instance);
 		mod.loadRecipes();
 		EMCHandler.instance().loadRecipes();
 	}
