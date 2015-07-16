@@ -1,7 +1,9 @@
 package latmod.emcc.emc;
 
+import java.io.*;
 import java.util.*;
 
+import latmod.emcc.EMCC;
 import latmod.ftbu.core.inv.*;
 import latmod.ftbu.core.util.*;
 import net.minecraft.block.Block;
@@ -25,6 +27,62 @@ public class VanillaEMC
 	{
 		regEntries.clear();
 		oreEntries.clear();
+	}
+	
+	public void fromBytes(byte[] b) throws Exception
+	{
+		clear();
+		
+		DataInputStream dis = new DataInputStream(new ByteArrayInputStream(b));
+		
+		int s = dis.readShort();
+		for(int i = 0; i < s; i++)
+		{
+			int j = dis.readShort();
+			int m = dis.readShort();
+			float v = dis.readFloat();
+			regEntries.add(new RegEntry(j, m, v));
+		}
+		
+		s = dis.readShort();
+		for(int i = 0; i < s; i++)
+		{
+			String o = dis.readUTF();
+			float v = dis.readFloat();
+			oreEntries.put(o, v);
+		}
+		
+		dis.close();
+		
+		EMCC.mod.logger.info("Loaded VanillaEMC from " + b.length + " bytes: " + LMStringUtils.stripI(Converter.toInts(b)));
+	}
+	
+	public byte[] toBytes() throws Exception
+	{
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		DataOutputStream dos = new DataOutputStream(baos);
+		
+		int s = regEntries.size();
+		dos.writeShort(s);
+		for(int i = 0; i < s; i++)
+		{
+			RegEntry r = regEntries.get(i);
+			dos.writeShort(Item.getIdFromItem(r.item));
+			dos.writeShort(r.damage);
+			dos.writeFloat(r.value);
+		}
+		
+		s = oreEntries.size();
+		dos.writeShort(s);
+		for(int i = 0; i < s; i++)
+		{
+			dos.writeUTF(oreEntries.keys.get(i));
+			dos.writeFloat(oreEntries.values.get(i).floatValue());
+		}
+		
+		dos.flush();
+		dos.close();
+		return baos.toByteArray();
 	}
 	
 	public void loadDefaults()
@@ -172,6 +230,9 @@ public class VanillaEMC
 			damage = is.getItemDamage();
 			value = v;
 		}
+		
+		public RegEntry(int i, int d, float v)
+		{ this(new ItemStack(Item.getItemById(i), 1, d), v); }
 		
 		public boolean equalsItem(ItemStack is)
 		{ return is != null && item == is.getItem() && (damage == ODItems.ANY || damage == -1 || damage == is.getItemDamage()); }

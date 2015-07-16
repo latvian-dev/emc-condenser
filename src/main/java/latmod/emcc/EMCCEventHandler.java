@@ -44,7 +44,7 @@ public class EMCCEventHandler
 			
 		}
 		
-		if(EMCHandler.hasEE3() && (EMCCConfig.General.removeNoEMCTooltip || EMCCConfig.General.forceVanillaEMC))
+		if((EMCCConfig.General.removeNoEMCTooltip || EMCCConfig.General.forceVanillaEMC) && EMCHandler.hasEE3())
 		{
 			for(int j = 0; j < e.toolTip.size(); j++)
 			{
@@ -58,7 +58,7 @@ public class EMCCEventHandler
 			}
 		}
 		
-		if((!EMCHandler.hasEE3() || EMCCConfig.General.forceVanillaEMC) && FTBU.proxy.isShiftDown())
+		if((EMCCConfig.General.forceVanillaEMC || !EMCHandler.hasEE3()) && FTBU.proxy.isShiftDown())
 		{
 			float f = EMCHandler.instance().getEMC(e.itemStack);
 			if(f > 0)

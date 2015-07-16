@@ -4,7 +4,7 @@ import java.io.File;
 
 import latmod.emcc.*;
 import latmod.emcc.item.ItemMaterialsEMCC;
-import latmod.ftbu.core.LatCoreMC;
+import latmod.ftbu.core.*;
 import latmod.ftbu.core.inv.ODItems;
 import latmod.ftbu.core.recipes.LMRecipes;
 import latmod.ftbu.core.util.LatCore;
@@ -19,7 +19,7 @@ public class EMCHandler
 	
 	public static void init(FMLPreInitializationEvent e)
 	{
-		hasEE3 = LatCoreMC.isModInstalled("EE3");
+		hasEE3 = LatCoreMC.isModInstalled(OtherMods.EE3);
 		
 		if(hasEE3) try
 		{
