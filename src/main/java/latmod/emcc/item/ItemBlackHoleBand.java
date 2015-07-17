@@ -3,6 +3,7 @@ package latmod.emcc.item;
 import java.util.List;
 
 import latmod.emcc.*;
+import latmod.ftbu.core.OtherMods;
 import latmod.ftbu.core.inv.InvUtils;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.EntityItem;
@@ -11,7 +12,9 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import baubles.api.*;
+import cpw.mods.fml.common.Optional;
 
+@Optional.Interface(modid = OtherMods.BAUBLES, iface = "baubles.api.IBauble")
 public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 {
 	public ItemBlackHoleBand(String s)
@@ -79,6 +82,7 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 		}
 	}
 	
+	@Optional.Method(modid = OtherMods.BAUBLES)
 	public BaubleType getBaubleType(ItemStack is)
 	{ return BaubleType.BELT; }
 }

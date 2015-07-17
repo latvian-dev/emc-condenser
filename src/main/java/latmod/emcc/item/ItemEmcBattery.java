@@ -2,6 +2,7 @@ package latmod.emcc.item;
 
 import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.IEmcStorageItem;
+import latmod.ftbu.core.*;
 import latmod.ftbu.core.inv.ODItems;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,7 +11,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import baubles.api.*;
+import cpw.mods.fml.common.Optional;
 
+@Optional.Interface(modid = OtherMods.BAUBLES, iface = "baubles.api.IBauble")
 public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 {
 	public ItemEmcBattery(String s)
@@ -48,7 +51,8 @@ public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 	
 	public void onUpdate(ItemStack is, World w, Entity e, int t, boolean b)
 	{ if(!w.isRemote && e instanceof EntityPlayer) onWornTick(is, (EntityPlayer)e); }
-
+	
+	@Optional.Method(modid = OtherMods.BAUBLES)
 	public BaubleType getBaubleType(ItemStack is)
 	{ return BaubleType.AMULET; }
 	
@@ -63,7 +67,7 @@ public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 			if(!EMCCConfig.Tools.enableBattery) return;
 			
 			chargeInv(is, ep, ep.inventory);
-			IInventory baubInv = BaublesApi.getBaubles(ep);
+			IInventory baubInv = BaublesHelper.getBaubles(ep);
 			if(baubInv != null) chargeInv(is, ep, baubInv);
 		}
 	}
