@@ -2,7 +2,7 @@ package latmod.emcc.api;
 import java.util.ArrayList;
 
 import latmod.ftbu.core.LatCoreMC;
-import latmod.ftbu.core.inv.InvUtils;
+import latmod.ftbu.core.inv.LMInvUtils;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -51,15 +51,15 @@ public class EMCCUtils
 		{
 			for(ItemStack is : is0) if(is != null)
 			{
-				ItemStack is1 = FurnaceRecipes.smelting().getSmeltingResult(InvUtils.singleCopy(is));
+				ItemStack is1 = FurnaceRecipes.smelting().getSmeltingResult(LMInvUtils.singleCopy(is));
 				
 				if(is1 != null)
 				{
 					if(!w.isRemote) for(int s = 0; s < is.stackSize; s++)
-						InvUtils.dropItem(w, x + 0.5D, y + 0.5D, z + 0.5D, is1, 10);
+						LMInvUtils.dropItem(w, x + 0.5D, y + 0.5D, z + 0.5D, is1, 10);
 					flag = true;
 				}
-				else if(!w.isRemote) InvUtils.dropItem(w, x + 0.5D, y + 0.5D, z + 0.5D, is, 10);
+				else if(!w.isRemote) LMInvUtils.dropItem(w, x + 0.5D, y + 0.5D, z + 0.5D, is, 10);
 			}
 		}
 		

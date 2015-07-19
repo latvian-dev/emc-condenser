@@ -73,7 +73,7 @@ public class BlacklistEntry
 				if(dmg == -1) dmg = ODItems.ANY;
 			}
 			
-			Item i = InvUtils.getItemFromRegName(uName);
+			Item i = LMInvUtils.getItemFromRegName(uName);
 			if(i != null) reg_list.add(new ItemEntry(i, dmg));
 		}
 	}

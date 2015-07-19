@@ -4,7 +4,7 @@ import java.util.List;
 
 import latmod.emcc.*;
 import latmod.ftbu.core.OtherMods;
-import latmod.ftbu.core.inv.InvUtils;
+import latmod.ftbu.core.inv.LMInvUtils;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -62,7 +62,7 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 			
 			for (EntityItem item : items)
 			{
-				if (InvUtils.addSingleItemToInv(item.getEntityItem(), ep.inventory, InvUtils.getPlayerSlots(ep), -1, false))
+				if (LMInvUtils.addSingleItemToInv(item.getEntityItem(), ep.inventory, LMInvUtils.getPlayerSlots(ep), -1, false))
 				{
 					e.worldObj.spawnParticle("smoke", item.posX, item.posY + item.height / 2F, item.posZ, 0D, 0D, 0D);
 					

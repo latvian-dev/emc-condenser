@@ -190,7 +190,7 @@ public class VanillaEMC
 	{
 		if(s != null && !s.isEmpty() && v > 0F)
 		{
-			ItemStack is = InvUtils.parseItem(s);
+			ItemStack is = LMInvUtils.parseItem(s);
 			addReg(is.getItem(), is.getItemDamage(), v);
 		}
 	}
@@ -238,7 +238,7 @@ public class VanillaEMC
 		{ return is != null && item == is.getItem() && (damage == ODItems.ANY || damage == -1 || damage == is.getItemDamage()); }
 		
 		public String toString()
-		{ return InvUtils.getRegName(item) + ((damage == 0) ? "" : ("@" + damage)); }
+		{ return LMInvUtils.getRegName(item) + ((damage == 0) ? "" : ("@" + damage)); }
 	}
 	
 	public static class EMCFile

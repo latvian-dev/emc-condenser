@@ -5,10 +5,10 @@ import latmod.emcc.client.gui.*;
 import latmod.emcc.emc.EMCHandler;
 import latmod.ftbu.core.*;
 import latmod.ftbu.core.client.LMGuiButtons;
-import latmod.ftbu.core.inv.InvUtils;
+import latmod.ftbu.core.inv.LMInvUtils;
 import latmod.ftbu.core.tile.*;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -136,7 +136,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 							{
 								for(long d = 0L; d < d1; d++)
 								{
-									if(InvUtils.addSingleItemToInv(InvUtils.singleCopy(tar), this, OUTPUT_SLOTS, -1, true))
+									if(LMInvUtils.addSingleItemToInv(LMInvUtils.singleCopy(tar), this, OUTPUT_SLOTS, -1, true))
 									{
 										storedEMC -= ev;
 										markDirty();
@@ -241,7 +241,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	public ItemStack getBlockToPlace()
 	{ return new ItemStack(EMCCItems.b_condenser); }
 	
-	public void handleButton(String button, int mouseButton, NBTTagCompound data, EntityPlayer ep)
+	public void handleButton(String button, int mouseButton, NBTTagCompound data, EntityPlayerMP ep)
 	{
 		if(button.equals(EMCCGuis.Buttons.SAFE_MODE))
 			safeMode = safeMode.next();
@@ -260,11 +260,11 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 		markDirty();
 	}
 	
-	public void onClientAction(EntityPlayer ep, String action, NBTTagCompound data)
+	public void onClientAction(EntityPlayerMP ep, String action, NBTTagCompound data)
 	{
 		if(action.equals(ACTION_TRANS_ITEMS))
 		{
-			int[] invSlots = InvUtils.getPlayerSlots(ep);
+			int[] invSlots = LMInvUtils.getPlayerSlots(ep);
 			
 			for(int i = 0; i < OUTPUT_SLOTS.length; i++)
 			if(items[OUTPUT_SLOTS[i]] != null)
@@ -273,7 +273,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 				
 				for(int j = 0; j < ss; j++)
 				{
-					if(InvUtils.addSingleItemToInv(items[OUTPUT_SLOTS[i]].copy(), ep.inventory, invSlots, -1, true))
+					if(LMInvUtils.addSingleItemToInv(items[OUTPUT_SLOTS[i]].copy(), ep.inventory, invSlots, -1, true))
 					{
 						items[OUTPUT_SLOTS[i]].stackSize--;
 						if(items[OUTPUT_SLOTS[i]].stackSize <= 0)
