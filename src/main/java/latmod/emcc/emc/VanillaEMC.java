@@ -191,7 +191,7 @@ public class VanillaEMC
 		if(s != null && !s.isEmpty() && v > 0F)
 		{
 			ItemStack is = LMInvUtils.parseItem(s);
-			addReg(is.getItem(), is.getItemDamage(), v);
+			if(is != null) addReg(is.getItem(), is.getItemDamage(), v);
 		}
 	}
 	

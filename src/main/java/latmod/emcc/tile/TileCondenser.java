@@ -7,14 +7,17 @@ import latmod.ftbu.core.*;
 import latmod.ftbu.core.client.LMGuiButtons;
 import latmod.ftbu.core.inv.LMInvUtils;
 import latmod.ftbu.core.tile.*;
+import latmod.latblocks.tile.IQuartzNetTile;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.*;
 
-public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWrenchable, IClientActionTile, IGuiTile, ISecureTile
+@Optional.Interface(modid = OtherMods.LATBLOCKS, iface = "latmod.latblocks.tile.IQuartzNetTile")
+public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWrenchable, IClientActionTile, IGuiTile, ISecureTile, IQuartzNetTile
 {
 	public static final String ACTION_TRANS_ITEMS = "transItems";
 	
@@ -300,4 +303,20 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	
 	public void onPlayerNotOwner(EntityPlayer ep, boolean breakBlock)
 	{ printOwner(ep); }
+	
+	public String getQTitle()
+	{ return getQIcon().getDisplayName(); }
+	
+	public int getQColor()
+	{ return 0xFF4E0063; }
+	
+	public ItemStack getQIcon()
+	{ return new ItemStack(EMCCItems.b_condenser); }
+	
+	public void onQClicked(EntityPlayerMP ep, int button)
+	{
+		if(!security.canInteract(ep))
+		{ printOwner(ep); return; }
+		LatCoreMC.openGui(ep, this, null);
+	}
 }
