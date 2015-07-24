@@ -1,6 +1,5 @@
 package latmod.emcc.client.gui;
 import latmod.emcc.*;
-import latmod.emcc.api.IEmcStorageItem;
 import latmod.emcc.emc.EMCHandler;
 import latmod.emcc.tile.TileCondenser;
 import latmod.ftbu.core.client.LMGuiButtons;
@@ -110,13 +109,8 @@ public class GuiCondenser extends GuiLM
 			public void addMouseOverText(FastList<String> l)
 			{
 				ItemStack tar = condenser.items[TileCondenser.SLOT_TARGET];
-				
 				double emc1 =  EMCHandler.instance().getEMC(tar);
-				
-				boolean charging = tar != null && tar.getItem() instanceof IEmcStorageItem;
-				
 				l.add(EnumChatFormatting.GOLD.toString() + "" + formatEMC(condenser.storedEMC) + (emc1 <= 0D ? "" : (" / " + formatEMC(emc1))));
-				if(charging && condenser.storedEMC > 0D) l.add(EMCC.mod.translateClient("charging"));
 			}
 		};
 		
@@ -168,6 +162,8 @@ public class GuiCondenser extends GuiLM
 	
 	public static String formatEMC(double d)
 	{
+		if(d == Double.POSITIVE_INFINITY) return EnumChatFormatting.OBFUSCATED + "000000";
+		
 		d = ((long)(d * 1000D)) / 1000D;
 		
 		String s = "" + d;

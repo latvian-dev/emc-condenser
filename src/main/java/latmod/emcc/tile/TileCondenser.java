@@ -222,10 +222,8 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	
 	public boolean isItemValidForSlot(int i, ItemStack is)
 	{
-		if(i == SLOT_TARGET)
-			return is == null || EMCHandler.instance().getEMC(is) > 0F;
-		else if(anyEquals(i, INPUT_SLOTS))
-			return is != null && EMCHandler.instance().getEMC(is) > 0F;
+		if(i == SLOT_TARGET || anyEquals(i, INPUT_SLOTS))
+			return is.getItem() instanceof IEmcStorageItem || EMCHandler.instance().getEMC(is) > 0F;
 		return false;
 	}
 	
@@ -313,8 +311,9 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	public ItemStack getQIcon()
 	{ return new ItemStack(EMCCItems.b_condenser); }
 	
-	public void onQClicked(EntityPlayerMP ep, int button)
+	public void onQClicked(EntityPlayer ep, int button)
 	{
+		if(!isServer()) return;
 		if(!security.canInteract(ep))
 		{ printOwner(ep); return; }
 		LatCoreMC.openGui(ep, this, null);
