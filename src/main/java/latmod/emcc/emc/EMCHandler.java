@@ -77,22 +77,22 @@ public class EMCHandler
 	{
 		// Material recipes //
 		
-		EMCC.mod.recipes.addRecipe(ItemMaterialsEMCC.ITEM_UUS, "MRM", "VSV", "MGM",
+		EMCC.mod.recipes.addRecipe(ItemMaterialsEMCC.ITEM_UUS.stack, "MRM", "VSV", "MGM",
 				'M', ODItems.DIAMOND,
 				'V', ODItems.EMERALD,
 				'R', ODItems.REDSTONE,
 				'G', ODItems.GLOWSTONE,
 				'S', Blocks.stone);
 		
-		EMCC.mod.recipes.addRecipe(LMRecipes.size(ItemMaterialsEMCC.INGOT_UUS, 8), "III", "IUI", "III",
+		EMCC.mod.recipes.addRecipe(LMRecipes.size(ItemMaterialsEMCC.INGOT_UUS.stack, 8), "III", "IUI", "III",
 				'I', ODItems.IRON,
-				'U', ItemMaterialsEMCC.ITEM_UUS);
+				'U', ItemMaterialsEMCC.ITEM_UUS.stack);
 		
 		EMCC.mod.recipes.addRecipe(new ItemStack(EMCCItems.b_uu_block, 8), "III", "IUI", "III",
 				'I', ODItems.OBSIDIAN,
-				'U', ItemMaterialsEMCC.ITEM_UUS);
+				'U', ItemMaterialsEMCC.ITEM_UUS.stack);
 		
-		EMCC.mod.recipes.addRecipe(ItemMaterialsEMCC.MINIUM_STAR, "MMM", "MSM", "MMM",
+		EMCC.mod.recipes.addRecipe(ItemMaterialsEMCC.MINIUM_STAR.stack, "MMM", "MSM", "MMM",
 				Character.valueOf('M'), ODItems.DIAMOND,
 				Character.valueOf('S'), Items.nether_star);
 		
@@ -100,7 +100,7 @@ public class EMCHandler
 		
 		EMCC.mod.recipes.addRecipe(new ItemStack(EMCCItems.b_condenser), "OBO", "OSO", "OIO",
 				'O', EMCCItems.b_uu_block,
-				'I', ItemMaterialsEMCC.MINIUM_STAR,
+				'I', ItemMaterialsEMCC.MINIUM_STAR.stack,
 				'B', EMCCItems.i_black_hole_band,
 				'S', Blocks.diamond_block);
 	}

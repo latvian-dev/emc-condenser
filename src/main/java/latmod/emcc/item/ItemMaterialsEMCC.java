@@ -1,61 +1,47 @@
 package latmod.emcc.item;
-import latmod.ftbu.core.client.LatCoreMCClient;
+import latmod.emcc.EMCC;
+import latmod.ftbu.core.LMMod;
 import latmod.ftbu.core.inv.ODItems;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import latmod.ftbu.core.item.*;
+import net.minecraft.creativetab.CreativeTabs;
 import cpw.mods.fml.relauncher.*;
 
-public class ItemMaterialsEMCC extends ItemEMCC
+public class ItemMaterialsEMCC extends ItemMaterialsLM
 {
-	public static final String[] names =
-	{
-		"item_uus",
-		"minium_star",
-		"ingot_uus"
-	};
-	
-	public static ItemStack ITEM_UUS;
-	public static ItemStack MINIUM_STAR;
-	public static ItemStack INGOT_UUS;
-	
-	@SideOnly(Side.CLIENT)
-	public IIcon[] icons;
+	public static MaterialItem ITEM_UUS;
+	public static MaterialItem MINIUM_STAR;
+	public static MaterialItem INGOT_UUS;
 	
 	public ItemMaterialsEMCC(String s)
-	{
-		super(s);
-		setHasSubtypes(true);
-		setMaxDamage(0);
-	}
+	{ super(s); }
 	
 	public void onPostLoaded()
 	{
-		itemsAdded.add(ODItems.add("itemUUS", ITEM_UUS = new ItemStack(this, 1, 0)));
-		itemsAdded.add(ODItems.add("miniumStar", MINIUM_STAR = new ItemStack(this, 1, 1)));
-		itemsAdded.add(ODItems.add("ingotUUS", INGOT_UUS = new ItemStack(this, 1, 2)));
+		add(ITEM_UUS = new MaterialItem(0, "item_uus")
+		{
+			public void onPostLoaded()
+			{ ODItems.add("itemUUS", stack); }
+		});
+		
+		add(MINIUM_STAR = new MaterialItem(1, "minium_star")
+		{
+			public void onPostLoaded()
+			{ ODItems.add("miniumStar", stack); }
+		});
+		
+		add(INGOT_UUS = new MaterialItem(2, "ingot_uus")
+		{
+			public void onPostLoaded()
+			{ ODItems.add("ingotUUS", stack); }
+		});
+		
+		super.onPostLoaded();
 	}
 	
-	public void loadRecipes()
-	{
-	}
-	
-	public String getUnlocalizedName(ItemStack is)
-	{
-		int dmg = is.getItemDamage();
-		if(dmg < 0 || dmg >= names.length) return "unknown";
-		return mod.getItemName(names[dmg]);
-	}
+	public LMMod getMod()
+	{ return EMCC.mod; }
 	
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister ir)
-	{
-		icons = new IIcon[names.length];
-		for(int i = 0; i < names.length; i++)
-			icons[i] = ir.registerIcon(mod.assets + names[i]);
-	}
-	
-	@SideOnly(Side.CLIENT)
-	public IIcon getIconFromDamageForRenderPass(int m, int r)
-	{ return (m >= 0 && m < icons.length) ? icons[m] : LatCoreMCClient.unknownItemIcon; }
+	public CreativeTabs getCreativeTab()
+	{ return EMCC.tab; }
 }

@@ -33,7 +33,7 @@ public class EMCHandlerEE3 extends EMCHandler
 		
 		// Material recipes //
 		
-		EMCC.mod.recipes.addRecipe(ItemMaterialsEMCC.ITEM_UUS, "MRM", "VSA", "MGM",
+		EMCC.mod.recipes.addRecipe(ItemMaterialsEMCC.ITEM_UUS.stack, "MRM", "VSA", "MGM",
 				'M', DUST_MINIUM,
 				'V', ODItems.EMERALD,
 				'A', ODItems.DIAMOND,
@@ -41,21 +41,21 @@ public class EMCHandlerEE3 extends EMCHandler
 				'G', ODItems.GLOWSTONE,
 				'S', Blocks.stone);
 		
-		addInfusing(LMRecipes.size(ItemMaterialsEMCC.INGOT_UUS, 8),
+		addInfusing(LMRecipes.size(ItemMaterialsEMCC.INGOT_UUS.stack, 8),
 				new ItemStack(Items.iron_ingot, 8),
-				ItemMaterialsEMCC.ITEM_UUS);
+				ItemMaterialsEMCC.ITEM_UUS.stack);
 		
 		addInfusing(new ItemStack(EMCCItems.b_uu_block, 8),
 				new ItemStack(Blocks.obsidian, 8),
-				ItemMaterialsEMCC.ITEM_UUS);
+				ItemMaterialsEMCC.ITEM_UUS.stack);
 		
-		addInfusing(ItemMaterialsEMCC.MINIUM_STAR, new ItemStack(Items.nether_star), LMRecipes.size(DUST_MINIUM, 8));
+		addInfusing(ItemMaterialsEMCC.MINIUM_STAR.stack, new ItemStack(Items.nether_star), LMRecipes.size(DUST_MINIUM, 8));
 		
 		// Condenser recipe //
 		
 		EMCC.mod.recipes.addRecipe(new ItemStack(EMCCItems.b_condenser), "OBO", "OSO", "OIO",
 				'O', EMCCItems.b_uu_block,
-				'I', ItemMaterialsEMCC.MINIUM_STAR,
+				'I', ItemMaterialsEMCC.MINIUM_STAR.stack,
 				'B', EMCCItems.i_black_hole_band,
 				'S', new ItemStack(com.pahimar.ee3.init.ModItems.stoneMinium, 1, ODItems.ANY));
 	}

@@ -37,7 +37,7 @@ public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 				'Q', ODItems.QUARTZ,
 				'R', ODItems.REDSTONE,
 				'G', ODItems.GLOWSTONE,
-				'U', ItemMaterialsEMCC.ITEM_UUS);
+				'U', ItemMaterialsEMCC.ITEM_UUS.stack);
 	}
 	
 	public void onPostLoaded()
