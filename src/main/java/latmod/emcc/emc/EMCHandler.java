@@ -6,7 +6,6 @@ import latmod.emcc.*;
 import latmod.emcc.item.ItemMaterialsEMCC;
 import latmod.ftbu.core.*;
 import latmod.ftbu.core.inv.ODItems;
-import latmod.ftbu.core.recipes.LMRecipes;
 import latmod.ftbu.core.util.LatCore;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
@@ -77,22 +76,22 @@ public class EMCHandler
 	{
 		// Material recipes //
 		
-		EMCC.mod.recipes.addRecipe(ItemMaterialsEMCC.ITEM_UUS.stack, "MRM", "VSV", "MGM",
+		EMCC.mod.recipes.addRecipe(ItemMaterialsEMCC.ITEM_UUS.getStack(), "MRM", "VSV", "MGM",
 				'M', ODItems.DIAMOND,
 				'V', ODItems.EMERALD,
 				'R', ODItems.REDSTONE,
 				'G', ODItems.GLOWSTONE,
 				'S', Blocks.stone);
 		
-		EMCC.mod.recipes.addRecipe(LMRecipes.size(ItemMaterialsEMCC.INGOT_UUS.stack, 8), "III", "IUI", "III",
+		EMCC.mod.recipes.addRecipe(ItemMaterialsEMCC.INGOT_UUS.getStack(8), "III", "IUI", "III",
 				'I', ODItems.IRON,
-				'U', ItemMaterialsEMCC.ITEM_UUS.stack);
+				'U', ItemMaterialsEMCC.ITEM_UUS);
 		
 		EMCC.mod.recipes.addRecipe(new ItemStack(EMCCItems.b_uu_block, 8), "III", "IUI", "III",
 				'I', ODItems.OBSIDIAN,
-				'U', ItemMaterialsEMCC.ITEM_UUS.stack);
+				'U', ItemMaterialsEMCC.ITEM_UUS);
 		
-		EMCC.mod.recipes.addRecipe(ItemMaterialsEMCC.MINIUM_STAR.stack, "MMM", "MSM", "MMM",
+		EMCC.mod.recipes.addRecipe(ItemMaterialsEMCC.MINIUM_STAR.getStack(), "MMM", "MSM", "MMM",
 				Character.valueOf('M'), ODItems.DIAMOND,
 				Character.valueOf('S'), Items.nether_star);
 		
@@ -100,7 +99,7 @@ public class EMCHandler
 		
 		EMCC.mod.recipes.addRecipe(new ItemStack(EMCCItems.b_condenser), "OBO", "OSO", "OIO",
 				'O', EMCCItems.b_uu_block,
-				'I', ItemMaterialsEMCC.MINIUM_STAR.stack,
+				'I', ItemMaterialsEMCC.MINIUM_STAR,
 				'B', EMCCItems.i_black_hole_band,
 				'S', Blocks.diamond_block);
 	}

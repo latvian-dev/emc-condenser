@@ -26,7 +26,7 @@ public class ItemUUAxe extends ItemToolEMCC // ItemAxe
 	{
 		if(EMCCConfig.Tools.enableTools)
 			mod.recipes.addRecipe(new ItemStack(this), "UU", "US", " S",
-					'U', ItemMaterialsEMCC.INGOT_UUS.stack,
+					'U', ItemMaterialsEMCC.INGOT_UUS,
 					'S', ODItems.STICK);
 	}
 	

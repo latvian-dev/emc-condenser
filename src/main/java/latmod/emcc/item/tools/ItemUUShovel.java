@@ -29,7 +29,7 @@ public class ItemUUShovel extends ItemToolEMCC
 	{
 		if(EMCCConfig.Tools.enableTools)
 			mod.recipes.addRecipe(new ItemStack(this), "U", "S", "S",
-					'U', ItemMaterialsEMCC.INGOT_UUS.stack,
+					'U', ItemMaterialsEMCC.INGOT_UUS,
 					'S', ODItems.STICK);
 	}
 	

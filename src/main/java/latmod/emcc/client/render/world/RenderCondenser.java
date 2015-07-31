@@ -13,8 +13,11 @@ public class RenderCondenser extends BlockRendererLM
 {
 	public static final RenderCondenser instance = new RenderCondenser();
 	
-	public Block glow = new BlockGlowing()
+	public Block glow = new BlockCustom()
 	{
+		public int getLightValue()
+		{ return 15; }
+		
 		public IIcon getIcon(int s, int m)
 		{ return (s == 1) ? EMCCItems.b_condenser.icon_top_glow : EMCCItems.b_condenser.icon_side_glow; }
 	};
@@ -37,7 +40,8 @@ public class RenderCondenser extends BlockRendererLM
 	
 	public boolean renderWorldBlock(IBlockAccess iba, int x, int y, int z, Block b, int modelID, RenderBlocks rb)
 	{
-		renderBlocks.blockAccess = iba;
+		renderBlocks.setInst(iba);
+		renderBlocks.currentSide = -1;
 		
 		renderBlocks.setRenderBounds(renderBlocks.fullBlock);
 		renderBlocks.clearOverrideBlockTexture();

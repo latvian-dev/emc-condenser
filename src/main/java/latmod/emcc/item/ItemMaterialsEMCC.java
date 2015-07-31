@@ -17,22 +17,22 @@ public class ItemMaterialsEMCC extends ItemMaterialsLM
 	
 	public void onPostLoaded()
 	{
-		add(ITEM_UUS = new MaterialItem(0, "item_uus")
+		add(ITEM_UUS = new MaterialItem(this, 0, "item_uus")
 		{
 			public void onPostLoaded()
-			{ ODItems.add("itemUUS", stack); }
+			{ ODItems.add("itemUUS", getStack()); }
 		});
 		
-		add(MINIUM_STAR = new MaterialItem(1, "minium_star")
+		add(MINIUM_STAR = new MaterialItem(this, 1, "minium_star")
 		{
 			public void onPostLoaded()
-			{ ODItems.add("miniumStar", stack); }
+			{ ODItems.add("miniumStar", getStack()); }
 		});
 		
-		add(INGOT_UUS = new MaterialItem(2, "ingot_uus")
+		add(INGOT_UUS = new MaterialItem(this, 2, "ingot_uus")
 		{
 			public void onPostLoaded()
-			{ ODItems.add("ingotUUS", stack); }
+			{ ODItems.add("ingotUUS", getStack()); }
 		});
 		
 		super.onPostLoaded();
