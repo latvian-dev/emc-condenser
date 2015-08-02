@@ -2,8 +2,9 @@ package latmod.emcc;
 
 import latmod.emcc.api.*;
 import latmod.emcc.emc.EMCHandler;
-import latmod.ftbu.core.event.ReloadEvent;
+import latmod.ftbu.core.api.IFTBUReloadable;
 import latmod.ftbu.mod.FTBU;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.AnvilUpdateEvent;
@@ -12,14 +13,13 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import cpw.mods.fml.common.eventhandler.*;
 import cpw.mods.fml.relauncher.*;
 
-public class EMCCEventHandler
+public class EMCCEventHandler implements IFTBUReloadable
 {
 	public static final EMCCEventHandler instance = new EMCCEventHandler();
 	
-	@SubscribeEvent
-	public void onReloaded(ReloadEvent e)
+	public void onReloaded(Side s, ICommandSender e) throws Exception
 	{
-		EMCHandler.instance().reloadEMCValues();
+		if(s.isServer()) EMCHandler.instance().reloadEMCValues();
 	}
 	
 	@SideOnly(Side.CLIENT)
