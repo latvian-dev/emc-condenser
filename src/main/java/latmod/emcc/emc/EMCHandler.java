@@ -97,11 +97,12 @@ public class EMCHandler
 		
 		// Condenser recipe //
 		
-		EMCC.mod.recipes.addRecipe(new ItemStack(EMCCItems.b_condenser), "OBO", "OSO", "OIO",
+		EMCC.mod.recipes.addRecipe(new ItemStack(EMCCItems.b_condenser), "OBO", "ASA", "OIO",
 				'O', EMCCItems.b_uu_block,
 				'I', ItemMaterialsEMCC.MINIUM_STAR,
 				'B', EMCCItems.i_black_hole_band,
-				'S', Blocks.diamond_block);
+				'S', Blocks.diamond_block,
+				'A', ODItems.OBSIDIAN);
 	}
 	
 	public float getEMC(ItemStack is)

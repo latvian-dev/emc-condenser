@@ -53,11 +53,12 @@ public class EMCHandlerEE3 extends EMCHandler
 		
 		// Condenser recipe //
 		
-		EMCC.mod.recipes.addRecipe(new ItemStack(EMCCItems.b_condenser), "OBO", "OSO", "OIO",
+		EMCC.mod.recipes.addRecipe(new ItemStack(EMCCItems.b_condenser), "OBO", "ASA", "OIO",
 				'O', EMCCItems.b_uu_block,
 				'I', ItemMaterialsEMCC.MINIUM_STAR,
 				'B', EMCCItems.i_black_hole_band,
-				'S', new ItemStack(com.pahimar.ee3.init.ModItems.stoneMinium, 1, ODItems.ANY));
+				'S', new ItemStack(com.pahimar.ee3.init.ModItems.stoneMinium, 1, ODItems.ANY),
+				'A', ODItems.OBSIDIAN);
 	}
 	
 	public void addInfusing(ItemStack out, ItemStack in, ItemStack with)
