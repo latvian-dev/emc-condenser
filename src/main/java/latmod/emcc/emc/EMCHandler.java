@@ -6,7 +6,7 @@ import latmod.emcc.*;
 import latmod.emcc.item.ItemMaterialsEMCC;
 import latmod.ftbu.core.*;
 import latmod.ftbu.core.inv.ODItems;
-import latmod.ftbu.core.util.LatCore;
+import latmod.ftbu.core.util.LMJsonUtils;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -59,7 +59,7 @@ public class EMCHandler
 		
 		if(vanillaEMCFile.exists())
 		{
-			VanillaEMC.EMCFile f = LatCore.fromJsonFile(vanillaEMCFile, VanillaEMC.EMCFile.class);
+			VanillaEMC.EMCFile f = LMJsonUtils.fromJsonFile(vanillaEMCFile, VanillaEMC.EMCFile.class);
 			if(f != null) f.saveTo(vanillaEMC);
 			else vanillaEMC.loadDefaults();
 		}
@@ -68,7 +68,7 @@ public class EMCHandler
 			vanillaEMC.loadDefaults();
 			VanillaEMC.EMCFile f = new VanillaEMC.EMCFile();
 			f.loadFrom(vanillaEMC);
-			LatCore.toJsonFile(vanillaEMCFile, f);
+			LMJsonUtils.toJsonFile(vanillaEMCFile, f);
 		}
 	}
 	

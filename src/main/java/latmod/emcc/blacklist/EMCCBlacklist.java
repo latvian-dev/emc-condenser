@@ -17,7 +17,7 @@ public class EMCCBlacklist
 		
 		list = null;
 		
-		if(file.exists()) try { list = LatCore.fromJsonFile(file, Blacklist.class); }
+		if(file.exists()) try { list = LMJsonUtils.fromJsonFile(file, Blacklist.class); }
 		catch(Exception ex) { list = null; }
 		
 		if(list == null)
@@ -59,7 +59,7 @@ public class EMCCBlacklist
 			list.example.addRegistryName("itemWithDamage", 3);
 			list.example.addRegistryName("itemAnyDamage", -1);
 			
-			LatCore.toJsonFile(file, list);
+			LMJsonUtils.toJsonFile(file, list);
 		}
 		
 		list.all.reloadList();

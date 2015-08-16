@@ -32,8 +32,8 @@ public class EMCC
 		LMMod.init(this, new EMCCConfig(e), null);
 		blacklist = new EMCCBlacklist(e);
 		
-		LatCoreMC.BusType.FORGE.register(EMCCEventHandler.instance);
-		LatCoreMC.BusType.LATMOD.register(EMCCEventHandler.instance);
+		EnumBusType.FORGE.register(EMCCEventHandler.instance);
+		EnumBusType.LATMOD.register(EMCCEventHandler.instance);
 		FTBUReloadableRegistry.add(EMCCEventHandler.instance);
 		
 		EMCHandler.init(e);
