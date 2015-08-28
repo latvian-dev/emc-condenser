@@ -3,7 +3,7 @@ import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.blacklist.EMCCBlacklist;
 import latmod.emcc.emc.EMCHandler;
 import latmod.ftbu.core.*;
-import latmod.ftbu.core.api.FTBUReloadableRegistry;
+import latmod.ftbu.core.api.FTBUApi;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.*;
@@ -34,7 +34,7 @@ public class EMCC
 		
 		EnumBusType.FORGE.register(EMCCEventHandler.instance);
 		EnumBusType.LATMOD.register(EMCCEventHandler.instance);
-		FTBUReloadableRegistry.add(EMCCEventHandler.instance);
+		FTBUApi.add(EMCCEventHandler.instance);
 		
 		EMCHandler.init(e);
 		
