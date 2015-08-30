@@ -119,15 +119,15 @@ public class GuiCondenser extends GuiLM
 		sidebar = new WidgetLM(this, -25, 26, texSidebar.width, texSidebar.height);
 	}
 	
-	public void addWidgets(FastList<WidgetLM> l)
+	public void addWidgets()
 	{
-		l.add(buttonTransItems);
-		l.add(buttonSecurity);
-		l.add(buttonRedstone);
-		l.add(buttonInvMode);
-		l.add(buttonSafeMode);
-		l.add(barEMC);
-		l.add(targetIcon);
+		mainPanel.add(buttonTransItems);
+		mainPanel.add(buttonSecurity);
+		mainPanel.add(buttonRedstone);
+		mainPanel.add(buttonInvMode);
+		mainPanel.add(buttonSafeMode);
+		mainPanel.add(barEMC);
+		mainPanel.add(targetIcon);
 	}
 	
 	public void drawBackground()
@@ -148,14 +148,14 @@ public class GuiCondenser extends GuiLM
 		if(condenser.items[TileCondenser.SLOT_TARGET] == null)
 			targetIcon.render(texTarget);
 		
-		buttonTransItems.render(Icons.down);
+		buttonTransItems.render(GuiIcons.down);
 		
 		sidebar.render(texSidebar);
 		
-		buttonRedstone.render(Icons.redstone[condenser.redstoneMode.ID]);
-		buttonSecurity.render(Icons.security[condenser.security.level.ID]);
-		buttonInvMode.render(Icons.inv[condenser.invMode.ID]);
-		buttonSafeMode.render(condenser.safeMode.isOn() ? Icons.accept : Icons.accept_gray);
+		buttonRedstone.render(GuiIcons.redstone[condenser.redstoneMode.ID]);
+		buttonSecurity.render(GuiIcons.security[condenser.security.level.ID]);
+		buttonInvMode.render(GuiIcons.inv[condenser.invMode.ID]);
+		buttonSafeMode.render(condenser.safeMode.isOn() ? GuiIcons.accept : GuiIcons.accept_gray);
 		
 		targetIcon.title = (condenser.items[TileCondenser.SLOT_TARGET] == null) ? noTargetLang : null;
 	}
