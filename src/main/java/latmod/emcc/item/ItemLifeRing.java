@@ -1,5 +1,7 @@
 package latmod.emcc.item;
 
+import baubles.api.*;
+import cpw.mods.fml.common.Optional;
 import latmod.emcc.*;
 import latmod.ftbu.core.OtherMods;
 import net.minecraft.entity.*;
@@ -7,8 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import baubles.api.*;
-import cpw.mods.fml.common.Optional;
 
 @Optional.Interface(modid = OtherMods.BAUBLES, iface = "baubles.api.IBauble")
 public class ItemLifeRing extends ItemEmcStorage implements IBauble

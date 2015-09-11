@@ -1,4 +1,5 @@
 package latmod.emcc.item.tools;
+import cpw.mods.fml.relauncher.*;
 import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.*;
 import latmod.emcc.item.ItemMaterialsEMCC;
@@ -12,7 +13,6 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.*;
-import cpw.mods.fml.relauncher.*;
 
 public class ItemUUBow extends ItemToolEMCC // ItemBow
 {

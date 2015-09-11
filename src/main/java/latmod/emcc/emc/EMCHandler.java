@@ -2,6 +2,7 @@ package latmod.emcc.emc;
 
 import java.io.File;
 
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import latmod.emcc.*;
 import latmod.emcc.item.ItemMaterialsEMCC;
 import latmod.ftbu.core.*;
@@ -9,7 +10,6 @@ import latmod.ftbu.core.inv.ODItems;
 import latmod.ftbu.core.util.LMJsonUtils;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class EMCHandler
 {

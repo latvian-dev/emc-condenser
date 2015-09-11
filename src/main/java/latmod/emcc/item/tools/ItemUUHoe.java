@@ -1,4 +1,5 @@
 package latmod.emcc.item.tools;
+import cpw.mods.fml.common.eventhandler.Event.Result;
 import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.item.ItemMaterialsEMCC;
@@ -10,7 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
-import cpw.mods.fml.common.eventhandler.Event.Result;
 
 public class ItemUUHoe extends ItemToolEMCC
 {

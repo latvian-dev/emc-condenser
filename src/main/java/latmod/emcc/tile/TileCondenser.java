@@ -1,4 +1,6 @@
 package latmod.emcc.tile;
+import cpw.mods.fml.common.Optional;
+import cpw.mods.fml.relauncher.*;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.client.gui.*;
@@ -13,8 +15,6 @@ import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import cpw.mods.fml.common.Optional;
-import cpw.mods.fml.relauncher.*;
 
 @Optional.Interface(modid = OtherMods.LATBLOCKS, iface = "latmod.latblocks.tile.IQuartzNetTile")
 public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWrenchable, IClientActionTile, IGuiTile, ISecureTile, IQuartzNetTile

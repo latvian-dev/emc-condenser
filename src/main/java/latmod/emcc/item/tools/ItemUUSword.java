@@ -1,4 +1,6 @@
 package latmod.emcc.item.tools;
+import com.google.common.collect.Multimap;
+
 import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.*;
 import latmod.emcc.item.ItemMaterialsEMCC;
@@ -11,8 +13,6 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-
-import com.google.common.collect.Multimap;
 
 public class ItemUUSword extends ItemToolEMCC implements ICreativeSafeItem // ItemSword
 {

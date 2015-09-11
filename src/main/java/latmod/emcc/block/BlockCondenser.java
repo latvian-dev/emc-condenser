@@ -1,4 +1,5 @@
 package latmod.emcc.block;
+import cpw.mods.fml.relauncher.*;
 import latmod.emcc.client.render.world.RenderCondenser;
 import latmod.emcc.tile.TileCondenser;
 import latmod.ftbu.core.tile.TileLM;
@@ -6,7 +7,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.*;
 
 public class BlockCondenser extends BlockEMCC
 {

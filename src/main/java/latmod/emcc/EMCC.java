@@ -1,12 +1,12 @@
 package latmod.emcc;
+import cpw.mods.fml.common.*;
+import cpw.mods.fml.common.event.*;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.blacklist.EMCCBlacklist;
 import latmod.emcc.emc.EMCHandler;
 import latmod.ftbu.core.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.common.*;
-import cpw.mods.fml.common.event.*;
 
 @Mod(modid = EMCC.MOD_ID, name = "EMC Condenser", version = "@VERSION@", dependencies = "required-after:FTBU;after:EE3")
 public class EMCC

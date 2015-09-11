@@ -3,14 +3,14 @@ package latmod.emcc.emc;
 import java.io.*;
 import java.util.*;
 
+import com.google.gson.annotations.Expose;
+
 import latmod.emcc.EMCC;
 import latmod.ftbu.core.inv.*;
 import latmod.ftbu.core.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.init.*;
 import net.minecraft.item.*;
-
-import com.google.gson.annotations.Expose;
 
 public class VanillaEMC
 {

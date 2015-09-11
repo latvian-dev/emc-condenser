@@ -1,12 +1,12 @@
 package latmod.emcc.client.render.world;
 
+import cpw.mods.fml.relauncher.*;
 import latmod.emcc.EMCCItems;
 import latmod.ftbu.core.client.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
-import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public class RenderCondenser extends BlockRendererLM

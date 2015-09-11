@@ -1,4 +1,5 @@
 package latmod.emcc.client.gui;
+import cpw.mods.fml.relauncher.*;
 import latmod.emcc.*;
 import latmod.emcc.emc.EMCHandler;
 import latmod.emcc.tile.TileCondenser;
@@ -8,7 +9,6 @@ import latmod.ftbu.core.util.FastList;
 import latmod.ftbu.mod.FTBU;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
-import cpw.mods.fml.relauncher.*;
 
 @SideOnly(Side.CLIENT)
 public class GuiCondenser extends GuiLM

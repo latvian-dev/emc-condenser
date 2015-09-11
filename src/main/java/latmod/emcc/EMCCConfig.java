@@ -1,11 +1,11 @@
 package latmod.emcc;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import latmod.emcc.emc.*;
 import latmod.emcc.tile.SafeMode;
 import latmod.ftbu.core.*;
 import latmod.ftbu.core.tile.*;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class EMCCConfig extends LMConfig implements IServerConfig
 {

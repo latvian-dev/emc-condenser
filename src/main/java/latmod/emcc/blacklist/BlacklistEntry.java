@@ -1,11 +1,11 @@
 package latmod.emcc.blacklist;
 import java.util.List;
 
+import com.google.gson.annotations.Expose;
+
 import latmod.ftbu.core.inv.*;
 import latmod.ftbu.core.util.FastList;
 import net.minecraft.item.*;
-
-import com.google.gson.annotations.Expose;
 
 public class BlacklistEntry
 {

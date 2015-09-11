@@ -1,5 +1,7 @@
 package latmod.emcc;
 
+import cpw.mods.fml.common.eventhandler.*;
+import cpw.mods.fml.relauncher.*;
 import latmod.emcc.api.*;
 import latmod.emcc.emc.EMCHandler;
 import latmod.ftbu.core.api.EventFTBUReload;
@@ -9,8 +11,6 @@ import net.minecraft.item.Item;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import cpw.mods.fml.common.eventhandler.*;
-import cpw.mods.fml.relauncher.*;
 
 public class EMCCEventHandler
 {

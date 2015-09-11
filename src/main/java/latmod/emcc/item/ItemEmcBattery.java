@@ -1,5 +1,7 @@
 package latmod.emcc.item;
 
+import baubles.api.*;
+import cpw.mods.fml.common.Optional;
 import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.IEmcStorageItem;
 import latmod.ftbu.core.*;
@@ -10,8 +12,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import baubles.api.*;
-import cpw.mods.fml.common.Optional;
 
 @Optional.Interface(modid = OtherMods.BAUBLES, iface = "baubles.api.IBauble")
 public class ItemEmcBattery extends ItemEmcStorage implements IBauble

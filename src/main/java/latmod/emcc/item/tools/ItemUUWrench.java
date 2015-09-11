@@ -1,4 +1,5 @@
 package latmod.emcc.item.tools;
+import cpw.mods.fml.relauncher.*;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.ftbu.core.inv.ODItems;
@@ -11,7 +12,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import cpw.mods.fml.relauncher.*;
 
 public class ItemUUWrench extends ItemToolEMCC
 {

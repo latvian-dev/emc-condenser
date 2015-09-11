@@ -1,6 +1,6 @@
 package latmod.emcc.tile;
-import latmod.emcc.EMCC;
 import cpw.mods.fml.relauncher.*;
+import latmod.emcc.EMCC;
 
 public enum SafeMode
 {
