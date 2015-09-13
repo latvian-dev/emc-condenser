@@ -3,8 +3,6 @@ package latmod.emcc.emc;
 import java.io.*;
 import java.util.*;
 
-import com.google.gson.annotations.Expose;
-
 import latmod.emcc.EMCC;
 import latmod.ftbu.core.inv.*;
 import latmod.ftbu.core.util.*;
@@ -243,8 +241,8 @@ public class VanillaEMC
 	
 	public static class EMCFile
 	{
-		@Expose public Map<String, Float> regNames;
-		@Expose public Map<String, Float> oreNames;
+		public Map<String, Float> regNames;
+		public Map<String, Float> oreNames;
 		
 		public void loadFrom(VanillaEMC e)
 		{
