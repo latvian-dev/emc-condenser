@@ -31,7 +31,7 @@ public class EMCC
 		LMMod.init(this, new EMCCConfig(e), null);
 		blacklist = new EMCCBlacklist(e);
 		
-		EnumBusType.register(EMCCEventHandler.instance);
+		EventBusHelper.register(EMCCEventHandler.instance);
 		EMCHandler.init(e);
 		EMCCItems.preInit();
 		mod.onPostLoaded();
