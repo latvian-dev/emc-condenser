@@ -1,12 +1,12 @@
 package latmod.emcc.client.gui;
 import cpw.mods.fml.relauncher.*;
+import latmod.core.util.FastList;
 import latmod.emcc.*;
 import latmod.emcc.emc.EMCHandler;
 import latmod.emcc.tile.TileCondenser;
-import latmod.ftbu.core.client.LMGuiButtons;
-import latmod.ftbu.core.gui.*;
-import latmod.ftbu.core.util.FastList;
 import latmod.ftbu.mod.FTBU;
+import latmod.ftbu.util.client.LMGuiButtons;
+import latmod.ftbu.util.gui.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 

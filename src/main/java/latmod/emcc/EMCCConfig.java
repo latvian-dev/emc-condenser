@@ -2,8 +2,9 @@ package latmod.emcc;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import latmod.emcc.emc.*;
 import latmod.emcc.tile.SafeMode;
-import latmod.ftbu.core.*;
-import latmod.ftbu.core.tile.*;
+import latmod.ftbu.api.IServerConfig;
+import latmod.ftbu.tile.*;
+import latmod.ftbu.util.*;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 

@@ -2,7 +2,7 @@ package latmod.emcc.client.render.world;
 
 import cpw.mods.fml.relauncher.*;
 import latmod.emcc.EMCCItems;
-import latmod.ftbu.core.client.*;
+import latmod.ftbu.util.client.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.util.IIcon;

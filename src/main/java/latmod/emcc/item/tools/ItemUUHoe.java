@@ -3,7 +3,7 @@ import cpw.mods.fml.common.eventhandler.Event.Result;
 import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.item.ItemMaterialsEMCC;
-import latmod.ftbu.core.inv.ODItems;
+import latmod.ftbu.inv.ODItems;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;

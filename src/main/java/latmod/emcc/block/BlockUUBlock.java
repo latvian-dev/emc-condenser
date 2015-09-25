@@ -1,6 +1,6 @@
 package latmod.emcc.block;
 import latmod.emcc.EMCCConfig;
-import latmod.ftbu.core.tile.TileLM;
+import latmod.ftbu.tile.TileLM;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
 

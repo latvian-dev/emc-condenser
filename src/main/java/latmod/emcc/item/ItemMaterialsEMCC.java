@@ -1,9 +1,9 @@
 package latmod.emcc.item;
 import cpw.mods.fml.relauncher.*;
 import latmod.emcc.EMCC;
-import latmod.ftbu.core.LMMod;
-import latmod.ftbu.core.inv.ODItems;
-import latmod.ftbu.core.item.*;
+import latmod.ftbu.inv.ODItems;
+import latmod.ftbu.item.*;
+import latmod.ftbu.util.LMMod;
 import net.minecraft.creativetab.CreativeTabs;
 
 public class ItemMaterialsEMCC extends ItemMaterialsLM

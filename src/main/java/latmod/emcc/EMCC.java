@@ -4,7 +4,7 @@ import cpw.mods.fml.common.event.*;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.blacklist.EMCCBlacklist;
 import latmod.emcc.emc.EMCHandler;
-import latmod.ftbu.core.*;
+import latmod.ftbu.util.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 

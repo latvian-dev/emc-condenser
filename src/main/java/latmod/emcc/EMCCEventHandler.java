@@ -4,7 +4,7 @@ import cpw.mods.fml.common.eventhandler.*;
 import cpw.mods.fml.relauncher.*;
 import latmod.emcc.api.*;
 import latmod.emcc.emc.EMCHandler;
-import latmod.ftbu.core.api.EventFTBUReload;
+import latmod.ftbu.api.EventFTBUReload;
 import latmod.ftbu.mod.FTBU;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;

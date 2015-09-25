@@ -3,8 +3,8 @@ import java.util.List;
 
 import com.google.gson.annotations.Expose;
 
-import latmod.ftbu.core.inv.*;
-import latmod.ftbu.core.util.FastList;
+import latmod.core.util.FastList;
+import latmod.ftbu.inv.*;
 import net.minecraft.item.*;
 
 public class BlacklistEntry
