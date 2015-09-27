@@ -188,7 +188,7 @@ public class VanillaEMC
 	{
 		if(s != null && !s.isEmpty() && v > 0F)
 		{
-			ItemStack is = ItemStackSerializer.parseItem(s);
+			ItemStack is = ItemStackTypeAdapter.parseItem(s);
 			if(is != null) addReg(is.getItem(), is.getItemDamage(), v);
 		}
 	}
