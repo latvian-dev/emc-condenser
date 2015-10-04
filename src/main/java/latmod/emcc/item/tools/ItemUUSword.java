@@ -1,8 +1,8 @@
 package latmod.emcc.item.tools;
 import com.google.common.collect.Multimap;
 
-import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.*;
+import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemMaterialsEMCC;
 import latmod.ftbu.inv.ODItems;
 import latmod.ftbu.item.ICreativeSafeItem;
@@ -23,7 +23,7 @@ public class ItemUUSword extends ItemToolEMCC implements ICreativeSafeItem // It
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfig.Tools.enableSword)
+		if(EMCCConfigTools.enableSword.get())
 			mod.recipes.addRecipe(new ItemStack(this), "U", "U", "S",
 					'U', ItemMaterialsEMCC.INGOT_UUS,
 					'S', ODItems.STICK);

@@ -1,7 +1,7 @@
 package latmod.emcc.item.tools;
 import cpw.mods.fml.common.eventhandler.Event.Result;
-import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.ToolInfusion;
+import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemMaterialsEMCC;
 import latmod.ftbu.inv.ODItems;
 import net.minecraft.block.Block;
@@ -21,7 +21,7 @@ public class ItemUUHoe extends ItemToolEMCC
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfig.Tools.enableTools)
+		if(EMCCConfigTools.enableTools.get())
 			mod.recipes.addRecipe(new ItemStack(this), "UU", " S", " S",
 					'U', ItemMaterialsEMCC.INGOT_UUS,
 					'S', ODItems.STICK);

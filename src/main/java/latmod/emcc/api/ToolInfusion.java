@@ -1,6 +1,6 @@
 package latmod.emcc.api;
 
-import latmod.emcc.EMCCConfig;
+import latmod.emcc.config.EMCCConfigEnchanting;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.*;
 import net.minecraft.item.*;
@@ -35,13 +35,13 @@ public enum ToolInfusion
 	{
 		//EMCCConfig
 		
-		FIRE.init(Items.blaze_rod, EMCCConfig.Enchanting.fire);
-		FORTUNE.init(Items.gold_ingot, EMCCConfig.Enchanting.fortune);
-		UNBREAKING.init(Item.getItemFromBlock(Blocks.obsidian), EMCCConfig.Enchanting.unbreaking);
-		SILKTOUCH.init(Items.string, EMCCConfig.Enchanting.silk_touch);
-		SHARPNESS.init(Items.iron_ingot, EMCCConfig.Enchanting.sharpness);
-		KNOCKBACK.init(Item.getItemFromBlock(Blocks.piston), EMCCConfig.Enchanting.knockback);
-		INFINITY.init(Items.diamond, EMCCConfig.Enchanting.infinity);
+		FIRE.init(Items.blaze_rod, EMCCConfigEnchanting.fire.get());
+		FORTUNE.init(Items.gold_ingot, EMCCConfigEnchanting.fortune.get());
+		UNBREAKING.init(Item.getItemFromBlock(Blocks.obsidian), EMCCConfigEnchanting.unbreaking.get());
+		SILKTOUCH.init(Items.string, EMCCConfigEnchanting.silk_touch.get());
+		SHARPNESS.init(Items.iron_ingot, EMCCConfigEnchanting.sharpness.get());
+		KNOCKBACK.init(Item.getItemFromBlock(Blocks.piston), EMCCConfigEnchanting.knockback.get());
+		INFINITY.init(Items.diamond, EMCCConfigEnchanting.infinity.get());
 	}
 	
 	public Enchantment getEnchantment(EnumToolType t)

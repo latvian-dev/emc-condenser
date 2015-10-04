@@ -2,7 +2,8 @@ package latmod.emcc.item;
 
 import baubles.api.*;
 import cpw.mods.fml.common.Optional;
-import latmod.emcc.*;
+import latmod.emcc.EMCCItems;
+import latmod.emcc.config.EMCCConfigTools;
 import latmod.ftbu.util.OtherMods;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,7 +30,7 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfig.Tools.lifeStone_1hp != -1D || EMCCConfig.Tools.lifeStone_food != -1D)
+		if(EMCCConfigTools.lifeStone_1hp.get() != -1F || EMCCConfigTools.lifeStone_food.get() != -1F)
 			mod.recipes.addRecipe(new ItemStack(this), "SPS", "PBP", "SPS",
 				'S', Items.cooked_beef,
 				'B', EMCCItems.i_emc_battery,
@@ -44,9 +45,9 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 			{
 				double emc = getStoredEmc(is);
 				
-				if(emc >= EMCCConfig.Tools.lifeStone_extinguish)
+				if(emc >= EMCCConfigTools.lifeStone_extinguish.get())
 				{
-					setStoredEmc(is, emc - EMCCConfig.Tools.lifeStone_food);
+					setStoredEmc(is, emc - EMCCConfigTools.lifeStone_food.get());
 					ep.extinguish();
 					w.playSoundAtEntity(ep, "random.fizz", 1F, 1F);
 				}
@@ -65,7 +66,7 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 	public void onWornTick(ItemStack is, EntityLivingBase e)
 	{
 		if(e == null || e.worldObj.isRemote || !(e instanceof EntityPlayer)) return;
-		if(EMCCConfig.Tools.lifeStone_1hp == -1D && EMCCConfig.Tools.lifeStone_food == -1D) return;
+		if(EMCCConfigTools.lifeStone_1hp.get() == -1F && EMCCConfigTools.lifeStone_food.get() == -1F) return;
 		
 		EntityPlayer ep = (EntityPlayer)e;
 		
@@ -73,20 +74,20 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 		{
 			double emc = getStoredEmc(is);
 			
-			if(EMCCConfig.Tools.lifeStone_food != -1D && emc >= EMCCConfig.Tools.lifeStone_food && ep.getFoodStats().needFood())
+			if(EMCCConfigTools.lifeStone_food.get() != -1F && emc >= EMCCConfigTools.lifeStone_food.get() && ep.getFoodStats().needFood())
 			{
 				ep.getFoodStats().addStats(1, 0.6F);
-				emc -= EMCCConfig.Tools.lifeStone_food;
+				emc -= EMCCConfigTools.lifeStone_food.get();
 				setStoredEmc(is, emc);
 			}
 			
 			float hp = ep.getHealth();
 			float maxHp = ep.getMaxHealth();
 			
-			if(EMCCConfig.Tools.lifeStone_1hp != -1D && hp < maxHp && emc >= EMCCConfig.Tools.lifeStone_1hp)
+			if(EMCCConfigTools.lifeStone_1hp.get() != -1F && hp < maxHp && emc >= EMCCConfigTools.lifeStone_1hp.get())
 			{
 				ep.setHealth(hp + 1F);
-				emc -= EMCCConfig.Tools.lifeStone_1hp;
+				emc -= EMCCConfigTools.lifeStone_1hp.get();
 				if(emc < 0D) emc = 0D;
 				setStoredEmc(is, emc);
 			}

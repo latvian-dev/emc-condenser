@@ -2,8 +2,8 @@ package latmod.emcc.item;
 
 import baubles.api.*;
 import cpw.mods.fml.common.Optional;
-import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.IEmcStorageItem;
+import latmod.emcc.config.EMCCConfigTools;
 import latmod.ftbu.inv.ODItems;
 import latmod.ftbu.util.*;
 import net.minecraft.entity.*;
@@ -32,7 +32,7 @@ public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfig.Tools.enableBattery)
+		if(EMCCConfigTools.enableBattery.get())
 			mod.recipes.addRecipe(new ItemStack(this), "QRQ", "QUQ", "QGQ",
 				'Q', ODItems.QUARTZ,
 				'R', ODItems.REDSTONE,
@@ -64,7 +64,7 @@ public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 		
 		if(is.getItemDamage() == 1 && (el.worldObj.getWorldTime() % 8 == 0))
 		{
-			if(!EMCCConfig.Tools.enableBattery) return;
+			if(!EMCCConfigTools.enableBattery.get()) return;
 			
 			chargeInv(is, ep, ep.inventory);
 			IInventory baubInv = BaublesHelper.getBaubles(ep);

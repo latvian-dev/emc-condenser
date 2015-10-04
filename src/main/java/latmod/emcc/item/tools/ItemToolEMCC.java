@@ -3,8 +3,9 @@ import java.util.Map;
 
 import cpw.mods.fml.relauncher.*;
 import latmod.core.util.FastList;
-import latmod.emcc.*;
+import latmod.emcc.EMCC;
 import latmod.emcc.api.*;
+import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemEmcStorage;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -32,7 +33,7 @@ public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 	public boolean damageItem(ItemStack is, boolean simulate)
 	{
 		double emc = getStoredEmc(is);
-		double d = EMCCConfig.Tools.toolEmcPerDamage;
+		double d = EMCCConfigTools.toolEmcPerDamage.get();
 		
 		if(emc >= d)
 		{

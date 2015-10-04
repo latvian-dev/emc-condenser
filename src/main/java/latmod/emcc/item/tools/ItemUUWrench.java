@@ -2,6 +2,7 @@ package latmod.emcc.item.tools;
 import cpw.mods.fml.relauncher.*;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
+import latmod.emcc.config.EMCCConfigTools;
 import latmod.ftbu.inv.ODItems;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -30,7 +31,7 @@ public class ItemUUWrench extends ItemToolEMCC
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfig.Tools.enableWrench)
+		if(EMCCConfigTools.enableWrench.get())
 			mod.recipes.addRecipe(new ItemStack(this), "UBU", " S ", " S ",
 					'U', EMCCItems.b_uu_block,
 					'S', ODItems.STICK,
@@ -129,7 +130,7 @@ public class ItemUUWrench extends ItemToolEMCC
 	}
 
 	public double getEmcPerDmg(ItemStack is)
-	{ return EMCCConfig.Tools.toolEmcPerDamage; }
+	{ return EMCCConfigTools.toolEmcPerDamage.get(); }
 	
 	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
 	{ return t.is(ToolInfusion.UNBREAKING); }

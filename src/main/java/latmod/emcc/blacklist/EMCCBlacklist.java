@@ -3,7 +3,8 @@ import java.io.File;
 
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import latmod.core.util.*;
-import latmod.emcc.*;
+import latmod.emcc.EMCCItems;
+import latmod.emcc.config.EMCCConfigGeneral;
 import latmod.ftbu.inv.ODItems;
 import net.minecraft.item.ItemStack;
 
@@ -69,7 +70,7 @@ public class EMCCBlacklist
 	
 	public boolean isBlacklistedFuel(ItemStack is)
 	{
-		if(!EMCCConfig.General.enableBlacklist) return false;
+		if(!EMCCConfigGeneral.blacklist.get()) return false;
 		if(list.fuels.isBlacklistedRegName(is) || list.all.isBlacklistedRegName(is)) return true;
 		
 		FastList<String> oreNames = ODItems.getOreNames(is);
@@ -87,7 +88,7 @@ public class EMCCBlacklist
 	{
 		if(is.getItem() == EMCCItems.i_wrench) return true;
 		
-		if(!EMCCConfig.General.enableBlacklist) return false;
+		if(!EMCCConfigGeneral.blacklist.get()) return false;
 		
 		if(list.targets.isBlacklistedRegName(is) || list.all.isBlacklistedRegName(is)) return true;
 		

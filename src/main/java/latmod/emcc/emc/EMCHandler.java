@@ -5,6 +5,7 @@ import java.io.File;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import latmod.core.util.LMJsonUtils;
 import latmod.emcc.*;
+import latmod.emcc.config.EMCCConfigGeneral;
 import latmod.emcc.item.ItemMaterialsEMCC;
 import latmod.ftbu.inv.ODItems;
 import latmod.ftbu.util.*;
@@ -33,7 +34,7 @@ public class EMCHandler
 			hasEE3 = false;
 		}
 		
-		if(EMCCConfig.General.forceVanillaEMC || !hasEE3)
+		if(EMCCConfigGeneral.forceVanillaEMC.get() || !hasEE3)
 			instance.vanillaEMCFile = new File(e.getModConfigurationDirectory(), "/LatMod/EMC_Condenser_VanillaEMC.json");
 	}
 	

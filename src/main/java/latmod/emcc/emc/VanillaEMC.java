@@ -1,6 +1,5 @@
 package latmod.emcc.emc;
 
-import java.io.*;
 import java.util.*;
 
 import latmod.core.util.*;
@@ -12,6 +11,8 @@ import net.minecraft.item.*;
 
 public class VanillaEMC
 {
+	private static final ByteIOStream io = new ByteIOStream();
+	
 	private final FastList<RegEntry> regEntries;
 	private final FastMap<String, Float> oreEntries;
 	
@@ -30,57 +31,51 @@ public class VanillaEMC
 	public void fromBytes(byte[] b) throws Exception
 	{
 		clear();
+		io.setCompressedData(b);
 		
-		DataInputStream dis = new DataInputStream(new ByteArrayInputStream(b));
-		
-		int s = dis.readShort();
+		int s = io.readUShort();
 		for(int i = 0; i < s; i++)
 		{
-			int j = dis.readShort();
-			int m = dis.readShort();
-			float v = dis.readFloat();
+			int j = io.readUShort();
+			int m = io.readUShort();
+			float v = io.readFloat();
 			regEntries.add(new RegEntry(j, m, v));
 		}
 		
-		s = dis.readShort();
+		s = io.readUShort();
 		for(int i = 0; i < s; i++)
 		{
-			String o = dis.readUTF();
-			float v = dis.readFloat();
+			String o = io.readString();
+			float v = io.readFloat();
 			oreEntries.put(o, v);
 		}
-		
-		dis.close();
 		
 		EMCC.mod.logger.info("Loaded VanillaEMC from " + b.length + " bytes");
 	}
 	
 	public byte[] toBytes() throws Exception
 	{
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		DataOutputStream dos = new DataOutputStream(baos);
+		io.setCompressedData(new byte[0]);
 		
 		int s = regEntries.size();
-		dos.writeShort(s);
+		io.writeUShort(s);
 		for(int i = 0; i < s; i++)
 		{
 			RegEntry r = regEntries.get(i);
-			dos.writeShort(Item.getIdFromItem(r.item));
-			dos.writeShort(r.damage);
-			dos.writeFloat(r.value);
+			io.writeUShort(Item.getIdFromItem(r.item));
+			io.writeUShort(r.damage);
+			io.writeFloat(r.value);
 		}
 		
 		s = oreEntries.size();
-		dos.writeShort(s);
+		io.writeUShort(s);
 		for(int i = 0; i < s; i++)
 		{
-			dos.writeUTF(oreEntries.keys.get(i));
-			dos.writeFloat(oreEntries.values.get(i).floatValue());
+			io.writeString(oreEntries.keys.get(i));
+			io.writeFloat(oreEntries.values.get(i).floatValue());
 		}
 		
-		dos.flush();
-		dos.close();
-		return baos.toByteArray();
+		return io.toCompressedByteArray();
 	}
 	
 	public void loadDefaults()

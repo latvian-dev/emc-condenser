@@ -4,7 +4,8 @@ import java.util.List;
 
 import baubles.api.*;
 import cpw.mods.fml.common.Optional;
-import latmod.emcc.*;
+import latmod.emcc.EMCCItems;
+import latmod.emcc.config.EMCCConfigTools;
 import latmod.ftbu.inv.LMInvUtils;
 import latmod.ftbu.util.OtherMods;
 import net.minecraft.entity.*;
@@ -33,7 +34,7 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfig.Tools.blackHoleStone_item != -1D)
+		if(EMCCConfigTools.blackHoleStone_item.get() != -1F)
 			mod.recipes.addRecipe(new ItemStack(this), "OEO", "EBE", "OEO",
 				'O', EMCCItems.b_uu_block,
 				'B', EMCCItems.i_emc_battery,
@@ -52,10 +53,9 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 		if(is.getItemDamage() == 1 && (e.worldObj.getWorldTime() % 4 == 0))
 		{
 			double emc = getStoredEmc(is);
-			
-			if(EMCCConfig.Tools.blackHoleStone_item == -1D || emc < EMCCConfig.Tools.blackHoleStone_item) return;
-			
-			double r = EMCCConfig.Tools.blackHoleStone_range;
+			float itemCost = EMCCConfigTools.blackHoleStone_item.get();
+			if(itemCost == -1F || emc < itemCost) return;
+			float r = EMCCConfigTools.blackHoleStone_range.get();
 			
 			@SuppressWarnings("unchecked")
 			List<EntityItem> items = ep.worldObj.getEntitiesWithinAABB(EntityItem.class, ep.boundingBox.expand(r, r, r));
@@ -72,7 +72,7 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 							item.delayBeforeCanPickup = 4;
 						if(item.delayBeforeCanPickup != 0) continue;
 						
-						emc -= EMCCConfig.Tools.blackHoleStone_item;
+						emc -= itemCost;
 						setStoredEmc(is, emc);
 						
 						item.setLocationAndAngles(ep.posX, ep.posY, ep.posZ, 0F, 0F);

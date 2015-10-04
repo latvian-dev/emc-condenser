@@ -3,12 +3,13 @@ import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.blacklist.EMCCBlacklist;
+import latmod.emcc.config.EMCCConfig;
 import latmod.emcc.emc.EMCHandler;
 import latmod.ftbu.util.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
-@Mod(modid = EMCC.MOD_ID, name = "EMC Condenser", version = "@VERSION@", dependencies = "required-after:FTBU;after:EE3")
+@Mod(modid = EMCC.MOD_ID, name = "EMC Condenser", version = "@VERSION@", dependencies = "required-after:FTBU;after:EE3;after:Baubles")
 public class EMCC
 {
 	protected static final String MOD_ID = "EMC_Condenser";
@@ -28,7 +29,8 @@ public class EMCC
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
-		LMMod.init(this, new EMCCConfig(e), null);
+		LMMod.init(this);
+		EMCCConfig.load();
 		blacklist = new EMCCBlacklist(e);
 		
 		EventBusHelper.register(EMCCEventHandler.instance);

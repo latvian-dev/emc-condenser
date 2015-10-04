@@ -1,6 +1,7 @@
 package latmod.emcc.emc;
 
 import latmod.emcc.*;
+import latmod.emcc.config.EMCCConfigGeneral;
 import latmod.emcc.item.ItemMaterialsEMCC;
 import latmod.ftbu.inv.ODItems;
 import latmod.ftbu.recipes.LMRecipes;
@@ -19,13 +20,13 @@ public class EMCHandlerEE3 extends EMCHandler
 		DUST_AZURE = new ItemStack(com.pahimar.ee3.init.ModItems.alchemicalDust, 1, 2);
 		DUST_MINIUM = new ItemStack(com.pahimar.ee3.init.ModItems.alchemicalDust, 1, 3);
 		
-		if(EMCCConfig.General.forceVanillaEMC)
+		if(EMCCConfigGeneral.forceVanillaEMC.get())
 			super.modInited();
 	}
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfig.General.forceVanillaRecipes)
+		if(EMCCConfigGeneral.forceVanillaRecipes.get())
 		{
 			super.loadRecipes();
 			return;
@@ -68,7 +69,7 @@ public class EMCHandlerEE3 extends EMCHandler
 	{
 		if(is == null || is.stackSize <= 0) return 0F;
 		
-		if(EMCCConfig.General.forceVanillaEMC)
+		if(EMCCConfigGeneral.forceVanillaEMC.get())
 			return super.getEMC(is);
 		
 		com.pahimar.ee3.api.exchange.EnergyValue e = com.pahimar.ee3.exchange.EnergyValueRegistry.getInstance().getEnergyValue(is);

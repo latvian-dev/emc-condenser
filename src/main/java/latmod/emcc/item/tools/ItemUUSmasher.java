@@ -1,6 +1,7 @@
 package latmod.emcc.item.tools;
-import latmod.emcc.*;
+import latmod.emcc.EMCCItems;
 import latmod.emcc.api.ToolInfusion;
+import latmod.emcc.config.EMCCConfigTools;
 import latmod.ftbu.inv.ODItems;
 import latmod.ftbu.item.Tool;
 import net.minecraft.block.Block;
@@ -22,7 +23,7 @@ public class ItemUUSmasher extends ItemUUPick
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfig.Tools.enableTools)
+		if(EMCCConfigTools.enableTools.get())
 			mod.recipes.addRecipe(new ItemStack(this), "APA", "BVB", " S ",
 					'B', EMCCItems.b_uu_block,
 					'S', ODItems.STICK,

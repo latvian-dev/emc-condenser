@@ -1,7 +1,7 @@
 package latmod.emcc.item.tools;
 import latmod.core.util.FastList;
-import latmod.emcc.EMCCConfig;
 import latmod.emcc.api.ToolInfusion;
+import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemMaterialsEMCC;
 import latmod.ftbu.inv.ODItems;
 import latmod.ftbu.item.Tool;
@@ -24,7 +24,7 @@ public class ItemUUAxe extends ItemToolEMCC // ItemAxe
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfig.Tools.enableTools)
+		if(EMCCConfigTools.enableTools.get())
 			mod.recipes.addRecipe(new ItemStack(this), "UU", "US", " S",
 					'U', ItemMaterialsEMCC.INGOT_UUS,
 					'S', ODItems.STICK);

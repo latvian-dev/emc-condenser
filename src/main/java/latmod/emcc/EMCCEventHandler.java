@@ -3,6 +3,7 @@ package latmod.emcc;
 import cpw.mods.fml.common.eventhandler.*;
 import cpw.mods.fml.relauncher.*;
 import latmod.emcc.api.*;
+import latmod.emcc.config.EMCCConfigGeneral;
 import latmod.emcc.emc.EMCHandler;
 import latmod.ftbu.api.EventFTBUReload;
 import latmod.ftbu.mod.FTBU;
@@ -44,21 +45,24 @@ public class EMCCEventHandler
 			
 		}
 		
-		if((EMCCConfig.General.removeNoEMCTooltip || EMCCConfig.General.forceVanillaEMC) && EMCHandler.hasEE3())
+		boolean removeNoEMCTooltip = EMCCConfigGeneral.removeNoEMCTooltip.get();
+		boolean forceVanillaEMC = EMCCConfigGeneral.forceVanillaEMC.get();
+		
+		if((removeNoEMCTooltip || forceVanillaEMC) && EMCHandler.hasEE3())
 		{
 			for(int j = 0; j < e.toolTip.size(); j++)
 			{
 				String s = e.toolTip.get(j);
 				if(s != null && !s.isEmpty())
 				{
-					if((EMCCConfig.General.removeNoEMCTooltip && s.contains("No Exchange Energy value"))
-					|| (EMCCConfig.General.forceVanillaEMC && s.contains("Exchange Energy")))
+					if((removeNoEMCTooltip && s.contains("No Exchange Energy value"))
+					|| (forceVanillaEMC && s.contains("Exchange Energy")))
 						e.toolTip.remove(j);
 				}
 			}
 		}
 		
-		if((EMCCConfig.General.forceVanillaEMC || !EMCHandler.hasEE3()) && FTBU.proxy.isShiftDown())
+		if((forceVanillaEMC || !EMCHandler.hasEE3()) && FTBU.proxy.isShiftDown())
 		{
 			float f = EMCHandler.instance().getEMC(e.itemStack);
 			if(f > 0)
