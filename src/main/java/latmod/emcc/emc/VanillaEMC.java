@@ -2,9 +2,9 @@ package latmod.emcc.emc;
 
 import java.util.*;
 
-import latmod.core.util.*;
 import latmod.emcc.EMCC;
 import latmod.ftbu.inv.*;
+import latmod.lib.*;
 import net.minecraft.block.Block;
 import net.minecraft.init.*;
 import net.minecraft.item.*;

@@ -3,12 +3,12 @@ package latmod.emcc.emc;
 import java.io.File;
 
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import latmod.core.util.LMJsonUtils;
 import latmod.emcc.*;
 import latmod.emcc.config.EMCCConfigGeneral;
 import latmod.emcc.item.ItemMaterialsEMCC;
 import latmod.ftbu.inv.ODItems;
 import latmod.ftbu.util.*;
+import latmod.lib.LMJsonUtils;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
 

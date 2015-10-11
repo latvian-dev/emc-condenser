@@ -2,11 +2,11 @@ package latmod.emcc.item.tools;
 import java.util.Map;
 
 import cpw.mods.fml.relauncher.*;
-import latmod.core.util.FastList;
 import latmod.emcc.EMCC;
 import latmod.emcc.api.*;
 import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemEmcStorage;
+import latmod.lib.FastList;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;

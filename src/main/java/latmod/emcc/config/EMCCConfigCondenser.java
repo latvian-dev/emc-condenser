@@ -1,9 +1,10 @@
 package latmod.emcc.config;
 
 import latmod.emcc.tile.SafeMode;
-import latmod.ftbu.api.config.*;
 import latmod.ftbu.tile.*;
 import latmod.ftbu.util.LMSecurity;
+import latmod.lib.config.*;
+import latmod.lib.util.IntBounds;
 
 public class EMCCConfigCondenser
 {

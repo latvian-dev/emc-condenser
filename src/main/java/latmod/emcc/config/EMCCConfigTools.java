@@ -1,6 +1,7 @@
 package latmod.emcc.config;
 
-import latmod.ftbu.api.config.*;
+import latmod.lib.config.*;
+import latmod.lib.util.FloatBounds;
 
 public class EMCCConfigTools
 {

@@ -3,8 +3,9 @@ import java.io.File;
 
 import latmod.emcc.EMCC;
 import latmod.emcc.emc.VanillaEMC;
-import latmod.ftbu.api.config.*;
+import latmod.ftbu.api.config.ConfigListRegistry;
 import latmod.ftbu.util.LatCoreMC;
+import latmod.lib.config.ConfigFile;
 
 public class EMCCConfig
 {
@@ -18,7 +19,7 @@ public class EMCCConfig
 		EMCCConfigCondenser.load(configFile);
 		EMCCConfigTools.load(configFile);
 		EMCCConfigEnchanting.load(configFile);
-		ConfigFileRegistry.add(configFile);
+		ConfigListRegistry.add(configFile);
 		configFile.load();
 	}
 	
