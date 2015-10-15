@@ -14,7 +14,7 @@ public class EMCCConfig
 	
 	public static void load()
 	{
-		configFile = new ConfigFile(EMCC.mod.modID, new File(LatCoreMC.configFolder, "/LatMod/EMC_Condenser.txt"), true);
+		configFile = new ConfigFile(EMCC.mod.modID, new File(LatCoreMC.configFolder, "/LatMod/EMC_Condenser.json"), true);
 		EMCCConfigGeneral.load(configFile);
 		EMCCConfigCondenser.load(configFile);
 		EMCCConfigTools.load(configFile);
