@@ -6,6 +6,7 @@ import latmod.emcc.api.*;
 import latmod.emcc.client.gui.*;
 import latmod.emcc.config.EMCCConfigCondenser;
 import latmod.emcc.emc.EMCHandler;
+import latmod.ftbu.api.tile.*;
 import latmod.ftbu.inv.LMInvUtils;
 import latmod.ftbu.tile.*;
 import latmod.ftbu.util.*;
