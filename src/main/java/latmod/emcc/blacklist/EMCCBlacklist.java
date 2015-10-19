@@ -14,7 +14,7 @@ public class EMCCBlacklist
 	
 	public EMCCBlacklist(FMLPreInitializationEvent e)
 	{
-		File file = new File(e.getModConfigurationDirectory(), "/LatMod/EMC_Condenser_Blacklist.json");
+		File file = new File(e.getModConfigurationDirectory(), "/EMC_Condenser/blacklist.json");
 		
 		list = null;
 		

@@ -1,10 +1,10 @@
 package latmod.emcc.config;
 import java.io.File;
 
+import ftb.lib.mod.FTBLib;
 import latmod.emcc.EMCC;
 import latmod.emcc.emc.VanillaEMC;
 import latmod.ftbu.api.config.ConfigListRegistry;
-import latmod.ftbu.util.LatCoreMC;
 import latmod.lib.config.ConfigFile;
 
 public class EMCCConfig
@@ -14,7 +14,7 @@ public class EMCCConfig
 	
 	public static void load()
 	{
-		configFile = new ConfigFile(EMCC.mod.modID, new File(LatCoreMC.configFolder, "/LatMod/EMC_Condenser.json"), true);
+		configFile = new ConfigFile(EMCC.mod.modID, new File(FTBLib.folderConfig, "EMC_Condenser/config.json"), true);
 		EMCCConfigGeneral.load(configFile);
 		EMCCConfigCondenser.load(configFile);
 		EMCCConfigTools.load(configFile);

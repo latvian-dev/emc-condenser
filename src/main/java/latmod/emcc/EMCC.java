@@ -1,11 +1,12 @@
 package latmod.emcc;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
+import ftb.lib.EventBusHelper;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.blacklist.EMCCBlacklist;
 import latmod.emcc.config.EMCCConfig;
 import latmod.emcc.emc.EMCHandler;
-import latmod.ftbu.util.*;
+import latmod.ftbu.util.LMMod;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 

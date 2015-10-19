@@ -35,7 +35,7 @@ public class EMCHandler
 		}
 		
 		if(EMCCConfigGeneral.forceVanillaEMC.get() || !hasEE3)
-			instance.vanillaEMCFile = new File(e.getModConfigurationDirectory(), "/LatMod/EMC_Condenser_VanillaEMC.json");
+			instance.vanillaEMCFile = new File(e.getModConfigurationDirectory(), "EMC_Condenser/vanilla_emc.json");
 	}
 	
 	public static final boolean hasEE3()
