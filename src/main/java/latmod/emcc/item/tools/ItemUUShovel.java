@@ -1,9 +1,8 @@
 package latmod.emcc.item.tools;
+import ftb.lib.item.*;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemMaterialsEMCC;
-import latmod.ftbu.api.item.Tool;
-import latmod.ftbu.inv.ODItems;
 import latmod.lib.FastList;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

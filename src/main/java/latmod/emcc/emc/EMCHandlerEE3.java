@@ -1,9 +1,9 @@
 package latmod.emcc.emc;
 
+import ftb.lib.item.ODItems;
 import latmod.emcc.*;
 import latmod.emcc.config.EMCCConfigGeneral;
 import latmod.emcc.item.ItemMaterialsEMCC;
-import latmod.ftbu.inv.ODItems;
 import latmod.ftbu.recipes.LMRecipes;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;

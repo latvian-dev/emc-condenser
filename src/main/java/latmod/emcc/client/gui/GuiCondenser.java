@@ -1,9 +1,9 @@
 package latmod.emcc.client.gui;
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.mod.FTBLibMod;
 import latmod.emcc.*;
 import latmod.emcc.emc.EMCHandler;
 import latmod.emcc.tile.TileCondenser;
-import latmod.ftbu.mod.FTBU;
 import latmod.ftbu.util.client.LMGuiButtons;
 import latmod.ftbu.util.gui.*;
 import latmod.lib.FastList;
@@ -168,7 +168,7 @@ public class GuiCondenser extends GuiLM
 		
 		String s = "" + d;
 		
-		if(!FTBU.proxy.isShiftDown())
+		if(!FTBLibMod.proxy.isShiftDown())
 		{
 			if(d > 1000)
 			{

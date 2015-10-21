@@ -2,10 +2,10 @@ package latmod.emcc.item;
 
 import baubles.api.*;
 import cpw.mods.fml.common.Optional;
+import ftb.lib.*;
+import ftb.lib.item.ODItems;
 import latmod.emcc.api.IEmcStorageItem;
 import latmod.emcc.config.EMCCConfigTools;
-import latmod.ftbu.inv.ODItems;
-import latmod.ftbu.util.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

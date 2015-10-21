@@ -1,6 +1,7 @@
 package latmod.emcc.client.render.world;
 
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.client.FTBLibClient;
 import latmod.emcc.EMCCItems;
 import latmod.ftbu.util.client.*;
 import net.minecraft.block.Block;
@@ -33,9 +34,9 @@ public class RenderCondenser extends BlockRendererLM
 		renderBlocks.setRenderBounds(0D, 0D, 0D, 1D, 1D, 1D);
 		renderBlocks.clearOverrideBlockTexture();
 		renderBlocks.renderBlockAsItem(empty, 0, 1F);
-		LatCoreMCClient.pushMaxBrightness();
+		FTBLibClient.pushMaxBrightness();
 		renderBlocks.renderBlockAsItem(glow, 0, 1F);
-		LatCoreMCClient.popMaxBrightness();
+		FTBLibClient.popMaxBrightness();
 	}
 	
 	public boolean renderWorldBlock(IBlockAccess iba, int x, int y, int z, Block b, int modelID, RenderBlocks rb)

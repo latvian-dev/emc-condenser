@@ -2,9 +2,9 @@ package latmod.emcc.item;
 
 import baubles.api.*;
 import cpw.mods.fml.common.Optional;
+import ftb.lib.OtherMods;
 import latmod.emcc.EMCCItems;
 import latmod.emcc.config.EMCCConfigTools;
-import latmod.ftbu.util.OtherMods;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;

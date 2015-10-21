@@ -2,11 +2,11 @@ package latmod.emcc;
 
 import cpw.mods.fml.common.eventhandler.*;
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.api.EventFTBReload;
+import ftb.lib.mod.FTBLibMod;
 import latmod.emcc.api.*;
 import latmod.emcc.config.EMCCConfigGeneral;
 import latmod.emcc.emc.EMCHandler;
-import latmod.ftbu.api.EventFTBUReload;
-import latmod.ftbu.mod.FTBU;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.AnvilUpdateEvent;
@@ -18,7 +18,7 @@ public class EMCCEventHandler
 	public static final EMCCEventHandler instance = new EMCCEventHandler();
 	
 	@SubscribeEvent
-	public void onReloaded(EventFTBUReload e)
+	public void onReloaded(EventFTBReload e)
 	{
 		if(e.side.isServer()) EMCHandler.instance().reloadEMCValues();
 	}
@@ -29,7 +29,7 @@ public class EMCCEventHandler
 	{
 		Item item = e.itemStack.getItem();
 		
-		if(item instanceof IEmcStorageItem && FTBU.proxy.isShiftDown())
+		if(item instanceof IEmcStorageItem && FTBLibMod.proxy.isShiftDown())
 		{
 			IEmcStorageItem i = (IEmcStorageItem)item;
 			
@@ -62,7 +62,7 @@ public class EMCCEventHandler
 			}
 		}
 		
-		if((forceVanillaEMC || !EMCHandler.hasEE3()) && FTBU.proxy.isShiftDown())
+		if((forceVanillaEMC || !EMCHandler.hasEE3()) && FTBLibMod.proxy.isShiftDown())
 		{
 			float f = EMCHandler.instance().getEMC(e.itemStack);
 			if(f > 0)

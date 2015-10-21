@@ -4,10 +4,10 @@ import java.util.List;
 
 import baubles.api.*;
 import cpw.mods.fml.common.Optional;
+import ftb.lib.OtherMods;
+import ftb.lib.item.LMInvUtils;
 import latmod.emcc.EMCCItems;
 import latmod.emcc.config.EMCCConfigTools;
-import latmod.ftbu.inv.LMInvUtils;
-import latmod.ftbu.util.OtherMods;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;

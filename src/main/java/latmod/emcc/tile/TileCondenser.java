@@ -1,13 +1,14 @@
 package latmod.emcc.tile;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.OtherMods;
+import ftb.lib.item.LMInvUtils;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.client.gui.*;
 import latmod.emcc.config.EMCCConfigCondenser;
 import latmod.emcc.emc.EMCHandler;
 import latmod.ftbu.api.tile.*;
-import latmod.ftbu.inv.LMInvUtils;
 import latmod.ftbu.tile.*;
 import latmod.ftbu.util.*;
 import latmod.ftbu.util.client.LMGuiButtons;

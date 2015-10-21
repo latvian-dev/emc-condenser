@@ -1,6 +1,6 @@
 package latmod.emcc.config;
 
-import latmod.ftbu.api.config.ConfigSyncRegistry;
+import ftb.lib.api.config.ConfigSyncRegistry;
 import latmod.lib.config.*;
 import latmod.lib.util.*;
 

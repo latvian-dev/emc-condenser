@@ -1,6 +1,6 @@
 package latmod.emcc.client.gui;
+import ftb.lib.item.SlotLM;
 import latmod.emcc.tile.TileCondenser;
-import latmod.ftbu.inv.SlotLM;
 import latmod.ftbu.util.gui.ContainerLM;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;

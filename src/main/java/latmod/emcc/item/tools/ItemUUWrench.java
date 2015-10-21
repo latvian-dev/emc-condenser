@@ -1,9 +1,9 @@
 package latmod.emcc.item.tools;
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.item.ODItems;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.config.EMCCConfigTools;
-import latmod.ftbu.inv.ODItems;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;

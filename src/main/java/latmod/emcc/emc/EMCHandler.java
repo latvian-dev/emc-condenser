@@ -3,11 +3,11 @@ package latmod.emcc.emc;
 import java.io.File;
 
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import ftb.lib.*;
+import ftb.lib.item.ODItems;
 import latmod.emcc.*;
 import latmod.emcc.config.EMCCConfigGeneral;
 import latmod.emcc.item.ItemMaterialsEMCC;
-import latmod.ftbu.inv.ODItems;
-import latmod.ftbu.util.*;
 import latmod.lib.LMJsonUtils;
 import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
@@ -19,7 +19,7 @@ public class EMCHandler
 	
 	public static void init(FMLPreInitializationEvent e)
 	{
-		hasEE3 = LatCoreMC.isModInstalled(OtherMods.EE3);
+		hasEE3 = FTBLib.isModInstalled(OtherMods.EE3);
 		
 		if(hasEE3) try
 		{
