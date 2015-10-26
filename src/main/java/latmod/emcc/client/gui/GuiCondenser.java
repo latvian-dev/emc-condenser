@@ -1,5 +1,6 @@
 package latmod.emcc.client.gui;
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.client.TextureCoords;
 import ftb.lib.mod.FTBLibMod;
 import latmod.emcc.*;
 import latmod.emcc.emc.EMCHandler;
