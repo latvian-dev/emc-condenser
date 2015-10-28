@@ -2,7 +2,7 @@ package latmod.emcc.config;
 
 import latmod.emcc.tile.SafeMode;
 import latmod.ftbu.tile.*;
-import latmod.ftbu.util.LMSecurity;
+import latmod.ftbu.util.LMSecurityLevel;
 import latmod.lib.config.*;
 import latmod.lib.util.IntBounds;
 
@@ -66,8 +66,8 @@ public class EMCCConfigCondenser
 	public static InvMode forcedInvMode()
 	{ return (forcedInvMode.get() == -1) ? null : InvMode.VALUES[forcedInvMode.get()]; }
 	
-	public static LMSecurity.Level forcedSecurity()
-	{ return (forcedSecurity.get() == -1) ? null : LMSecurity.Level.VALUES[forcedInvMode.get()]; }
+	public static LMSecurityLevel forcedSecurity()
+	{ return (forcedSecurity.get() == -1) ? null : LMSecurityLevel.VALUES[forcedInvMode.get()]; }
 	
 	public static RedstoneMode forcedRedstoneControl()
 	{ return (forcedRedstoneControl.get() == -1) ? null : RedstoneMode.VALUES[forcedInvMode.get()]; }

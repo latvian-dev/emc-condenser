@@ -105,7 +105,7 @@ public class GuiCondenser extends GuiLM
 			}
 		};
 		
-		barEMC = new WidgetLM(this, 30, 9, texBar.width, texBar.height)
+		barEMC = new WidgetLM(this, 30, 9, texBar.widthI, texBar.heightI)
 		{
 			public void addMouseOverText(FastList<String> l)
 			{
@@ -117,7 +117,7 @@ public class GuiCondenser extends GuiLM
 		
 		targetIcon = new WidgetLM(this, 8, 9, 16, 16);
 		noTargetLang = EMCC.mod.translateClient("notarget");
-		sidebar = new WidgetLM(this, -25, 26, texSidebar.width, texSidebar.height);
+		sidebar = new WidgetLM(this, -25, 26, texSidebar.widthI, texSidebar.heightI);
 	}
 	
 	public void addWidgets()
