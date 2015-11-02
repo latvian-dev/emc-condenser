@@ -154,7 +154,7 @@ public class GuiCondenser extends GuiLM
 		sidebar.render(texSidebar);
 		
 		buttonRedstone.render(GuiIcons.redstone[condenser.redstoneMode.ID]);
-		buttonSecurity.render(GuiIcons.security[condenser.security.level.ID]);
+		buttonSecurity.render(condenser.security.level.getIcon());
 		buttonInvMode.render(GuiIcons.inv[condenser.invMode.ID]);
 		buttonSafeMode.render(condenser.safeMode.isOn() ? GuiIcons.accept : GuiIcons.accept_gray);
 		

@@ -256,7 +256,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 		else if(button.equals(LMGuiButtons.SECURITY))
 		{
 			if(ep != null && security.isOwner(ep))
-				security.level = (mouseButton == 0) ? security.level.next(LMSecurityLevel.VALUES) : security.level.prev(LMSecurityLevel.VALUES);
+				security.level = (mouseButton == 0) ? security.level.next(LMSecurityLevel.VALUES_3) : security.level.prev(LMSecurityLevel.VALUES_3);
 			else printOwner(ep);
 		}
 		

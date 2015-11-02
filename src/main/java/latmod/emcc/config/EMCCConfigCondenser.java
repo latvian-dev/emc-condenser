@@ -67,7 +67,7 @@ public class EMCCConfigCondenser
 	{ return (forcedInvMode.get() == -1) ? null : InvMode.VALUES[forcedInvMode.get()]; }
 	
 	public static LMSecurityLevel forcedSecurity()
-	{ return (forcedSecurity.get() == -1) ? null : LMSecurityLevel.VALUES[forcedInvMode.get()]; }
+	{ return (forcedSecurity.get() == -1) ? null : LMSecurityLevel.VALUES_3[forcedInvMode.get()]; }
 	
 	public static RedstoneMode forcedRedstoneControl()
 	{ return (forcedRedstoneControl.get() == -1) ? null : RedstoneMode.VALUES[forcedInvMode.get()]; }
