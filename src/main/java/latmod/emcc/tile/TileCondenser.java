@@ -1,16 +1,17 @@
 package latmod.emcc.tile;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.*;
-import ftb.lib.OtherMods;
+import ftb.lib.*;
+import ftb.lib.api.gui.IGuiTile;
 import ftb.lib.item.LMInvUtils;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.client.gui.*;
 import latmod.emcc.config.EMCCConfigCondenser;
 import latmod.emcc.emc.EMCHandler;
-import latmod.ftbu.api.tile.*;
+import latmod.ftbu.api.tile.ISecureTile;
 import latmod.ftbu.tile.*;
-import latmod.ftbu.util.*;
+import latmod.ftbu.util.LMSecurityLevel;
 import latmod.ftbu.util.client.LMGuiButtons;
 import latmod.latblocks.tile.IQuartzNetTile;
 import net.minecraft.client.gui.GuiScreen;
@@ -20,7 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 @Optional.Interface(modid = OtherMods.LATBLOCKS, iface = "latmod.latblocks.tile.IQuartzNetTile")
-public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWrenchable, IClientActionTile, IGuiTile, ISecureTile, IQuartzNetTile
+public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWrenchable, IGuiTile, ISecureTile, IQuartzNetTile
 {
 	public static final String ACTION_TRANS_ITEMS = "transItems";
 	
@@ -55,7 +56,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	}
 	
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
-	{ if(isServer()) LatCoreMC.openGui(ep, this, null); return true; }
+	{ if(isServer()) FTBLib.openGui(ep, this, null); return true; }
 	
 	public void onUpdate()
 	{
@@ -319,6 +320,6 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 		if(!isServer()) return;
 		if(!security.canInteract(ep))
 		{ printOwner(ep); return; }
-		LatCoreMC.openGui(ep, this, null);
+		FTBLib.openGui(ep, this, null);
 	}
 }
