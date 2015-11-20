@@ -3,7 +3,6 @@ import java.io.File;
 
 import ftb.lib.FTBLib;
 import ftb.lib.api.config.ConfigListRegistry;
-import latmod.emcc.EMCC;
 import latmod.emcc.emc.VanillaEMC;
 import latmod.lib.config.ConfigFile;
 
@@ -14,12 +13,12 @@ public class EMCCConfig
 	
 	public static void load()
 	{
-		configFile = new ConfigFile(EMCC.mod.modID, new File(FTBLib.folderConfig, "EMC_Condenser/config.json"), true);
+		configFile = new ConfigFile("emcc", new File(FTBLib.folderConfig, "EMC_Condenser/config.json"), true);
 		EMCCConfigGeneral.load(configFile);
 		EMCCConfigCondenser.load(configFile);
 		EMCCConfigTools.load(configFile);
 		EMCCConfigEnchanting.load(configFile);
-		ConfigListRegistry.add(configFile);
+		ConfigListRegistry.instance.add(configFile);
 		configFile.load();
 	}
 	
