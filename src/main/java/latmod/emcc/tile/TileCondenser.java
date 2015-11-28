@@ -192,17 +192,17 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	
 	public void checkForced()
 	{
-		if(EMCCConfigCondenser.forcedRedstoneControl() != null && redstoneMode.ID != EMCCConfigCondenser.forcedRedstoneControl().ID)
-		{ redstoneMode = EMCCConfigCondenser.forcedRedstoneControl(); markDirty(); }
+		if(EMCCConfigCondenser.forcedRedstoneControl.get() != null && redstoneMode != EMCCConfigCondenser.forcedRedstoneControl.get())
+		{ redstoneMode = EMCCConfigCondenser.forcedRedstoneControl.get(); markDirty(); }
 		
-		if(EMCCConfigCondenser.forcedSecurity() != null && security.level.ID != EMCCConfigCondenser.forcedSecurity().ID)
-		{ security.level = EMCCConfigCondenser.forcedSecurity(); markDirty(); }
+		if(EMCCConfigCondenser.forcedSecurity.get() != null && security.level != EMCCConfigCondenser.forcedSecurity.get())
+		{ security.level = EMCCConfigCondenser.forcedSecurity.get(); markDirty(); }
 		
-		if(EMCCConfigCondenser.forcedSafeMode() != null && safeMode.ID != EMCCConfigCondenser.forcedSafeMode().ID)
-		{ safeMode = EMCCConfigCondenser.forcedSafeMode(); markDirty(); }
+		if(EMCCConfigCondenser.forcedSafeMode.get() != null && safeMode != EMCCConfigCondenser.forcedSafeMode.get())
+		{ safeMode = EMCCConfigCondenser.forcedSafeMode.get(); markDirty(); }
 		
-		if(EMCCConfigCondenser.forcedInvMode() != null && invMode.ID != EMCCConfigCondenser.forcedInvMode().ID)
-		{ invMode = EMCCConfigCondenser.forcedInvMode(); markDirty(); }
+		if(EMCCConfigCondenser.forcedInvMode.get() != null && invMode != EMCCConfigCondenser.forcedInvMode.get())
+		{ invMode = EMCCConfigCondenser.forcedInvMode.get(); markDirty(); }
 	}
 	
 	@Override
