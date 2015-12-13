@@ -26,7 +26,7 @@ public class ItemUUShovel extends ItemToolEMCC
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.enableTools.get())
+		if(EMCCConfigTools.Enable.tools.get())
 			mod.recipes.addRecipe(new ItemStack(this), "U", "S", "S",
 					'U', ItemMaterialsEMCC.INGOT_UUS,
 					'S', ODItems.STICK);

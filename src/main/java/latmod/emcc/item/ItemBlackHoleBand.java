@@ -34,7 +34,7 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.blackHoleStone_item.get() != -1F)
+		if(EMCCConfigTools.black_hole_stone_item.get() != -1F)
 			mod.recipes.addRecipe(new ItemStack(this), "OEO", "EBE", "OEO",
 				'O', EMCCItems.b_uu_block,
 				'B', EMCCItems.i_emc_battery,
@@ -53,9 +53,9 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 		if(is.getItemDamage() == 1 && (e.worldObj.getWorldTime() % 4 == 0))
 		{
 			double emc = getStoredEmc(is);
-			float itemCost = EMCCConfigTools.blackHoleStone_item.get();
+			double itemCost = EMCCConfigTools.black_hole_stone_item.get();
 			if(itemCost == -1F || emc < itemCost) return;
-			float r = EMCCConfigTools.blackHoleStone_range.get();
+			double r = EMCCConfigTools.black_hole_stone_range.get();
 			
 			@SuppressWarnings("unchecked")
 			List<EntityItem> items = ep.worldObj.getEntitiesWithinAABB(EntityItem.class, ep.boundingBox.expand(r, r, r));

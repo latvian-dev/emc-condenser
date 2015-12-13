@@ -1,15 +1,14 @@
 package latmod.emcc.config;
 
 import latmod.lib.config.*;
-import latmod.lib.util.*;
+import latmod.lib.util.DoubleBounds;
 
 public class EMCCConfigGeneral
 {
 	public static final ConfigGroup group = new ConfigGroup("general");
 	public static final ConfigEntryBool blacklist = new ConfigEntryBool("blacklist", true);
-	public static final ConfigEntryFloat uuBlockEnchantPower = new ConfigEntryFloat("uuBlockEnchantPower", new FloatBounds(3F, 0F, 100F));
-	public static final ConfigEntryBool removeNoEMCTooltip = new ConfigEntryBool("removeNoEMCTooltip", true);
-	public static final ConfigEntryInt ticksToInfuse = new ConfigEntryInt("ticksToInfuse", new IntBounds(400, -1, 32767));
-	public static final ConfigEntryBool forceVanillaRecipes = new ConfigEntryBool("forceVanillaRecipes", false).sync();
-	public static final ConfigEntryBool forceVanillaEMC = new ConfigEntryBool("forceVanillaEMC", false).sync();
+	public static final ConfigEntryDouble uu_block_enchant_power = new ConfigEntryDouble("uu_block_enchant_power", new DoubleBounds(3D, 0D, 100D));
+	public static final ConfigEntryBool remove_no_emc_tooltip = new ConfigEntryBool("remove_no_emc_tooltip", true);
+	public static final ConfigEntryBool force_vanilla_recipes = new ConfigEntryBool("force_vanilla_recipes", false).sync();
+	public static final ConfigEntryBool force_vanilla_emc = new ConfigEntryBool("force_vanilla_emc", false).sync();
 }

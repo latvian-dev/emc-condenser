@@ -1,13 +1,13 @@
 package latmod.emcc.client.gui;
 import cpw.mods.fml.relauncher.*;
-import ftb.lib.api.gui.GuiIcons;
+import ftb.lib.api.gui.*;
 import ftb.lib.client.TextureCoords;
 import ftb.lib.gui.GuiLM;
 import ftb.lib.gui.widgets.*;
 import ftb.lib.mod.FTBLibMod;
 import latmod.emcc.*;
+import latmod.emcc.block.TileCondenser;
 import latmod.emcc.emc.EMCHandler;
-import latmod.emcc.tile.TileCondenser;
 import latmod.ftbu.util.client.LMGuiButtons;
 import latmod.lib.FastList;
 import net.minecraft.item.ItemStack;
@@ -72,8 +72,8 @@ public class GuiCondenser extends GuiLM
 			
 			public void addMouseOverText(FastList<String> l)
 			{
-				l.add(condenser.redstoneMode.getTitle());
-				l.add(condenser.redstoneMode.getText());
+				l.add(condenser.redstone_mode.get().getTitle());
+				l.add(condenser.redstone_mode.get().getText());
 			}
 		};
 		
@@ -87,8 +87,8 @@ public class GuiCondenser extends GuiLM
 			
 			public void addMouseOverText(FastList<String> l)
 			{
-				l.add(condenser.invMode.getTitle());
-				l.add(condenser.invMode.getText());
+				l.add(condenser.inv_mode.get().getTitle());
+				l.add(condenser.inv_mode.get().getText());
 			}
 		};
 		
@@ -102,8 +102,8 @@ public class GuiCondenser extends GuiLM
 			
 			public void addMouseOverText(FastList<String> l)
 			{
-				l.add(condenser.safeMode.getTitle());
-				l.add(condenser.safeMode.getText());
+				l.add(EMCC.mod.translateClient("safemode"));
+				l.add(FTBLibLang.label_enabled(condenser.safe_mode.get()));
 			}
 		};
 		
@@ -155,10 +155,10 @@ public class GuiCondenser extends GuiLM
 		
 		sidebar.render(texSidebar);
 		
-		buttonRedstone.render(GuiIcons.redstone[condenser.redstoneMode.ID]);
+		buttonRedstone.render(GuiIcons.redstone[condenser.redstone_mode.get().ID]);
 		buttonSecurity.render(condenser.security.level.getIcon());
-		buttonInvMode.render(GuiIcons.inv[condenser.invMode.ID]);
-		buttonSafeMode.render(condenser.safeMode.isOn() ? GuiIcons.accept : GuiIcons.accept_gray);
+		buttonInvMode.render(GuiIcons.inv[condenser.inv_mode.get().ID]);
+		buttonSafeMode.render(condenser.safe_mode.get() ? GuiIcons.accept : GuiIcons.accept_gray);
 		
 		targetIcon.title = (condenser.items[TileCondenser.SLOT_TARGET] == null) ? noTargetLang : null;
 	}

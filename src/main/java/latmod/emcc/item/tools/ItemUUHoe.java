@@ -21,7 +21,7 @@ public class ItemUUHoe extends ItemToolEMCC
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.enableTools.get())
+		if(EMCCConfigTools.Enable.tools.get())
 			mod.recipes.addRecipe(new ItemStack(this), "UU", " S", " S",
 					'U', ItemMaterialsEMCC.INGOT_UUS,
 					'S', ODItems.STICK);

@@ -32,7 +32,7 @@ public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.enableBattery.get())
+		if(EMCCConfigTools.Enable.battery.get())
 			mod.recipes.addRecipe(new ItemStack(this), "QRQ", "QUQ", "QGQ",
 				'Q', ODItems.QUARTZ,
 				'R', ODItems.REDSTONE,
@@ -64,7 +64,7 @@ public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 		
 		if(is.getItemDamage() == 1 && (el.worldObj.getWorldTime() % 8 == 0))
 		{
-			if(!EMCCConfigTools.enableBattery.get()) return;
+			if(!EMCCConfigTools.Enable.battery.get()) return;
 			
 			chargeInv(is, ep, ep.inventory);
 			IInventory baubInv = BaublesHelper.getBaubles(ep);

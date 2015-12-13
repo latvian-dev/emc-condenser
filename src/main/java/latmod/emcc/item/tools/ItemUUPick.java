@@ -25,7 +25,7 @@ public class ItemUUPick extends ItemToolEMCC
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.enableTools.get())
+		if(EMCCConfigTools.Enable.tools.get())
 			mod.recipes.addRecipe(new ItemStack(this), "UUU", " S ", " S ",
 					'U', ItemMaterialsEMCC.INGOT_UUS,
 					'S', ODItems.STICK);

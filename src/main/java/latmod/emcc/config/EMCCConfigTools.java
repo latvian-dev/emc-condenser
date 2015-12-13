@@ -1,20 +1,25 @@
 package latmod.emcc.config;
 
 import latmod.lib.config.*;
-import latmod.lib.util.FloatBounds;
+import latmod.lib.util.DoubleBounds;
 
 public class EMCCConfigTools
 {
 	public static final ConfigGroup group = new ConfigGroup("tools");
-	public static final ConfigEntryBool enableWrench = new ConfigEntryBool("enableWrench", true);
-	public static final ConfigEntryBool enableBattery = new ConfigEntryBool("enableBattery", true);
-	public static final ConfigEntryBool enableSword = new ConfigEntryBool("enableSword", true);
-	public static final ConfigEntryBool enableBow = new ConfigEntryBool("enableBow", true);
-	public static final ConfigEntryBool enableTools = new ConfigEntryBool("enableTools", true);
-	public static final ConfigEntryFloat toolEmcPerDamage = new ConfigEntryFloat("toolEmcPerDamage", new FloatBounds(64F));
-	public static final ConfigEntryFloat lifeStone_1hp = new ConfigEntryFloat("lifeStone_1hp", new FloatBounds(24F));
-	public static final ConfigEntryFloat lifeStone_food = new ConfigEntryFloat("lifeStone_food", new FloatBounds(128F));
-	public static final ConfigEntryFloat lifeStone_extinguish = new ConfigEntryFloat("lifeStone_extinguish", new FloatBounds(64F));
-	public static final ConfigEntryFloat blackHoleStone_item = new ConfigEntryFloat("blackHoleStone_item", new FloatBounds(48F));
-	public static final ConfigEntryFloat blackHoleStone_range = new ConfigEntryFloat("blackHoleStone_range", new FloatBounds(4F));
+	public static final ConfigGroup enable = new ConfigGroup("enable").addAll(Enable.class);
+	public static final ConfigEntryDouble tool_emc_per_damage = new ConfigEntryDouble("tool_emc_per_damage", new DoubleBounds(64D, 0D, Double.POSITIVE_INFINITY));
+	public static final ConfigEntryDouble life_stone_1hp = new ConfigEntryDouble("life_stone_1hp", new DoubleBounds(24D, 0D, Double.POSITIVE_INFINITY));
+	public static final ConfigEntryDouble life_stone_food = new ConfigEntryDouble("life_stone_food", new DoubleBounds(128D, 0D, Double.POSITIVE_INFINITY));
+	public static final ConfigEntryDouble life_stone_extinguish = new ConfigEntryDouble("life_stone_extinguish", new DoubleBounds(64D, 0D, Double.POSITIVE_INFINITY));
+	public static final ConfigEntryDouble black_hole_stone_item = new ConfigEntryDouble("black_hole_stone_item", new DoubleBounds(48D, 0D, Double.POSITIVE_INFINITY));
+	public static final ConfigEntryDouble black_hole_stone_range = new ConfigEntryDouble("black_hole_stone_range", new DoubleBounds(4D, 0D, 64D));
+	
+	public static class Enable
+	{
+		public static final ConfigEntryBool wrench = new ConfigEntryBool("wrench", true);
+		public static final ConfigEntryBool battery = new ConfigEntryBool("battery", true);
+		public static final ConfigEntryBool sword = new ConfigEntryBool("sword", true);
+		public static final ConfigEntryBool bow = new ConfigEntryBool("bow", true);
+		public static final ConfigEntryBool tools = new ConfigEntryBool("tools", true);
+	}
 }

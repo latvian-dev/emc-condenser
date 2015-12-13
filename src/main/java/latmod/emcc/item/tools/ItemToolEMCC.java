@@ -33,7 +33,7 @@ public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 	public boolean damageItem(ItemStack is, boolean simulate)
 	{
 		double emc = getStoredEmc(is);
-		double d = EMCCConfigTools.toolEmcPerDamage.get();
+		double d = EMCCConfigTools.tool_emc_per_damage.get();
 		
 		if(emc >= d)
 		{
