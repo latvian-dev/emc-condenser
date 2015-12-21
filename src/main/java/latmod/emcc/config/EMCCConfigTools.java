@@ -5,8 +5,7 @@ import latmod.lib.util.DoubleBounds;
 
 public class EMCCConfigTools
 {
-	public static final ConfigGroup group = new ConfigGroup("tools");
-	public static final ConfigGroup enable = new ConfigGroup("enable").addAll(Enable.class);
+	public static final ConfigGroup enable = new ConfigGroup("enable");
 	public static final ConfigEntryDouble tool_emc_per_damage = new ConfigEntryDouble("tool_emc_per_damage", new DoubleBounds(64D, 0D, Double.POSITIVE_INFINITY));
 	public static final ConfigEntryDouble life_stone_1hp = new ConfigEntryDouble("life_stone_1hp", new DoubleBounds(24D, 0D, Double.POSITIVE_INFINITY));
 	public static final ConfigEntryDouble life_stone_food = new ConfigEntryDouble("life_stone_food", new DoubleBounds(128D, 0D, Double.POSITIVE_INFINITY));

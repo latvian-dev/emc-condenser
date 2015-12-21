@@ -55,6 +55,5 @@ public class EMCC
 	public void postInit(FMLPostInitializationEvent e)
 	{
 		mod.loadRecipes();
-		EMCHandler.instance().loadRecipes();
 	}
 }

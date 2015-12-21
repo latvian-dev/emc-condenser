@@ -11,8 +11,6 @@ import net.minecraft.item.*;
 
 public class VanillaEMC
 {
-	private static final ByteIOStream io = new ByteIOStream();
-	
 	private final FastList<RegEntry> regEntries;
 	private final FastMap<String, Float> oreEntries;
 	
@@ -28,54 +26,49 @@ public class VanillaEMC
 		oreEntries.clear();
 	}
 	
-	public void fromBytes(byte[] b) throws Exception
+	public void fromBytes(ByteIOStream io) throws Exception
 	{
 		clear();
-		io.setCompressedData(b);
 		
-		int s = io.readUShort();
+		int s = io.readUnsignedShort();
 		for(int i = 0; i < s; i++)
 		{
-			int j = io.readUShort();
-			int m = io.readUShort();
+			int j = io.readUnsignedShort();
+			int m = io.readUnsignedShort();
 			float v = io.readFloat();
 			regEntries.add(new RegEntry(j, m, v));
 		}
 		
-		s = io.readUShort();
+		s = io.readUnsignedShort();
 		for(int i = 0; i < s; i++)
 		{
-			String o = io.readString();
+			String o = io.readUTF();
 			float v = io.readFloat();
 			oreEntries.put(o, v);
 		}
 		
-		EMCC.mod.logger.info("Loaded VanillaEMC from " + b.length + " bytes");
+		EMCC.mod.logger.info("Loaded VanillaEMC from " + 0 + " bytes");
 	}
 	
-	public byte[] toBytes() throws Exception
+	public void toBytes(ByteIOStream io) throws Exception
 	{
-		io.setCompressedData(new byte[0]);
-		
 		int s = regEntries.size();
-		io.writeUShort(s);
+		io.writeShort(s);
 		for(int i = 0; i < s; i++)
 		{
 			RegEntry r = regEntries.get(i);
-			io.writeUShort(Item.getIdFromItem(r.item));
-			io.writeUShort(r.damage);
+			io.writeShort(Item.getIdFromItem(r.item));
+			io.writeShort(r.damage);
 			io.writeFloat(r.value);
 		}
 		
 		s = oreEntries.size();
-		io.writeUShort(s);
-		for(int i = 0; i < s; i++)
+		io.writeShort(s);
+		for(Map.Entry<String, Float> e : oreEntries.entrySet())
 		{
-			io.writeString(oreEntries.keys.get(i));
-			io.writeFloat(oreEntries.values.get(i).floatValue());
+			io.writeUTF(e.getKey());
+			io.writeFloat(e.getValue().floatValue());
 		}
-		
-		return io.toCompressedByteArray();
 	}
 	
 	public void loadDefaults()
@@ -200,13 +193,8 @@ public class VanillaEMC
 		
 		FastList<String> ores = ODItems.getOreNames(is);
 		
-		if(!ores.isEmpty()) for(int i = 0; i < oreEntries.size(); i++)
-		{
-			String k = oreEntries.keys.get(i);
-			Float v = oreEntries.values.get(i);
-			
-			if(ores.contains(k)) return v.floatValue();
-		}
+		if(!ores.isEmpty()) for(Map.Entry<String, Float> e1 : oreEntries.entrySet())
+		{ if(ores.contains(e1.getKey())) return e1.getValue().floatValue(); }
 		
 		return 0F;
 	}
@@ -258,8 +246,8 @@ public class VanillaEMC
 				regNames.put(r.toString(), r.value);
 			}
 			
-			for(int i = 0; i < e.oreEntries.size(); i++)
-				oreNames.put(e.oreEntries.keys.get(i), e.oreEntries.values.get(i));
+			for(Map.Entry<String, Float> e1 : e.oreEntries.entrySet())
+				oreNames.put(e1.getKey(), e1.getValue());
 		}
 		
 		public void saveTo(VanillaEMC e)

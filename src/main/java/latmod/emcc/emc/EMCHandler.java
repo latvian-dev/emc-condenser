@@ -4,12 +4,8 @@ import java.io.File;
 
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import ftb.lib.*;
-import ftb.lib.item.ODItems;
-import latmod.emcc.*;
 import latmod.emcc.config.EMCCConfigGeneral;
-import latmod.emcc.item.ItemMaterialsEMCC;
 import latmod.lib.LMJsonUtils;
-import net.minecraft.init.*;
 import net.minecraft.item.ItemStack;
 
 public class EMCHandler
@@ -71,39 +67,6 @@ public class EMCHandler
 			f.loadFrom(vanillaEMC);
 			LMJsonUtils.toJsonFile(vanillaEMCFile, f);
 		}
-	}
-	
-	public void loadRecipes()
-	{
-		// Material recipes //
-		
-		EMCC.mod.recipes.addRecipe(ItemMaterialsEMCC.ITEM_UUS.getStack(), "MRM", "VSV", "MGM",
-				'M', ODItems.DIAMOND,
-				'V', ODItems.EMERALD,
-				'R', ODItems.REDSTONE,
-				'G', ODItems.GLOWSTONE,
-				'S', Blocks.stone);
-		
-		EMCC.mod.recipes.addRecipe(ItemMaterialsEMCC.INGOT_UUS.getStack(8), "III", "IUI", "III",
-				'I', ODItems.IRON,
-				'U', ItemMaterialsEMCC.ITEM_UUS);
-		
-		EMCC.mod.recipes.addRecipe(new ItemStack(EMCCItems.b_uu_block, 8), "III", "IUI", "III",
-				'I', ODItems.OBSIDIAN,
-				'U', ItemMaterialsEMCC.ITEM_UUS);
-		
-		EMCC.mod.recipes.addRecipe(ItemMaterialsEMCC.MINIUM_STAR.getStack(), "MMM", "MSM", "MMM",
-				Character.valueOf('M'), ODItems.DIAMOND,
-				Character.valueOf('S'), Items.nether_star);
-		
-		// Condenser recipe //
-		
-		EMCC.mod.recipes.addRecipe(new ItemStack(EMCCItems.b_condenser), "OBO", "ASA", "OIO",
-				'O', EMCCItems.b_uu_block,
-				'I', ItemMaterialsEMCC.MINIUM_STAR,
-				'B', EMCCItems.i_black_hole_band,
-				'S', Blocks.diamond_block,
-				'A', ODItems.OBSIDIAN);
 	}
 	
 	public float getEMC(ItemStack is)

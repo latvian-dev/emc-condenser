@@ -1,9 +1,14 @@
 package latmod.emcc.block;
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.item.ODItems;
+import latmod.emcc.*;
 import latmod.emcc.client.render.world.RenderCondenser;
+import latmod.emcc.item.ItemMaterialsEMCC;
 import latmod.ftbu.tile.TileLM;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
@@ -26,6 +31,12 @@ public class BlockCondenser extends BlockEMCC
 	
 	public void loadRecipes()
 	{
+		EMCC.mod.recipes.addRecipe(new ItemStack(EMCCItems.b_condenser), "OBO", "ASA", "OIO",
+				'O', EMCCItems.b_uu_block,
+				'I', ItemMaterialsEMCC.MINIUM_STAR,
+				'B', EMCCItems.i_black_hole_band,
+				'S', Blocks.diamond_block,
+				'A', ODItems.OBSIDIAN);
 	}
 	
 	@SideOnly(Side.CLIENT)

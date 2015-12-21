@@ -1,12 +1,10 @@
 package latmod.emcc.config;
 
-import latmod.lib.config.*;
+import latmod.lib.config.ConfigEntryInt;
 import latmod.lib.util.IntBounds;
 
 public class EMCCConfigEnchanting
 {
-	public static final ConfigGroup group = new ConfigGroup("enchanting");
-	
 	private static final ConfigEntryInt get(String s, int def)
 	{ return new ConfigEntryInt(s, new IntBounds(def, 0, 50)); }
 	
