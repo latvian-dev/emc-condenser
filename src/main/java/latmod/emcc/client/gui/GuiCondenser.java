@@ -1,4 +1,6 @@
 package latmod.emcc.client.gui;
+import java.util.List;
+
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.api.gui.*;
 import ftb.lib.client.TextureCoords;
@@ -9,7 +11,6 @@ import latmod.emcc.*;
 import latmod.emcc.block.TileCondenser;
 import latmod.emcc.emc.EMCHandler;
 import latmod.ftbu.util.client.LMGuiButtons;
-import latmod.lib.FastList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 
@@ -55,7 +56,7 @@ public class GuiCondenser extends GuiLM
 				playClickSound();
 			}
 			
-			public void addMouseOverText(FastList<String> l)
+			public void addMouseOverText(List<String> l)
 			{
 				l.add(condenser.security.level.getTitle());
 				l.add(condenser.security.level.getText());
@@ -70,7 +71,7 @@ public class GuiCondenser extends GuiLM
 				playClickSound();
 			}
 			
-			public void addMouseOverText(FastList<String> l)
+			public void addMouseOverText(List<String> l)
 			{
 				l.add(condenser.redstone_mode.get().getTitle());
 				l.add(condenser.redstone_mode.get().getText());
@@ -85,7 +86,7 @@ public class GuiCondenser extends GuiLM
 				playClickSound();
 			}
 			
-			public void addMouseOverText(FastList<String> l)
+			public void addMouseOverText(List<String> l)
 			{
 				l.add(condenser.inv_mode.get().getTitle());
 				l.add(condenser.inv_mode.get().getText());
@@ -100,7 +101,7 @@ public class GuiCondenser extends GuiLM
 				playClickSound();
 			}
 			
-			public void addMouseOverText(FastList<String> l)
+			public void addMouseOverText(List<String> l)
 			{
 				l.add(EMCC.mod.translateClient("safemode"));
 				l.add(FTBLibLang.label_enabled(condenser.safe_mode.get()));
@@ -109,7 +110,7 @@ public class GuiCondenser extends GuiLM
 		
 		barEMC = new WidgetLM(this, 30, 9, texBar.widthI, texBar.heightI)
 		{
-			public void addMouseOverText(FastList<String> l)
+			public void addMouseOverText(List<String> l)
 			{
 				ItemStack tar = condenser.items[TileCondenser.SLOT_TARGET];
 				double emc1 =  EMCHandler.instance().getEMC(tar);
