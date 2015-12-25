@@ -1,7 +1,5 @@
 package latmod.emcc.item;
 
-import java.util.List;
-
 import baubles.api.*;
 import cpw.mods.fml.common.Optional;
 import ftb.lib.OtherMods;
@@ -14,6 +12,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 @Optional.Interface(modid = OtherMods.BAUBLES, iface = "baubles.api.IBauble")
 public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble

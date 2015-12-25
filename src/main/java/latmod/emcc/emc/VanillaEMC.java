@@ -1,13 +1,13 @@
 package latmod.emcc.emc;
 
-import java.util.*;
-
 import ftb.lib.item.*;
 import latmod.emcc.EMCC;
 import latmod.lib.*;
 import net.minecraft.block.Block;
 import net.minecraft.init.*;
 import net.minecraft.item.*;
+
+import java.util.*;
 
 public class VanillaEMC
 {

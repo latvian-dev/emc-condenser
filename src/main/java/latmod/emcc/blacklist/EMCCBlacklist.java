@@ -1,5 +1,4 @@
 package latmod.emcc.blacklist;
-import java.io.File;
 
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import ftb.lib.item.ODItems;
@@ -7,6 +6,8 @@ import latmod.emcc.EMCCItems;
 import latmod.emcc.config.EMCCConfigGeneral;
 import latmod.lib.*;
 import net.minecraft.item.ItemStack;
+
+import java.io.File;
 
 public class EMCCBlacklist
 {

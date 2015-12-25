@@ -1,5 +1,4 @@
 package latmod.emcc.item.tools;
-import java.util.Map;
 
 import cpw.mods.fml.relauncher.*;
 import latmod.emcc.EMCC;
@@ -17,6 +16,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+
+import java.util.Map;
 
 public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 {

@@ -1,5 +1,4 @@
 package latmod.emcc.api;
-import java.util.ArrayList;
 
 import ftb.lib.item.LMInvUtils;
 import latmod.ftbu.util.LatCoreMC;
@@ -11,6 +10,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
 
 public class EMCCUtils
 {

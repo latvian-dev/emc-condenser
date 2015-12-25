@@ -1,12 +1,12 @@
 package latmod.emcc.emc;
 
-import java.io.File;
-
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import ftb.lib.*;
 import latmod.emcc.config.EMCCConfigGeneral;
 import latmod.lib.LMJsonUtils;
 import net.minecraft.item.ItemStack;
+
+import java.io.File;
 
 public class EMCHandler
 {

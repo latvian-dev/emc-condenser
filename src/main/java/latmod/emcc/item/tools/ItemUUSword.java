@@ -1,6 +1,6 @@
 package latmod.emcc.item.tools;
-import com.google.common.collect.Multimap;
 
+import com.google.common.collect.Multimap;
 import ftb.lib.item.ODItems;
 import latmod.emcc.api.*;
 import latmod.emcc.config.EMCCConfigTools;

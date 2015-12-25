@@ -1,10 +1,11 @@
 package latmod.emcc.config;
-import java.io.File;
 
 import ftb.lib.FTBLib;
 import ftb.lib.api.config.ConfigRegistry;
 import latmod.emcc.emc.VanillaEMC;
 import latmod.lib.config.*;
+
+import java.io.File;
 
 public class EMCCConfig
 {
