@@ -16,13 +16,13 @@ public class EMCCConfig
 	{
 		configFile = new ConfigFile("emcc", new File(FTBLib.folderConfig, "EMC_Condenser/config.json"));
 		configFile.configGroup.setName("EMCCondenser");
-		configFile.add(new ConfigGroup("condenser").addAll(EMCCConfigCondenser.class));
-		configFile.add(new ConfigGroup("enchanting").addAll(EMCCConfigEnchanting.class));
-		configFile.add(new ConfigGroup("general").addAll(EMCCConfigGeneral.class));
-		configFile.add(new ConfigGroup("tools").addAll(EMCCConfigTools.class));
+		configFile.add(new ConfigGroup("condenser").addAll(EMCCConfigCondenser.class, null, false));
+		configFile.add(new ConfigGroup("enchanting").addAll(EMCCConfigEnchanting.class, null, false));
+		configFile.add(new ConfigGroup("general").addAll(EMCCConfigGeneral.class, null, false));
+		configFile.add(new ConfigGroup("tools").addAll(EMCCConfigTools.class, null, false));
 		
-		EMCCConfigCondenser.forced.addAll(EMCCConfigCondenser.Forced.class);
-		EMCCConfigTools.enable.addAll(EMCCConfigTools.Enable.class);
+		EMCCConfigCondenser.forced.addAll(EMCCConfigCondenser.Forced.class, null, false);
+		EMCCConfigTools.enable.addAll(EMCCConfigTools.Enable.class, null, false);
 		
 		ConfigRegistry.add(configFile);
 		configFile.load();
