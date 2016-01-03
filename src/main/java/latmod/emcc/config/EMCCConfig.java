@@ -14,7 +14,7 @@ public class EMCCConfig
 	
 	public static void load()
 	{
-		configFile = new ConfigFile("emcc", new File(FTBLib.folderConfig, "EMC_Condenser/config.json"));
+		configFile = new ConfigFile("emcc", new File(FTBLib.folderConfig, "LatMod/EMC_Condenser/config.json"));
 		configFile.configGroup.setName("EMCCondenser");
 		configFile.add(new ConfigGroup("condenser").addAll(EMCCConfigCondenser.class, null, false));
 		configFile.add(new ConfigGroup("enchanting").addAll(EMCCConfigEnchanting.class, null, false));
