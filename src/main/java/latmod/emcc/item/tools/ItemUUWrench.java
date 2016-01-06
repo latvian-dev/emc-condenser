@@ -32,7 +32,7 @@ public class ItemUUWrench extends ItemToolEMCC
 	public void loadRecipes()
 	{
 		if(EMCCConfigTools.Enable.wrench.get())
-			mod.recipes.addRecipe(new ItemStack(this), "UBU", " S ", " S ",
+			getMod().recipes.addRecipe(new ItemStack(this), "UBU", " S ", " S ",
 					'U', EMCCItems.b_uu_block,
 					'S', ODItems.STICK,
 					'B', EMCCItems.i_emc_battery);

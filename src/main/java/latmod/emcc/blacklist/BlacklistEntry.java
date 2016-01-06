@@ -2,16 +2,16 @@ package latmod.emcc.blacklist;
 
 import com.google.gson.annotations.Expose;
 import ftb.lib.item.*;
-import latmod.lib.FastList;
+import latmod.lib.LMListUtils;
 import net.minecraft.item.*;
 
-import java.util.List;
+import java.util.*;
 
 public class BlacklistEntry
 {
 	@Expose public List<String> ore_dictionary;
 	@Expose public List<String> registry_name;
-	private FastList<ItemEntry> reg_list;
+	private final ArrayList<ItemEntry> reg_list;
 	
 	public static class ItemEntry
 	{
@@ -33,9 +33,9 @@ public class BlacklistEntry
 	
 	public BlacklistEntry()
 	{
-		ore_dictionary = new FastList<String>();
-		registry_name = new FastList<String>();
-		reg_list = new FastList<ItemEntry>();
+		ore_dictionary = new ArrayList<>();
+		registry_name = new ArrayList<>();
+		reg_list = new ArrayList<>();
 	}
 	
 	public void addOreName(String s)
@@ -44,8 +44,8 @@ public class BlacklistEntry
 	public void addRegistryName(String s, Integer dmg)
 	{ registry_name.add(s + (dmg == null ? "" : ("@" + dmg))); }
 	
-	public boolean isBlacklistedOre(FastList<String> s)
-	{ return !ore_dictionary.isEmpty() && s.containsAny(ore_dictionary); }
+	public boolean isBlacklistedOre(List<String> s)
+	{ return !ore_dictionary.isEmpty() && LMListUtils.containsAny(s, ore_dictionary); }
 
 	public boolean isBlacklistedRegName(ItemStack is)
 	{ return !reg_list.isEmpty() && reg_list.contains(is); }

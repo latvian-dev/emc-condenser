@@ -5,7 +5,6 @@ import latmod.emcc.EMCC;
 import latmod.emcc.api.*;
 import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemEmcStorage;
-import latmod.lib.FastList;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -17,7 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-import java.util.Map;
+import java.util.*;
 
 public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 {
@@ -131,6 +130,6 @@ public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 	public boolean canHarvestBlock(Block b, ItemStack is)
 	{ return isEffective(b); }
 	
-	public static boolean isEffective(Block b, FastList<Block> bl, FastList<Material> ml)
+	public static boolean isEffective(Block b, List<Block> bl, List<Material> ml)
 	{ return bl.contains(b) || ml.contains(b.getMaterial()); }
 }

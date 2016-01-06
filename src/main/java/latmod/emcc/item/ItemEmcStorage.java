@@ -45,8 +45,8 @@ public abstract class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		itemIcon = ir.registerIcon(mod.assets + "stones/" + itemName);
-		icon_enabled = ir.registerIcon(mod.assets + "stones/" + itemName + "_enabled");
+		itemIcon = ir.registerIcon(getMod().assets + "stones/" + itemName);
+		icon_enabled = ir.registerIcon(getMod().assets + "stones/" + itemName + "_enabled");
 	}
 	
 	@SideOnly(Side.CLIENT)

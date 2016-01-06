@@ -1,9 +1,9 @@
 package latmod.emcc.item.tools;
+
 import ftb.lib.item.*;
 import latmod.emcc.api.*;
 import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemMaterialsEMCC;
-import latmod.lib.FastList;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,10 +12,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import java.util.*;
+
 public class ItemUUPick extends ItemToolEMCC
 {
-	public static final FastList<Block> effectiveBlocks = new FastList<Block>(new Block[] {Blocks.cobblestone, Blocks.double_stone_slab, Blocks.stone_slab, Blocks.stone, Blocks.sandstone, Blocks.mossy_cobblestone, Blocks.iron_ore, Blocks.iron_block, Blocks.coal_ore, Blocks.gold_block, Blocks.gold_ore, Blocks.diamond_ore, Blocks.diamond_block, Blocks.ice, Blocks.netherrack, Blocks.lapis_ore, Blocks.lapis_block, Blocks.redstone_ore, Blocks.lit_redstone_ore, Blocks.rail, Blocks.detector_rail, Blocks.golden_rail, Blocks.activator_rail});
-	public static final FastList<Material> effectiveMaterials = new FastList<Material>(new Material[] { Material.iron, Material.anvil, Material.rock });
+	public static final List<Block> effectiveBlocks = Arrays.asList(Blocks.cobblestone, Blocks.double_stone_slab, Blocks.stone_slab, Blocks.stone, Blocks.sandstone, Blocks.mossy_cobblestone, Blocks.iron_ore, Blocks.iron_block, Blocks.coal_ore, Blocks.gold_block, Blocks.gold_ore, Blocks.diamond_ore, Blocks.diamond_block, Blocks.ice, Blocks.netherrack, Blocks.lapis_ore, Blocks.lapis_block, Blocks.redstone_ore, Blocks.lit_redstone_ore, Blocks.rail, Blocks.detector_rail, Blocks.golden_rail, Blocks.activator_rail);
+	public static final List<Material> effectiveMaterials = Arrays.asList(Material.iron, Material.anvil, Material.rock);
 	
 	public ItemUUPick(String s)
 	{
@@ -26,7 +28,7 @@ public class ItemUUPick extends ItemToolEMCC
 	public void loadRecipes()
 	{
 		if(EMCCConfigTools.Enable.tools.get())
-			mod.recipes.addRecipe(new ItemStack(this), "UUU", " S ", " S ",
+			getMod().recipes.addRecipe(new ItemStack(this), "UUU", " S ", " S ",
 					'U', ItemMaterialsEMCC.INGOT_UUS,
 					'S', ODItems.STICK);
 	}

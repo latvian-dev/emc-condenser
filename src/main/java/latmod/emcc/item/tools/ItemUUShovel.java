@@ -3,7 +3,6 @@ import ftb.lib.item.*;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemMaterialsEMCC;
-import latmod.lib.FastList;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,10 +11,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import java.util.*;
+
 public class ItemUUShovel extends ItemToolEMCC
 {
-	public static final FastList<Block> effectiveBlocks = new FastList<Block>(new Block[] {Blocks.grass, Blocks.dirt, Blocks.sand, Blocks.gravel, Blocks.snow_layer, Blocks.snow, Blocks.clay, Blocks.farmland, Blocks.soul_sand, Blocks.mycelium});
-	public static final FastList<Material> effectiveMaterials = new FastList<Material>(new Material[] { Material.grass, Material.ground, Material.sand, Material.clay, Material.snow });
+	public static final List<Block> effectiveBlocks = Arrays.asList(Blocks.grass, Blocks.dirt, Blocks.sand, Blocks.gravel, Blocks.snow_layer, Blocks.snow, Blocks.clay, Blocks.farmland, Blocks.soul_sand, Blocks.mycelium);
+	public static final List<Material> effectiveMaterials = Arrays.asList(Material.grass, Material.ground, Material.sand, Material.clay, Material.snow);
 	
 	public ItemUUShovel(String s)
 	{
@@ -27,7 +28,7 @@ public class ItemUUShovel extends ItemToolEMCC
 	public void loadRecipes()
 	{
 		if(EMCCConfigTools.Enable.tools.get())
-			mod.recipes.addRecipe(new ItemStack(this), "U", "S", "S",
+			getMod().recipes.addRecipe(new ItemStack(this), "U", "S", "S",
 					'U', ItemMaterialsEMCC.INGOT_UUS,
 					'S', ODItems.STICK);
 	}

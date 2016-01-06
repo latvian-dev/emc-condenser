@@ -33,7 +33,7 @@ public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 	public void loadRecipes()
 	{
 		if(EMCCConfigTools.Enable.battery.get())
-			mod.recipes.addRecipe(new ItemStack(this), "QRQ", "QUQ", "QGQ",
+			getMod().recipes.addRecipe(new ItemStack(this), "QRQ", "QUQ", "QGQ",
 				'Q', ODItems.QUARTZ,
 				'R', ODItems.REDSTONE,
 				'G', ODItems.GLOWSTONE,

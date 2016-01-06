@@ -22,8 +22,8 @@ public class BlockCondenser extends BlockEMCC
 		super(s, Material.rock);
 		isBlockContainer = true;
 		setResistance(100000F);
-		
-		mod.addTile(TileCondenser.class, s);
+
+		getMod().addTile(TileCondenser.class, s);
 	}
 	
 	public TileLM createNewTileEntity(World w, int m)
@@ -42,10 +42,10 @@ public class BlockCondenser extends BlockEMCC
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister ir)
 	{
-		icon_top_empty = ir.registerIcon(mod.assets + "cond_top_empty");
-		icon_top_glow = ir.registerIcon(mod.assets + "cond_top_glow");
-		icon_side_empty = ir.registerIcon(mod.assets + "cond_side_empty");
-		icon_side_glow = ir.registerIcon(mod.assets + "cond_side_glow");
+		icon_top_empty = ir.registerIcon(getMod().assets + "cond_top_empty");
+		icon_top_glow = ir.registerIcon(getMod().assets + "cond_top_glow");
+		icon_side_empty = ir.registerIcon(getMod().assets + "cond_side_empty");
+		icon_side_glow = ir.registerIcon(getMod().assets + "cond_side_glow");
 		blockIcon = icon_side_empty;
 	}
 	

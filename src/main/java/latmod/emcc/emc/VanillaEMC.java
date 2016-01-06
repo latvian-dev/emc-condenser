@@ -2,7 +2,7 @@ package latmod.emcc.emc;
 
 import ftb.lib.item.*;
 import latmod.emcc.EMCC;
-import latmod.lib.*;
+import latmod.lib.ByteIOStream;
 import net.minecraft.block.Block;
 import net.minecraft.init.*;
 import net.minecraft.item.*;
@@ -11,13 +11,13 @@ import java.util.*;
 
 public class VanillaEMC
 {
-	private final FastList<RegEntry> regEntries;
-	private final FastMap<String, Float> oreEntries;
+	private final ArrayList<RegEntry> regEntries;
+	private final HashMap<String, Float> oreEntries;
 	
 	public VanillaEMC()
 	{
-		regEntries = new FastList<RegEntry>();
-		oreEntries = new FastMap<String, Float>();
+		regEntries = new ArrayList<>();
+		oreEntries = new HashMap<>();
 	}
 	
 	public void clear()
@@ -191,7 +191,7 @@ public class VanillaEMC
 			if(e.equalsItem(is)) return e.value;
 		}
 		
-		FastList<String> ores = ODItems.getOreNames(is);
+		List<String> ores = ODItems.getOreNames(is);
 		
 		if(!ores.isEmpty()) for(Map.Entry<String, Float> e1 : oreEntries.entrySet())
 		{ if(ores.contains(e1.getKey())) return e1.getValue().floatValue(); }

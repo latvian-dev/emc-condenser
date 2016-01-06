@@ -1,18 +1,20 @@
 package latmod.emcc.item.tools;
+
 import ftb.lib.item.*;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemMaterialsEMCC;
-import latmod.lib.FastList;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
+import java.util.*;
+
 public class ItemUUAxe extends ItemToolEMCC // ItemAxe
 {
-	public static final FastList<Block> effectiveBlocks = new FastList<Block>(new Block[] { Blocks.planks, Blocks.bookshelf, Blocks.log, Blocks.log2, Blocks.chest, Blocks.pumpkin, Blocks.lit_pumpkin, Blocks.lit_pumpkin });
-	public static final FastList<Material> effectiveMaterials = new FastList<Material>(new Material[] { Material.wood, Material.plants, Material.vine, Material.gourd, Material.leaves });
+	public static final List<Block> effectiveBlocks = Arrays.asList(Blocks.planks, Blocks.bookshelf, Blocks.log, Blocks.log2, Blocks.chest, Blocks.pumpkin, Blocks.lit_pumpkin, Blocks.lit_pumpkin);
+	public static final List<Material> effectiveMaterials = Arrays.asList(Material.wood, Material.plants, Material.vine, Material.gourd, Material.leaves);
 	
 	public ItemUUAxe(String s)
 	{
@@ -24,7 +26,7 @@ public class ItemUUAxe extends ItemToolEMCC // ItemAxe
 	public void loadRecipes()
 	{
 		if(EMCCConfigTools.Enable.tools.get())
-			mod.recipes.addRecipe(new ItemStack(this), "UU", "US", " S",
+			getMod().recipes.addRecipe(new ItemStack(this), "UU", "US", " S",
 					'U', ItemMaterialsEMCC.INGOT_UUS,
 					'S', ODItems.STICK);
 	}

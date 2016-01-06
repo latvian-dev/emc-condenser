@@ -23,7 +23,7 @@ public class ItemUUSmasher extends ItemUUPick
 	public void loadRecipes()
 	{
 		if(EMCCConfigTools.Enable.tools.get())
-			mod.recipes.addRecipe(new ItemStack(this), "APA", "BVB", " S ",
+			getMod().recipes.addRecipe(new ItemStack(this), "APA", "BVB", " S ",
 					'B', EMCCItems.b_uu_block,
 					'S', ODItems.STICK,
 					'P', EMCCItems.i_pick,

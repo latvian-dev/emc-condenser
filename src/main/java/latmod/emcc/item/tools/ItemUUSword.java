@@ -24,7 +24,7 @@ public class ItemUUSword extends ItemToolEMCC implements ICreativeSafeItem // It
 	public void loadRecipes()
 	{
 		if(EMCCConfigTools.Enable.sword.get())
-			mod.recipes.addRecipe(new ItemStack(this), "U", "U", "S",
+			getMod().recipes.addRecipe(new ItemStack(this), "U", "U", "S",
 					'U', ItemMaterialsEMCC.INGOT_UUS,
 					'S', ODItems.STICK);
 	}
