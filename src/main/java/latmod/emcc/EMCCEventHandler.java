@@ -20,7 +20,7 @@ public class EMCCEventHandler
 	@SubscribeEvent
 	public void onReloaded(EventFTBReload e)
 	{
-		if(e.side.isServer()) EMCHandler.instance().reloadEMCValues();
+		if(e.world.side.isServer()) EMCHandler.instance().reloadEMCValues();
 	}
 	
 	@SideOnly(Side.CLIENT)
