@@ -1,4 +1,5 @@
 package latmod.emcc.item;
+
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.item.ODItems;
 import latmod.emcc.EMCC;
@@ -25,12 +26,7 @@ public class ItemMaterialsEMCC extends ItemMaterialsLM
 			
 			public void loadRecipes()
 			{
-				EMCC.mod.recipes.addRecipe(getStack(), "MRM", "VSV", "MGM",
-						'M', ODItems.DIAMOND,
-						'V', ODItems.EMERALD,
-						'R', ODItems.REDSTONE,
-						'G', ODItems.GLOWSTONE,
-						'S', Blocks.stone);
+				EMCC.mod.recipes.addRecipe(getStack(), "MRM", "VSV", "MGM", 'M', ODItems.DIAMOND, 'V', ODItems.EMERALD, 'R', ODItems.REDSTONE, 'G', ODItems.GLOWSTONE, 'S', Blocks.stone);
 			}
 		});
 		
@@ -41,9 +37,7 @@ public class ItemMaterialsEMCC extends ItemMaterialsLM
 			
 			public void loadRecipes()
 			{
-				EMCC.mod.recipes.addRecipe(getStack(), "MMM", "MSM", "MMM",
-						Character.valueOf('M'), ODItems.DIAMOND,
-						Character.valueOf('S'), Items.nether_star);
+				EMCC.mod.recipes.addRecipe(getStack(), "MMM", "MSM", "MMM", Character.valueOf('M'), ODItems.DIAMOND, Character.valueOf('S'), Items.nether_star);
 			}
 		});
 		
@@ -54,9 +48,7 @@ public class ItemMaterialsEMCC extends ItemMaterialsLM
 			
 			public void loadRecipes()
 			{
-				EMCC.mod.recipes.addRecipe(getStack(8), "III", "IUI", "III",
-						'I', ODItems.IRON,
-						'U', ItemMaterialsEMCC.ITEM_UUS);
+				EMCC.mod.recipes.addRecipe(getStack(8), "III", "IUI", "III", 'I', ODItems.IRON, 'U', ItemMaterialsEMCC.ITEM_UUS);
 			}
 		});
 		

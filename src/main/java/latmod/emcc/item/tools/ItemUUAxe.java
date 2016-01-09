@@ -26,9 +26,7 @@ public class ItemUUAxe extends ItemToolEMCC // ItemAxe
 	public void loadRecipes()
 	{
 		if(EMCCConfigTools.Enable.tools.get())
-			getMod().recipes.addRecipe(new ItemStack(this), "UU", "US", " S",
-					'U', ItemMaterialsEMCC.INGOT_UUS,
-					'S', ODItems.STICK);
+			getMod().recipes.addRecipe(new ItemStack(this), "UU", "US", " S", 'U', ItemMaterialsEMCC.INGOT_UUS, 'S', ODItems.STICK);
 	}
 	
 	public boolean isEffective(Block b)

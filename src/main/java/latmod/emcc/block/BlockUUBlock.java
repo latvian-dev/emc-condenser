@@ -1,4 +1,5 @@
 package latmod.emcc.block;
+
 import ftb.lib.item.ODItems;
 import latmod.emcc.*;
 import latmod.emcc.config.EMCCConfigGeneral;
@@ -20,12 +21,10 @@ public class BlockUUBlock extends BlockEMCC
 	{ return null; }
 	
 	public float getEnchantPowerBonus(World w, int x, int y, int z)
-	{ return (float)EMCCConfigGeneral.uu_block_enchant_power.get(); }
+	{ return (float) EMCCConfigGeneral.uu_block_enchant_power.get(); }
 	
 	public void loadRecipes()
 	{
-		EMCC.mod.recipes.addRecipe(new ItemStack(EMCCItems.b_uu_block, 8), "III", "IUI", "III",
-				'I', ODItems.OBSIDIAN,
-				'U', ItemMaterialsEMCC.ITEM_UUS);
+		EMCC.mod.recipes.addRecipe(new ItemStack(EMCCItems.b_uu_block, 8), "III", "IUI", "III", 'I', ODItems.OBSIDIAN, 'U', ItemMaterialsEMCC.ITEM_UUS);
 	}
 }

@@ -1,4 +1,5 @@
 package latmod.emcc.block;
+
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.item.ODItems;
 import latmod.emcc.*;
@@ -31,12 +32,7 @@ public class BlockCondenser extends BlockEMCC
 	
 	public void loadRecipes()
 	{
-		EMCC.mod.recipes.addRecipe(new ItemStack(EMCCItems.b_condenser), "OBO", "ASA", "OIO",
-				'O', EMCCItems.b_uu_block,
-				'I', ItemMaterialsEMCC.MINIUM_STAR,
-				'B', EMCCItems.i_black_hole_band,
-				'S', Blocks.diamond_block,
-				'A', ODItems.OBSIDIAN);
+		EMCC.mod.recipes.addRecipe(new ItemStack(EMCCItems.b_condenser), "OBO", "ASA", "OIO", 'O', EMCCItems.b_uu_block, 'I', ItemMaterialsEMCC.MINIUM_STAR, 'B', EMCCItems.i_black_hole_band, 'S', Blocks.diamond_block, 'A', ODItems.OBSIDIAN);
 	}
 	
 	@SideOnly(Side.CLIENT)

@@ -1,4 +1,5 @@
 package latmod.emcc.item;
+
 import cpw.mods.fml.relauncher.*;
 import latmod.emcc.EMCC;
 import latmod.ftbu.item.ItemLM;

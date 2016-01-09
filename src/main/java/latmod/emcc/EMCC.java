@@ -1,4 +1,5 @@
 package latmod.emcc;
+
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
 import ftb.lib.EventBusHelper;

@@ -13,9 +13,8 @@ public enum ToolInfusion
 	SHARPNESS("sharpness", 10),
 	KNOCKBACK("knockback", 5),
 	SILKTOUCH("silkTouch", 1),
-	INFINITY("infinity", 1),
-	
-	; public static final ToolInfusion[] VALUES = values();
+	INFINITY("infinity", 1),;
+	public static final ToolInfusion[] VALUES = values();
 	
 	public final int ID;
 	public final String name;
@@ -48,17 +47,13 @@ public enum ToolInfusion
 	{
 		if(this == FIRE)
 		{
-			if(t == EnumToolType.BOW)
-				return Enchantment.flame;
-			else if(t == EnumToolType.SWORD)
-				return Enchantment.fireAspect;
+			if(t == EnumToolType.BOW) return Enchantment.flame;
+			else if(t == EnumToolType.SWORD) return Enchantment.fireAspect;
 		}
 		else if(this == FORTUNE)
 		{
-			if(t == EnumToolType.TOOL)
-				return Enchantment.fortune;
-			if(t == EnumToolType.SWORD)
-				return Enchantment.looting;
+			if(t == EnumToolType.TOOL) return Enchantment.fortune;
+			if(t == EnumToolType.SWORD) return Enchantment.looting;
 			return Enchantment.fireAspect;
 		}
 		else if(this == UNBREAKING)
@@ -67,39 +62,37 @@ public enum ToolInfusion
 		}
 		else if(this == SHARPNESS)
 		{
-			if(t == EnumToolType.TOOL)
-				return Enchantment.efficiency;
-			if(t == EnumToolType.SWORD)
-				return Enchantment.sharpness;
+			if(t == EnumToolType.TOOL) return Enchantment.efficiency;
+			if(t == EnumToolType.SWORD) return Enchantment.sharpness;
 			return Enchantment.power;
 		}
 		else if(this == KNOCKBACK)
 		{
-			if(t == EnumToolType.SWORD)
-				return Enchantment.knockback;
+			if(t == EnumToolType.SWORD) return Enchantment.knockback;
 			return Enchantment.punch;
 		}
 		else if(this == SILKTOUCH)
 		{
-			if(t == EnumToolType.TOOL)
-				return Enchantment.silkTouch;
+			if(t == EnumToolType.TOOL) return Enchantment.silkTouch;
 		}
 		else if(this == INFINITY)
 		{
-			if(t == EnumToolType.BOW)
-				return Enchantment.infinity;
+			if(t == EnumToolType.BOW) return Enchantment.infinity;
 		}
 		
 		return null;
 	}
 	
 	public void init(Item it, int i)
-	{ item = it; requiredLevel = i; }
+	{
+		item = it;
+		requiredLevel = i;
+	}
 	
 	public boolean is(ToolInfusion... t)
 	{
 		for(ToolInfusion t1 : t)
-		if(t1 == this) return true;
+			if(t1 == this) return true;
 		return false;
 	}
 	
@@ -122,6 +115,7 @@ public enum ToolInfusion
 	{
 		Item i = is.getItem();
 		for(ToolInfusion t : VALUES)
-		if(t.item == i) return t; return null;
+			if(t.item == i) return t;
+		return null;
 	}
 }

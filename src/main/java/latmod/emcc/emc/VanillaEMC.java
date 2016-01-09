@@ -96,8 +96,8 @@ public class VanillaEMC
 		addReg(Blocks.red_flower, -1, 16);
 		addReg(Blocks.cactus, 0, 8);
 		addReg(Blocks.vine, 0, 8);
-        addReg(Blocks.waterlily, 0, 16);
-        addReg(Blocks.double_plant, -1, 8);
+		addReg(Blocks.waterlily, 0, 16);
+		addReg(Blocks.double_plant, -1, 8);
 		
 		addOre(ODItems.WOOD, 32);
 		addOre(ODItems.SAPLING, 32);
@@ -260,8 +260,7 @@ public class VanillaEMC
 				String k = keys.next();
 				Float v = values.next();
 				
-				if(k != null && v != null && !k.isEmpty() && v.floatValue() > 0F)
-					e.addReg(k, v);
+				if(k != null && v != null && !k.isEmpty() && v.floatValue() > 0F) e.addReg(k, v);
 			}
 			
 			keys = oreNames.keySet().iterator();
@@ -272,8 +271,7 @@ public class VanillaEMC
 				String k = keys.next();
 				Float v = values.next();
 				
-				if(k != null && v != null && !k.isEmpty() && v.floatValue() > 0F)
-					e.addOre(k, v);
+				if(k != null && v != null && !k.isEmpty() && v.floatValue() > 0F) e.addOre(k, v);
 			}
 		}
 	}

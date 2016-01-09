@@ -24,9 +24,7 @@ public class ItemUUSword extends ItemToolEMCC implements ICreativeSafeItem // It
 	public void loadRecipes()
 	{
 		if(EMCCConfigTools.Enable.sword.get())
-			getMod().recipes.addRecipe(new ItemStack(this), "U", "U", "S",
-					'U', ItemMaterialsEMCC.INGOT_UUS,
-					'S', ODItems.STICK);
+			getMod().recipes.addRecipe(new ItemStack(this), "U", "U", "S", 'U', ItemMaterialsEMCC.INGOT_UUS, 'S', ODItems.STICK);
 	}
 	
 	public ItemStack onItemRightClick(ItemStack is, World w, EntityPlayer ep)
@@ -53,11 +51,11 @@ public class ItemUUSword extends ItemToolEMCC implements ICreativeSafeItem // It
 	
 	@SuppressWarnings("all")
 	public Multimap getAttributeModifiers(ItemStack is)
-    {
-        Multimap multimap = super.getAttributeModifiers(is);
-        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Weapon modifier", damageItem(is, true) ? 9D : 1D, 0));
-        return multimap;
-    }
+	{
+		Multimap multimap = super.getAttributeModifiers(is);
+		multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Weapon modifier", damageItem(is, true) ? 9D : 1D, 0));
+		return multimap;
+	}
 	
 	public boolean isEffective(Block b)
 	{ return b.getMaterial() == Material.web; }

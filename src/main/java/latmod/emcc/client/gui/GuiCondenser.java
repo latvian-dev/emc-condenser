@@ -31,7 +31,7 @@ public class GuiCondenser extends GuiLM
 	public GuiCondenser(final ContainerCondenser c)
 	{
 		super(c, texLoc);
-		condenser = (TileCondenser)c.inv;
+		condenser = (TileCondenser) c.inv;
 		xSize = 176;
 		ySize = 236;
 		
@@ -113,8 +113,8 @@ public class GuiCondenser extends GuiLM
 		{
 			public void addMouseOverText(List<String> l)
 			{
-				ItemStack tar = condenser.items[TileCondenser.SLOT_TARGET];
-				double emc1 =  EMCHandler.instance().getEMC(tar);
+				ItemStack tar = condenser.items[ TileCondenser.SLOT_TARGET ];
+				double emc1 = EMCHandler.instance().getEMC(tar);
 				l.add(EnumChatFormatting.GOLD.toString() + "" + formatEMC(condenser.storedEMC) + (emc1 <= 0D ? "" : (" / " + formatEMC(emc1))));
 			}
 		};
@@ -139,37 +139,36 @@ public class GuiCondenser extends GuiLM
 	{
 		super.drawBackground();
 		
-		ItemStack tar = condenser.items[TileCondenser.SLOT_TARGET];
+		ItemStack tar = condenser.items[ TileCondenser.SLOT_TARGET ];
 		
-		double emc1 =  EMCHandler.instance().getEMC(tar);
+		double emc1 = EMCHandler.instance().getEMC(tar);
 		
 		if(emc1 > 0L)
 		{
 			setTexture(texLoc);
-			double d = (condenser.storedEMC % emc1) / (double)emc1;
+			double d = (condenser.storedEMC % emc1) / (double) emc1;
 			drawTexturedRectD(guiLeft + barEMC.posX, guiTop + barEMC.posY, zLevel, texBar.width * d, texBar.height, texBar.minU, texBar.minV, texBar.minU + (texBar.maxU - texBar.minU) * d, texBar.maxV);
 		}
 		
-		if(condenser.items[TileCondenser.SLOT_TARGET] == null)
-			targetIcon.render(texTarget);
+		if(condenser.items[ TileCondenser.SLOT_TARGET ] == null) targetIcon.render(texTarget);
 		
 		buttonTransItems.render(GuiIcons.down);
 		
 		sidebar.render(texSidebar);
 		
-		buttonRedstone.render(GuiIcons.redstone[condenser.redstone_mode.get().ID]);
+		buttonRedstone.render(GuiIcons.redstone[ condenser.redstone_mode.get().ID ]);
 		buttonSecurity.render(condenser.security.level.getIcon());
-		buttonInvMode.render(GuiIcons.inv[condenser.inv_mode.get().ID]);
+		buttonInvMode.render(GuiIcons.inv[ condenser.inv_mode.get().ID ]);
 		buttonSafeMode.render(condenser.safe_mode.get() ? GuiIcons.accept : GuiIcons.accept_gray);
 		
-		targetIcon.title = (condenser.items[TileCondenser.SLOT_TARGET] == null) ? noTargetLang : null;
+		targetIcon.title = (condenser.items[ TileCondenser.SLOT_TARGET ] == null) ? noTargetLang : null;
 	}
 	
 	public static String formatEMC(double d)
 	{
 		if(d == Double.POSITIVE_INFINITY) return EnumChatFormatting.OBFUSCATED + "000000";
 		
-		d = ((long)(d * 1000D)) / 1000D;
+		d = ((long) (d * 1000D)) / 1000D;
 		
 		String s = "" + d;
 		
@@ -178,20 +177,19 @@ public class GuiCondenser extends GuiLM
 			if(d > 1000)
 			{
 				double d1 = d / 1000D;
-				d1 = ((long)(d1 * 1000D)) / 1000D;
+				d1 = ((long) (d1 * 1000D)) / 1000D;
 				s = "" + d1 + "K";
 			}
 			
 			if(d > 1000000)
 			{
 				double d1 = d / 1000000D;
-				d1 = ((long)(d1 * 100D)) / 100D;
+				d1 = ((long) (d1 * 100D)) / 100D;
 				s = "" + d1 + "M";
 			}
 		}
 		
-		if(s.endsWith(".0"))
-			s = s.substring(0, s.length() - 2);
+		if(s.endsWith(".0")) s = s.substring(0, s.length() - 2);
 		
 		return s;
 	}

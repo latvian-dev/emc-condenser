@@ -1,4 +1,5 @@
 package latmod.emcc.item;
+
 import cpw.mods.fml.relauncher.*;
 import latmod.emcc.api.IEmcStorageItem;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -32,8 +33,7 @@ public abstract class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 			{
 				int dmg = is.getItemDamage();
 				
-				if(dmg == 0 || dmg == 1)
-					is.setItemDamage(dmg == 0 ? 1 : 0);
+				if(dmg == 0 || dmg == 1) is.setItemDamage(dmg == 0 ? 1 : 0);
 				
 				w.playSoundAtEntity(ep, "random.orb", 1F, (dmg % 2 == 0) ? 1F : 0.5F);
 			}
@@ -60,13 +60,11 @@ public abstract class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 	{
 		if(emc <= 0D)
 		{
-			if(is.hasTagCompound())
-				is.stackTagCompound.removeTag(NBT_KEY);
+			if(is.hasTagCompound()) is.stackTagCompound.removeTag(NBT_KEY);
 		}
 		else
 		{
-			if(!is.hasTagCompound())
-				is.stackTagCompound = new NBTTagCompound();
+			if(!is.hasTagCompound()) is.stackTagCompound = new NBTTagCompound();
 			is.stackTagCompound.setDouble(NBT_KEY, emc);
 		}
 	}

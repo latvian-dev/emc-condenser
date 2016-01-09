@@ -1,4 +1,5 @@
 package latmod.emcc.client.gui;
+
 import ftb.lib.gui.ContainerLM;
 import ftb.lib.item.SlotLM;
 import latmod.emcc.block.TileCondenser;
@@ -19,7 +20,7 @@ public class ContainerCondenser extends ContainerLM
 			int x = i % 9;
 			int y = i / 9;
 			
-			addSlotToContainer(new SlotLM(t, TileCondenser.INPUT_SLOTS[i], 8 + x * 18, 32 + y * 18));
+			addSlotToContainer(new SlotLM(t, TileCondenser.INPUT_SLOTS[ i ], 8 + x * 18, 32 + y * 18));
 		}
 		
 		for(int i = 0; i < TileCondenser.OUTPUT_SLOTS.length; i++)
@@ -27,7 +28,7 @@ public class ContainerCondenser extends ContainerLM
 			int x = i % 9;
 			int y = i / 9;
 			
-			addSlotToContainer(new SlotLM(t, TileCondenser.OUTPUT_SLOTS[i], 8 + x * 18, 107 + y * 18));
+			addSlotToContainer(new SlotLM(t, TileCondenser.OUTPUT_SLOTS[ i ], 8 + x * 18, 107 + y * 18));
 		}
 		
 		addPlayerSlots(154);
@@ -40,25 +41,22 @@ public class ContainerCondenser extends ContainerLM
 	public ItemStack transferStackInSlot(EntityPlayer ep, int i)
 	{
 		ItemStack is = null;
-		Slot slot = (Slot)inventorySlots.get(i);
+		Slot slot = (Slot) inventorySlots.get(i);
 		
-		if (slot != null && slot.getHasStack())
+		if(slot != null && slot.getHasStack())
 		{
 			ItemStack is1 = slot.getStack();
 			is = is1.copy();
 			
 			int maxSlot = TileCondenser.SLOT_COUNT - TileCondenser.OUTPUT_SLOTS.length;
 			
-			if (i < maxSlot)
+			if(i < maxSlot)
 			{
-				if (!mergeItemStack(is1, maxSlot, inventorySlots.size(), true))
-					return null;
+				if(!mergeItemStack(is1, maxSlot, inventorySlots.size(), true)) return null;
 			}
-			else if (!mergeItemStack(is1, 0, maxSlot, false))
-				return null;
+			else if(!mergeItemStack(is1, 0, maxSlot, false)) return null;
 			
-			if (is1.stackSize == 0)
-				slot.putStack((ItemStack)null);
+			if(is1.stackSize == 0) slot.putStack((ItemStack) null);
 			else slot.onSlotChanged();
 		}
 		

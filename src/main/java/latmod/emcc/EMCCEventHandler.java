@@ -31,15 +31,13 @@ public class EMCCEventHandler
 		
 		if(item instanceof IEmcStorageItem && FTBLibMod.proxy.isShiftDown())
 		{
-			IEmcStorageItem i = (IEmcStorageItem)item;
+			IEmcStorageItem i = (IEmcStorageItem) item;
 			
 			double stored = i.getStoredEmc(e.itemStack);
 			double maxStored = i.getMaxStoredEmc(e.itemStack);
 			
-			if(stored == Double.POSITIVE_INFINITY)
-				e.toolTip.add("EMC: Infinite");
-			else if(maxStored == Double.POSITIVE_INFINITY)
-				e.toolTip.add("EMC: " + formDouble(stored, 100D));
+			if(stored == Double.POSITIVE_INFINITY) e.toolTip.add("EMC: Infinite");
+			else if(maxStored == Double.POSITIVE_INFINITY) e.toolTip.add("EMC: " + formDouble(stored, 100D));
 			else
 				e.toolTip.add("EMC: " + formDouble(stored, 100D) + " [ " + formDouble(stored * 100D / maxStored, 100D) + "% ]");
 			
@@ -55,8 +53,7 @@ public class EMCCEventHandler
 				String s = e.toolTip.get(j);
 				if(s != null && !s.isEmpty())
 				{
-					if((removeNoEMCTooltip && s.contains("No Exchange Energy value"))
-					|| (forceVanillaEMC && s.contains("Exchange Energy")))
+					if((removeNoEMCTooltip && s.contains("No Exchange Energy value")) || (forceVanillaEMC && s.contains("Exchange Energy")))
 						e.toolTip.remove(j);
 				}
 			}
@@ -88,7 +85,7 @@ public class EMCCEventHandler
 	
 	private static String formDouble(double d, double d1)
 	{
-		if(d1 > 0D) d = ((long)(d * d1)) / d1;
+		if(d1 > 0D) d = ((long) (d * d1)) / d1;
 		String s = "" + d;
 		if(s.endsWith(".0")) s = s.substring(0, s.length() - 2);
 		return s;
@@ -99,7 +96,7 @@ public class EMCCEventHandler
 	{
 		if(e.left != null && e.right != null && e.left.getItem() instanceof IEmcTool)
 		{
-			IEmcTool i = (IEmcTool)e.left.getItem();
+			IEmcTool i = (IEmcTool) e.left.getItem();
 			ToolInfusion t = ToolInfusion.get(e.right);
 			
 			if(t != null && i.canEnchantWith(e.left, t))

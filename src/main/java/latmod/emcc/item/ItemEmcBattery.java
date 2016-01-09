@@ -33,11 +33,7 @@ public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 	public void loadRecipes()
 	{
 		if(EMCCConfigTools.Enable.battery.get())
-			getMod().recipes.addRecipe(new ItemStack(this), "QRQ", "QUQ", "QGQ",
-				'Q', ODItems.QUARTZ,
-				'R', ODItems.REDSTONE,
-				'G', ODItems.GLOWSTONE,
-				'U', ItemMaterialsEMCC.ITEM_UUS);
+			getMod().recipes.addRecipe(new ItemStack(this), "QRQ", "QUQ", "QGQ", 'Q', ODItems.QUARTZ, 'R', ODItems.REDSTONE, 'G', ODItems.GLOWSTONE, 'U', ItemMaterialsEMCC.ITEM_UUS);
 	}
 	
 	public void onPostLoaded()
@@ -50,7 +46,7 @@ public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 	}
 	
 	public void onUpdate(ItemStack is, World w, Entity e, int t, boolean b)
-	{ if(!w.isRemote && e instanceof EntityPlayer) onWornTick(is, (EntityPlayer)e); }
+	{ if(!w.isRemote && e instanceof EntityPlayer) onWornTick(is, (EntityPlayer) e); }
 	
 	@Optional.Method(modid = OtherMods.BAUBLES)
 	public BaubleType getBaubleType(ItemStack is)
@@ -60,7 +56,7 @@ public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 	{
 		if(el.worldObj.isRemote || !(el instanceof EntityPlayer)) return;
 		
-		EntityPlayer ep = (EntityPlayer)el;
+		EntityPlayer ep = (EntityPlayer) el;
 		
 		if(is.getItemDamage() == 1 && (el.worldObj.getWorldTime() % 8 == 0))
 		{
@@ -85,7 +81,7 @@ public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 			
 			if(is1 != null && is1.getItem() instanceof IEmcStorageItem && is1.getItem() != this)
 			{
-				IEmcStorageItem si = (IEmcStorageItem)is1.getItem();
+				IEmcStorageItem si = (IEmcStorageItem) is1.getItem();
 				
 				double max = si.getMaxStoredEmc(is1);
 				

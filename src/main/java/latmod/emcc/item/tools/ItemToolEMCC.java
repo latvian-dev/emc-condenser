@@ -45,7 +45,10 @@ public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 	}
 	
 	public boolean onBlockDestroyed(ItemStack is, World w, Block b, int x, int y, int z, EntityLivingBase el)
-    { if(b.getBlockHardness(w, x, y, z) != 0D) damageItem(is, false); return true; }
+	{
+		if(b.getBlockHardness(w, x, y, z) != 0D) damageItem(is, false);
+		return true;
+	}
 	
 	public boolean getIsRepairable(ItemStack is1, ItemStack is2)
 	{ return false; }

@@ -19,7 +19,7 @@ public class EMCCUtils
 	{
 		if(is != null && is.getItem() instanceof IEmcStorageItem)
 		{
-			double emc = ((IEmcStorageItem)is.getItem()).getStoredEmc(is);
+			double emc = ((IEmcStorageItem) is.getItem()).getStoredEmc(is);
 			if(emc == 0D) return false;
 			
 			double mEmc = m.getStoredEmc();
@@ -33,7 +33,7 @@ public class EMCCUtils
 				mEmc += d;
 				
 				m.setStoredEmc(mEmc);
-				((IEmcStorageItem)is.getItem()).setStoredEmc(is, emc);
+				((IEmcStorageItem) is.getItem()).setStoredEmc(is, emc);
 				
 				return true;
 			}
@@ -50,18 +50,19 @@ public class EMCCUtils
 		
 		if(is0 != null && !is0.isEmpty())
 		{
-			for(ItemStack is : is0) if(is != null)
-			{
-				ItemStack is1 = FurnaceRecipes.smelting().getSmeltingResult(LMInvUtils.singleCopy(is));
-				
-				if(is1 != null)
+			for(ItemStack is : is0)
+				if(is != null)
 				{
-					if(!w.isRemote) for(int s = 0; s < is.stackSize; s++)
-						LMInvUtils.dropItem(w, x + 0.5D, y + 0.5D, z + 0.5D, is1, 10);
-					flag = true;
+					ItemStack is1 = FurnaceRecipes.smelting().getSmeltingResult(LMInvUtils.singleCopy(is));
+
+					if(is1 != null)
+					{
+						if(!w.isRemote) for(int s = 0; s < is.stackSize; s++)
+							LMInvUtils.dropItem(w, x + 0.5D, y + 0.5D, z + 0.5D, is1, 10);
+						flag = true;
+					}
+					else if(!w.isRemote) LMInvUtils.dropItem(w, x + 0.5D, y + 0.5D, z + 0.5D, is, 10);
 				}
-				else if(!w.isRemote) LMInvUtils.dropItem(w, x + 0.5D, y + 0.5D, z + 0.5D, is, 10);
-			}
 		}
 		
 		return flag;
@@ -110,43 +111,42 @@ public class EMCCUtils
 		{
 			int meta = w.getBlockMetadata(x, y, z);
 			
-			if(block.getBlockHardness(w, x, y, z) != 0F)
-				is.damageItem(1, el);
+			if(block.getBlockHardness(w, x, y, z) != 0F) is.damageItem(1, el);
 			
 			int fortune = EnchantmentHelper.getFortuneModifier(el);
 			
 			for(int ox = -1; ox <= 1; ox++)
-			for(int oy = -1; oy <= 1; oy++)
-			for(int oz = -1; oz <= 1; oz++)
-			{
-				if((ox == 0 && oy == 0 && oz == 0) || is.getItemDamage() == is.getMaxDamage());
-				else
-				{
-					if(w.getTileEntity(x + ox, y + oy, z + oz) == null)
+				for(int oy = -1; oy <= 1; oy++)
+					for(int oz = -1; oz <= 1; oz++)
 					{
-						Block block1 = w.getBlock(x + ox, y + oy, z + oz);
-						
-						if(block1 != Blocks.air && ei.isEffective(block1))
+						if((ox == 0 && oy == 0 && oz == 0) || is.getItemDamage() == is.getMaxDamage()) ;
+						else
 						{
-							float h = block1.getBlockHardness(w, x + ox, y + oy, z + oz);
-							
-							if(h != -1F)
+							if(w.getTileEntity(x + ox, y + oy, z + oz) == null)
 							{
-								if(w.setBlockToAir(x + ox, y + oy, z + oz))
+								Block block1 = w.getBlock(x + ox, y + oy, z + oz);
+
+								if(block1 != Blocks.air && ei.isEffective(block1))
 								{
-									if (h != 0F) is.damageItem(1, el);
-									
-									block1.dropBlockAsItem(w, x + ox, y + oy, z + oz, meta, fortune);
-									
-									b = true;
-									
-									if(is.stackSize == 0) return true;
+									float h = block1.getBlockHardness(w, x + ox, y + oy, z + oz);
+
+									if(h != -1F)
+									{
+										if(w.setBlockToAir(x + ox, y + oy, z + oz))
+										{
+											if(h != 0F) is.damageItem(1, el);
+
+											block1.dropBlockAsItem(w, x + ox, y + oy, z + oz, meta, fortune);
+
+											b = true;
+
+											if(is.stackSize == 0) return true;
+										}
+									}
 								}
 							}
 						}
 					}
-				}
-			}
 		}
 		
 		return b;

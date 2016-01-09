@@ -79,8 +79,7 @@ public class EMCCBlacklist
 		
 		if(oreNames != null && oreNames.size() > 0)
 		{
-			if(list.fuels.isBlacklistedOre(oreNames) || list.all.isBlacklistedOre(oreNames))
-				return true;
+			if(list.fuels.isBlacklistedOre(oreNames) || list.all.isBlacklistedOre(oreNames)) return true;
 		}
 		
 		return false;
@@ -98,8 +97,7 @@ public class EMCCBlacklist
 		
 		if(oreNames != null && oreNames.size() > 0)
 		{
-			if(list.targets.isBlacklistedOre(oreNames) || list.all.isBlacklistedOre(oreNames))
-				return true;
+			if(list.targets.isBlacklistedOre(oreNames) || list.all.isBlacklistedOre(oreNames)) return true;
 		}
 		
 		return false;

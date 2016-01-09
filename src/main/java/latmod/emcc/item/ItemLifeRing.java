@@ -31,10 +31,7 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 	public void loadRecipes()
 	{
 		if(EMCCConfigTools.life_stone_1hp.get() != -1F || EMCCConfigTools.life_stone_food.get() != -1F)
-			getMod().recipes.addRecipe(new ItemStack(this), "SPS", "PBP", "SPS",
-				'S', Items.cooked_beef,
-				'B', EMCCItems.i_emc_battery,
-				'P', new ItemStack(Items.potionitem, 1, 8225));
+			getMod().recipes.addRecipe(new ItemStack(this), "SPS", "PBP", "SPS", 'S', Items.cooked_beef, 'B', EMCCItems.i_emc_battery, 'P', new ItemStack(Items.potionitem, 1, 8225));
 	}
 	
 	public ItemStack onItemRightClick(ItemStack is, World w, EntityPlayer ep)
@@ -60,7 +57,7 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 	public void onUpdate(ItemStack is, World w, Entity e, int t, boolean b)
 	{
 		if(w.isRemote || !(e instanceof EntityPlayer)) return;
-		onWornTick(is, (EntityPlayer)e);
+		onWornTick(is, (EntityPlayer) e);
 	}
 	
 	public void onWornTick(ItemStack is, EntityLivingBase e)
@@ -68,7 +65,7 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 		if(e == null || e.worldObj.isRemote || !(e instanceof EntityPlayer)) return;
 		if(EMCCConfigTools.life_stone_1hp.get() == -1F && EMCCConfigTools.life_stone_food.get() == -1F) return;
 		
-		EntityPlayer ep = (EntityPlayer)e;
+		EntityPlayer ep = (EntityPlayer) e;
 		
 		if(is.getItemDamage() == 1 && e.worldObj.getWorldTime() % 8 == 0)
 		{

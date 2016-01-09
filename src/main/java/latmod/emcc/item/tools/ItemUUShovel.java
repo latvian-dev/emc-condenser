@@ -1,4 +1,5 @@
 package latmod.emcc.item.tools;
+
 import ftb.lib.item.*;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.config.EMCCConfigTools;
@@ -28,9 +29,7 @@ public class ItemUUShovel extends ItemToolEMCC
 	public void loadRecipes()
 	{
 		if(EMCCConfigTools.Enable.tools.get())
-			getMod().recipes.addRecipe(new ItemStack(this), "U", "S", "S",
-					'U', ItemMaterialsEMCC.INGOT_UUS,
-					'S', ODItems.STICK);
+			getMod().recipes.addRecipe(new ItemStack(this), "U", "S", "S", 'U', ItemMaterialsEMCC.INGOT_UUS, 'S', ODItems.STICK);
 	}
 	
 	public boolean canHarvestBlock(Block b, ItemStack is)
@@ -49,10 +48,10 @@ public class ItemUUShovel extends ItemToolEMCC
 	}
 	
 	public boolean onBlockDestroyed(ItemStack is, World w, Block bid, int x, int y, int z, EntityLivingBase el)
-    {
+	{
 		return super.onBlockDestroyed(is, w, bid, x, y, z, el);
 		//else return EMCCUtils.destroyBlockArea(w, x, y, z, el, is, bid, this);
-    }
+	}
 	
 	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
 	{ return t.is(ToolInfusion.SHARPNESS, ToolInfusion.UNBREAKING, ToolInfusion.FIRE, ToolInfusion.SILKTOUCH); }

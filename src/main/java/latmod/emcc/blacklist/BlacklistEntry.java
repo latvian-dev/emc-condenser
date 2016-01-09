@@ -9,8 +9,10 @@ import java.util.*;
 
 public class BlacklistEntry
 {
-	@Expose public List<String> ore_dictionary;
-	@Expose public List<String> registry_name;
+	@Expose
+	public List<String> ore_dictionary;
+	@Expose
+	public List<String> registry_name;
 	private final ArrayList<ItemEntry> reg_list;
 	
 	public static class ItemEntry
@@ -26,7 +28,7 @@ public class BlacklistEntry
 		
 		public boolean equals(Object o)
 		{
-			ItemStack is = (ItemStack)o;
+			ItemStack is = (ItemStack) o;
 			return is != null && (damage == -1 || is.getItemDamage() == damage) && is.getItem() == item;
 		}
 	}
@@ -68,8 +70,8 @@ public class BlacklistEntry
 			}
 			else
 			{
-				uName = s1[0];
-				dmg = Integer.parseInt(s1[1]);
+				uName = s1[ 0 ];
+				dmg = Integer.parseInt(s1[ 1 ]);
 				if(dmg == -1) dmg = ODItems.ANY;
 			}
 			

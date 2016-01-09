@@ -35,20 +35,17 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 	public void loadRecipes()
 	{
 		if(EMCCConfigTools.black_hole_stone_item.get() != -1F)
-			getMod().recipes.addRecipe(new ItemStack(this), "OEO", "EBE", "OEO",
-				'O', EMCCItems.b_uu_block,
-				'B', EMCCItems.i_emc_battery,
-				'E', Items.ender_pearl);
+			getMod().recipes.addRecipe(new ItemStack(this), "OEO", "EBE", "OEO", 'O', EMCCItems.b_uu_block, 'B', EMCCItems.i_emc_battery, 'E', Items.ender_pearl);
 	}
 	
 	public void onUpdate(ItemStack is, World w, Entity e, int t, boolean b)
-	{ if(e != null && e instanceof EntityPlayer) onWornTick(is, (EntityPlayer)e); }
+	{ if(e != null && e instanceof EntityPlayer) onWornTick(is, (EntityPlayer) e); }
 	
 	public void onWornTick(ItemStack is, EntityLivingBase e)
 	{
 		if(!(e instanceof EntityPlayer)) return;
 		
-		EntityPlayer ep = (EntityPlayer)e;
+		EntityPlayer ep = (EntityPlayer) e;
 		
 		if(is.getItemDamage() == 1 && (e.worldObj.getWorldTime() % 4 == 0))
 		{
@@ -57,19 +54,17 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 			if(itemCost == -1F || emc < itemCost) return;
 			double r = EMCCConfigTools.black_hole_stone_range.get();
 			
-			@SuppressWarnings("unchecked")
-			List<EntityItem> items = ep.worldObj.getEntitiesWithinAABB(EntityItem.class, ep.boundingBox.expand(r, r, r));
+			@SuppressWarnings("unchecked") List<EntityItem> items = ep.worldObj.getEntitiesWithinAABB(EntityItem.class, ep.boundingBox.expand(r, r, r));
 			
-			for (EntityItem item : items)
+			for(EntityItem item : items)
 			{
-				if (LMInvUtils.addSingleItemToInv(item.getEntityItem(), ep.inventory, LMInvUtils.getPlayerSlots(ep), -1, false))
+				if(LMInvUtils.addSingleItemToInv(item.getEntityItem(), ep.inventory, LMInvUtils.getPlayerSlots(ep), -1, false))
 				{
 					e.worldObj.spawnParticle("smoke", item.posX, item.posY + item.height / 2F, item.posZ, 0D, 0D, 0D);
 					
 					if(!e.worldObj.isRemote)
 					{
-						if(item.delayBeforeCanPickup > 4)
-							item.delayBeforeCanPickup = 4;
+						if(item.delayBeforeCanPickup > 4) item.delayBeforeCanPickup = 4;
 						if(item.delayBeforeCanPickup != 0) continue;
 						
 						emc -= itemCost;

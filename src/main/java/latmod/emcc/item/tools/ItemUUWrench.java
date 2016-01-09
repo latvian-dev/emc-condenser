@@ -1,4 +1,5 @@
 package latmod.emcc.item.tools;
+
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.item.ODItems;
 import latmod.emcc.*;
@@ -32,10 +33,7 @@ public class ItemUUWrench extends ItemToolEMCC
 	public void loadRecipes()
 	{
 		if(EMCCConfigTools.Enable.wrench.get())
-			getMod().recipes.addRecipe(new ItemStack(this), "UBU", " S ", " S ",
-					'U', EMCCItems.b_uu_block,
-					'S', ODItems.STICK,
-					'B', EMCCItems.i_emc_battery);
+			getMod().recipes.addRecipe(new ItemStack(this), "UBU", " S ", " S ", 'U', EMCCItems.b_uu_block, 'S', ODItems.STICK, 'B', EMCCItems.i_emc_battery);
 	}
 	
 	public int getItemEnchantability()
@@ -51,19 +49,19 @@ public class ItemUUWrench extends ItemToolEMCC
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(ItemStack is, int r)
 	{
-		if(is.stackTagCompound != null && is.stackTagCompound.hasKey(NBT_KEY))
-			return icon_full; return itemIcon;
+		if(is.stackTagCompound != null && is.stackTagCompound.hasKey(NBT_KEY)) return icon_full;
+		return itemIcon;
 	}
 	
 	public boolean onItemUse(ItemStack is, EntityPlayer ep, World w, int x, int y, int z, int side, float x1, float y1, float z1)
 	{
-		if (!ep.canPlayerEdit(x, y, z, side, is)) return false;
+		if(!ep.canPlayerEdit(x, y, z, side, is)) return false;
 		
 		if(ep.isSneaking())
 		{
 			if(!w.isRemote)
 			{
-				NBTTagCompound tag = (NBTTagCompound)(is.hasTagCompound() ? is.stackTagCompound.getTag(NBT_KEY) : null);
+				NBTTagCompound tag = (NBTTagCompound) (is.hasTagCompound() ? is.stackTagCompound.getTag(NBT_KEY) : null);
 				
 				if(tag == null)
 				{
@@ -71,7 +69,7 @@ public class ItemUUWrench extends ItemToolEMCC
 					
 					if(te != null && te instanceof IEmcWrenchable)
 					{
-						IEmcWrenchable wr = (IEmcWrenchable)te;
+						IEmcWrenchable wr = (IEmcWrenchable) te;
 						
 						if(wr.canWrench(ep))
 						{
@@ -80,7 +78,7 @@ public class ItemUUWrench extends ItemToolEMCC
 							
 							if(!is.hasTagCompound()) is.stackTagCompound = new NBTTagCompound();
 							tag.setString("PlaceBlock", Block.blockRegistry.getNameForObject(w.getBlock(x, y, z)));
-							tag.setShort("PlaceMetadata", (short)w.getBlockMetadata(x, y, z));
+							tag.setShort("PlaceMetadata", (short) w.getBlockMetadata(x, y, z));
 							is.stackTagCompound.setTag(NBT_KEY, tag);
 							
 							wr.onWrenched(ep, is);
@@ -90,9 +88,9 @@ public class ItemUUWrench extends ItemToolEMCC
 				}
 				else
 				{
-					x += ForgeDirection.VALID_DIRECTIONS[side].offsetX;
-					y += ForgeDirection.VALID_DIRECTIONS[side].offsetY;
-					z += ForgeDirection.VALID_DIRECTIONS[side].offsetZ;
+					x += ForgeDirection.VALID_DIRECTIONS[ side ].offsetX;
+					y += ForgeDirection.VALID_DIRECTIONS[ side ].offsetY;
+					z += ForgeDirection.VALID_DIRECTIONS[ side ].offsetZ;
 					
 					if(w.isAirBlock(x, y, z))
 					{
@@ -102,7 +100,7 @@ public class ItemUUWrench extends ItemToolEMCC
 						
 						int placeMeta = tag.getShort("PlaceMetadata");
 						
-						Block b = (Block)Block.blockRegistry.getObject(placeId);
+						Block b = (Block) Block.blockRegistry.getObject(placeId);
 						
 						w.setBlock(x, y, z, b);
 						w.setBlockMetadataWithNotify(x, y, z, placeMeta, 3);
@@ -111,7 +109,7 @@ public class ItemUUWrench extends ItemToolEMCC
 						
 						if(te != null && te instanceof IEmcWrenchable)
 						{
-							IEmcWrenchable wr = (IEmcWrenchable)te;
+							IEmcWrenchable wr = (IEmcWrenchable) te;
 							
 							b.onBlockPlacedBy(w, x, y, z, ep, ep.getHeldItem());
 							wr.readFromWrench(tag);
