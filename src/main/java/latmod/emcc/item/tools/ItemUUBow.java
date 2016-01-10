@@ -45,14 +45,14 @@ public class ItemUUBow extends ItemToolEMCC // ItemBow
 		if(!damageItem(is, true)) return;
 		
 		int j = getMaxItemUseDuration(is) - itemInUseCount;
-
+		
 		ArrowLooseEvent event = new ArrowLooseEvent(ep, is, j);
 		MinecraftForge.EVENT_BUS.post(event);
 		if(event.isCanceled()) return;
 		j = event.charge;
-
+		
 		boolean flag = ep.capabilities.isCreativeMode || hasInfusion(is, ToolInfusion.INFINITY);
-
+		
 		if(flag || ep.inventory.hasItem(Items.arrow))
 		{
 			float f = j / 20F;
@@ -108,9 +108,9 @@ public class ItemUUBow extends ItemToolEMCC // ItemBow
 	{
 		itemIcon = ir.registerIcon(getMod().assets + "tools/bow_0");
 		
-		pullIcons = new IIcon[ 3 ];
+		pullIcons = new IIcon[3];
 		for(int i = 0; i < pullIcons.length; i++)
-			pullIcons[ i ] = ir.registerIcon(getMod().assets + "tools/bow_" + (i + 1));
+			pullIcons[i] = ir.registerIcon(getMod().assets + "tools/bow_" + (i + 1));
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -118,8 +118,8 @@ public class ItemUUBow extends ItemToolEMCC // ItemBow
 	{
 		if(t == 0) return itemIcon;
 		int i = getMaxItemUseDuration(is1) - t;
-		if(i > 17) return pullIcons[ 2 ];
-		if(i > 13) return pullIcons[ 1 ];
-		return pullIcons[ 0 ];
+		if(i > 17) return pullIcons[2];
+		if(i > 13) return pullIcons[1];
+		return pullIcons[0];
 	}
 }

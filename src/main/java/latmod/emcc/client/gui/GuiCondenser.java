@@ -113,7 +113,7 @@ public class GuiCondenser extends GuiLM
 		{
 			public void addMouseOverText(List<String> l)
 			{
-				ItemStack tar = condenser.items[ TileCondenser.SLOT_TARGET ];
+				ItemStack tar = condenser.items[TileCondenser.SLOT_TARGET];
 				double emc1 = EMCHandler.instance().getEMC(tar);
 				l.add(EnumChatFormatting.GOLD.toString() + "" + formatEMC(condenser.storedEMC) + (emc1 <= 0D ? "" : (" / " + formatEMC(emc1))));
 			}
@@ -139,7 +139,7 @@ public class GuiCondenser extends GuiLM
 	{
 		super.drawBackground();
 		
-		ItemStack tar = condenser.items[ TileCondenser.SLOT_TARGET ];
+		ItemStack tar = condenser.items[TileCondenser.SLOT_TARGET];
 		
 		double emc1 = EMCHandler.instance().getEMC(tar);
 		
@@ -150,18 +150,18 @@ public class GuiCondenser extends GuiLM
 			drawTexturedRectD(guiLeft + barEMC.posX, guiTop + barEMC.posY, zLevel, texBar.width * d, texBar.height, texBar.minU, texBar.minV, texBar.minU + (texBar.maxU - texBar.minU) * d, texBar.maxV);
 		}
 		
-		if(condenser.items[ TileCondenser.SLOT_TARGET ] == null) targetIcon.render(texTarget);
+		if(condenser.items[TileCondenser.SLOT_TARGET] == null) targetIcon.render(texTarget);
 		
 		buttonTransItems.render(GuiIcons.down);
 		
 		sidebar.render(texSidebar);
 		
-		buttonRedstone.render(GuiIcons.redstone[ condenser.redstone_mode.get().ID ]);
+		buttonRedstone.render(GuiIcons.redstone[condenser.redstone_mode.get().ID]);
 		buttonSecurity.render(condenser.security.level.getIcon());
-		buttonInvMode.render(GuiIcons.inv[ condenser.inv_mode.get().ID ]);
+		buttonInvMode.render(GuiIcons.inv[condenser.inv_mode.get().ID]);
 		buttonSafeMode.render(condenser.safe_mode.get() ? GuiIcons.accept : GuiIcons.accept_gray);
 		
-		targetIcon.title = (condenser.items[ TileCondenser.SLOT_TARGET ] == null) ? noTargetLang : null;
+		targetIcon.title = (condenser.items[TileCondenser.SLOT_TARGET] == null) ? noTargetLang : null;
 	}
 	
 	public static String formatEMC(double d)

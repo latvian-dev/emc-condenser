@@ -55,7 +55,7 @@ public abstract class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 	
 	public boolean canChargeEmc(ItemStack is)
 	{ return true; }
-
+	
 	public void setStoredEmc(ItemStack is, double emc)
 	{
 		if(emc <= 0D)

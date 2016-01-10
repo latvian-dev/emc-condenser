@@ -28,18 +28,18 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	public static final String ACTION_TRANS_ITEMS = "transItems";
 	
 	public static final int SLOT_TARGET = 0;
-	public static final int[] TARGET_SLOTS = { SLOT_TARGET };
-	public static final int[] INPUT_SLOTS = new int[ 36 ];
-	public static final int[] OUTPUT_SLOTS = new int[ 18 ];
+	public static final int[] TARGET_SLOTS = {SLOT_TARGET};
+	public static final int[] INPUT_SLOTS = new int[36];
+	public static final int[] OUTPUT_SLOTS = new int[18];
 	public static final int SLOT_COUNT = INPUT_SLOTS.length + OUTPUT_SLOTS.length + 1;
 	
 	static
 	{
 		for(int i = 0; i < INPUT_SLOTS.length; i++)
-			INPUT_SLOTS[ i ] = i + 1;
+			INPUT_SLOTS[i] = i + 1;
 		
 		for(int i = 0; i < OUTPUT_SLOTS.length; i++)
-			OUTPUT_SLOTS[ i ] = INPUT_SLOTS.length + 1 + i;
+			OUTPUT_SLOTS[i] = INPUT_SLOTS.length + 1 + i;
 	}
 	
 	public double storedEMC = 0D;
@@ -76,34 +76,34 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 				
 				for(int i = 0; i < INPUT_SLOTS.length; i++)
 				{
-					if(items[ INPUT_SLOTS[ i ] ] != null && items[ INPUT_SLOTS[ i ] ].stackSize > 0)
+					if(items[INPUT_SLOTS[i]] != null && items[INPUT_SLOTS[i]].stackSize > 0)
 					{
-						if(items[ INPUT_SLOTS[ i ] ].getItem() instanceof IEmcStorageItem)
+						if(items[INPUT_SLOTS[i]].getItem() instanceof IEmcStorageItem)
 						{
-							IEmcStorageItem storageItem = (IEmcStorageItem) items[ INPUT_SLOTS[ i ] ].getItem();
+							IEmcStorageItem storageItem = (IEmcStorageItem) items[INPUT_SLOTS[i]].getItem();
 							
-							double ev = storageItem.getStoredEmc(items[ INPUT_SLOTS[ i ] ]);
+							double ev = storageItem.getStoredEmc(items[INPUT_SLOTS[i]]);
 							
 							storedEMC += ev;
-							storageItem.setStoredEmc(items[ INPUT_SLOTS[ i ] ], 0D);
+							storageItem.setStoredEmc(items[INPUT_SLOTS[i]], 0D);
 							markDirty();
 							continue;
 						}
 						
-						double iev = EMCHandler.instance().getEMC(items[ INPUT_SLOTS[ i ] ]);
+						double iev = EMCHandler.instance().getEMC(items[INPUT_SLOTS[i]]);
 						
-						if(iev > 0D && !EMCC.blacklist.isBlacklistedFuel(items[ INPUT_SLOTS[ i ] ]))
+						if(iev > 0D && !EMCC.blacklist.isBlacklistedFuel(items[INPUT_SLOTS[i]]))
 						{
-							if(safe_mode.get() && items[ INPUT_SLOTS[ i ] ].stackSize == 1) continue;
+							if(safe_mode.get() && items[INPUT_SLOTS[i]].stackSize == 1) continue;
 							
-							int s = Math.min((safe_mode.get() && items[ INPUT_SLOTS[ i ] ].stackSize > 1) ? (items[ INPUT_SLOTS[ i ] ].stackSize - 1) : items[ INPUT_SLOTS[ i ] ].stackSize, limit);
+							int s = Math.min((safe_mode.get() && items[INPUT_SLOTS[i]].stackSize > 1) ? (items[INPUT_SLOTS[i]].stackSize - 1) : items[INPUT_SLOTS[i]].stackSize, limit);
 							
 							if(s <= 0) continue;
 							
 							limit -= s;
 							storedEMC += iev * s;
-							items[ INPUT_SLOTS[ i ] ].stackSize -= s;
-							if(items[ INPUT_SLOTS[ i ] ].stackSize <= 0) items[ INPUT_SLOTS[ i ] ] = null;
+							items[INPUT_SLOTS[i]].stackSize -= s;
+							if(items[INPUT_SLOTS[i]].stackSize <= 0) items[INPUT_SLOTS[i]] = null;
 							markDirty();
 						}
 					}
@@ -111,9 +111,9 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 					if(limit <= 0) break;
 				}
 				
-				if(storedEMC > 0D && items[ SLOT_TARGET ] != null)
+				if(storedEMC > 0D && items[SLOT_TARGET] != null)
 				{
-					ItemStack tar = items[ SLOT_TARGET ];
+					ItemStack tar = items[SLOT_TARGET];
 					
 					if(tar.getItem() instanceof IEmcStorageItem)
 					{
@@ -126,7 +126,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 							
 							if(a > 0D)
 							{
-								storageItem.setStoredEmc(items[ SLOT_TARGET ], ev + a);
+								storageItem.setStoredEmc(items[SLOT_TARGET], ev + a);
 								storedEMC -= a;
 								markDirty();
 							}
@@ -173,8 +173,8 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 		
 		storedEMC = tag.getDouble("StoredEMC");
 		safe_mode.set(tag.getBoolean("SafeMode"));
-		redstone_mode.set(RedstoneMode.VALUES[ tag.getByte("RSMode") ]);
-		inv_mode.set(InvMode.VALUES[ tag.getByte("InvMode") ]);
+		redstone_mode.set(RedstoneMode.VALUES[tag.getByte("RSMode")]);
+		inv_mode.set(InvMode.VALUES[tag.getByte("InvMode")]);
 		cooldown = tag.getShort("Cooldown");
 		
 		checkForced();
@@ -233,7 +233,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	private static boolean anyEquals(int s, int[] slots)
 	{
 		for(int i = 0; i < slots.length; i++)
-		{ if(s == slots[ i ]) return true; }
+		{ if(s == slots[i]) return true; }
 		return false;
 	}
 	
@@ -282,24 +282,24 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 			int[] invSlots = LMInvUtils.getPlayerSlots(ep);
 			
 			for(int i = 0; i < OUTPUT_SLOTS.length; i++)
-				if(items[ OUTPUT_SLOTS[ i ] ] != null)
+				if(items[OUTPUT_SLOTS[i]] != null)
 				{
-					int ss = items[ OUTPUT_SLOTS[ i ] ].stackSize;
-
+					int ss = items[OUTPUT_SLOTS[i]].stackSize;
+					
 					for(int j = 0; j < ss; j++)
 					{
-						if(LMInvUtils.addSingleItemToInv(items[ OUTPUT_SLOTS[ i ] ].copy(), ep.inventory, invSlots, -1, true))
+						if(LMInvUtils.addSingleItemToInv(items[OUTPUT_SLOTS[i]].copy(), ep.inventory, invSlots, -1, true))
 						{
-							items[ OUTPUT_SLOTS[ i ] ].stackSize--;
-							if(items[ OUTPUT_SLOTS[ i ] ].stackSize <= 0) items[ OUTPUT_SLOTS[ i ] ] = null;
-
+							items[OUTPUT_SLOTS[i]].stackSize--;
+							if(items[OUTPUT_SLOTS[i]].stackSize <= 0) items[OUTPUT_SLOTS[i]] = null;
+							
 							markDirty();
 						}
 					}
 				}
 		}
 		else super.onClientAction(ep, action, data);
-
+		
 	}
 	
 	public Container getContainer(EntityPlayer ep, NBTTagCompound data)

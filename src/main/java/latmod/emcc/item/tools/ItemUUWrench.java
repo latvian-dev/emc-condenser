@@ -88,9 +88,9 @@ public class ItemUUWrench extends ItemToolEMCC
 				}
 				else
 				{
-					x += ForgeDirection.VALID_DIRECTIONS[ side ].offsetX;
-					y += ForgeDirection.VALID_DIRECTIONS[ side ].offsetY;
-					z += ForgeDirection.VALID_DIRECTIONS[ side ].offsetZ;
+					x += ForgeDirection.VALID_DIRECTIONS[side].offsetX;
+					y += ForgeDirection.VALID_DIRECTIONS[side].offsetY;
+					z += ForgeDirection.VALID_DIRECTIONS[side].offsetZ;
 					
 					if(w.isAirBlock(x, y, z))
 					{
@@ -126,7 +126,7 @@ public class ItemUUWrench extends ItemToolEMCC
 		
 		return false;
 	}
-
+	
 	public double getEmcPerDmg(ItemStack is)
 	{ return EMCCConfigTools.tool_emc_per_damage.get(); }
 	

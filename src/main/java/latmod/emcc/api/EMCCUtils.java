@@ -54,7 +54,7 @@ public class EMCCUtils
 				if(is != null)
 				{
 					ItemStack is1 = FurnaceRecipes.smelting().getSmeltingResult(LMInvUtils.singleCopy(is));
-
+					
 					if(is1 != null)
 					{
 						if(!w.isRemote) for(int s = 0; s < is.stackSize; s++)
@@ -125,21 +125,21 @@ public class EMCCUtils
 							if(w.getTileEntity(x + ox, y + oy, z + oz) == null)
 							{
 								Block block1 = w.getBlock(x + ox, y + oy, z + oz);
-
+								
 								if(block1 != Blocks.air && ei.isEffective(block1))
 								{
 									float h = block1.getBlockHardness(w, x + ox, y + oy, z + oz);
-
+									
 									if(h != -1F)
 									{
 										if(w.setBlockToAir(x + ox, y + oy, z + oz))
 										{
 											if(h != 0F) is.damageItem(1, el);
-
+											
 											block1.dropBlockAsItem(w, x + ox, y + oy, z + oz, meta, fortune);
-
+											
 											b = true;
-
+											
 											if(is.stackSize == 0) return true;
 										}
 									}

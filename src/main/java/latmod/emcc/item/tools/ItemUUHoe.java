@@ -33,21 +33,21 @@ public class ItemUUHoe extends ItemToolEMCC
 		{
 			UseHoeEvent event = new UseHoeEvent(ep, is, w, x, y, z);
 			if(MinecraftForge.EVENT_BUS.post(event)) return false;
-
+			
 			if(event.getResult() == Result.ALLOW)
 			{
 				is.damageItem(1, ep);
 				return true;
 			}
-
+			
 			Block b = w.getBlock(x, y, z);
 			boolean air = w.isAirBlock(x, y + 1, z);
-
+			
 			if(side != 0 && air && (b == Blocks.grass || b == Blocks.dirt))
 			{
 				Block block = Blocks.farmland;
 				w.playSoundEffect(x + 0.5D, y + 0.5D, z + 0.5D, block.stepSound.getStepResourcePath(), (block.stepSound.getVolume() + 1F) / 2F, block.stepSound.getPitch() * 0.8F);
-
+				
 				if(w.isRemote) return true;
 				else
 				{

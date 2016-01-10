@@ -48,7 +48,7 @@ public class BlacklistEntry
 	
 	public boolean isBlacklistedOre(List<String> s)
 	{ return !ore_dictionary.isEmpty() && LMListUtils.containsAny(s, ore_dictionary); }
-
+	
 	public boolean isBlacklistedRegName(ItemStack is)
 	{ return !reg_list.isEmpty() && reg_list.contains(is); }
 	
@@ -70,8 +70,8 @@ public class BlacklistEntry
 			}
 			else
 			{
-				uName = s1[ 0 ];
-				dmg = Integer.parseInt(s1[ 1 ]);
+				uName = s1[0];
+				dmg = Integer.parseInt(s1[1]);
 				if(dmg == -1) dmg = ODItems.ANY;
 			}
 			
