@@ -133,6 +133,7 @@ public class GuiCondenser extends GuiLM
 		mainPanel.add(buttonSafeMode);
 		mainPanel.add(barEMC);
 		mainPanel.add(targetIcon);
+		mainPanel.add(sidebar);
 	}
 	
 	public void drawBackground()
