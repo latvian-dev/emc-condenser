@@ -1,7 +1,7 @@
 package latmod.emcc.config;
 
-import latmod.ftbu.tile.*;
-import latmod.ftbu.util.LMSecurityLevel;
+import ftb.lib.LMSecurityLevel;
+import ftb.lib.api.tile.*;
 import latmod.lib.config.*;
 import latmod.lib.util.*;
 
@@ -13,9 +13,9 @@ public class EMCCConfigCondenser
 	
 	public static class Forced
 	{
-		public static final ConfigEntryEnum<InvMode> inv_mode = new ConfigEntryEnum<InvMode>("inv_mode", InvMode.class, InvMode.VALUES, null, true);
-		public static final ConfigEntryEnum<LMSecurityLevel> security = new ConfigEntryEnum<LMSecurityLevel>("security", LMSecurityLevel.class, LMSecurityLevel.VALUES_3, null, true);
-		public static final ConfigEntryEnum<RedstoneMode> redstone_control = new ConfigEntryEnum<RedstoneMode>("redstone_control", RedstoneMode.class, RedstoneMode.VALUES, null, true);
-		public static final ConfigEntryEnum<EnumEnabled> safe_mode = new ConfigEntryEnum<EnumEnabled>("safe_mode", EnumEnabled.class, EnumEnabled.VALUES, null, true);
+		public static final ConfigEntryEnum<InvMode> inv_mode = new ConfigEntryEnum<>("inv_mode", InvMode.class, InvMode.VALUES, null, true);
+		public static final ConfigEntryEnum<LMSecurityLevel> security = new ConfigEntryEnum<>("security", LMSecurityLevel.class, LMSecurityLevel.VALUES_3, null, true);
+		public static final ConfigEntryEnum<RedstoneMode> redstone_control = new ConfigEntryEnum<>("redstone_control", RedstoneMode.class, RedstoneMode.VALUES, null, true);
+		public static final ConfigEntryEnum<EnumEnabled> safe_mode = new ConfigEntryEnum<>("safe_mode", EnumEnabled.class, EnumEnabled.VALUES, null, true);
 	}
 }

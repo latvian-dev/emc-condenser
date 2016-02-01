@@ -2,12 +2,7 @@ package latmod.emcc;
 
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
-import ftb.lib.EventBusHelper;
-import latmod.emcc.api.ToolInfusion;
-import latmod.emcc.blacklist.EMCCBlacklist;
-import latmod.emcc.config.EMCCConfig;
-import latmod.emcc.emc.EMCHandler;
-import latmod.ftbu.util.LMMod;
+import ftb.lib.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
@@ -24,14 +19,13 @@ public class EMCC
 	
 	public static CreativeTabs tab = null;
 	
-	@LMMod.Instance(MOD_ID)
 	public static LMMod mod;
 	public static EMCCBlacklist blacklist;
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
-		LMMod.init(this);
+		mod = LMMod.create(EMCC.MOD_ID);
 		EMCCConfig.load();
 		blacklist = new EMCCBlacklist(e);
 		

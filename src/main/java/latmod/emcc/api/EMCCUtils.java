@@ -1,6 +1,6 @@
 package latmod.emcc.api;
 
-import ftb.lib.item.LMInvUtils;
+import ftb.lib.api.item.LMInvUtils;
 import latmod.lib.MathHelperLM;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;

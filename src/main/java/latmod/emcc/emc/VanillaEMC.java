@@ -1,6 +1,6 @@
 package latmod.emcc.emc;
 
-import ftb.lib.item.*;
+import ftb.lib.api.item.*;
 import latmod.emcc.EMCC;
 import latmod.lib.ByteIOStream;
 import net.minecraft.block.Block;
@@ -46,8 +46,6 @@ public class VanillaEMC
 			float v = io.readFloat();
 			oreEntries.put(o, v);
 		}
-		
-		EMCC.mod.logger.info("Loaded VanillaEMC from " + 0 + " bytes");
 	}
 	
 	public void toBytes(ByteIOStream io) throws Exception
@@ -176,7 +174,7 @@ public class VanillaEMC
 	{
 		if(s != null && !s.isEmpty() && v > 0F)
 		{
-			ItemStack is = ItemStackTypeAdapter.parseItem(s);
+			ItemStack is = ItemStackSerializer.parseItem(s);
 			if(is != null) addReg(is.getItem(), is.getItemDamage(), v);
 		}
 	}

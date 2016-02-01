@@ -1,7 +1,6 @@
 package latmod.emcc.item;
 
 import cpw.mods.fml.relauncher.*;
-import latmod.emcc.api.IEmcStorageItem;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

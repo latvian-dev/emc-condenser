@@ -1,10 +1,8 @@
 package latmod.emcc.block;
 
-import ftb.lib.item.ODItems;
+import ftb.lib.api.item.ODItems;
+import ftb.lib.api.tile.TileLM;
 import latmod.emcc.*;
-import latmod.emcc.config.EMCCConfigGeneral;
-import latmod.emcc.item.ItemMaterialsEMCC;
-import latmod.ftbu.tile.TileLM;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

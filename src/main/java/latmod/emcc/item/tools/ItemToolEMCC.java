@@ -3,7 +3,6 @@ package latmod.emcc.item.tools;
 import cpw.mods.fml.relauncher.*;
 import latmod.emcc.EMCC;
 import latmod.emcc.api.*;
-import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemEmcStorage;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

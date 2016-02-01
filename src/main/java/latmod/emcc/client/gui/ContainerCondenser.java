@@ -1,7 +1,7 @@
 package latmod.emcc.client.gui;
 
-import ftb.lib.gui.ContainerLM;
-import ftb.lib.item.SlotLM;
+import ftb.lib.api.gui.ContainerLM;
+import ftb.lib.api.item.SlotLM;
 import latmod.emcc.block.TileCondenser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;

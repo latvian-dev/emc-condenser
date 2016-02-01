@@ -1,24 +1,22 @@
 package latmod.emcc.client.gui;
 
 import cpw.mods.fml.relauncher.*;
+import ftb.lib.TextureCoords;
+import ftb.lib.api.client.FTBLibClient;
 import ftb.lib.api.gui.*;
-import ftb.lib.client.TextureCoords;
-import ftb.lib.gui.GuiLM;
-import ftb.lib.gui.widgets.*;
+import ftb.lib.api.gui.widgets.*;
 import ftb.lib.mod.FTBLibMod;
 import latmod.emcc.*;
 import latmod.emcc.block.TileCondenser;
-import latmod.emcc.emc.EMCHandler;
-import latmod.ftbu.util.client.LMGuiButtons;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public class GuiCondenser extends GuiLM
+public class GuiCondenser extends GuiContainerLM
 {
-	public static final ResourceLocation texLoc = EMCC.mod.getLocation("textures/gui/condenser.png");
+	public static final ResourceLocation texLoc = new ResourceLocation("emcc", "textures/gui/condenser.png");
 	public static final TextureCoords texBar = new TextureCoords(texLoc, 0, 236, 118, 16);
 	public static final TextureCoords texTarget = new TextureCoords(texLoc, 176, 0, 16, 16);
 	public static final TextureCoords texSidebar = new TextureCoords(texLoc, 176, 26, 25, 83);
@@ -30,7 +28,7 @@ public class GuiCondenser extends GuiLM
 	
 	public GuiCondenser(final ContainerCondenser c)
 	{
-		super(c, texLoc);
+		super(null, c, texLoc);
 		condenser = (TileCondenser) c.inv;
 		xSize = 176;
 		ySize = 236;
@@ -42,19 +40,19 @@ public class GuiCondenser extends GuiLM
 				if(b == 0)
 				{
 					condenser.sendClientAction(TileCondenser.ACTION_TRANS_ITEMS, null);
-					playClickSound();
+					FTBLibClient.playClickSound();
 				}
 			}
 		};
 		
-		buttonTransItems.title = EMCC.mod.translateClient("takeitems");
+		buttonTransItems.title = EMCC.mod.translate("takeitems");
 		
 		buttonSecurity = new ButtonLM(this, -19, 32, 16, 16)
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.clientPressButton(LMGuiButtons.SECURITY, b);
-				playClickSound();
+				condenser.clientPressButton("security", b);
+				FTBLibClient.playClickSound();
 			}
 			
 			public void addMouseOverText(List<String> l)
@@ -69,7 +67,7 @@ public class GuiCondenser extends GuiLM
 			public void onButtonPressed(int b)
 			{
 				condenser.clientPressButton(LMGuiButtons.REDSTONE, b);
-				playClickSound();
+				FTBLibClient.playClickSound();
 			}
 			
 			public void addMouseOverText(List<String> l)
@@ -84,7 +82,7 @@ public class GuiCondenser extends GuiLM
 			public void onButtonPressed(int b)
 			{
 				condenser.clientPressButton(LMGuiButtons.INV_MODE, b);
-				playClickSound();
+				FTBLibClient.playClickSound();
 			}
 			
 			public void addMouseOverText(List<String> l)
@@ -99,12 +97,12 @@ public class GuiCondenser extends GuiLM
 			public void onButtonPressed(int b)
 			{
 				condenser.clientPressButton(EMCCGuis.Buttons.SAFE_MODE, b);
-				playClickSound();
+				FTBLibClient.playClickSound();
 			}
 			
 			public void addMouseOverText(List<String> l)
 			{
-				l.add(EMCC.mod.translateClient("safemode"));
+				l.add(EMCC.mod.translate("safemode"));
 				l.add(FTBLibLang.label_enabled(condenser.safe_mode.get()));
 			}
 		};
@@ -120,7 +118,7 @@ public class GuiCondenser extends GuiLM
 		};
 		
 		targetIcon = new WidgetLM(this, 8, 9, 16, 16);
-		noTargetLang = EMCC.mod.translateClient("notarget");
+		noTargetLang = EMCC.mod.translate("notarget");
 		sidebar = new WidgetLM(this, -25, 26, texSidebar.widthI(), texSidebar.heightI());
 	}
 	
@@ -146,9 +144,9 @@ public class GuiCondenser extends GuiLM
 		
 		if(emc1 > 0L)
 		{
-			setTexture(texLoc);
+			FTBLibClient.setTexture(texLoc);
 			double d = (condenser.storedEMC % emc1) / (double) emc1;
-			drawTexturedRectD(guiLeft + barEMC.posX, guiTop + barEMC.posY, zLevel, texBar.width * d, texBar.height, texBar.minU, texBar.minV, texBar.minU + (texBar.maxU - texBar.minU) * d, texBar.maxV);
+			GuiLM.drawTexturedRectD(guiLeft + barEMC.posX, guiTop + barEMC.posY, zLevel, texBar.width * d, texBar.height, texBar.minU, texBar.minV, texBar.minU + (texBar.maxU - texBar.minU) * d, texBar.maxV);
 		}
 		
 		if(condenser.items[TileCondenser.SLOT_TARGET] == null) targetIcon.render(texTarget);

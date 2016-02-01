@@ -1,9 +1,7 @@
 package latmod.emcc.blacklist;
 
+import com.google.gson.JsonElement;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import ftb.lib.item.ODItems;
-import latmod.emcc.EMCCItems;
-import latmod.emcc.config.EMCCConfigGeneral;
 import latmod.lib.LMJsonUtils;
 import net.minecraft.item.ItemStack;
 
@@ -20,8 +18,12 @@ public class EMCCBlacklist
 		
 		list = null;
 		
-		if(file.exists()) try { list = LMJsonUtils.fromJsonFile(file, Blacklist.class); }
-		catch(Exception ex) { list = null; }
+		JsonElement je = LMJsonUtils.fromJson(file);
+		
+		if(je != null && je.isJsonObject())
+		{
+			list = new Blacklist();
+		}
 		
 		if(list == null)
 		{

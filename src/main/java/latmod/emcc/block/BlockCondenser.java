@@ -1,11 +1,9 @@
 package latmod.emcc.block;
 
 import cpw.mods.fml.relauncher.*;
-import ftb.lib.item.ODItems;
+import ftb.lib.api.item.ODItems;
+import ftb.lib.api.tile.TileLM;
 import latmod.emcc.*;
-import latmod.emcc.client.render.world.RenderCondenser;
-import latmod.emcc.item.ItemMaterialsEMCC;
-import latmod.ftbu.tile.TileLM;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Blocks;

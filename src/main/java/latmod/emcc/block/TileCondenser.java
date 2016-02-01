@@ -3,17 +3,12 @@ package latmod.emcc.block;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.*;
-import ftb.lib.api.gui.IGuiTile;
-import ftb.lib.item.LMInvUtils;
+import ftb.lib.api.item.LMInvUtils;
+import ftb.lib.api.tile.*;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.client.gui.*;
 import latmod.emcc.config.EMCCConfigCondenser;
-import latmod.emcc.emc.EMCHandler;
-import latmod.ftbu.api.tile.ISecureTile;
-import latmod.ftbu.tile.*;
-import latmod.ftbu.util.LMSecurityLevel;
-import latmod.ftbu.util.client.LMGuiButtons;
 import latmod.latblocks.api.IQuartzNetTile;
 import latmod.lib.config.*;
 import net.minecraft.client.gui.GuiScreen;
@@ -262,9 +257,9 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	public void handleButton(String button, int mouseButton, NBTTagCompound data, EntityPlayerMP ep)
 	{
 		if(button.equals(EMCCGuis.Buttons.SAFE_MODE)) safe_mode.set(!safe_mode.get());
-		else if(button.equals(LMGuiButtons.REDSTONE)) redstone_mode.onClicked();
-		else if(button.equals(LMGuiButtons.INV_MODE)) inv_mode.onClicked();
-		else if(button.equals(LMGuiButtons.SECURITY))
+		else if(button.equals("redstone")) redstone_mode.onClicked();
+		else if(button.equals("inv_mode")) inv_mode.onClicked();
+		else if(button.equals("security"))
 		{
 			if(ep != null && security.isOwner(ep))
 				security.level = (mouseButton == 0) ? security.level.next(LMSecurityLevel.VALUES_3) : security.level.prev(LMSecurityLevel.VALUES_3);
