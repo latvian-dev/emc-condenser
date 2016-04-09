@@ -1,23 +1,25 @@
 package latmod.emcc.emc;
 
+import com.google.gson.*;
 import ftb.lib.api.item.*;
-import latmod.emcc.EMCC;
+import latmod.emcc.api.ItemEntry;
 import latmod.lib.ByteIOStream;
 import net.minecraft.block.Block;
 import net.minecraft.init.*;
 import net.minecraft.item.*;
+import net.minecraft.util.IJsonSerializable;
 
 import java.util.*;
 
-public class VanillaEMC
+public class VanillaEMC implements IJsonSerializable
 {
-	private final ArrayList<RegEntry> regEntries;
-	private final HashMap<String, Float> oreEntries;
+	public final Map<ItemEntry, Float> regEntries;
+	public final Map<String, Float> oreEntries;
 	
 	public VanillaEMC()
 	{
-		regEntries = new ArrayList<>();
-		oreEntries = new HashMap<>();
+		regEntries = new LinkedHashMap<>();
+		oreEntries = new LinkedHashMap<>();
 	}
 	
 	public void clear()
@@ -36,7 +38,13 @@ public class VanillaEMC
 			int j = io.readUnsignedShort();
 			int m = io.readUnsignedShort();
 			float v = io.readFloat();
-			regEntries.add(new RegEntry(j, m, v));
+			
+			Item item = Item.getItemById(j);
+			
+			if(item != null)
+			{
+				regEntries.put(new ItemEntry(item, m), v);
+			}
 		}
 		
 		s = io.readUnsignedShort();
@@ -52,12 +60,11 @@ public class VanillaEMC
 	{
 		int s = regEntries.size();
 		io.writeShort(s);
-		for(int i = 0; i < s; i++)
+		for(Map.Entry<ItemEntry, Float> e : regEntries.entrySet())
 		{
-			RegEntry r = regEntries.get(i);
-			io.writeShort(Item.getIdFromItem(r.item));
-			io.writeShort(r.damage);
-			io.writeFloat(r.value);
+			io.writeShort(Item.getIdFromItem(e.getKey().item));
+			io.writeShort(e.getKey().damage);
+			io.writeFloat(e.getValue());
 		}
 		
 		s = oreEntries.size();
@@ -159,10 +166,20 @@ public class VanillaEMC
 	
 	
 	private void addOre(String s, float v)
-	{ if(s != null && !s.isEmpty() && v > 0F) oreEntries.put(s, v); }
+	{
+		if(s != null && !s.isEmpty() && v > 0F)
+		{
+			oreEntries.put(s, v);
+		}
+	}
 	
 	private void addReg(ItemStack is, float v)
-	{ if(is != null && v > 0F) regEntries.add(new RegEntry(is, v)); }
+	{
+		if(is != null && v > 0F)
+		{
+			regEntries.put(new ItemEntry(is), v);
+		}
+	}
 	
 	private void addReg(Block b, int dmg, float v)
 	{ addReg(new ItemStack(b, 1, dmg), v); }
@@ -174,8 +191,17 @@ public class VanillaEMC
 	{
 		if(s != null && !s.isEmpty() && v > 0F)
 		{
-			ItemStack is = ItemStackSerializer.parseItem(s);
-			if(is != null) addReg(is.getItem(), is.getItemDamage(), v);
+			String[] s1 = s.split("@");
+			if(s1.length == 2)
+			{
+				Item item = LMInvUtils.getItemFromRegName(s1[0]);
+				
+				if(item != null)
+				{
+					int dmg = Integer.parseInt(s1[1]);
+					addReg(item, dmg, v);
+				}
+			}
 		}
 	}
 	
@@ -183,94 +209,69 @@ public class VanillaEMC
 	{
 		if(is == null || is.getItem() == null) return 0F;
 		
-		for(int i = 0; i < regEntries.size(); i++)
-		{
-			RegEntry e = regEntries.get(i);
-			if(e.equalsItem(is)) return e.value;
-		}
+		Float f = regEntries.get(is);
+		
+		if(f != null) return f;
 		
 		List<String> ores = ODItems.getOreNames(is);
 		
+		//TODO: Make prettier
 		if(!ores.isEmpty()) for(Map.Entry<String, Float> e1 : oreEntries.entrySet())
 		{ if(ores.contains(e1.getKey())) return e1.getValue().floatValue(); }
 		
 		return 0F;
 	}
 	
-	private static class RegEntry
+	public void func_152753_a(JsonElement e)
 	{
-		public final Item item;
-		public final int damage;
-		public final float value;
+		clear();
 		
-		public RegEntry(ItemStack is, float v)
+		JsonObject o = e.getAsJsonObject();
+		
+		if(o.has("reg_entries") && o.has("ore_entries"))
 		{
-			item = is.getItem();
-			damage = is.getItemDamage();
-			value = v;
+			JsonObject o1 = o.get("reg_entries").getAsJsonObject();
+			
+			for(Map.Entry<String, JsonElement> entry : o1.entrySet())
+			{
+				addReg(entry.getKey(), entry.getValue().getAsFloat());
+			}
+			
+			o1 = o.get("ore_entries").getAsJsonObject();
+			
+			for(Map.Entry<String, JsonElement> entry : o1.entrySet())
+			{
+				addOre(entry.getKey(), entry.getValue().getAsFloat());
+			}
 		}
-		
-		public RegEntry(int i, int d, float v)
-		{ this(new ItemStack(Item.getItemById(i), 1, d), v); }
-		
-		public boolean equalsItem(ItemStack is)
-		{ return is != null && item == is.getItem() && (damage == ODItems.ANY || damage == -1 || damage == is.getItemDamage()); }
-		
-		public String toString()
-		{ return LMInvUtils.getRegName(item) + ((damage == 0) ? "" : ("@" + damage)); }
+		else
+		{
+			loadDefaults();
+		}
 	}
 	
-	public static class EMCFile
+	public JsonElement getSerializableElement()
 	{
-		public Map<String, Float> regNames;
-		public Map<String, Float> oreNames;
+		JsonObject o = new JsonObject();
 		
-		public void loadFrom(VanillaEMC e)
+		JsonObject o1 = new JsonObject();
+		
+		for(Map.Entry<ItemEntry, Float> e : regEntries.entrySet())
 		{
-			if(regNames == null || oreNames == null)
-			{
-				regNames = new HashMap<String, Float>();
-				oreNames = new HashMap<String, Float>();
-			}
-			else
-			{
-				regNames.clear();
-				oreNames.clear();
-			}
-			
-			for(int i = 0; i < e.regEntries.size(); i++)
-			{
-				RegEntry r = e.regEntries.get(i);
-				regNames.put(r.toString(), r.value);
-			}
-			
-			for(Map.Entry<String, Float> e1 : e.oreEntries.entrySet())
-				oreNames.put(e1.getKey(), e1.getValue());
+			o1.add(e.getKey().getID(), new JsonPrimitive(e.getValue()));
 		}
 		
-		public void saveTo(VanillaEMC e)
+		o.add("reg_entries", o1);
+		
+		o1 = new JsonObject();
+		
+		for(Map.Entry<String, Float> e : oreEntries.entrySet())
 		{
-			Iterator<String> keys = regNames.keySet().iterator();
-			Iterator<Float> values = regNames.values().iterator();
-			
-			while(keys.hasNext() && values.hasNext())
-			{
-				String k = keys.next();
-				Float v = values.next();
-				
-				if(k != null && v != null && !k.isEmpty() && v.floatValue() > 0F) e.addReg(k, v);
-			}
-			
-			keys = oreNames.keySet().iterator();
-			values = oreNames.values().iterator();
-			
-			while(keys.hasNext() && values.hasNext())
-			{
-				String k = keys.next();
-				Float v = values.next();
-				
-				if(k != null && v != null && !k.isEmpty() && v.floatValue() > 0F) e.addOre(k, v);
-			}
+			o1.add(e.getKey(), new JsonPrimitive(e.getValue()));
 		}
+		
+		o.add("ore_entries", o1);
+		
+		return o;
 	}
 }

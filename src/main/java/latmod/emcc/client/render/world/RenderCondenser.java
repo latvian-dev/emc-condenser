@@ -2,6 +2,7 @@ package latmod.emcc.client.render.world;
 
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.api.client.FTBLibClient;
+import latmod.emcc.EMCCItems;
 import latmod.latblocks.client.render.world.BlockRendererLM;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;

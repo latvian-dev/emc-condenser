@@ -1,12 +1,15 @@
 package latmod.emcc.config;
 
-import latmod.lib.config.ConfigEntryInt;
-import latmod.lib.util.IntBounds;
+import ftb.lib.api.config.ConfigEntryInt;
 
 public class EMCCConfigEnchanting
 {
 	private static final ConfigEntryInt get(String s, int def)
-	{ return new ConfigEntryInt(s, new IntBounds(def, 0, 50)); }
+	{
+		ConfigEntryInt c = new ConfigEntryInt(s, def);
+		c.setBounds(0, 50);
+		return c;
+	}
 	
 	public static final ConfigEntryInt fire = get("fire", 20); // Flame for bow 
 	public static final ConfigEntryInt fortune = get("fortune", 25); // Looting for swords

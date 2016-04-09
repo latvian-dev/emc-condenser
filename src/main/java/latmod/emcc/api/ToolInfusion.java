@@ -34,13 +34,13 @@ public enum ToolInfusion
 	{
 		//EMCCConfig
 		
-		FIRE.init(Items.blaze_rod, EMCCConfigEnchanting.fire.get());
-		FORTUNE.init(Items.gold_ingot, EMCCConfigEnchanting.fortune.get());
-		UNBREAKING.init(Item.getItemFromBlock(Blocks.obsidian), EMCCConfigEnchanting.unbreaking.get());
-		SILKTOUCH.init(Items.string, EMCCConfigEnchanting.silk_touch.get());
-		SHARPNESS.init(Items.iron_ingot, EMCCConfigEnchanting.sharpness.get());
-		KNOCKBACK.init(Item.getItemFromBlock(Blocks.piston), EMCCConfigEnchanting.knockback.get());
-		INFINITY.init(Items.diamond, EMCCConfigEnchanting.infinity.get());
+		FIRE.init(Items.blaze_rod, EMCCConfigEnchanting.fire.getAsInt());
+		FORTUNE.init(Items.gold_ingot, EMCCConfigEnchanting.fortune.getAsInt());
+		UNBREAKING.init(Item.getItemFromBlock(Blocks.obsidian), EMCCConfigEnchanting.unbreaking.getAsInt());
+		SILKTOUCH.init(Items.string, EMCCConfigEnchanting.silk_touch.getAsInt());
+		SHARPNESS.init(Items.iron_ingot, EMCCConfigEnchanting.sharpness.getAsInt());
+		KNOCKBACK.init(Item.getItemFromBlock(Blocks.piston), EMCCConfigEnchanting.knockback.getAsInt());
+		INFINITY.init(Items.diamond, EMCCConfigEnchanting.infinity.getAsInt());
 	}
 	
 	public Enchantment getEnchantment(EnumToolType t)

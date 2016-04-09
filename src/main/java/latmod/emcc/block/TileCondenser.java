@@ -3,14 +3,16 @@ package latmod.emcc.block;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.*;
+import ftb.lib.api.LangKey;
+import ftb.lib.api.config.*;
 import ftb.lib.api.item.LMInvUtils;
 import ftb.lib.api.tile.*;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.client.gui.*;
 import latmod.emcc.config.EMCCConfigCondenser;
+import latmod.emcc.emc.EMCHandler;
 import latmod.latblocks.api.IQuartzNetTile;
-import latmod.lib.config.*;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
@@ -20,7 +22,8 @@ import net.minecraft.nbt.NBTTagCompound;
 @Optional.Interface(modid = OtherMods.LATBLOCKS, iface = "latmod.latblocks.tile.IQuartzNetTile")
 public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWrenchable, IGuiTile, ISecureTile, IQuartzNetTile
 {
-	public static final String ACTION_TRANS_ITEMS = "transItems";
+	public static final String ACTION_TRANS_ITEMS = "trans_items";
+	public static final LangKey safeModeLang = new LangKey("emcc.safe_mode");
 	
 	public static final int SLOT_TARGET = 0;
 	public static final int[] TARGET_SLOTS = {SLOT_TARGET};
@@ -41,8 +44,8 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	public int cooldown = 0;
 	
 	public final ConfigEntryBool safe_mode = new ConfigEntryBool("safe_mode", false);
-	public final ConfigEntryEnum<RedstoneMode> redstone_mode = new ConfigEntryEnum<RedstoneMode>("redstone_mode", RedstoneMode.class, RedstoneMode.VALUES, RedstoneMode.DISABLED, false);
-	public final ConfigEntryEnum<InvMode> inv_mode = new ConfigEntryEnum<InvMode>("inv_mode", InvMode.class, InvMode.VALUES, InvMode.ENABLED, false);
+	public final ConfigEntryEnum<RedstoneMode> redstone_mode = new ConfigEntryEnum<>("redstone_mode", RedstoneMode.VALUES, RedstoneMode.DISABLED, false);
+	public final ConfigEntryEnum<InvMode> inv_mode = new ConfigEntryEnum<>("inv_mode", InvMode.VALUES, InvMode.ENABLED, false);
 	
 	public TileCondenser()
 	{
@@ -62,11 +65,11 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 		{
 			if(cooldown <= 0)
 			{
-				cooldown = EMCCConfigCondenser.sleep_delay.get();
+				cooldown = EMCCConfigCondenser.sleep_delay.getAsInt();
 				
 				if(redstone_mode.get() != RedstoneMode.DISABLED && redstone_mode.get().cancel(redstonePowered)) return;
 				
-				int limit = EMCCConfigCondenser.limit_per_tick.get();
+				int limit = EMCCConfigCondenser.limit_per_tick.getAsInt();
 				if(limit == -1) limit = INPUT_SLOTS.length * 64;
 				
 				for(int i = 0; i < INPUT_SLOTS.length; i++)
@@ -89,9 +92,9 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 						
 						if(iev > 0D && !EMCC.blacklist.isBlacklistedFuel(items[INPUT_SLOTS[i]]))
 						{
-							if(safe_mode.get() && items[INPUT_SLOTS[i]].stackSize == 1) continue;
+							if(safe_mode.getAsBoolean() && items[INPUT_SLOTS[i]].stackSize == 1) continue;
 							
-							int s = Math.min((safe_mode.get() && items[INPUT_SLOTS[i]].stackSize > 1) ? (items[INPUT_SLOTS[i]].stackSize - 1) : items[INPUT_SLOTS[i]].stackSize, limit);
+							int s = Math.min((safe_mode.getAsBoolean() && items[INPUT_SLOTS[i]].stackSize > 1) ? (items[INPUT_SLOTS[i]].stackSize - 1) : items[INPUT_SLOTS[i]].stackSize, limit);
 							
 							if(s <= 0) continue;
 							
@@ -180,7 +183,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 		super.writeTileData(tag);
 		
 		tag.setDouble("StoredEMC", storedEMC);
-		tag.setBoolean("SafeMode", safe_mode.get());
+		tag.setBoolean("SafeMode", safe_mode.getAsBoolean());
 		tag.setByte("RSMode", (byte) redstone_mode.get().ID);
 		tag.setByte("InvMode", (byte) inv_mode.get().ID);
 		tag.setShort("Cooldown", (short) cooldown);
@@ -200,7 +203,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 			markDirty();
 		}
 		
-		if(EMCCConfigCondenser.Forced.safe_mode.get() != null && safe_mode.get() != EMCCConfigCondenser.Forced.safe_mode.get().isEnabled())
+		if(EMCCConfigCondenser.Forced.safe_mode.get() != null && safe_mode.getAsBoolean() != EMCCConfigCondenser.Forced.safe_mode.get().isEnabled())
 		{
 			safe_mode.set(EMCCConfigCondenser.Forced.safe_mode.get().isEnabled());
 			markDirty();
@@ -256,13 +259,13 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	
 	public void handleButton(String button, int mouseButton, NBTTagCompound data, EntityPlayerMP ep)
 	{
-		if(button.equals(EMCCGuis.Buttons.SAFE_MODE)) safe_mode.set(!safe_mode.get());
-		else if(button.equals("redstone")) redstone_mode.onClicked();
-		else if(button.equals("inv_mode")) inv_mode.onClicked();
+		if(button.equals(EMCCGuis.Buttons.SAFE_MODE)) safe_mode.set(!safe_mode.getAsBoolean());
+		else if(button.equals("redstone")) redstone_mode.onClicked(mouseButton == 0);
+		else if(button.equals("inv_mode")) inv_mode.onClicked(mouseButton == 0);
 		else if(button.equals("security"))
 		{
 			if(ep != null && security.isOwner(ep))
-				security.level = (mouseButton == 0) ? security.level.next(LMSecurityLevel.VALUES_3) : security.level.prev(LMSecurityLevel.VALUES_3);
+				security.level = (mouseButton == 0) ? security.level.next(PrivacyLevel.VALUES_3) : security.level.prev(PrivacyLevel.VALUES_3);
 			else printOwner(ep);
 		}
 		

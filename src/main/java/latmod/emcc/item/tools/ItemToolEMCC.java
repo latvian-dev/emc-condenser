@@ -3,6 +3,7 @@ package latmod.emcc.item.tools;
 import cpw.mods.fml.relauncher.*;
 import latmod.emcc.EMCC;
 import latmod.emcc.api.*;
+import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemEmcStorage;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -11,7 +12,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
@@ -32,7 +33,7 @@ public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 	public boolean damageItem(ItemStack is, boolean simulate)
 	{
 		double emc = getStoredEmc(is);
-		double d = EMCCConfigTools.tool_emc_per_damage.get();
+		double d = EMCCConfigTools.tool_emc_per_damage.getAsDouble();
 		
 		if(emc >= d)
 		{
@@ -55,15 +56,16 @@ public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 	public boolean isItemTool(ItemStack is)
 	{ return true; }
 	
-	public final void onPostLoaded()
+	@SideOnly(Side.CLIENT)
+	public void getSubItems(Item item, CreativeTabs c, List l)
 	{
 		ItemStack is0 = new ItemStack(this);
 		setStoredEmc(is0, 0);
-		itemsAdded.add(is0);
+		l.add(is0);
 		
 		ItemStack is1 = new ItemStack(this);
 		setStoredEmc(is1, getMaxStoredEmc(is1));
-		itemsAdded.add(is1);
+		l.add(is1);
 	}
 	
 	public void loadRecipes()
@@ -75,7 +77,7 @@ public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 	
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
-	{ itemIcon = ir.registerIcon(EMCC.mod.assets + "tools/" + itemName); }
+	{ itemIcon = ir.registerIcon(EMCC.mod.lowerCaseModID + ":tools/" + itemName); }
 	
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(ItemStack is, int r)

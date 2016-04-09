@@ -1,13 +1,17 @@
 package latmod.emcc.client.gui;
 
 import cpw.mods.fml.relauncher.*;
-import ftb.lib.TextureCoords;
+import ftb.lib.*;
+import ftb.lib.api.FTBLibLang;
 import ftb.lib.api.client.FTBLibClient;
 import ftb.lib.api.gui.*;
 import ftb.lib.api.gui.widgets.*;
+import ftb.lib.api.tile.*;
 import ftb.lib.mod.FTBLibMod;
 import latmod.emcc.*;
 import latmod.emcc.block.TileCondenser;
+import latmod.emcc.emc.EMCHandler;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 
@@ -28,7 +32,7 @@ public class GuiCondenser extends GuiContainerLM
 	
 	public GuiCondenser(final ContainerCondenser c)
 	{
-		super(null, c, texLoc);
+		super(c, texLoc);
 		condenser = (TileCondenser) c.inv;
 		xSize = 176;
 		ySize = 236;
@@ -57,8 +61,8 @@ public class GuiCondenser extends GuiContainerLM
 			
 			public void addMouseOverText(List<String> l)
 			{
-				l.add(condenser.security.level.getTitle());
-				l.add(condenser.security.level.getText());
+				l.add(I18n.format(PrivacyLevel.enumLangKey));
+				l.add(condenser.security.level.lang.format());
 			}
 		};
 		
@@ -66,14 +70,14 @@ public class GuiCondenser extends GuiContainerLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.clientPressButton(LMGuiButtons.REDSTONE, b);
+				condenser.clientPressButton("redstone", b);
 				FTBLibClient.playClickSound();
 			}
 			
 			public void addMouseOverText(List<String> l)
 			{
-				l.add(condenser.redstone_mode.get().getTitle());
-				l.add(condenser.redstone_mode.get().getText());
+				l.add(I18n.format(RedstoneMode.enumLangKey));
+				l.add(condenser.redstone_mode.get().lang.format());
 			}
 		};
 		
@@ -81,14 +85,14 @@ public class GuiCondenser extends GuiContainerLM
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.clientPressButton(LMGuiButtons.INV_MODE, b);
+				condenser.clientPressButton("inv_mode", b);
 				FTBLibClient.playClickSound();
 			}
 			
 			public void addMouseOverText(List<String> l)
 			{
-				l.add(condenser.inv_mode.get().getTitle());
-				l.add(condenser.inv_mode.get().getText());
+				l.add(I18n.format(InvMode.enumLangKey));
+				l.add(condenser.inv_mode.get().lang.format());
 			}
 		};
 		
@@ -102,8 +106,8 @@ public class GuiCondenser extends GuiContainerLM
 			
 			public void addMouseOverText(List<String> l)
 			{
-				l.add(EMCC.mod.translate("safemode"));
-				l.add(FTBLibLang.label_enabled(condenser.safe_mode.get()));
+				l.add(TileCondenser.safeModeLang.format());
+				l.add(condenser.safe_mode.getAsBoolean() ? FTBLibLang.label_enabled.format() : FTBLibLang.label_disabled.format());
 			}
 		};
 		
@@ -158,7 +162,7 @@ public class GuiCondenser extends GuiContainerLM
 		buttonRedstone.render(GuiIcons.redstone[condenser.redstone_mode.get().ID]);
 		buttonSecurity.render(condenser.security.level.getIcon());
 		buttonInvMode.render(GuiIcons.inv[condenser.inv_mode.get().ID]);
-		buttonSafeMode.render(condenser.safe_mode.get() ? GuiIcons.accept : GuiIcons.accept_gray);
+		buttonSafeMode.render(condenser.safe_mode.getAsBoolean() ? GuiIcons.accept : GuiIcons.accept_gray);
 		
 		targetIcon.title = (condenser.items[TileCondenser.SLOT_TARGET] == null) ? noTargetLang : null;
 	}

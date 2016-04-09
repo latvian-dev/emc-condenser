@@ -1,6 +1,7 @@
 package latmod.emcc.item;
 
 import cpw.mods.fml.relauncher.*;
+import latmod.emcc.api.IEmcStorageItem;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,8 +45,8 @@ public abstract class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		itemIcon = ir.registerIcon(getMod().assets + "stones/" + itemName);
-		icon_enabled = ir.registerIcon(getMod().assets + "stones/" + itemName + "_enabled");
+		itemIcon = ir.registerIcon(getMod().lowerCaseModID + ":stones/" + itemName);
+		icon_enabled = ir.registerIcon(getMod().lowerCaseModID + ":stones/" + itemName + "_enabled");
 	}
 	
 	@SideOnly(Side.CLIENT)

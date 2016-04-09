@@ -1,6 +1,6 @@
 package latmod.emcc.item.tools;
 
-import ftb.lib.item.*;
+import ftb.lib.api.item.*;
 import latmod.emcc.EMCCItems;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.config.EMCCConfigTools;
@@ -23,7 +23,7 @@ public class ItemUUSmasher extends ItemUUPick
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.Enable.tools.get())
+		if(EMCCConfigTools.Enabled.tools.getAsBoolean())
 			getMod().recipes.addRecipe(new ItemStack(this), "APA", "BVB", " S ", 'B', EMCCItems.b_uu_block, 'S', ODItems.STICK, 'P', EMCCItems.i_pick, 'A', EMCCItems.i_axe, 'V', EMCCItems.i_shovel);
 	}
 	

@@ -1,8 +1,12 @@
 package latmod.emcc.blacklist;
 
 import com.google.gson.JsonElement;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import ftb.lib.FTBLib;
+import ftb.lib.api.item.ODItems;
+import latmod.emcc.EMCCItems;
+import latmod.emcc.config.EMCCConfigGeneral;
 import latmod.lib.LMJsonUtils;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import java.io.File;
@@ -12,9 +16,9 @@ public class EMCCBlacklist
 {
 	public Blacklist list;
 	
-	public EMCCBlacklist(FMLPreInitializationEvent e)
+	public EMCCBlacklist()
 	{
-		File file = new File(e.getModConfigurationDirectory(), "/EMC_Condenser/blacklist.json");
+		File file = new File(FTBLib.folderConfig, "/EMC_Condenser/blacklist.json");
 		
 		list = null;
 		
@@ -28,6 +32,8 @@ public class EMCCBlacklist
 		if(list == null)
 		{
 			list = new Blacklist();
+			
+			list.all.addRegistryName(Items.experience_bottle, 0);
 			
 			list.all.addOreName("oreIron");
 			list.all.addOreName("oreGold");
@@ -50,21 +56,14 @@ public class EMCCBlacklist
 			
 			// Items
 			
-			list.all.addRegistryName("experience_bottle", null);
+			list.targets.addRegistryName(Items.nether_star, 0);
+			list.targets.addRegistryName(Items.enchanted_book, -1);
 			
-			list.targets.addRegistryName("nether_star", null);
-			list.targets.addRegistryName("enchanted_book", null);
-			
-			list.fuels.addOreName("cobblestone");
-			list.fuels.addOreName("stone");
+			list.fuels.addOreName(ODItems.COBBLE);
+			list.fuels.addOreName(ODItems.STONE);
 			list.fuels.addOreName("foodSalt");
 			
-			list.example.addOreName("oreName");
-			list.example.addRegistryName("itemNoDamage", null);
-			list.example.addRegistryName("itemWithDamage", 3);
-			list.example.addRegistryName("itemAnyDamage", -1);
-			
-			LMJsonUtils.toJsonFile(file, list);
+			LMJsonUtils.toJson(file, list.getSerializableElement());
 		}
 		
 		list.all.reloadList();
@@ -74,7 +73,7 @@ public class EMCCBlacklist
 	
 	public boolean isBlacklistedFuel(ItemStack is)
 	{
-		if(!EMCCConfigGeneral.blacklist.get()) return false;
+		if(!EMCCConfigGeneral.blacklist.getAsBoolean()) return false;
 		if(list.fuels.isBlacklistedRegName(is) || list.all.isBlacklistedRegName(is)) return true;
 		
 		List<String> oreNames = ODItems.getOreNames(is);
@@ -91,7 +90,7 @@ public class EMCCBlacklist
 	{
 		if(is.getItem() == EMCCItems.i_wrench) return true;
 		
-		if(!EMCCConfigGeneral.blacklist.get()) return false;
+		if(!EMCCConfigGeneral.blacklist.getAsBoolean()) return false;
 		
 		if(list.targets.isBlacklistedRegName(is) || list.all.isBlacklistedRegName(is)) return true;
 		

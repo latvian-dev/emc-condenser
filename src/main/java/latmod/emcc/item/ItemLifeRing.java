@@ -30,7 +30,7 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.life_stone_1hp.get() != -1F || EMCCConfigTools.life_stone_food.get() != -1F)
+		if(EMCCConfigTools.life_stone_1hp.getAsDouble() != -1D || EMCCConfigTools.life_stone_food.getAsDouble() != -1D)
 			getMod().recipes.addRecipe(new ItemStack(this), "SPS", "PBP", "SPS", 'S', Items.cooked_beef, 'B', EMCCItems.i_emc_battery, 'P', new ItemStack(Items.potionitem, 1, 8225));
 	}
 	
@@ -42,9 +42,9 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 			{
 				double emc = getStoredEmc(is);
 				
-				if(emc >= EMCCConfigTools.life_stone_extinguish.get())
+				if(emc >= EMCCConfigTools.life_stone_extinguish.getAsDouble())
 				{
-					setStoredEmc(is, emc - EMCCConfigTools.life_stone_food.get());
+					setStoredEmc(is, emc - EMCCConfigTools.life_stone_extinguish.getAsDouble());
 					ep.extinguish();
 					w.playSoundAtEntity(ep, "random.fizz", 1F, 1F);
 				}
@@ -63,7 +63,11 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 	public void onWornTick(ItemStack is, EntityLivingBase e)
 	{
 		if(e == null || e.worldObj.isRemote || !(e instanceof EntityPlayer)) return;
-		if(EMCCConfigTools.life_stone_1hp.get() == -1F && EMCCConfigTools.life_stone_food.get() == -1F) return;
+		
+		double food = EMCCConfigTools.life_stone_food.getAsDouble();
+		double hp1 = EMCCConfigTools.life_stone_1hp.getAsDouble();
+		
+		if(hp1 == -1D && food == -1D) return;
 		
 		EntityPlayer ep = (EntityPlayer) e;
 		
@@ -71,20 +75,20 @@ public class ItemLifeRing extends ItemEmcStorage implements IBauble
 		{
 			double emc = getStoredEmc(is);
 			
-			if(EMCCConfigTools.life_stone_food.get() != -1F && emc >= EMCCConfigTools.life_stone_food.get() && ep.getFoodStats().needFood())
+			if(food != -1D && emc >= food && ep.getFoodStats().needFood())
 			{
 				ep.getFoodStats().addStats(1, 0.6F);
-				emc -= EMCCConfigTools.life_stone_food.get();
+				emc -= food;
 				setStoredEmc(is, emc);
 			}
 			
 			float hp = ep.getHealth();
 			float maxHp = ep.getMaxHealth();
 			
-			if(EMCCConfigTools.life_stone_1hp.get() != -1F && hp < maxHp && emc >= EMCCConfigTools.life_stone_1hp.get())
+			if(hp1 != -1D && hp < maxHp && emc >= hp1)
 			{
 				ep.setHealth(hp + 1F);
-				emc -= EMCCConfigTools.life_stone_1hp.get();
+				emc -= hp1;
 				if(emc < 0D) emc = 0D;
 				setStoredEmc(is, emc);
 			}

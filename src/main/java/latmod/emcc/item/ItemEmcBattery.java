@@ -2,14 +2,20 @@ package latmod.emcc.item;
 
 import baubles.api.*;
 import cpw.mods.fml.common.Optional;
+import cpw.mods.fml.relauncher.*;
 import ftb.lib.*;
 import ftb.lib.api.item.ODItems;
+import latmod.emcc.api.IEmcStorageItem;
+import latmod.emcc.config.EMCCConfigTools;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 @Optional.Interface(modid = OtherMods.BAUBLES, iface = "baubles.api.IBauble")
 public class ItemEmcBattery extends ItemEmcStorage implements IBauble
@@ -30,17 +36,18 @@ public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.Enable.battery.get())
+		if(EMCCConfigTools.Enabled.battery.getAsBoolean())
 			getMod().recipes.addRecipe(new ItemStack(this), "QRQ", "QUQ", "QGQ", 'Q', ODItems.QUARTZ, 'R', ODItems.REDSTONE, 'G', ODItems.GLOWSTONE, 'U', ItemMaterialsEMCC.ITEM_UUS);
 	}
 	
-	public void onPostLoaded()
+	@SideOnly(Side.CLIENT)
+	public void getSubItems(Item item, CreativeTabs c, List l)
 	{
-		itemsAdded.add(new ItemStack(this, 1, 0));
-		ItemStack is1 = new ItemStack(this, 1, 1);
+		l.add(new ItemStack(item, 1, 0));
+		ItemStack is1 = new ItemStack(item, 1, 1);
 		is1.stackTagCompound = new NBTTagCompound();
 		setStoredEmc(is1, Double.POSITIVE_INFINITY);
-		itemsAdded.add(is1);
+		l.add(is1);
 	}
 	
 	public void onUpdate(ItemStack is, World w, Entity e, int t, boolean b)
@@ -58,7 +65,7 @@ public class ItemEmcBattery extends ItemEmcStorage implements IBauble
 		
 		if(is.getItemDamage() == 1 && (el.worldObj.getWorldTime() % 8 == 0))
 		{
-			if(!EMCCConfigTools.Enable.battery.get()) return;
+			if(!EMCCConfigTools.Enabled.battery.getAsBoolean()) return;
 			
 			chargeInv(is, ep, ep.inventory);
 			IInventory baubInv = BaublesHelper.getBaubles(ep);

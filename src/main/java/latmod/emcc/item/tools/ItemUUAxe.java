@@ -1,6 +1,6 @@
 package latmod.emcc.item.tools;
 
-import ftb.lib.item.*;
+import ftb.lib.api.item.*;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemMaterialsEMCC;
@@ -25,7 +25,7 @@ public class ItemUUAxe extends ItemToolEMCC // ItemAxe
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.Enable.tools.get())
+		if(EMCCConfigTools.Enabled.tools.getAsBoolean())
 			getMod().recipes.addRecipe(new ItemStack(this), "UU", "US", " S", 'U', ItemMaterialsEMCC.INGOT_UUS, 'S', ODItems.STICK);
 	}
 	

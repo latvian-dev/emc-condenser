@@ -4,6 +4,8 @@ import baubles.api.*;
 import cpw.mods.fml.common.Optional;
 import ftb.lib.OtherMods;
 import ftb.lib.api.item.LMInvUtils;
+import latmod.emcc.EMCCItems;
+import latmod.emcc.config.EMCCConfigTools;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,7 +34,7 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.black_hole_stone_item.get() != -1F)
+		if(EMCCConfigTools.black_hole_stone_item.getAsDouble() != -1D)
 			getMod().recipes.addRecipe(new ItemStack(this), "OEO", "EBE", "OEO", 'O', EMCCItems.b_uu_block, 'B', EMCCItems.i_emc_battery, 'E', Items.ender_pearl);
 	}
 	
@@ -48,9 +50,9 @@ public class ItemBlackHoleBand extends ItemEmcStorage implements IBauble
 		if(is.getItemDamage() == 1 && (e.worldObj.getWorldTime() % 4 == 0))
 		{
 			double emc = getStoredEmc(is);
-			double itemCost = EMCCConfigTools.black_hole_stone_item.get();
+			double itemCost = EMCCConfigTools.black_hole_stone_item.getAsDouble();
 			if(itemCost == -1F || emc < itemCost) return;
-			double r = EMCCConfigTools.black_hole_stone_range.get();
+			double r = EMCCConfigTools.black_hole_stone_range.getAsDouble();
 			
 			@SuppressWarnings("unchecked") List<EntityItem> items = ep.worldObj.getEntitiesWithinAABB(EntityItem.class, ep.boundingBox.expand(r, r, r));
 			

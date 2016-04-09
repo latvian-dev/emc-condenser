@@ -1,11 +1,10 @@
 package latmod.emcc.item.tools;
 
 import com.google.common.collect.Multimap;
-import ftb.lib.item.ODItems;
+import ftb.lib.api.item.ODItems;
 import latmod.emcc.api.*;
 import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemMaterialsEMCC;
-import latmod.ftbu.api.item.ICreativeSafeItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.*;
@@ -14,7 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemUUSword extends ItemToolEMCC implements ICreativeSafeItem // ItemSword
+public class ItemUUSword extends ItemToolEMCC // ItemSword
 {
 	public ItemUUSword(String s)
 	{
@@ -23,7 +22,7 @@ public class ItemUUSword extends ItemToolEMCC implements ICreativeSafeItem // It
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.Enable.sword.get())
+		if(EMCCConfigTools.Enabled.sword.getAsBoolean())
 			getMod().recipes.addRecipe(new ItemStack(this), "U", "U", "S", 'U', ItemMaterialsEMCC.INGOT_UUS, 'S', ODItems.STICK);
 	}
 	

@@ -1,6 +1,6 @@
 package latmod.emcc.item.tools;
 
-import ftb.lib.item.*;
+import ftb.lib.api.item.*;
 import latmod.emcc.api.*;
 import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemMaterialsEMCC;
@@ -27,7 +27,7 @@ public class ItemUUPick extends ItemToolEMCC
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.Enable.tools.get())
+		if(EMCCConfigTools.Enabled.tools.getAsBoolean())
 			getMod().recipes.addRecipe(new ItemStack(this), "UUU", " S ", " S ", 'U', ItemMaterialsEMCC.INGOT_UUS, 'S', ODItems.STICK);
 	}
 	

@@ -4,6 +4,8 @@ import cpw.mods.fml.relauncher.*;
 import ftb.lib.api.item.ODItems;
 import ftb.lib.api.tile.TileLM;
 import latmod.emcc.*;
+import latmod.emcc.client.render.world.RenderCondenser;
+import latmod.emcc.item.ItemMaterialsEMCC;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Blocks;
@@ -19,14 +21,20 @@ public class BlockCondenser extends BlockEMCC
 	public BlockCondenser(String s)
 	{
 		super(s, Material.rock);
-		isBlockContainer = true;
 		setResistance(100000F);
-		
-		getMod().addTile(TileCondenser.class, s);
 	}
 	
-	public TileLM createNewTileEntity(World w, int m)
+	public boolean hasTileEntity(int meta)
+	{ return true; }
+	
+	public TileLM createTileEntity(World w, int m)
 	{ return new TileCondenser(); }
+	
+	public void onPostLoaded()
+	{
+		super.onPostLoaded();
+		getMod().addTile(TileCondenser.class, blockName);
+	}
 	
 	public void loadRecipes()
 	{
@@ -36,10 +44,10 @@ public class BlockCondenser extends BlockEMCC
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister ir)
 	{
-		icon_top_empty = ir.registerIcon(getMod().assets + "cond_top_empty");
-		icon_top_glow = ir.registerIcon(getMod().assets + "cond_top_glow");
-		icon_side_empty = ir.registerIcon(getMod().assets + "cond_side_empty");
-		icon_side_glow = ir.registerIcon(getMod().assets + "cond_side_glow");
+		icon_top_empty = ir.registerIcon(getMod().lowerCaseModID + ":cond_top_empty");
+		icon_top_glow = ir.registerIcon(getMod().lowerCaseModID + ":cond_top_glow");
+		icon_side_empty = ir.registerIcon(getMod().lowerCaseModID + ":cond_side_empty");
+		icon_side_glow = ir.registerIcon(getMod().lowerCaseModID + ":cond_side_glow");
 		blockIcon = icon_side_empty;
 	}
 	

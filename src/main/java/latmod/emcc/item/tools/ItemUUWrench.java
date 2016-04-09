@@ -1,7 +1,7 @@
 package latmod.emcc.item.tools;
 
 import cpw.mods.fml.relauncher.*;
-import ftb.lib.item.ODItems;
+import ftb.lib.api.item.ODItems;
 import latmod.emcc.*;
 import latmod.emcc.api.*;
 import latmod.emcc.config.EMCCConfigTools;
@@ -32,7 +32,7 @@ public class ItemUUWrench extends ItemToolEMCC
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.Enable.wrench.get())
+		if(EMCCConfigTools.Enabled.wrench.getAsBoolean())
 			getMod().recipes.addRecipe(new ItemStack(this), "UBU", " S ", " S ", 'U', EMCCItems.b_uu_block, 'S', ODItems.STICK, 'B', EMCCItems.i_emc_battery);
 	}
 	
@@ -42,8 +42,8 @@ public class ItemUUWrench extends ItemToolEMCC
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		itemIcon = ir.registerIcon(EMCC.mod.assets + "tools/wrench");
-		icon_full = ir.registerIcon(EMCC.mod.assets + "tools/wrench_full");
+		itemIcon = ir.registerIcon(EMCC.mod.lowerCaseModID + ":tools/wrench");
+		icon_full = ir.registerIcon(EMCC.mod.lowerCaseModID + ":tools/wrench_full");
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -128,7 +128,7 @@ public class ItemUUWrench extends ItemToolEMCC
 	}
 	
 	public double getEmcPerDmg(ItemStack is)
-	{ return EMCCConfigTools.tool_emc_per_damage.get(); }
+	{ return EMCCConfigTools.tool_emc_per_damage.getAsDouble(); }
 	
 	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
 	{ return t.is(ToolInfusion.UNBREAKING); }

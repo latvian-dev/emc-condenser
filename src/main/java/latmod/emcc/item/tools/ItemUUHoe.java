@@ -1,7 +1,7 @@
 package latmod.emcc.item.tools;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
-import ftb.lib.item.ODItems;
+import ftb.lib.api.item.ODItems;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemMaterialsEMCC;
@@ -22,7 +22,7 @@ public class ItemUUHoe extends ItemToolEMCC
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.Enable.tools.get())
+		if(EMCCConfigTools.Enabled.tools.getAsBoolean())
 			getMod().recipes.addRecipe(new ItemStack(this), "UU", " S", " S", 'U', ItemMaterialsEMCC.INGOT_UUS, 'S', ODItems.STICK);
 	}
 	

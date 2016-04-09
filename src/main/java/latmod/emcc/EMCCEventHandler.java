@@ -43,8 +43,8 @@ public class EMCCEventHandler
 			
 		}
 		
-		boolean removeNoEMCTooltip = EMCCConfigGeneral.remove_no_emc_tooltip.get();
-		boolean forceVanillaEMC = EMCCConfigGeneral.force_vanilla_emc.get();
+		boolean removeNoEMCTooltip = EMCCConfigGeneral.remove_no_emc_tooltip.getAsBoolean();
+		boolean forceVanillaEMC = EMCCConfigGeneral.force_vanilla_emc.getAsBoolean();
 		
 		if((removeNoEMCTooltip || forceVanillaEMC) && EMCHandler.hasEE3())
 		{

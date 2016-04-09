@@ -1,42 +1,99 @@
 package latmod.emcc.blacklist;
 
-import com.google.gson.JsonObject;
+import com.google.gson.*;
+import latmod.emcc.api.ItemEntry;
 import net.minecraft.item.*;
+import net.minecraft.util.IJsonSerializable;
 
-public class Blacklist
+import java.util.*;
+
+public class Blacklist implements IJsonSerializable
 {
 	public final BlacklistEntryList all;
 	public final BlacklistEntryList targets;
 	public final BlacklistEntryList fuels;
-	public final BlacklistEntryList example;
 	
-	public Blacklist(JsonObject o)
+	public Blacklist()
 	{
 		all = new BlacklistEntryList();
 		targets = new BlacklistEntryList();
 		fuels = new BlacklistEntryList();
-		example = new BlacklistEntryList();
 	}
 	
-	public static class ItemEntry
+	public void func_152753_a(JsonElement e)
 	{
-		public Item item;
-		public int damage;
-		
-		public ItemEntry(Item s, int i)
-		{
-			item = s;
-			damage = i;
-		}
-		
-		public boolean equals(Object o)
-		{
-			ItemStack is = (ItemStack) o;
-			return is != null && (damage == -1 || is.getItemDamage() == damage) && is.getItem() == item;
-		}
+		JsonObject o = e.getAsJsonObject();
+		all.func_152753_a(o.get("all"));
+		targets.func_152753_a(o.get("targets"));
+		fuels.func_152753_a(o.get("fuels"));
 	}
 	
-	public static class BlacklistEntryList
+	public JsonElement getSerializableElement()
 	{
+		JsonObject o = new JsonObject();
+		o.add("all", all.getSerializableElement());
+		o.add("targets", targets.getSerializableElement());
+		o.add("fuels", fuels.getSerializableElement());
+		return o;
+	}
+	
+	public static class BlacklistEntryList implements IJsonSerializable
+	{
+		private final Set<String> oreNames;
+		private final Set<ItemEntry> regNames;
+		
+		public BlacklistEntryList()
+		{
+			oreNames = new HashSet<>();
+			regNames = new HashSet<>();
+		}
+		
+		public void addOreName(String s)
+		{
+			if(s != null && !s.isEmpty())
+			{
+				oreNames.add(s);
+			}
+		}
+		
+		public void addRegistryName(Item item, int dmg)
+		{
+			regNames.add(new ItemEntry(item, dmg));
+		}
+		
+		public boolean isBlacklistedRegName(ItemStack is)
+		{
+			return regNames.contains(is);
+		}
+		
+		public boolean isBlacklistedOre(List<String> l)
+		{
+			if(l == null || l.isEmpty()) return false;
+			else if(l.size() == 1) return oreNames.contains(l.get(0));
+			
+			for(String s : l)
+			{
+				if(oreNames.contains(s))
+				{
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
+		public void reloadList()
+		{
+		}
+		
+		public void func_152753_a(JsonElement p_152753_1_)
+		{
+		}
+		
+		public JsonElement getSerializableElement()
+		{
+			JsonObject o = new JsonObject();
+			return o;
+		}
 	}
 }

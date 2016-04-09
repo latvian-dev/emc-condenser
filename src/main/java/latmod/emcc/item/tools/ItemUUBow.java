@@ -27,7 +27,7 @@ public class ItemUUBow extends ItemToolEMCC // ItemBow
 	
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.Enable.bow.get())
+		if(EMCCConfigTools.Enabled.bow.getAsBoolean())
 			getMod().recipes.addRecipe(new ItemStack(this), " US", "U S", " US", 'U', ItemMaterialsEMCC.INGOT_UUS, 'S', Items.string);
 	}
 	
@@ -106,11 +106,11 @@ public class ItemUUBow extends ItemToolEMCC // ItemBow
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
-		itemIcon = ir.registerIcon(getMod().assets + "tools/bow_0");
+		itemIcon = ir.registerIcon(getMod().lowerCaseModID + ":tools/bow_0");
 		
 		pullIcons = new IIcon[3];
 		for(int i = 0; i < pullIcons.length; i++)
-			pullIcons[i] = ir.registerIcon(getMod().assets + "tools/bow_" + (i + 1));
+			pullIcons[i] = ir.registerIcon(getMod().lowerCaseModID + ":tools/bow_" + (i + 1));
 	}
 	
 	@SideOnly(Side.CLIENT)

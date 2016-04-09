@@ -1,6 +1,5 @@
 package latmod.emcc.emc;
 
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import ftb.lib.*;
 import latmod.emcc.config.EMCCConfigGeneral;
 import latmod.lib.LMJsonUtils;
@@ -13,7 +12,7 @@ public class EMCHandler
 	private static EMCHandler instance = new EMCHandler();
 	private static boolean hasEE3 = false;
 	
-	public static void init(FMLPreInitializationEvent e)
+	public static void init()
 	{
 		hasEE3 = FTBLib.isModInstalled(OtherMods.EE3);
 		
@@ -30,8 +29,8 @@ public class EMCHandler
 			hasEE3 = false;
 		}
 		
-		if(EMCCConfigGeneral.force_vanilla_emc.get() || !hasEE3)
-			instance.vanillaEMCFile = new File(e.getModConfigurationDirectory(), "EMC_Condenser/vanilla_emc.json");
+		if(EMCCConfigGeneral.force_vanilla_emc.getAsBoolean() || !hasEE3)
+			instance.vanillaEMCFile = new File(FTBLib.folderConfig, "EMC_Condenser/vanilla_emc.json");
 	}
 	
 	public static final boolean hasEE3()
@@ -56,16 +55,12 @@ public class EMCHandler
 		
 		if(vanillaEMCFile.exists())
 		{
-			VanillaEMC.EMCFile f = LMJsonUtils.fromJsonFile(vanillaEMCFile, VanillaEMC.EMCFile.class);
-			if(f != null) f.saveTo(vanillaEMC);
-			else vanillaEMC.loadDefaults();
+			vanillaEMC.func_152753_a(LMJsonUtils.fromJson(vanillaEMCFile));
 		}
 		else
 		{
 			vanillaEMC.loadDefaults();
-			VanillaEMC.EMCFile f = new VanillaEMC.EMCFile();
-			f.loadFrom(vanillaEMC);
-			LMJsonUtils.toJsonFile(vanillaEMCFile, f);
+			LMJsonUtils.toJson(vanillaEMCFile, vanillaEMC.getSerializableElement());
 		}
 	}
 	
