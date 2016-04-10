@@ -3,7 +3,6 @@ package latmod.emcc.block;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.*;
-import ftb.lib.api.LangKey;
 import ftb.lib.api.config.*;
 import ftb.lib.api.item.LMInvUtils;
 import ftb.lib.api.tile.*;
@@ -22,9 +21,6 @@ import net.minecraft.nbt.NBTTagCompound;
 @Optional.Interface(modid = OtherMods.LATBLOCKS, iface = "latmod.latblocks.tile.IQuartzNetTile")
 public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWrenchable, IGuiTile, ISecureTile, IQuartzNetTile
 {
-	public static final String ACTION_TRANS_ITEMS = "trans_items";
-	public static final LangKey safeModeLang = new LangKey("emcc.safe_mode");
-	
 	public static final int SLOT_TARGET = 0;
 	public static final int[] TARGET_SLOTS = {SLOT_TARGET};
 	public static final int[] INPUT_SLOTS = new int[36];
@@ -259,7 +255,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	
 	public void handleButton(String button, int mouseButton, NBTTagCompound data, EntityPlayerMP ep)
 	{
-		if(button.equals(EMCCGuis.Buttons.SAFE_MODE)) safe_mode.set(!safe_mode.getAsBoolean());
+		if(button.equals("safe_mode")) safe_mode.set(!safe_mode.getAsBoolean());
 		else if(button.equals("redstone")) redstone_mode.onClicked(mouseButton == 0);
 		else if(button.equals("inv_mode")) inv_mode.onClicked(mouseButton == 0);
 		else if(button.equals("security"))
@@ -275,7 +271,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	
 	public void onClientAction(EntityPlayerMP ep, String action, NBTTagCompound data)
 	{
-		if(action.equals(ACTION_TRANS_ITEMS))
+		if(action.equals("trans_items"))
 		{
 			int[] invSlots = LMInvUtils.getPlayerSlots(ep);
 			

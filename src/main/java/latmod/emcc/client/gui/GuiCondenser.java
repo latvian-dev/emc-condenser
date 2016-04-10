@@ -8,10 +8,9 @@ import ftb.lib.api.gui.*;
 import ftb.lib.api.gui.widgets.*;
 import ftb.lib.api.tile.*;
 import ftb.lib.mod.FTBLibMod;
-import latmod.emcc.*;
+import latmod.emcc.EMCCCommon;
 import latmod.emcc.block.TileCondenser;
 import latmod.emcc.emc.EMCHandler;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 
@@ -28,14 +27,13 @@ public class GuiCondenser extends GuiContainerLM
 	public final TileCondenser condenser;
 	public final ButtonLM buttonTransItems, buttonSecurity, buttonRedstone, buttonInvMode, buttonSafeMode;
 	public final WidgetLM barEMC, targetIcon, sidebar;
-	private static String noTargetLang = "";
 	
 	public GuiCondenser(final ContainerCondenser c)
 	{
 		super(c, texLoc);
 		condenser = (TileCondenser) c.inv;
-		xSize = 176;
-		ySize = 236;
+		mainPanel.width = 176;
+		mainPanel.height = 236;
 		
 		buttonTransItems = new ButtonLM(this, 153, 9, 16, 16)
 		{
@@ -43,13 +41,13 @@ public class GuiCondenser extends GuiContainerLM
 			{
 				if(b == 0)
 				{
-					condenser.sendClientAction(TileCondenser.ACTION_TRANS_ITEMS, null);
+					condenser.sendClientAction("trans_items", null);
 					FTBLibClient.playClickSound();
 				}
 			}
 		};
 		
-		buttonTransItems.title = EMCC.mod.translate("takeitems");
+		buttonTransItems.title = EMCCCommon.lang_takeitems.format();
 		
 		buttonSecurity = new ButtonLM(this, -19, 32, 16, 16)
 		{
@@ -61,10 +59,12 @@ public class GuiCondenser extends GuiContainerLM
 			
 			public void addMouseOverText(List<String> l)
 			{
-				l.add(I18n.format(PrivacyLevel.enumLangKey));
+				l.add(title);
 				l.add(condenser.security.level.lang.format());
 			}
 		};
+		
+		buttonSecurity.title = PrivacyLevel.enumLangKey.format();
 		
 		buttonRedstone = new ButtonLM(this, -19, 50, 16, 16)
 		{
@@ -76,10 +76,12 @@ public class GuiCondenser extends GuiContainerLM
 			
 			public void addMouseOverText(List<String> l)
 			{
-				l.add(I18n.format(RedstoneMode.enumLangKey));
+				l.add(title);
 				l.add(condenser.redstone_mode.get().lang.format());
 			}
 		};
+		
+		buttonRedstone.title = RedstoneMode.enumLangKey.format();
 		
 		buttonInvMode = new ButtonLM(this, -19, 68, 16, 16)
 		{
@@ -91,25 +93,29 @@ public class GuiCondenser extends GuiContainerLM
 			
 			public void addMouseOverText(List<String> l)
 			{
-				l.add(I18n.format(InvMode.enumLangKey));
+				l.add(title);
 				l.add(condenser.inv_mode.get().lang.format());
 			}
 		};
+		
+		buttonInvMode.title = InvMode.enumLangKey.format();
 		
 		buttonSafeMode = new ButtonLM(this, -19, 86, 16, 16)
 		{
 			public void onButtonPressed(int b)
 			{
-				condenser.clientPressButton(EMCCGuis.Buttons.SAFE_MODE, b);
+				condenser.clientPressButton("safe_mode", b);
 				FTBLibClient.playClickSound();
 			}
 			
 			public void addMouseOverText(List<String> l)
 			{
-				l.add(TileCondenser.safeModeLang.format());
+				l.add(title);
 				l.add(condenser.safe_mode.getAsBoolean() ? FTBLibLang.label_enabled.format() : FTBLibLang.label_disabled.format());
 			}
 		};
+		
+		buttonSafeMode.title = EMCCCommon.lang_safemode.format();
 		
 		barEMC = new WidgetLM(this, 30, 9, texBar.widthI(), texBar.heightI())
 		{
@@ -122,7 +128,6 @@ public class GuiCondenser extends GuiContainerLM
 		};
 		
 		targetIcon = new WidgetLM(this, 8, 9, 16, 16);
-		noTargetLang = EMCC.mod.translate("notarget");
 		sidebar = new WidgetLM(this, -25, 26, texSidebar.widthI(), texSidebar.heightI());
 	}
 	
@@ -164,7 +169,7 @@ public class GuiCondenser extends GuiContainerLM
 		buttonInvMode.render(GuiIcons.inv[condenser.inv_mode.get().ID]);
 		buttonSafeMode.render(condenser.safe_mode.getAsBoolean() ? GuiIcons.accept : GuiIcons.accept_gray);
 		
-		targetIcon.title = (condenser.items[TileCondenser.SLOT_TARGET] == null) ? noTargetLang : null;
+		targetIcon.title = (condenser.items[TileCondenser.SLOT_TARGET] == null) ? EMCCCommon.lang_notarget.format() : null;
 	}
 	
 	public static String formatEMC(double d)

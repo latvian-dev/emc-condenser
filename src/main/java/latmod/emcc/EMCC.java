@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 @Mod(modid = EMCC.MOD_ID, name = "EMC Condenser", version = "@VERSION@", dependencies = "required-after:FTBU;after:EE3;after:Baubles")
 public class EMCC
 {
-	protected static final String MOD_ID = "EMC_Condenser";
+	protected static final String MOD_ID = "EMCC";
 	
 	@Mod.Instance(EMCC.MOD_ID)
 	public static EMCC inst;
