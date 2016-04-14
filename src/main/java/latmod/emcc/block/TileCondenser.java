@@ -12,6 +12,7 @@ import latmod.emcc.client.gui.*;
 import latmod.emcc.config.EMCCConfigCondenser;
 import latmod.emcc.emc.EMCHandler;
 import latmod.latblocks.api.IQuartzNetTile;
+import latmod.lib.util.EnumEnabled;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
@@ -199,9 +200,9 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 			markDirty();
 		}
 		
-		if(EMCCConfigCondenser.Forced.safe_mode.get() != null && safe_mode.getAsBoolean() != EMCCConfigCondenser.Forced.safe_mode.get().isEnabled())
+		if(EMCCConfigCondenser.Forced.safe_mode.get() != null && safe_mode.getAsBoolean() != (EMCCConfigCondenser.Forced.safe_mode.get() == EnumEnabled.ENABLED))
 		{
-			safe_mode.set(EMCCConfigCondenser.Forced.safe_mode.get().isEnabled());
+			safe_mode.set(EMCCConfigCondenser.Forced.safe_mode.get() == EnumEnabled.ENABLED);
 			markDirty();
 		}
 		
