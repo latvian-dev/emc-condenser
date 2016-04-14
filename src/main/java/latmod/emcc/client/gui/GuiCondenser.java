@@ -2,13 +2,13 @@ package latmod.emcc.client.gui;
 
 import cpw.mods.fml.relauncher.*;
 import ftb.lib.*;
-import ftb.lib.api.FTBLibLang;
+import ftb.lib.api.GuiLang;
 import ftb.lib.api.client.FTBLibClient;
 import ftb.lib.api.gui.*;
 import ftb.lib.api.gui.widgets.*;
 import ftb.lib.api.tile.*;
 import ftb.lib.mod.FTBLibMod;
-import latmod.emcc.EMCCCommon;
+import latmod.emcc.EMCCLang;
 import latmod.emcc.block.TileCondenser;
 import latmod.emcc.emc.EMCHandler;
 import net.minecraft.item.ItemStack;
@@ -47,7 +47,7 @@ public class GuiCondenser extends GuiContainerLM
 			}
 		};
 		
-		buttonTransItems.title = EMCCCommon.lang_takeitems.format();
+		buttonTransItems.title = EMCCLang.lang_takeitems.format();
 		
 		buttonSecurity = new ButtonLM(this, -19, 32, 16, 16)
 		{
@@ -111,11 +111,11 @@ public class GuiCondenser extends GuiContainerLM
 			public void addMouseOverText(List<String> l)
 			{
 				l.add(title);
-				l.add(condenser.safe_mode.getAsBoolean() ? FTBLibLang.label_enabled.format() : FTBLibLang.label_disabled.format());
+				l.add(condenser.safe_mode.getAsBoolean() ? GuiLang.label_enabled.format() : GuiLang.label_disabled.format());
 			}
 		};
 		
-		buttonSafeMode.title = EMCCCommon.lang_safemode.format();
+		buttonSafeMode.title = EMCCLang.lang_safemode.format();
 		
 		barEMC = new WidgetLM(this, 30, 9, texBar.widthI(), texBar.heightI())
 		{
@@ -169,7 +169,7 @@ public class GuiCondenser extends GuiContainerLM
 		buttonInvMode.render(GuiIcons.inv[condenser.inv_mode.get().ID]);
 		buttonSafeMode.render(condenser.safe_mode.getAsBoolean() ? GuiIcons.accept : GuiIcons.accept_gray);
 		
-		targetIcon.title = (condenser.items[TileCondenser.SLOT_TARGET] == null) ? EMCCCommon.lang_notarget.format() : null;
+		targetIcon.title = (condenser.items[TileCondenser.SLOT_TARGET] == null) ? EMCCLang.lang_notarget.format() : null;
 	}
 	
 	public static String formatEMC(double d)
@@ -178,7 +178,7 @@ public class GuiCondenser extends GuiContainerLM
 		
 		d = ((long) (d * 1000D)) / 1000D;
 		
-		String s = "" + d;
+		String s = Double.toString(d);
 		
 		if(!FTBLibMod.proxy.isShiftDown())
 		{
@@ -186,14 +186,14 @@ public class GuiCondenser extends GuiContainerLM
 			{
 				double d1 = d / 1000D;
 				d1 = ((long) (d1 * 1000D)) / 1000D;
-				s = "" + d1 + "K";
+				s = Double.toString(d1) + 'K';
 			}
 			
 			if(d > 1000000)
 			{
 				double d1 = d / 1000000D;
 				d1 = ((long) (d1 * 100D)) / 100D;
-				s = "" + d1 + "M";
+				s = Double.toString(d1) + 'M';
 			}
 		}
 		
