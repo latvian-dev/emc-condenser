@@ -1,6 +1,7 @@
 package latmod.emcc.client.render.world;
 
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ftb.lib.api.client.FTBLibClient;
 import latmod.emcc.EMCCItems;
 import latmod.latblocks.client.render.world.BlockRendererLM;
@@ -16,19 +17,23 @@ public class RenderCondenser extends BlockRendererLM
 	
 	public Block glow = new BlockCustom()
 	{
+		@Override
 		public int getLightValue()
 		{ return 15; }
 		
+		@Override
 		public IIcon getIcon(int s, int m)
 		{ return (s == 1) ? EMCCItems.b_condenser.icon_top_glow : EMCCItems.b_condenser.icon_side_glow; }
 	};
 	
 	public Block empty = new BlockCustom()
 	{
+		@Override
 		public IIcon getIcon(int s, int m)
 		{ return (s == 1) ? EMCCItems.b_condenser.icon_top_empty : EMCCItems.b_condenser.icon_side_empty; }
 	};
 	
+	@Override
 	public void renderInventoryBlock(Block b, int meta, int modelID, RenderBlocks rb)
 	{
 		renderBlocks.setRenderBounds(0D, 0D, 0D, 1D, 1D, 1D);
@@ -39,6 +44,7 @@ public class RenderCondenser extends BlockRendererLM
 		FTBLibClient.popMaxBrightness();
 	}
 	
+	@Override
 	public boolean renderWorldBlock(IBlockAccess iba, int x, int y, int z, Block b, int modelID, RenderBlocks rb)
 	{
 		renderBlocks.setInst(iba);

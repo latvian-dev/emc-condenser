@@ -1,31 +1,65 @@
-package latmod.emcc.emc;
+package latmod.emcc;
 
-import com.google.gson.*;
-import ftb.lib.api.item.*;
-import latmod.emcc.api.ItemEntry;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import ftb.lib.FTBLib;
+import ftb.lib.api.item.ItemEntry;
+import ftb.lib.api.item.LMInvUtils;
+import ftb.lib.api.item.ODItems;
 import latmod.lib.ByteIOStream;
+import latmod.lib.LMJsonUtils;
 import net.minecraft.block.Block;
-import net.minecraft.init.*;
-import net.minecraft.item.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IJsonSerializable;
 
-import java.util.*;
+import java.io.File;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class VanillaEMC implements IJsonSerializable
 {
+	public static final VanillaEMC instance = new VanillaEMC();
+	
+	public void load()
+	{
+		clear();
+		
+		File file = new File(FTBLib.folderConfig, "/LatMod/EMC_Condenser/emc.json");
+		JsonElement e = LMJsonUtils.fromJson(file);
+		
+		if(e.isJsonObject())
+		{
+			func_152753_a(e);
+		}
+		else
+		{
+			addDefaults();
+			LMJsonUtils.toJson(file, getSerializableElement());
+		}
+	}
+	
 	public final Map<ItemEntry, Float> regEntries;
 	public final Map<String, Float> oreEntries;
+	public final Map<ItemEntry, Float> cache;
 	
 	public VanillaEMC()
 	{
 		regEntries = new LinkedHashMap<>();
 		oreEntries = new LinkedHashMap<>();
+		cache = new HashMap<>();
 	}
 	
 	public void clear()
 	{
 		regEntries.clear();
 		oreEntries.clear();
+		cache.clear();
 	}
 	
 	public void fromBytes(ByteIOStream io) throws Exception
@@ -76,7 +110,7 @@ public class VanillaEMC implements IJsonSerializable
 		}
 	}
 	
-	public void loadDefaults()
+	public void addDefaults()
 	{
 		addOre(ODItems.COBBLE, 1);
 		addOre(ODItems.STONE, 1);
@@ -209,19 +243,38 @@ public class VanillaEMC implements IJsonSerializable
 	{
 		if(is == null || is.getItem() == null) return 0F;
 		
-		Float f = regEntries.get(is);
+		ItemEntry item = new ItemEntry(is);
 		
-		if(f != null) return f;
+		Float f = cache.get(item);
 		
-		List<String> ores = ODItems.getOreNames(is);
+		if(f == null)
+		{
+			f = regEntries.get(item);
+			
+			if(f == null)
+			{
+				List<String> ores = ODItems.getOreNames(is);
+				
+				//TODO: Make prettier
+				if(!ores.isEmpty()) for(Map.Entry<String, Float> e1 : oreEntries.entrySet())
+				{
+					if(ores.contains(e1.getKey()))
+					{
+						f = e1.getValue();
+						break;
+					}
+				}
+			}
+			
+			if(f == null) f = 0F;
+			cache.put(item, f);
+			return f;
+		}
 		
-		//TODO: Make prettier
-		if(!ores.isEmpty()) for(Map.Entry<String, Float> e1 : oreEntries.entrySet())
-		{ if(ores.contains(e1.getKey())) return e1.getValue().floatValue(); }
-		
-		return 0F;
+		return f;
 	}
 	
+	@Override
 	public void func_152753_a(JsonElement e)
 	{
 		clear();
@@ -246,10 +299,11 @@ public class VanillaEMC implements IJsonSerializable
 		}
 		else
 		{
-			loadDefaults();
+			addDefaults();
 		}
 	}
 	
+	@Override
 	public JsonElement getSerializableElement()
 	{
 		JsonObject o = new JsonObject();

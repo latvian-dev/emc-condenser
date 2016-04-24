@@ -1,6 +1,7 @@
 package latmod.emcc.item;
 
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import latmod.emcc.api.IEmcStorageItem;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,6 +26,7 @@ public abstract class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 		setMaxStackSize(1);
 	}
 	
+	@Override
 	public ItemStack onItemRightClick(ItemStack is, World w, EntityPlayer ep)
 	{
 		if(!w.isRemote)
@@ -42,6 +44,7 @@ public abstract class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 		return is;
 	}
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
@@ -49,13 +52,16 @@ public abstract class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 		icon_enabled = ir.registerIcon(getMod().lowerCaseModID + ":stones/" + itemName + "_enabled");
 	}
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(ItemStack is, int r)
 	{ return is.getItemDamage() == 1 ? icon_enabled : itemIcon; }
 	
+	@Override
 	public boolean canChargeEmc(ItemStack is)
 	{ return true; }
 	
+	@Override
 	public void setStoredEmc(ItemStack is, double emc)
 	{
 		if(emc <= 0D)
@@ -69,6 +75,7 @@ public abstract class ItemEmcStorage extends ItemEMCC implements IEmcStorageItem
 		}
 	}
 	
+	@Override
 	public double getStoredEmc(ItemStack is)
 	{ return is.hasTagCompound() ? is.stackTagCompound.getDouble(NBT_KEY) : 0D; }
 	

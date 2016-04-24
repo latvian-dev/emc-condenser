@@ -1,8 +1,11 @@
 package latmod.emcc.item.tools;
 
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import latmod.emcc.EMCC;
-import latmod.emcc.api.*;
+import latmod.emcc.api.EnumToolType;
+import latmod.emcc.api.IEmcTool;
+import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemEmcStorage;
 import net.minecraft.block.Block;
@@ -12,11 +15,13 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 {
@@ -44,18 +49,22 @@ public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 		return false;
 	}
 	
+	@Override
 	public boolean onBlockDestroyed(ItemStack is, World w, Block b, int x, int y, int z, EntityLivingBase el)
 	{
 		if(b.getBlockHardness(w, x, y, z) != 0D) damageItem(is, false);
 		return true;
 	}
 	
+	@Override
 	public boolean getIsRepairable(ItemStack is1, ItemStack is2)
 	{ return false; }
 	
+	@Override
 	public boolean isItemTool(ItemStack is)
 	{ return true; }
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs c, List l)
 	{
@@ -68,31 +77,39 @@ public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 		l.add(is1);
 	}
 	
+	@Override
 	public void loadRecipes()
 	{
 	}
 	
+	@Override
 	public ItemStack onItemRightClick(ItemStack is, World w, EntityPlayer ep)
 	{ return is; }
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{ itemIcon = ir.registerIcon(EMCC.mod.lowerCaseModID + ":tools/" + itemName); }
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(ItemStack is, int r)
 	{ return itemIcon; }
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public CreativeTabs getCreativeTab()
 	{ return EMCC.tab; }
 	
+	@Override
 	public String getUnlocalizedName(ItemStack is)
 	{ return EMCC.mod.getItemName(itemName); }
 	
+	@Override
 	public float getDigSpeed(ItemStack is, Block b, int meta)
 	{ return (isEffective(b) && damageItem(is, true)) ? efficiencyOnProperMaterial : 1F; }
 	
+	@Override
 	public int getInfusionLevel(ItemStack is, ToolInfusion t)
 	{ return EnchantmentHelper.getEnchantmentLevel(t.getEnchantment(getToolType(is)).effectId, is); }
 	
@@ -107,30 +124,39 @@ public abstract class ItemToolEMCC extends ItemEmcStorage implements IEmcTool
 		EnchantmentHelper.setEnchantments(m, is);
 	}
 	
+	@Override
 	public boolean canDischargeEmc(ItemStack is)
 	{ return false; }
 	
+	@Override
 	public double getMaxStoredEmc(ItemStack is)
 	{ return Short.MAX_VALUE; }
 	
+	@Override
 	public double getEmcTrasferLimit(ItemStack is)
 	{ return 4096D; }
 	
+	@Override
 	public EnumToolType getToolType(ItemStack is)
 	{ return EnumToolType.TOOL; }
 	
+	@Override
 	public boolean showDurabilityBar(ItemStack is)
 	{ return getStoredEmc(is) != getMaxStoredEmc(is); }
 	
+	@Override
 	public double getDurabilityForDisplay(ItemStack is)
 	{ return 1F - getStoredEmc(is) / getMaxStoredEmc(is); }
 	
+	@Override
 	public int getItemEnchantability(ItemStack is)
 	{ return 0; }
 	
+	@Override
 	public boolean isRepairable()
 	{ return false; }
 	
+	@Override
 	public boolean canHarvestBlock(Block b, ItemStack is)
 	{ return isEffective(b); }
 	

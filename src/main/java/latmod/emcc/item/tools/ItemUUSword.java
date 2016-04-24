@@ -2,12 +2,14 @@ package latmod.emcc.item.tools;
 
 import com.google.common.collect.Multimap;
 import ftb.lib.api.item.ODItems;
-import latmod.emcc.api.*;
+import latmod.emcc.api.EnumToolType;
+import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemMaterialsEMCC;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -20,12 +22,14 @@ public class ItemUUSword extends ItemToolEMCC // ItemSword
 		super(s);
 	}
 	
+	@Override
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.Enabled.sword.getAsBoolean())
+		if(EMCCConfigTools.sword.getAsBoolean())
 			getMod().recipes.addRecipe(new ItemStack(this), "U", "U", "S", 'U', ItemMaterialsEMCC.INGOT_UUS, 'S', ODItems.STICK);
 	}
 	
+	@Override
 	public ItemStack onItemRightClick(ItemStack is, World w, EntityPlayer ep)
 	{
 		if(!w.isRemote && hasInfusion(is, ToolInfusion.FIRE) && ep.isBurning())
@@ -36,15 +40,18 @@ public class ItemUUSword extends ItemToolEMCC // ItemSword
 		return is;
 	}
 	
+	@Override
 	public boolean hitEntity(ItemStack is, EntityLivingBase el, EntityLivingBase el1)
 	{
 		damageItem(is, false);
 		return true;
 	}
 	
+	@Override
 	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
 	{ return t.is(ToolInfusion.SHARPNESS, ToolInfusion.UNBREAKING, ToolInfusion.FORTUNE, ToolInfusion.KNOCKBACK, ToolInfusion.FIRE); }
 	
+	@Override
 	public EnumToolType getToolType(ItemStack is)
 	{ return EnumToolType.SWORD; }
 	
@@ -56,6 +63,7 @@ public class ItemUUSword extends ItemToolEMCC // ItemSword
 		return multimap;
 	}
 	
+	@Override
 	public boolean isEffective(Block b)
 	{ return b.getMaterial() == Material.web; }
 }

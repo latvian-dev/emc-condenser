@@ -1,12 +1,15 @@
 package latmod.emcc;
 
-import cpw.mods.fml.common.eventhandler.*;
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.common.eventhandler.EventPriority;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ftb.lib.api.EventFTBReload;
+import ftb.lib.api.EventFTBSync;
 import ftb.lib.mod.FTBLibMod;
-import latmod.emcc.api.*;
-import latmod.emcc.config.EMCCConfigGeneral;
-import latmod.emcc.emc.EMCHandler;
+import latmod.emcc.api.IEmcStorageItem;
+import latmod.emcc.api.IEmcTool;
+import latmod.emcc.api.ToolInfusion;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.AnvilUpdateEvent;
@@ -20,7 +23,27 @@ public class EMCCEventHandler
 	@SubscribeEvent
 	public void onReloaded(EventFTBReload e)
 	{
-		if(e.world.side.isServer()) EMCHandler.instance().reloadEMCValues();
+		if(e.world.side.isServer())
+		{
+			Blacklist.instance.load();
+			VanillaEMC.instance.load();
+		}
+	}
+	
+	@SubscribeEvent
+	public void syncData(EventFTBSync e)
+	{
+		/* TODO: Sync EMC and Blacklist
+		if(e.world.side.isServer())
+		{
+			NBTTagCompound tag = new NBTTagCompound();
+			
+			e.syncData.setTag("EMCC", tag);
+		}
+		else
+		{
+			NBTTagCompound tag = e.syncData.getCompoundTag("EMCC");
+		}*/
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -43,25 +66,9 @@ public class EMCCEventHandler
 			
 		}
 		
-		boolean removeNoEMCTooltip = EMCCConfigGeneral.remove_no_emc_tooltip.getAsBoolean();
-		boolean forceVanillaEMC = EMCCConfigGeneral.force_vanilla_emc.getAsBoolean();
-		
-		if((removeNoEMCTooltip || forceVanillaEMC) && EMCHandler.hasEE3())
+		if(FTBLibMod.proxy.isShiftDown())
 		{
-			for(int j = 0; j < e.toolTip.size(); j++)
-			{
-				String s = e.toolTip.get(j);
-				if(s != null && !s.isEmpty())
-				{
-					if((removeNoEMCTooltip && s.contains("No Exchange Energy value")) || (forceVanillaEMC && s.contains("Exchange Energy")))
-						e.toolTip.remove(j);
-				}
-			}
-		}
-		
-		if((forceVanillaEMC || !EMCHandler.hasEE3()) && FTBLibMod.proxy.isShiftDown())
-		{
-			float f = EMCHandler.instance().getEMC(e.itemStack);
+			float f = VanillaEMC.instance.getEMC(e.itemStack);
 			if(f > 0)
 			{
 				e.toolTip.add("EMC: " + formDouble(f, 1000D));

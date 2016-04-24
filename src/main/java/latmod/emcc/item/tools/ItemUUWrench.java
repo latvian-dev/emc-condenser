@@ -1,9 +1,12 @@
 package latmod.emcc.item.tools;
 
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ftb.lib.api.item.ODItems;
-import latmod.emcc.*;
-import latmod.emcc.api.*;
+import latmod.emcc.EMCC;
+import latmod.emcc.EMCCItems;
+import latmod.emcc.api.IEmcWrenchable;
+import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.config.EMCCConfigTools;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -30,15 +33,18 @@ public class ItemUUWrench extends ItemToolEMCC
 		setFull3D();
 	}
 	
+	@Override
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.Enabled.wrench.getAsBoolean())
+		if(EMCCConfigTools.wrench.getAsBoolean())
 			getMod().recipes.addRecipe(new ItemStack(this), "UBU", " S ", " S ", 'U', EMCCItems.b_uu_block, 'S', ODItems.STICK, 'B', EMCCItems.i_emc_battery);
 	}
 	
+	@Override
 	public int getItemEnchantability()
 	{ return 15; }
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
@@ -46,6 +52,7 @@ public class ItemUUWrench extends ItemToolEMCC
 		icon_full = ir.registerIcon(EMCC.mod.lowerCaseModID + ":tools/wrench_full");
 	}
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(ItemStack is, int r)
 	{
@@ -53,6 +60,7 @@ public class ItemUUWrench extends ItemToolEMCC
 		return itemIcon;
 	}
 	
+	@Override
 	public boolean onItemUse(ItemStack is, EntityPlayer ep, World w, int x, int y, int z, int side, float x1, float y1, float z1)
 	{
 		if(!ep.canPlayerEdit(x, y, z, side, is)) return false;
@@ -130,9 +138,11 @@ public class ItemUUWrench extends ItemToolEMCC
 	public double getEmcPerDmg(ItemStack is)
 	{ return EMCCConfigTools.tool_emc_per_damage.getAsDouble(); }
 	
+	@Override
 	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
 	{ return t.is(ToolInfusion.UNBREAKING); }
 	
+	@Override
 	public boolean isEffective(Block b)
 	{ return false; }
 }

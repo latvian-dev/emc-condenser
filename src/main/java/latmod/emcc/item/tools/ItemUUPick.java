@@ -1,7 +1,9 @@
 package latmod.emcc.item.tools;
 
-import ftb.lib.api.item.*;
-import latmod.emcc.api.*;
+import ftb.lib.api.item.ODItems;
+import ftb.lib.api.item.Tool;
+import latmod.emcc.api.EMCCUtils;
+import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemMaterialsEMCC;
 import net.minecraft.block.Block;
@@ -12,7 +14,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class ItemUUPick extends ItemToolEMCC
 {
@@ -25,15 +28,18 @@ public class ItemUUPick extends ItemToolEMCC
 		setHarvestLevel(Tool.Type.PICK, Tool.Level.ALUMITE);
 	}
 	
+	@Override
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.Enabled.tools.getAsBoolean())
+		if(EMCCConfigTools.tools.getAsBoolean())
 			getMod().recipes.addRecipe(new ItemStack(this), "UUU", " S ", " S ", 'U', ItemMaterialsEMCC.INGOT_UUS, 'S', ODItems.STICK);
 	}
 	
+	@Override
 	public boolean isEffective(Block b)
 	{ return effectiveBlocks.contains(b) || effectiveMaterials.contains(b.getMaterial()); }
 	
+	@Override
 	public boolean onBlockStartBreak(ItemStack tool, int x, int y, int z, EntityPlayer ep)
 	{
 		return false;
@@ -43,12 +49,14 @@ public class ItemUUPick extends ItemToolEMCC
 		*/
 	}
 	
+	@Override
 	public boolean onBlockDestroyed(ItemStack is, World w, Block bid, int x, int y, int z, EntityLivingBase el)
 	{
 		EMCCUtils.destroyBlockArea(w, x, y, z, el, is, bid, this);
 		return super.onBlockDestroyed(is, w, bid, x, y, z, el);
 	}
 	
+	@Override
 	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
 	{ return t.is(ToolInfusion.SHARPNESS, ToolInfusion.UNBREAKING, ToolInfusion.FORTUNE, ToolInfusion.FIRE, ToolInfusion.SILKTOUCH); }
 }

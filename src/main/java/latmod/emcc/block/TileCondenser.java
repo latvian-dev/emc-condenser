@@ -1,21 +1,36 @@
 package latmod.emcc.block;
 
 import cpw.mods.fml.common.Optional;
-import cpw.mods.fml.relauncher.*;
-import ftb.lib.*;
-import ftb.lib.api.config.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import ftb.lib.FTBLib;
+import ftb.lib.OtherMods;
+import ftb.lib.PrivacyLevel;
+import ftb.lib.api.MouseButton;
+import ftb.lib.api.config.ConfigEntryBool;
+import ftb.lib.api.config.ConfigEntryEnum;
 import ftb.lib.api.item.LMInvUtils;
-import ftb.lib.api.tile.*;
-import latmod.emcc.*;
-import latmod.emcc.api.*;
-import latmod.emcc.client.gui.*;
+import ftb.lib.api.tile.IGuiTile;
+import ftb.lib.api.tile.ISecureTile;
+import ftb.lib.api.tile.InvMode;
+import ftb.lib.api.tile.RedstoneMode;
+import ftb.lib.api.tile.TileInvLM;
+import latmod.emcc.Blacklist;
+import latmod.emcc.EMCCItems;
+import latmod.emcc.VanillaEMC;
+import latmod.emcc.api.IEmcStorageItem;
+import latmod.emcc.api.IEmcWrenchable;
+import latmod.emcc.client.gui.ContainerCondenser;
+import latmod.emcc.client.gui.GuiCondenser;
 import latmod.emcc.config.EMCCConfigCondenser;
-import latmod.emcc.emc.EMCHandler;
+import latmod.emcc.config.EMCCConfigForced;
 import latmod.latblocks.api.IQuartzNetTile;
 import latmod.lib.util.EnumEnabled;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -50,12 +65,14 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 		checkForced();
 	}
 	
+	@Override
 	public boolean onRightClick(EntityPlayer ep, ItemStack is, int side, float x, float y, float z)
 	{
 		if(isServer()) FTBLib.openGui(ep, this, null);
 		return true;
 	}
 	
+	@Override
 	public void onUpdate()
 	{
 		if(isServer())
@@ -85,9 +102,9 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 							continue;
 						}
 						
-						double iev = EMCHandler.instance().getEMC(items[INPUT_SLOTS[i]]);
+						double iev = VanillaEMC.instance.getEMC(items[INPUT_SLOTS[i]]);
 						
-						if(iev > 0D && !EMCC.blacklist.isBlacklistedFuel(items[INPUT_SLOTS[i]]))
+						if(iev > 0D && !Blacklist.instance.isBlacklistedFuel(items[INPUT_SLOTS[i]]))
 						{
 							if(safe_mode.getAsBoolean() && items[INPUT_SLOTS[i]].stackSize == 1) continue;
 							
@@ -129,9 +146,9 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 					}
 					else
 					{
-						double ev = EMCHandler.instance().getEMC(tar);
+						double ev = VanillaEMC.instance.getEMC(tar);
 						
-						if(ev > 0D && !EMCC.blacklist.isBlacklistedTarget(tar))
+						if(ev > 0D && !Blacklist.instance.isBlacklistedTarget(tar))
 						{
 							long d1 = (long) (storedEMC / ev);
 							
@@ -159,9 +176,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 		}
 	}
 	
-	protected boolean customNBT()
-	{ return true; }
-	
+	@Override
 	public void readTileData(NBTTagCompound tag)
 	{
 		super.readTileData(tag);
@@ -175,6 +190,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 		checkForced();
 	}
 	
+	@Override
 	public void writeTileData(NBTTagCompound tag)
 	{
 		super.writeTileData(tag);
@@ -188,27 +204,27 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 	
 	public void checkForced()
 	{
-		if(EMCCConfigCondenser.Forced.redstone_control.get() != null && redstone_mode.get() != EMCCConfigCondenser.Forced.redstone_control.get())
+		if(EMCCConfigForced.redstone_control.get() != null && redstone_mode.get() != EMCCConfigForced.redstone_control.get())
 		{
-			redstone_mode.set(EMCCConfigCondenser.Forced.redstone_control.get());
+			redstone_mode.set(EMCCConfigForced.redstone_control.get());
 			markDirty();
 		}
 		
-		if(EMCCConfigCondenser.Forced.security.get() != null && security.level != EMCCConfigCondenser.Forced.security.get())
+		if(EMCCConfigForced.security.get() != null && security.level != EMCCConfigForced.security.get())
 		{
-			security.level = EMCCConfigCondenser.Forced.security.get();
+			security.level = EMCCConfigForced.security.get();
 			markDirty();
 		}
 		
-		if(EMCCConfigCondenser.Forced.safe_mode.get() != null && safe_mode.getAsBoolean() != (EMCCConfigCondenser.Forced.safe_mode.get() == EnumEnabled.ENABLED))
+		if(EMCCConfigForced.safe_mode.get() != null && safe_mode.getAsBoolean() != (EMCCConfigForced.safe_mode.get() == EnumEnabled.ENABLED))
 		{
-			safe_mode.set(EMCCConfigCondenser.Forced.safe_mode.get() == EnumEnabled.ENABLED);
+			safe_mode.set(EMCCConfigForced.safe_mode.get() == EnumEnabled.ENABLED);
 			markDirty();
 		}
 		
-		if(EMCCConfigCondenser.Forced.inv_mode.get() != null && inv_mode.get() != EMCCConfigCondenser.Forced.inv_mode.get())
+		if(EMCCConfigForced.inv_mode.get() != null && inv_mode.get() != EMCCConfigForced.inv_mode.get())
 		{
-			inv_mode.set(EMCCConfigCondenser.Forced.inv_mode.get());
+			inv_mode.set(EMCCConfigForced.inv_mode.get());
 			markDirty();
 		}
 	}
@@ -232,37 +248,44 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 		return false;
 	}
 	
+	@Override
 	public boolean isItemValidForSlot(int i, ItemStack is)
 	{
 		if(i == SLOT_TARGET || anyEquals(i, INPUT_SLOTS))
-			return is.getItem() instanceof IEmcStorageItem || EMCHandler.instance().getEMC(is) > 0F;
+			return is.getItem() instanceof IEmcStorageItem || VanillaEMC.instance.getEMC(is) > 0F;
 		return false;
 	}
 	
+	@Override
 	public boolean canWrench(EntityPlayer ep)
 	{ return security.canInteract(ep); }
 	
+	@Override
 	public void readFromWrench(NBTTagCompound tag)
 	{ readTileData(tag); }
 	
+	@Override
 	public void writeToWrench(NBTTagCompound tag)
 	{ writeTileData(tag); }
 	
+	@Override
 	public void onWrenched(EntityPlayer ep, ItemStack is)
 	{ dropItems = false; }
 	
+	@Override
 	public ItemStack getBlockToPlace()
 	{ return new ItemStack(EMCCItems.b_condenser); }
 	
-	public void handleButton(String button, int mouseButton, NBTTagCompound data, EntityPlayerMP ep)
+	@Override
+	public void handleButton(String button, MouseButton mouseButton, NBTTagCompound data, EntityPlayerMP ep)
 	{
 		if(button.equals("safe_mode")) safe_mode.set(!safe_mode.getAsBoolean());
-		else if(button.equals("redstone")) redstone_mode.onClicked(mouseButton == 0);
-		else if(button.equals("inv_mode")) inv_mode.onClicked(mouseButton == 0);
+		else if(button.equals("redstone")) redstone_mode.onClicked(mouseButton);
+		else if(button.equals("inv_mode")) inv_mode.onClicked(mouseButton);
 		else if(button.equals("security"))
 		{
 			if(ep != null && security.isOwner(ep))
-				security.level = (mouseButton == 0) ? security.level.next(PrivacyLevel.VALUES_3) : security.level.prev(PrivacyLevel.VALUES_3);
+				security.level = mouseButton.isLeft() ? security.level.next(PrivacyLevel.VALUES_3) : security.level.prev(PrivacyLevel.VALUES_3);
 			else printOwner(ep);
 		}
 		
@@ -270,6 +293,7 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 		markDirty();
 	}
 	
+	@Override
 	public void onClientAction(EntityPlayerMP ep, String action, NBTTagCompound data)
 	{
 		if(action.equals("trans_items"))
@@ -297,23 +321,29 @@ public class TileCondenser extends TileInvLM implements ISidedInventory, IEmcWre
 		
 	}
 	
+	@Override
 	public Container getContainer(EntityPlayer ep, NBTTagCompound data)
 	{ return new ContainerCondenser(ep, this); }
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public GuiScreen getGui(EntityPlayer ep, NBTTagCompound data)
 	{ return new GuiCondenser(new ContainerCondenser(ep, this)); }
 	
+	@Override
 	public boolean canPlayerInteract(EntityPlayer ep, boolean breakBlock)
 	{ return security.canInteract(ep); }
 	
+	@Override
 	public void onPlayerNotOwner(EntityPlayer ep, boolean breakBlock)
 	{ printOwner(ep); }
 	
+	@Override
 	public ItemStack getQIconItem()
 	{ return new ItemStack(EMCCItems.b_condenser); }
 	
-	public void onQClicked(EntityPlayer ep, int button)
+	@Override
+	public void onQClicked(EntityPlayer ep, MouseButton button)
 	{
 		if(!isServer()) return;
 		if(!security.canInteract(ep))

@@ -1,15 +1,14 @@
 package latmod.emcc.config;
 
 import ftb.lib.FTBLib;
-import ftb.lib.api.config.*;
-import latmod.emcc.emc.VanillaEMC;
+import ftb.lib.api.config.ConfigFile;
+import ftb.lib.api.config.ConfigRegistry;
 
 import java.io.File;
 
 public class EMCCConfig
 {
 	public static final ConfigFile configFile = new ConfigFile("emcc");
-	public static VanillaEMC localEMCValues;
 	
 	public static void load()
 	{
@@ -17,10 +16,9 @@ public class EMCCConfig
 		configFile.setDisplayName("EMCCondenser");
 		configFile.addGroup("general", EMCCConfigGeneral.class);
 		configFile.addGroup("condenser", EMCCConfigCondenser.class);
-		configFile.addGroup("condenser_forced", EMCCConfigCondenser.Forced.class);
+		configFile.addGroup("condenser_forced", EMCCConfigForced.class).setInfo(new String[] {"Forced values that player can't change"});
 		configFile.addGroup("enchanting", EMCCConfigEnchanting.class);
 		configFile.addGroup("tools", EMCCConfigTools.class);
-		configFile.addGroup("tools_enabled", EMCCConfigTools.Enabled.class);
 		
 		ConfigRegistry.add(configFile);
 		configFile.load();

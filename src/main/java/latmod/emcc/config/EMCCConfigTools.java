@@ -1,6 +1,7 @@
 package latmod.emcc.config;
 
-import ftb.lib.api.config.*;
+import ftb.lib.api.config.ConfigEntryBool;
+import ftb.lib.api.config.ConfigEntryDouble;
 import latmod.lib.annotations.NumberBounds;
 
 public class EMCCConfigTools
@@ -23,12 +24,9 @@ public class EMCCConfigTools
 	@NumberBounds(min = 0D, max = 64D)
 	public static final ConfigEntryDouble black_hole_stone_range = new ConfigEntryDouble("black_hole_stone_range", 4D);
 	
-	public static class Enabled
-	{
-		public static final ConfigEntryBool wrench = new ConfigEntryBool("wrench", true);
-		public static final ConfigEntryBool battery = new ConfigEntryBool("battery", true);
-		public static final ConfigEntryBool sword = new ConfigEntryBool("sword", true);
-		public static final ConfigEntryBool bow = new ConfigEntryBool("bow", true);
-		public static final ConfigEntryBool tools = new ConfigEntryBool("tools", true);
-	}
+	public static final ConfigEntryBool wrench = new ConfigEntryBool("wrench", true);
+	public static final ConfigEntryBool battery = new ConfigEntryBool("battery", true);
+	public static final ConfigEntryBool sword = new ConfigEntryBool("sword", true);
+	public static final ConfigEntryBool bow = new ConfigEntryBool("bow", true);
+	public static final ConfigEntryBool tools = new ConfigEntryBool("tools", true);
 }

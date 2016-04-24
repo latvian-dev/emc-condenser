@@ -1,18 +1,26 @@
 package latmod.emcc.client.gui;
 
-import cpw.mods.fml.relauncher.*;
-import ftb.lib.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import ftb.lib.PrivacyLevel;
+import ftb.lib.TextureCoords;
 import ftb.lib.api.GuiLang;
+import ftb.lib.api.MouseButton;
 import ftb.lib.api.client.FTBLibClient;
-import ftb.lib.api.gui.*;
-import ftb.lib.api.gui.widgets.*;
-import ftb.lib.api.tile.*;
+import ftb.lib.api.gui.GuiContainerLM;
+import ftb.lib.api.gui.GuiIcons;
+import ftb.lib.api.gui.GuiLM;
+import ftb.lib.api.gui.widgets.ButtonLM;
+import ftb.lib.api.gui.widgets.WidgetLM;
+import ftb.lib.api.tile.InvMode;
+import ftb.lib.api.tile.RedstoneMode;
 import ftb.lib.mod.FTBLibMod;
 import latmod.emcc.EMCCLang;
+import latmod.emcc.VanillaEMC;
 import latmod.emcc.block.TileCondenser;
-import latmod.emcc.emc.EMCHandler;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.List;
 
@@ -37,13 +45,11 @@ public class GuiCondenser extends GuiContainerLM
 		
 		buttonTransItems = new ButtonLM(this, 153, 9, 16, 16)
 		{
-			public void onButtonPressed(int b)
+			@Override
+			public void onClicked(MouseButton button)
 			{
-				if(b == 0)
-				{
-					condenser.sendClientAction("trans_items", null);
-					FTBLibClient.playClickSound();
-				}
+				condenser.sendClientAction("trans_items", null);
+				FTBLibClient.playClickSound();
 			}
 		};
 		
@@ -51,12 +57,14 @@ public class GuiCondenser extends GuiContainerLM
 		
 		buttonSecurity = new ButtonLM(this, -19, 32, 16, 16)
 		{
-			public void onButtonPressed(int b)
+			@Override
+			public void onClicked(MouseButton button)
 			{
-				condenser.clientPressButton("security", b);
+				condenser.clientPressButton("security", button, null);
 				FTBLibClient.playClickSound();
 			}
 			
+			@Override
 			public void addMouseOverText(List<String> l)
 			{
 				l.add(title);
@@ -68,12 +76,14 @@ public class GuiCondenser extends GuiContainerLM
 		
 		buttonRedstone = new ButtonLM(this, -19, 50, 16, 16)
 		{
-			public void onButtonPressed(int b)
+			@Override
+			public void onClicked(MouseButton button)
 			{
-				condenser.clientPressButton("redstone", b);
+				condenser.clientPressButton("redstone", button, null);
 				FTBLibClient.playClickSound();
 			}
 			
+			@Override
 			public void addMouseOverText(List<String> l)
 			{
 				l.add(title);
@@ -85,12 +95,14 @@ public class GuiCondenser extends GuiContainerLM
 		
 		buttonInvMode = new ButtonLM(this, -19, 68, 16, 16)
 		{
-			public void onButtonPressed(int b)
+			@Override
+			public void onClicked(MouseButton button)
 			{
-				condenser.clientPressButton("inv_mode", b);
+				condenser.clientPressButton("inv_mode", button, null);
 				FTBLibClient.playClickSound();
 			}
 			
+			@Override
 			public void addMouseOverText(List<String> l)
 			{
 				l.add(title);
@@ -102,12 +114,14 @@ public class GuiCondenser extends GuiContainerLM
 		
 		buttonSafeMode = new ButtonLM(this, -19, 86, 16, 16)
 		{
-			public void onButtonPressed(int b)
+			@Override
+			public void onClicked(MouseButton button)
 			{
-				condenser.clientPressButton("safe_mode", b);
+				condenser.clientPressButton("safe_mode", button, null);
 				FTBLibClient.playClickSound();
 			}
 			
+			@Override
 			public void addMouseOverText(List<String> l)
 			{
 				l.add(title);
@@ -119,10 +133,11 @@ public class GuiCondenser extends GuiContainerLM
 		
 		barEMC = new WidgetLM(this, 30, 9, texBar.widthI(), texBar.heightI())
 		{
+			@Override
 			public void addMouseOverText(List<String> l)
 			{
 				ItemStack tar = condenser.items[TileCondenser.SLOT_TARGET];
-				double emc1 = EMCHandler.instance().getEMC(tar);
+				double emc1 = VanillaEMC.instance.getEMC(tar);
 				l.add(EnumChatFormatting.GOLD.toString() + "" + formatEMC(condenser.storedEMC) + (emc1 <= 0D ? "" : (" / " + formatEMC(emc1))));
 			}
 		};
@@ -131,6 +146,7 @@ public class GuiCondenser extends GuiContainerLM
 		sidebar = new WidgetLM(this, -25, 26, texSidebar.widthI(), texSidebar.heightI());
 	}
 	
+	@Override
 	public void addWidgets()
 	{
 		mainPanel.add(buttonTransItems);
@@ -143,18 +159,19 @@ public class GuiCondenser extends GuiContainerLM
 		mainPanel.add(sidebar);
 	}
 	
+	@Override
 	public void drawBackground()
 	{
 		super.drawBackground();
 		
 		ItemStack tar = condenser.items[TileCondenser.SLOT_TARGET];
 		
-		double emc1 = EMCHandler.instance().getEMC(tar);
+		double emc1 = VanillaEMC.instance.getEMC(tar);
 		
 		if(emc1 > 0L)
 		{
 			FTBLibClient.setTexture(texLoc);
-			double d = (condenser.storedEMC % emc1) / (double) emc1;
+			double d = (condenser.storedEMC % emc1) / emc1;
 			GuiLM.drawTexturedRectD(guiLeft + barEMC.posX, guiTop + barEMC.posY, zLevel, texBar.width * d, texBar.height, texBar.minU, texBar.minV, texBar.minU + (texBar.maxU - texBar.minU) * d, texBar.maxV);
 		}
 		

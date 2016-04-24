@@ -15,9 +15,11 @@ public class BlockUUBlock extends BlockEMCC
 		super(s, Material.rock);
 	}
 	
+	@Override
 	public float getEnchantPowerBonus(World w, int x, int y, int z)
 	{ return (float) EMCCConfigGeneral.uu_block_enchant_power.getAsDouble(); }
 	
+	@Override
 	public void loadRecipes()
 	{
 		getMod().recipes.addRecipe(new ItemStack(EMCCItems.b_uu_block, 8), "III", "IUI", "III", 'I', ODItems.OBSIDIAN, 'U', ItemMaterialsEMCC.ITEM_UUS);

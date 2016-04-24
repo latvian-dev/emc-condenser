@@ -1,7 +1,9 @@
 package latmod.emcc.item.tools;
 
-import cpw.mods.fml.relauncher.*;
-import latmod.emcc.api.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import latmod.emcc.api.EnumToolType;
+import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemMaterialsEMCC;
 import net.minecraft.block.Block;
@@ -9,11 +11,13 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.*;
+import net.minecraftforge.event.entity.player.ArrowLooseEvent;
+import net.minecraftforge.event.entity.player.ArrowNockEvent;
 
 public class ItemUUBow extends ItemToolEMCC // ItemBow
 {
@@ -25,21 +29,26 @@ public class ItemUUBow extends ItemToolEMCC // ItemBow
 		super(s);
 	}
 	
+	@Override
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.Enabled.bow.getAsBoolean())
+		if(EMCCConfigTools.bow.getAsBoolean())
 			getMod().recipes.addRecipe(new ItemStack(this), " US", "U S", " US", 'U', ItemMaterialsEMCC.INGOT_UUS, 'S', Items.string);
 	}
 	
+	@Override
 	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
 	{ return t.is(ToolInfusion.UNBREAKING, ToolInfusion.INFINITY, ToolInfusion.FIRE, ToolInfusion.SHARPNESS, ToolInfusion.KNOCKBACK); }
 	
+	@Override
 	public boolean isEffective(Block b)
 	{ return false; }
 	
+	@Override
 	public EnumToolType getToolType(ItemStack is)
 	{ return EnumToolType.BOW; }
 	
+	@Override
 	public void onPlayerStoppedUsing(ItemStack is, World w, EntityPlayer ep, int itemInUseCount)
 	{
 		if(!damageItem(is, true)) return;
@@ -82,15 +91,19 @@ public class ItemUUBow extends ItemToolEMCC // ItemBow
 		}
 	}
 	
+	@Override
 	public ItemStack onEaten(ItemStack is, World w, EntityPlayer ep)
 	{ return is; }
 	
+	@Override
 	public int getMaxItemUseDuration(ItemStack is)
 	{ return 72000; }
 	
+	@Override
 	public EnumAction getItemUseAction(ItemStack p_77661_1_)
 	{ return EnumAction.bow; }
 	
+	@Override
 	public ItemStack onItemRightClick(ItemStack is, World w, EntityPlayer ep)
 	{
 		ArrowNockEvent event = new ArrowNockEvent(ep, is);
@@ -103,6 +116,7 @@ public class ItemUUBow extends ItemToolEMCC // ItemBow
 		return is;
 	}
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister ir)
 	{
@@ -113,6 +127,7 @@ public class ItemUUBow extends ItemToolEMCC // ItemBow
 			pullIcons[i] = ir.registerIcon(getMod().lowerCaseModID + ":tools/bow_" + (i + 1));
 	}
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(ItemStack is, int r, EntityPlayer ep, ItemStack is1, int t)
 	{

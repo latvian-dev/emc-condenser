@@ -20,12 +20,14 @@ public class ItemUUHoe extends ItemToolEMCC
 		super(s);
 	}
 	
+	@Override
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.Enabled.tools.getAsBoolean())
+		if(EMCCConfigTools.tools.getAsBoolean())
 			getMod().recipes.addRecipe(new ItemStack(this), "UU", " S", " S", 'U', ItemMaterialsEMCC.INGOT_UUS, 'S', ODItems.STICK);
 	}
 	
+	@Override
 	public boolean onItemUse(ItemStack is, EntityPlayer ep, World w, int x, int y, int z, int side, float x1, float y1, float z1)
 	{
 		if(!ep.canPlayerEdit(x, y, z, side, is) || ep.isSneaking()) return false;
@@ -60,9 +62,11 @@ public class ItemUUHoe extends ItemToolEMCC
 		}
 	}
 	
+	@Override
 	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
 	{ return t.is(ToolInfusion.UNBREAKING); }
 	
+	@Override
 	public boolean isEffective(Block b)
 	{ return false; }
 }

@@ -1,6 +1,7 @@
 package latmod.emcc.item.tools;
 
-import ftb.lib.api.item.*;
+import ftb.lib.api.item.ODItems;
+import ftb.lib.api.item.Tool;
 import latmod.emcc.api.ToolInfusion;
 import latmod.emcc.config.EMCCConfigTools;
 import latmod.emcc.item.ItemMaterialsEMCC;
@@ -9,7 +10,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class ItemUUAxe extends ItemToolEMCC // ItemAxe
 {
@@ -23,15 +25,18 @@ public class ItemUUAxe extends ItemToolEMCC // ItemAxe
 		setHarvestLevel(Tool.Type.AXE, Tool.Level.ALUMITE);
 	}
 	
+	@Override
 	public void loadRecipes()
 	{
-		if(EMCCConfigTools.Enabled.tools.getAsBoolean())
+		if(EMCCConfigTools.tools.getAsBoolean())
 			getMod().recipes.addRecipe(new ItemStack(this), "UU", "US", " S", 'U', ItemMaterialsEMCC.INGOT_UUS, 'S', ODItems.STICK);
 	}
 	
+	@Override
 	public boolean isEffective(Block b)
 	{ return isEffective(b, effectiveBlocks, effectiveMaterials); }
 	
+	@Override
 	public boolean canEnchantWith(ItemStack is, ToolInfusion t)
 	{ return t.is(ToolInfusion.SHARPNESS, ToolInfusion.UNBREAKING); }
 }

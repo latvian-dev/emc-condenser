@@ -1,12 +1,14 @@
 package latmod.emcc;
 
-import cpw.mods.fml.common.*;
-import cpw.mods.fml.common.event.*;
-import ftb.lib.*;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import ftb.lib.CreativeTabLM;
+import ftb.lib.EventBusHelper;
+import ftb.lib.LMMod;
 import latmod.emcc.api.ToolInfusion;
-import latmod.emcc.blacklist.EMCCBlacklist;
 import latmod.emcc.config.EMCCConfig;
-import latmod.emcc.emc.EMCHandler;
 import net.minecraft.item.ItemStack;
 
 @Mod(modid = EMCC.MOD_ID, name = "EMC Condenser", version = "@VERSION@", dependencies = "required-after:FTBU;after:EE3;after:Baubles")
@@ -23,7 +25,6 @@ public class EMCC
 	public static CreativeTabLM tab;
 	
 	public static LMMod mod;
-	public static EMCCBlacklist blacklist;
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e)
@@ -32,23 +33,14 @@ public class EMCC
 		tab = new CreativeTabLM("emcc").setMod(mod);
 		
 		EMCCConfig.load();
-		blacklist = new EMCCBlacklist();
 		
 		EventBusHelper.register(EMCCEventHandler.instance);
-		EMCHandler.init();
 		EMCCItems.preInit();
 		mod.onPostLoaded();
 		ToolInfusion.initAll();
 		
 		tab.addIcon(new ItemStack(EMCCItems.i_emc_battery, 1, 1));
-	}
-	
-	@Mod.EventHandler
-	public void init(FMLInitializationEvent e)
-	{
-		EMCHandler.instance().modInited();
-		ToolInfusion.initAll();
-		proxy.init();
+		proxy.preInit();
 	}
 	
 	@Mod.EventHandler

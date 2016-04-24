@@ -13,6 +13,7 @@ public abstract class BlockEMCC extends BlockLM
 		setCreativeTab(EMCC.tab);
 	}
 	
+	@Override
 	public LMMod getMod()
 	{ return EMCC.mod; }
 }

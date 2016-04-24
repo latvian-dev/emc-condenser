@@ -38,6 +38,7 @@ public class ContainerCondenser extends ContainerLM
 	public boolean canInteractWith(EntityPlayer ep)
 	{ return true; }
 	
+	@Override
 	public ItemStack transferStackInSlot(EntityPlayer ep, int i)
 	{
 		ItemStack is = null;
@@ -56,7 +57,7 @@ public class ContainerCondenser extends ContainerLM
 			}
 			else if(!mergeItemStack(is1, 0, maxSlot, false)) return null;
 			
-			if(is1.stackSize == 0) slot.putStack((ItemStack) null);
+			if(is1.stackSize == 0) slot.putStack(null);
 			else slot.onSlotChanged();
 		}
 		
