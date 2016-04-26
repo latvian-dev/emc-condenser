@@ -2,8 +2,10 @@ package latmod.emcc.api;
 
 import latmod.emcc.config.EMCCConfigEnchanting;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.init.*;
-import net.minecraft.item.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public enum ToolInfusion
 {
@@ -96,14 +98,14 @@ public enum ToolInfusion
 		return false;
 	}
 	
-	public static final ToolInfusion get(EnumToolType type, Enchantment e)
+	public static ToolInfusion get(EnumToolType type, Enchantment e)
 	{
 		for(ToolInfusion t : VALUES)
 			if(t.getEnchantment(type) == e) return t;
 		return null;
 	}
 	
-	public static final ToolInfusion get(String s)
+	public static ToolInfusion get(String s)
 	{
 		if(s == null || s.length() == 0) return null;
 		for(ToolInfusion t : VALUES)
@@ -111,7 +113,7 @@ public enum ToolInfusion
 		return null;
 	}
 	
-	public static final ToolInfusion get(ItemStack is)
+	public static ToolInfusion get(ItemStack is)
 	{
 		Item i = is.getItem();
 		for(ToolInfusion t : VALUES)

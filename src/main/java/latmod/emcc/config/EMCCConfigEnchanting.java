@@ -4,7 +4,7 @@ import ftb.lib.api.config.ConfigEntryInt;
 
 public class EMCCConfigEnchanting
 {
-	private static final ConfigEntryInt get(String s, int def)
+	private static ConfigEntryInt get(String s, int def)
 	{
 		ConfigEntryInt c = new ConfigEntryInt(s, def);
 		c.setBounds(0, 50);

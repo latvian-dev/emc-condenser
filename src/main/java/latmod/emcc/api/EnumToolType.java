@@ -4,5 +4,5 @@ public enum EnumToolType
 {
 	TOOL,
 	SWORD,
-	BOW;
+	BOW
 }
