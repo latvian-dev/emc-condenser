@@ -1,84 +1,48 @@
-def version_mod = "1.12.0";
-
 buildscript {
-    repositories {
-        mavenCentral()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
-    }
-    dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
-    }
+	repositories {
+		jcenter()
+		maven { url = "http://files.minecraftforge.net/maven" }
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+	}
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+version = System.properties['mod_version']
+if (version == null) {
+	version = "Dev"
+}
+group = "com.latmod.emc_condenser"
+archivesBaseName = "EMCCondenser"
+
+sourceCompatibility = targetCompatibility = "1.8"
+compileJava {
+	sourceCompatibility = targetCompatibility = "1.8"
 }
 
-apply plugin: 'forge'
-
-version = version_mc + "-" + version_mod
-group = "latmod.emcc"
-archivesBaseName = "EMC_Condenser"
-sourceCompatibility = JavaVersion.VERSION_1_7
-targetCompatibility = JavaVersion.VERSION_1_7
-
 minecraft {
-    version = version_mc + "-" + version_forge
-    runDir = mcp_run_dir
+	version = "1.12.1-14.22.0.2474"
+	runDir = "run"
+	mappings = "snapshot_20170908"
+}
 
-    replace "@VERSION@", version_mod
-    replaceIn "LatBlocks.java"
+repositories {
+	ivy { name "com.latmod.mods"; artifactPattern "http://mods.latmod.com/[module]/[revision]/[module]-[revision](-[classifier]).[ext]" }
 }
 
 dependencies {
-    compile fileTree(dir: project_dir + "DevMods/", include: '*.jar')
-    compile files(project_dir + "/Exported/FTBLib-" + version_mc + "-" + version_mods + "-dev.jar")
-    compile files(project_dir + "/Exported/FTBUtilities-" + version_mc + "-" + version_mods + "-dev.jar")
-    compile files(project_dir + "/Exported/LatBlocks-" + version_mc + "-" + version_mod + "-dev.jar")
+	compile 'com.latmod.mods:FTBLib:4.1.0:api'
 }
 
-sourceSets {
-    main {
-        java {
-            srcDir project_dir + archivesBaseName + "/src/main/java"
-        }
-        resources {
-            srcDir project_dir + archivesBaseName + "/src/main/resources"
-        }
-    }
+processResources {
+	inputs.property "version", project.version
+	inputs.property "mcversion", project.minecraft.version
+	from(sourceSets.main.resources.srcDirs) {
+		include 'mcmod.info'
+		expand 'version': project.version, 'mcversion': project.minecraft.version
+	}
+	from(sourceSets.main.resources.srcDirs) {
+		exclude 'mcmod.info'
+	}
 }
-
-tasks.withType(Jar) {
-    destinationDir = file(project_dir + "/Exported/")
-}
-
-processResources
-        {
-            inputs.property "version", project.version
-            inputs.property "mcversion", project.minecraft.version
-
-            from(sourceSets.main.resources.srcDirs) {
-                include 'mcmod.info'
-                expand 'version': project.version, 'mcversion': project.minecraft.version
-            }
-
-            from(sourceSets.main.resources.srcDirs) {
-                exclude 'mcmod.info'
-            }
-        }
-
-task sourceJar(type: Jar) {
-    from sourceSets.main.java
-    classifier = 'src'
-}
-
-task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    classifier = 'dev'
-}
-
-build.dependsOn deobfJar
-build.dependsOn sourceJar

@@ -1,20 +1,17 @@
 [
-{
-  "modid": "EMC_Condenser",
-  "name": "EMC Condenser Mod",
-  "description": "This mod adds EMC Condenser, that you can use to transmutate items",
-  "version": "${version}",
-  "url": "http://minecraft.curseforge.com/projects/emc-condenser",
-  "updateUrl": "",
-  "authorList": [
-    "LatvianModder"
-  ],
-  "credits": "Pahimar, for making EE3",
-  "logoFile": "/assets/emcc/textures/logo.png",
-  "screenshots": [
-  ],
-  "parent":"",
-  "dependencies": [
-  ]
-}
+	{
+		"modid": "emc_condenser",
+		"name": "EMC Condenser",
+		"description": "This mod adds EMC Condenser, that you can use to transmutate items",
+		"version": "${version}",
+		"mcversion": "1.12",
+		"url": "http://minecraft.curseforge.com/projects/emc-condenser",
+		"updateUrl": "",
+		"authorList": ["LatvianModder"],
+		"credits": "",
+		"logoFile": "assets/emc_condenser/textures/logo.png",
+		"screenshots": [],
+		"parent": "",
+		"dependencies": []
+	}
 ]
