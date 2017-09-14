@@ -1,5 +1,1 @@
-EMC Condenser
-===============
-
-CurseForge link:
-http://minecraft.curseforge.com/mc-mods/225907-emc-condenser
+# EMC Condenser [![](http://cf.way2muchnoise.eu/emc-condenser.svg)](https://minecraft.curseforge.com/projects/emc-condenser) [![](http://cf.way2muchnoise.eu/versions/emc-condenser.svg)](https://minecraft.curseforge.com/projects/emc-condenser)

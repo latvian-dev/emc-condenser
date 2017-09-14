@@ -1,0 +1,14 @@
+{
+	"type": "forge:ore_shaped",
+	"group": "emc_condenser:uus",
+	"result": {"item": "uus_item"},
+	"pattern": [
+		"III",
+		"IUI",
+		"III"
+	],
+	"key": {
+		"I": {"type": "forge:ore_dict", "ore": "ingotIron"},
+		"U": {"type": "forge:ore_dict", "ore": "itemUUS"}
+	}
+}

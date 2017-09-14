@@ -1,0 +1,7 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "emc_condenser:items/uus_item",
+		"layer1": "emc_condenser:items/uus_item_overlay"
+	}
+}

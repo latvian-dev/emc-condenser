@@ -1,29 +1,20 @@
-itemGroup.emcc=EMC Condenser
+itemGroup.emc_condenser=EMC Condenser
 
-## Items ##
-emcc.item.item_uus.name=UnUnSeptium
-emcc.item.minium_star.name=Minium Star
-emcc.item.ingot_uus.name=UnUnSeptium Ingot
+# Blocks
+tile.emc_condenser.uus_block.name=UnUnSeptium Block
+tile.emc_condenser.condenser.name=EMC Condenser
 
-emcc.item.battery.name=EMC Battery
-emcc.item.lifeRing.name=Ring of Life
-emcc.item.blackHoleBand.name=Black Hole Band
+# Items
+item.emc_condenser.uus_item.name=UnUnSeptium
+item.emc_condenser.crystal_star.name=Crystal Star
+item.emc_condenser.uus_ingot.name=UnUnSeptium Ingot
 
-emcc.item.wrench.name=UnUnSeptium Wrench
-emcc.item.sword.name=UnUnSeptium Sword
-emcc.item.pick.name=UnUnSeptium Pick
-emcc.item.shovel.name=UnUnSeptium Shovel
-emcc.item.axe.name=UnUnSeptium Axe
-emcc.item.hoe.name=UnUnSeptium Hoe
-emcc.item.smasher.name=UnUnSeptium Smasher
-emcc.item.bow.name=UnUnSeptium Bow
+item.emc_condenser.battery.name=EMC Battery
+item.emc_condenser.life_ring.name=Ring of Life
+item.emc_condenser.black_hole_band.name=Black Hole Band
 
-## Blocks ##
-emcc.tile.uub.name=UnUnSeptium Block
-emcc.tile.condenser.name=EMC Condenser
-
-## Lang ##
-emcc.lang.notarget=No Target
-emcc.lang.stored_emc=Stored EMC: %s
-emcc.lang.safemode=Safe Mode
-emcc.lang.takeitems=Take Items
+# Lang
+lang.emc_condenser.notarget=No Target
+lang.emc_condenser.stored_emc=Stored EMC: %s
+lang.emc_condenser.safemode=Safe Mode
+lang.emc_condenser.takeitems=Take Items

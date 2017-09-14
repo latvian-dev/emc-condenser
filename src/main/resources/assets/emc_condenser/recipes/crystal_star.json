@@ -1,0 +1,14 @@
+{
+	"type": "forge:ore_shaped",
+	"group": "emc_condenser:condenser",
+	"result": {"item": "crystal_star"},
+	"pattern": [
+		"DDD",
+		"DSD",
+		"DDD"
+	],
+	"key": {
+		"D": {"type": "forge:ore_dict", "ore": "gemDiamond"},
+		"S": {"type": "forge:ore_dict", "ore": "netherStar"}
+	}
+}

@@ -1,0 +1,36 @@
+{
+	"parent": "block/block",
+	"textures": {
+		"outside_top": "emc_condenser:blocks/condenser_outside_top",
+		"inside_top": "emc_condenser:blocks/condenser_inside_top",
+		"outside_side": "emc_condenser:blocks/condenser_outside_side",
+		"inside_side": "emc_condenser:blocks/condenser_inside_side",
+		"particle": "emc_condenser:blocks/uus_block"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"down": {"texture": "#outside_side", "cullface": "down"},
+				"up": {"texture": "#outside_top", "cullface": "up"},
+				"north": {"texture": "#outside_side", "cullface": "north"},
+				"south": {"texture": "#outside_side", "cullface": "south"},
+				"west": {"texture": "#outside_side", "cullface": "west"},
+				"east": {"texture": "#outside_side", "cullface": "east"}
+			}
+		},
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"down": {"texture": "#inside_side", "cullface": "down"},
+				"up": {"texture": "#inside_top", "cullface": "up"},
+				"north": {"texture": "#inside_side", "cullface": "north"},
+				"south": {"texture": "#inside_side", "cullface": "south"},
+				"west": {"texture": "#inside_side", "cullface": "west"},
+				"east": {"texture": "#inside_side", "cullface": "east"}
+			}
+		}
+	]
+}

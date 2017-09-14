@@ -1,0 +1,14 @@
+{
+	"type": "forge:ore_shaped",
+	"group": "emc_condenser:uus",
+	"result": {"item": "uus_block"},
+	"pattern": [
+		" U ",
+		"UOU",
+		" U "
+	],
+	"key": {
+		"U": {"type": "forge:ore_dict", "ore": "ingotUUS"},
+		"O": {"type": "forge:ore_dict", "ore": "obsidian"}
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "emc_condenser:items/battery"
+	},
+	"overrides": [
+		{"predicate": {"active": 1}, "model": "emc_condenser:item/battery_active"}
+	]
+}
