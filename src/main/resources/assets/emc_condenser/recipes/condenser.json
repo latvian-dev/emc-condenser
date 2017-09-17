@@ -4,14 +4,13 @@
 	"result": {"item": "condenser"},
 	"pattern": [
 		"OBO",
-		"ASA",
+		"OSO",
 		"OIO"
 	],
 	"key": {
 		"O": {"type": "forge:ore_dict", "ore": "blockUUS"},
 		"I": {"type": "forge:ore_dict", "ore": "crystalStar"},
 		"B": {"item": "black_hole_band"},
-		"S": {"type": "forge:ore_dict", "ore": "blockDiamond"},
-		"A": {"type": "forge:ore_dict", "ore": "obsidian"}
+		"S": {"type": "forge:ore_dict", "ore": "blockDiamond"}
 	}
 }

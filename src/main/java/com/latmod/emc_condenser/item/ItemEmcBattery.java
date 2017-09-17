@@ -43,11 +43,14 @@ public class ItemEmcBattery extends ItemEmcStorage// implements IBauble
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
 	{
-		items.add(new ItemStack(this));
-		ItemStack fullStack = new ItemStack(this);
-		setStoredEmc(fullStack, Integer.MAX_VALUE);
-		setActive(fullStack, true);
-		items.add(fullStack);
+		if (isInCreativeTab(tab))
+		{
+			items.add(new ItemStack(this));
+			ItemStack fullStack = new ItemStack(this);
+			setStoredEmc(fullStack, Integer.MAX_VALUE);
+			setActive(fullStack, true);
+			items.add(fullStack);
+		}
 	}
 
 	@Override

@@ -3,14 +3,12 @@
 	"group": "emc_condenser:emc_storage",
 	"result": {"item": "battery"},
 	"pattern": [
-		"QRQ",
-		"QUQ",
-		"QGQ"
+		" U ",
+		"UQU",
+		" U "
 	],
 	"key": {
-		"Q": {"type": "forge:ore_dict", "ore": "gemQuartz"},
-		"R": {"type": "forge:ore_dict", "ore": "dustRedstone"},
-		"G": {"type": "forge:ore_dict", "ore": "dustGlowstone"},
+		"Q": {"type": "forge:ore_dict", "ore": "blockQuartz"},
 		"U": {"type": "forge:ore_dict", "ore": "itemUUS"}
 	}
 }

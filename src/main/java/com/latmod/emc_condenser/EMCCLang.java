@@ -9,7 +9,8 @@ import com.feed_the_beast.ftbl.lib.LangKey;
 public class EMCCLang
 {
 	public static final LangKey NOTARGET = LangKey.of("lang.emc_condenser.notarget");
-	public static final LangKey STORED_EMC = LangKey.of("lang.emc_condenser.stored_emc"); //TODO: Lang
+	public static final LangKey EMC = LangKey.of("lang.emc_condenser.emc");
+	public static final LangKey TOTAL_EMC = LangKey.of("lang.emc_condenser.total_emc");
 	public static final LangKey SAFEMODE = LangKey.of("lang.emc_condenser.safemode");
 	public static final LangKey TAKEITEMS = LangKey.of("lang.emc_condenser.takeitems");
 }

@@ -15,6 +15,7 @@ item.emc_condenser.black_hole_band.name=Black Hole Band
 
 # Lang
 lang.emc_condenser.notarget=No Target
-lang.emc_condenser.stored_emc=Stored EMC: %s
+lang.emc_condenser.emc=EMC: %s
+lang.emc_condenser.total_emc=Total EMC: %s
 lang.emc_condenser.safemode=Safe Mode
 lang.emc_condenser.takeitems=Take Items

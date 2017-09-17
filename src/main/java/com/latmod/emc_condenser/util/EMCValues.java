@@ -36,8 +36,7 @@ public class EMCValues
 			}
 
 			json = JsonUtils.fromJson(file).getAsJsonArray();
-			load(json);
-			return true;
+			return load(json);
 		}
 		catch (Exception ex)
 		{
@@ -47,10 +46,11 @@ public class EMCValues
 		}
 	}
 
-	public static void load(JsonArray a)
+	public static boolean load(JsonArray a)
 	{
 		LIST.clear();
 		CACHE.clear();
+		boolean ret = true;
 
 		for (JsonElement e : a)
 		{
@@ -59,15 +59,24 @@ public class EMCValues
 
 			if (value > 0)
 			{
-				o.remove("emc");
-				Ingredient ingredient = CommonUtils.getIngredient(o);
-
-				if (ingredient != Ingredient.EMPTY)
+				try
 				{
-					LIST.add(new EMCValue(ingredient, value));
+					Ingredient ingredient = CommonUtils.getIngredient(o);
+
+					if (ingredient != Ingredient.EMPTY)
+					{
+						LIST.add(new EMCValue(ingredient, value));
+					}
+				}
+				catch (Exception ex)
+				{
+					System.err.println(ex.toString());
+					ret = false;
 				}
 			}
 		}
+
+		return ret;
 	}
 
 	public static EMCValue getEMC(ItemStack stack)

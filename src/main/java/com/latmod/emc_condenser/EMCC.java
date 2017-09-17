@@ -1,5 +1,6 @@
 package com.latmod.emc_condenser;
 
+import com.latmod.emc_condenser.item.ItemEmcBattery;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
@@ -23,7 +24,9 @@ public class EMCC
 		@Override
 		public ItemStack getTabIconItem()
 		{
-			return new ItemStack(EMCCItems.BATTERY, 1, 1);
+			ItemStack stack = new ItemStack(EMCCItems.BATTERY);
+			((ItemEmcBattery) EMCCItems.BATTERY).setActive(stack, true);
+			return stack;
 		}
 	};
 
