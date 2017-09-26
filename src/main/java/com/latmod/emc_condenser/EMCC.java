@@ -8,10 +8,12 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = EMCC.MOD_ID, name = "EMC Condenser", version = "@VERSION@", acceptedMinecraftVersions = "[1.12,)", dependencies = "required-after:ftbl;after:Baubles")
+@Mod(modid = EMCC.MOD_ID, name = EMCC.MOD_NAME, version = EMCC.VERSION, acceptedMinecraftVersions = "[1.12,)", dependencies = "required-after:ftbl;after:Baubles")
 public class EMCC
 {
 	public static final String MOD_ID = "emc_condenser";
+	public static final String MOD_NAME = "EMC Condenser";
+	public static final String VERSION = "@VERSION@";
 
 	@Mod.Instance(MOD_ID)
 	public static EMCC INST;
