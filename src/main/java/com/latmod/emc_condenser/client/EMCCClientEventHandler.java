@@ -1,7 +1,7 @@
 package com.latmod.emc_condenser.client;
 
 import com.feed_the_beast.ftbl.api.EventHandler;
-import com.feed_the_beast.ftbl.api.events.registry.RegisterGuiProvidersEvent;
+import com.feed_the_beast.ftbl.api.player.RegisterGuiProvidersEvent;
 import com.feed_the_beast.ftbl.lib.client.ClientUtils;
 import com.feed_the_beast.ftbl.lib.gui.GuiLang;
 import com.feed_the_beast.ftbl.lib.gui.IGuiWrapper;
