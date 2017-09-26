@@ -4,7 +4,7 @@
 		"name": "EMC Condenser",
 		"description": "This mod adds EMC Condenser, that you can use to transmutate items",
 		"version": "${version}",
-		"mcversion": "1.12",
+		"mcversion": "${mcversion}",
 		"url": "http://minecraft.curseforge.com/projects/emc-condenser",
 		"updateUrl": "",
 		"authorList": ["LatvianModder"],

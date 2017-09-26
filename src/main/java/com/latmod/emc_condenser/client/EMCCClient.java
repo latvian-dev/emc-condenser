@@ -4,12 +4,9 @@ import com.feed_the_beast.ftbl.lib.client.ClientUtils;
 import com.latmod.emc_condenser.EMCCCommon;
 import com.latmod.emc_condenser.EMCCItems;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.awt.*;
 
-@SideOnly(Side.CLIENT)
 public class EMCCClient extends EMCCCommon
 {
 	@Override
