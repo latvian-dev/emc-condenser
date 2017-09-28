@@ -4,7 +4,7 @@ import com.feed_the_beast.ftbl.api.EventHandler;
 import com.feed_the_beast.ftbl.api.IForgePlayer;
 import com.feed_the_beast.ftbl.api.ISyncData;
 import com.feed_the_beast.ftbl.api.RegisterSyncDataEvent;
-import com.feed_the_beast.ftbl.api.ReloadEvent;
+import com.feed_the_beast.ftbl.api.ServerReloadEvent;
 import com.feed_the_beast.ftbl.api.player.RegisterContainerProvidersEvent;
 import com.feed_the_beast.ftbl.lib.util.JsonUtils;
 import com.latmod.emc_condenser.block.TileCondenser;
@@ -25,7 +25,7 @@ public class EMCCEventHandler
 	private static final ResourceLocation RELOAD_EMC = new ResourceLocation(EMCC.MOD_ID, "emc");
 
 	@SubscribeEvent
-	public static void registerReloadIds(ReloadEvent.RegisterIds event)
+	public static void registerReloadIds(ServerReloadEvent.RegisterIds event)
 	{
 		event.register(RELOAD_CONFIG);
 		event.register(RELOAD_BLACKLIST);
@@ -33,24 +33,21 @@ public class EMCCEventHandler
 	}
 
 	@SubscribeEvent
-	public static void onReloaded(ReloadEvent event)
+	public static void onServerReload(ServerReloadEvent event)
 	{
-		if (event.getSide().isServer())
+		if (event.reload(RELOAD_CONFIG))
 		{
-			if (event.reload(RELOAD_CONFIG))
-			{
-				EMCCConfig.sync();
-			}
+			EMCCConfig.sync();
+		}
 
-			if (event.reload(RELOAD_BLACKLIST) && !Blacklist.load())
-			{
-				event.failedToReload(RELOAD_BLACKLIST);
-			}
+		if (event.reload(RELOAD_BLACKLIST) && !Blacklist.load())
+		{
+			event.failedToReload(RELOAD_BLACKLIST);
+		}
 
-			if (event.reload(RELOAD_EMC) && !EMCValues.load())
-			{
-				event.failedToReload(RELOAD_EMC);
-			}
+		if (event.reload(RELOAD_EMC) && !EMCValues.load())
+		{
+			event.failedToReload(RELOAD_EMC);
 		}
 	}
 
