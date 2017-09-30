@@ -1,5 +1,6 @@
 package com.latmod.emc_condenser;
 
+import com.feed_the_beast.ftbl.lib.internal.FTBLibFinals;
 import com.latmod.emc_condenser.item.ItemEmcBattery;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -8,7 +9,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = EMCC.MOD_ID, name = EMCC.MOD_NAME, version = EMCC.VERSION, acceptedMinecraftVersions = "[1.12,)", dependencies = "required-after:ftbl;after:Baubles")
+@Mod(modid = EMCC.MOD_ID, name = EMCC.MOD_NAME, version = EMCC.VERSION, acceptedMinecraftVersions = "[1.12,)", dependencies = "required-after:" + FTBLibFinals.MOD_ID + ";after:" + FTBLibFinals.BAUBLES)
 public class EMCC
 {
 	public static final String MOD_ID = "emc_condenser";
