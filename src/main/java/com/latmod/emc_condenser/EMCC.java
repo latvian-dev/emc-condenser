@@ -19,7 +19,7 @@ public class EMCC
 	@Mod.Instance(MOD_ID)
 	public static EMCC INST;
 
-	@SidedProxy(clientSide = "com.latmod.emc_condenser.client.EMCCClient", serverSide = "latmod.emc_condenser.EMCCCommon")
+	@SidedProxy(clientSide = "com.latmod.emc_condenser.client.EMCCClient", serverSide = "com.latmod.emc_condenser.EMCCCommon")
 	public static EMCCCommon PROXY;
 
 	public static final CreativeTabs TAB = new CreativeTabs(MOD_ID)
