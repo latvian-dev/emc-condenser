@@ -1,8 +1,8 @@
 package com.latmod.emc_condenser;
 
-import com.feed_the_beast.ftbl.lib.EnumIO;
-import com.feed_the_beast.ftbl.lib.EnumPrivacyLevel;
-import com.feed_the_beast.ftbl.lib.EnumRedstoneMode;
+import com.feed_the_beast.ftbl.lib.util.misc.EnumIO;
+import com.feed_the_beast.ftbl.lib.util.misc.EnumPrivacyLevel;
+import com.feed_the_beast.ftbl.lib.util.misc.EnumRedstoneMode;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;

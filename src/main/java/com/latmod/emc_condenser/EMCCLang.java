@@ -1,7 +1,7 @@
 package com.latmod.emc_condenser;
 
 
-import com.feed_the_beast.ftbl.lib.LangKey;
+import com.feed_the_beast.ftbl.lib.util.LangKey;
 
 /**
  * @author LatvianModder

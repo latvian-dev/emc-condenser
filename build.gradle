@@ -9,12 +9,9 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = System.properties['mod_version']
-if (version == null) {
-	version = "Dev"
-}
-group = "com.latmod.emc_condenser"
-archivesBaseName = "EMCCondenser"
+version = "${mod_version}"
+group = package_group
+archivesBaseName = mod_name
 
 sourceCompatibility = targetCompatibility = "1.8"
 compileJava {
@@ -22,9 +19,12 @@ compileJava {
 }
 
 minecraft {
-	version = "1.12.2-14.23.0.2493"
+	version = "${mc_version}-${forge_version}"
 	runDir = "run"
-	mappings = "snapshot_20170926"
+	mappings = "${mappings_version}"
+
+	replace "@VERSION@", project.version
+	replaceIn "${mod_reference}"
 }
 
 repositories {
@@ -32,16 +32,18 @@ repositories {
 }
 
 dependencies {
-	compile 'com.latmod.mods:FTBLib:4.1.4:api'
+	compile "com.latmod.mods:FTBLib:${ftblib_version}:api"
 }
 
 processResources {
 	inputs.property "version", project.version
 	inputs.property "mcversion", project.minecraft.version
+
 	from(sourceSets.main.resources.srcDirs) {
 		include 'mcmod.info'
 		expand 'version': project.version, 'mcversion': project.minecraft.version
 	}
+
 	from(sourceSets.main.resources.srcDirs) {
 		exclude 'mcmod.info'
 	}

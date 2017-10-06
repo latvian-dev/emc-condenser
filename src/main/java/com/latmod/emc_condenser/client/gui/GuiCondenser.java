@@ -1,9 +1,5 @@
 package com.latmod.emc_condenser.client.gui;
 
-import com.feed_the_beast.ftbl.lib.EnumIO;
-import com.feed_the_beast.ftbl.lib.EnumPrivacyLevel;
-import com.feed_the_beast.ftbl.lib.EnumRedstoneMode;
-import com.feed_the_beast.ftbl.lib.MouseButton;
 import com.feed_the_beast.ftbl.lib.client.ClientUtils;
 import com.feed_the_beast.ftbl.lib.gui.Button;
 import com.feed_the_beast.ftbl.lib.gui.GuiBase;
@@ -13,6 +9,10 @@ import com.feed_the_beast.ftbl.lib.gui.GuiIcons;
 import com.feed_the_beast.ftbl.lib.gui.GuiLang;
 import com.feed_the_beast.ftbl.lib.gui.Widget;
 import com.feed_the_beast.ftbl.lib.icon.Icon;
+import com.feed_the_beast.ftbl.lib.util.misc.EnumIO;
+import com.feed_the_beast.ftbl.lib.util.misc.EnumPrivacyLevel;
+import com.feed_the_beast.ftbl.lib.util.misc.EnumRedstoneMode;
+import com.feed_the_beast.ftbl.lib.util.misc.MouseButton;
 import com.latmod.emc_condenser.EMCC;
 import com.latmod.emc_condenser.EMCCLang;
 import com.latmod.emc_condenser.block.TileCondenser;
