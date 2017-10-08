@@ -7,6 +7,7 @@ import com.feed_the_beast.ftbl.lib.gui.GuiContainerWrapper;
 import com.feed_the_beast.ftbl.lib.gui.GuiHelper;
 import com.feed_the_beast.ftbl.lib.gui.GuiIcons;
 import com.feed_the_beast.ftbl.lib.gui.GuiLang;
+import com.feed_the_beast.ftbl.lib.gui.SimpleButton;
 import com.feed_the_beast.ftbl.lib.gui.Widget;
 import com.feed_the_beast.ftbl.lib.icon.Icon;
 import com.feed_the_beast.ftbl.lib.util.misc.EnumIO;
@@ -43,37 +44,26 @@ public class GuiCondenser extends GuiBase
 		super(176, 236);
 		container = c;
 
-		buttonTransItems = new Button(153, 9, 16, 16)
+		buttonTransItems = new SimpleButton(this, 153, 9, EMCCLang.TAKEITEMS, GuiIcons.DOWN, (gui, button) -> ClientUtils.MC.playerController.sendEnchantPacket(container.windowId, TileCondenser.BUTTON_TRANSFER_ITEMS));
+
+		buttonSecurity = new Button(this, -19, 32, 16, 16)
 		{
 			@Override
-			public void onClicked(GuiBase gui, MouseButton button)
-			{
-				GuiHelper.playClickSound();
-				ClientUtils.MC.playerController.sendEnchantPacket(container.windowId, TileCondenser.BUTTON_TRANSFER_ITEMS);
-			}
-		};
-
-		buttonTransItems.setTitle(EMCCLang.TAKEITEMS.translate());
-		buttonTransItems.setIcon(GuiIcons.DOWN);
-
-		buttonSecurity = new Button(-19, 32, 16, 16)
-		{
-			@Override
-			public void onClicked(GuiBase gui, MouseButton button)
+			public void onClicked(MouseButton button)
 			{
 				GuiHelper.playClickSound();
 				ClientUtils.MC.playerController.sendEnchantPacket(container.windowId, button.isLeft() ? TileCondenser.BUTTON_SECURITY_LEFT : TileCondenser.BUTTON_SECURITY_RIGHT);
 			}
 
 			@Override
-			public void addMouseOverText(GuiBase gui, List<String> list)
+			public void addMouseOverText(List<String> list)
 			{
-				list.add(getTitle(gui));
+				list.add(getTitle());
 				list.add(container.condenser.security.getValue().getLangKey().translate());
 			}
 
 			@Override
-			public Icon getIcon(GuiBase gui)
+			public Icon getIcon()
 			{
 				return container.condenser.security.getValue().getIcon();
 			}
@@ -81,24 +71,24 @@ public class GuiCondenser extends GuiBase
 
 		buttonSecurity.setTitle(EnumPrivacyLevel.ENUM_LANG_KEY.translate());
 
-		buttonRedstone = new Button(-19, 50, 16, 16)
+		buttonRedstone = new Button(this, -19, 50, 16, 16)
 		{
 			@Override
-			public void onClicked(GuiBase gui, MouseButton button)
+			public void onClicked(MouseButton button)
 			{
 				GuiHelper.playClickSound();
 				ClientUtils.MC.playerController.sendEnchantPacket(container.windowId, button.isLeft() ? TileCondenser.BUTTON_REDSTONE_MODE_LEFT : TileCondenser.BUTTON_REDSTONE_MODE_RIGHT);
 			}
 
 			@Override
-			public void addMouseOverText(GuiBase gui, List<String> list)
+			public void addMouseOverText(List<String> list)
 			{
-				list.add(getTitle(gui));
+				list.add(getTitle());
 				list.add(container.condenser.redstone_mode.getValue().getLangKey().translate());
 			}
 
 			@Override
-			public Icon getIcon(GuiBase gui)
+			public Icon getIcon()
 			{
 				return container.condenser.redstone_mode.getValue().getIcon();
 			}
@@ -106,24 +96,24 @@ public class GuiCondenser extends GuiBase
 
 		buttonRedstone.setTitle(EnumRedstoneMode.ENUM_LANG_KEY.translate());
 
-		buttonInvMode = new Button(-19, 68, 16, 16)
+		buttonInvMode = new Button(this, -19, 68, 16, 16)
 		{
 			@Override
-			public void onClicked(GuiBase gui, MouseButton button)
+			public void onClicked(MouseButton button)
 			{
 				GuiHelper.playClickSound();
 				ClientUtils.MC.playerController.sendEnchantPacket(container.windowId, button.isLeft() ? TileCondenser.BUTTON_INVENTORY_MODE_LEFT : TileCondenser.BUTTON_INVENTORY_MODE_RIGHT);
 			}
 
 			@Override
-			public void addMouseOverText(GuiBase gui, List<String> list)
+			public void addMouseOverText(List<String> list)
 			{
-				list.add(getTitle(gui));
+				list.add(getTitle());
 				list.add(container.condenser.inv_mode.getValue().getLangKey().translate());
 			}
 
 			@Override
-			public Icon getIcon(GuiBase gui)
+			public Icon getIcon()
 			{
 				return container.condenser.inv_mode.getValue().getIcon();
 			}
@@ -131,24 +121,24 @@ public class GuiCondenser extends GuiBase
 
 		buttonInvMode.setTitle(EnumIO.ENUM_LANG_KEY.translate());
 
-		buttonSafeMode = new Button(-19, 86, 16, 16)
+		buttonSafeMode = new Button(this, -19, 86, 16, 16)
 		{
 			@Override
-			public void onClicked(GuiBase gui, MouseButton button)
+			public void onClicked(MouseButton button)
 			{
 				GuiHelper.playClickSound();
 				ClientUtils.MC.playerController.sendEnchantPacket(container.windowId, TileCondenser.BUTTON_SAFE_MODE);
 			}
 
 			@Override
-			public void addMouseOverText(GuiBase gui, List<String> list)
+			public void addMouseOverText(List<String> list)
 			{
-				list.add(getTitle(gui));
+				list.add(getTitle());
 				list.add((container.condenser.safe_mode.getBoolean() ? GuiLang.ENABLED : GuiLang.DISABLED).translate());
 			}
 
 			@Override
-			public Icon getIcon(GuiBase gui)
+			public Icon getIcon()
 			{
 				return container.condenser.safe_mode.getBoolean() ? GuiIcons.ACCEPT : GuiIcons.ACCEPT_GRAY;
 			}
@@ -156,10 +146,10 @@ public class GuiCondenser extends GuiBase
 
 		buttonSafeMode.setTitle(EMCCLang.SAFEMODE.translate());
 
-		barEMC = new Widget(30, 9, 118, 16)
+		barEMC = new Widget(this, 30, 9, 118, 16)
 		{
 			@Override
-			public void addMouseOverText(GuiBase gui, List<String> l)
+			public void addMouseOverText(List<String> l)
 			{
 				ItemStack tar = container.condenser.target.getStackInSlot(0);
 				int emc1 = EMCValues.getEMC(tar).value;
@@ -167,7 +157,7 @@ public class GuiCondenser extends GuiBase
 			}
 
 			@Override
-			public Icon getIcon(GuiBase gui)
+			public Icon getIcon()
 			{
 				int emc1 = EMCValues.getEMC(container.condenser.target.getStackInSlot(0)).value;
 
@@ -185,25 +175,25 @@ public class GuiCondenser extends GuiBase
 			}
 		};
 
-		targetIcon = new Widget(8, 9, 16, 16)
+		targetIcon = new Widget(this, 8, 9, 16, 16)
 		{
 			@Override
-			public String getTitle(GuiBase gui)
+			public String getTitle()
 			{
 				return (!container.condenser.target.getStackInSlot(0).isEmpty() || !container.player.inventory.getItemStack().isEmpty()) ? "" : EMCCLang.NOTARGET.translate();
 			}
 
 			@Override
-			public Icon getIcon(GuiBase gui)
+			public Icon getIcon()
 			{
 				return !container.condenser.target.getStackInSlot(0).isEmpty() ? Icon.EMPTY : TEX_TARGET;
 			}
 		};
 
-		sidebar = new Widget(-25, 26, 25, 83)
+		sidebar = new Widget(this, -25, 26, 25, 83)
 		{
 			@Override
-			public Icon getIcon(GuiBase gui)
+			public Icon getIcon()
 			{
 				return TEX_SIDEBAR;
 			}
@@ -253,7 +243,7 @@ public class GuiCondenser extends GuiBase
 	}
 
 	@Override
-	public Icon getIcon(GuiBase gui)
+	public Icon getIcon()
 	{
 		return TEX_BACKGROUND;
 	}
