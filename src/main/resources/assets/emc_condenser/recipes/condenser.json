@@ -11,6 +11,6 @@
 		"O": {"type": "forge:ore_dict", "ore": "blockUUS"},
 		"I": {"type": "forge:ore_dict", "ore": "crystalStar"},
 		"B": {"item": "black_hole_band"},
-		"S": {"type": "forge:ore_dict", "ore": "blockDiamond"}
+		"S": {"type": "forge:ore_dict", "ore": "glowstone"}
 	}
 }

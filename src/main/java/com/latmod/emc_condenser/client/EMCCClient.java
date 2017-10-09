@@ -22,14 +22,12 @@ public class EMCCClient extends EMCCCommon
 
 		ClientUtils.MC.getItemColors().registerItemColorHandler((stack, tintIndex) ->
 		{
-			if (tintIndex == 1)
+			if (tintIndex == 0)
 			{
 				return Color.HSBtoRGB((Minecraft.getSystemTime() % 10000L) * 0.0001F, 0.6F, 0.7F);
 			}
 
 			return 0xFFFFFF;
-		}, EMCCItems.UUS_ITEM);
-
-		ClientUtils.MC.getItemColors().registerItemColorHandler((stack, tintIndex) -> Color.HSBtoRGB((Minecraft.getSystemTime() % 10000L) * 0.0001F, 0.7F, 0.7F), EMCCItems.UUS_INGOT);
+		}, EMCCItems.UUS_ITEM, EMCCItems.UUS_INGOT);
 	}
 }
