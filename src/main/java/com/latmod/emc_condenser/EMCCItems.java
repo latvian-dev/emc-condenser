@@ -2,13 +2,14 @@ package com.latmod.emc_condenser;
 
 import com.feed_the_beast.ftbl.lib.block.ItemBlockBase;
 import com.feed_the_beast.ftbl.lib.client.ClientUtils;
-import com.latmod.emc_condenser.block.BlockCondenser;
+import com.latmod.emc_condenser.block.BlockConstructor;
+import com.latmod.emc_condenser.block.BlockDestructor;
 import com.latmod.emc_condenser.block.BlockUUBlock;
-import com.latmod.emc_condenser.block.TileCondenser;
-import com.latmod.emc_condenser.item.ItemBlackHoleBand;
+import com.latmod.emc_condenser.block.TileConstructor;
+import com.latmod.emc_condenser.block.TileDestructor;
+import com.latmod.emc_condenser.item.ItemBalancedClay;
 import com.latmod.emc_condenser.item.ItemEMCC;
 import com.latmod.emc_condenser.item.ItemEmcBattery;
-import com.latmod.emc_condenser.item.ItemLifeRing;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -29,24 +30,25 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EMCCItems
 {
 	public static final Block UUS_BLOCK = Blocks.AIR;
-	public static final Block CONDENSER = Blocks.AIR;
+	public static final Block CONSTRUCTOR = Blocks.AIR;
+	public static final Block DESTRUCTOR = Blocks.AIR;
 
 	public static final Item UUS_ITEM = Items.AIR;
 	public static final Item UUS_INGOT = Items.AIR;
 	public static final Item CRYSTAL_STAR = Items.AIR;
-
+	public static final Item BALANCED_CLAY = Items.AIR;
 	public static final Item BATTERY = Items.AIR;
-	public static final Item LIFE_RING = Items.AIR;
-	public static final Item BLACK_HOLE_BAND = Items.AIR;
 
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event)
 	{
 		event.getRegistry().registerAll(
 				new BlockUUBlock("uus_block"),
-				new BlockCondenser("condenser"));
+				new BlockConstructor("constructor"),
+				new BlockDestructor("destructor"));
 
-		GameRegistry.registerTileEntity(TileCondenser.class, EMCC.MOD_ID + ":condenser");
+		GameRegistry.registerTileEntity(TileConstructor.class, EMCC.MOD_ID + ":constructor");
+		GameRegistry.registerTileEntity(TileDestructor.class, EMCC.MOD_ID + ":destructor");
 	}
 
 	@SubscribeEvent
@@ -54,15 +56,13 @@ public class EMCCItems
 	{
 		event.getRegistry().registerAll(
 				new ItemBlockBase(UUS_BLOCK),
-				new ItemBlockBase(CONDENSER),
-
+				new ItemBlockBase(CONSTRUCTOR),
+				new ItemBlockBase(DESTRUCTOR),
 				new ItemEMCC("uus_item"),
 				new ItemEMCC("uus_ingot"),
 				new ItemEMCC("crystal_star"),
-
-				new ItemEmcBattery("battery"),
-				new ItemLifeRing("life_ring"),
-				new ItemBlackHoleBand("black_hole_band"));
+				new ItemBalancedClay("balanced_clay"),
+				new ItemEmcBattery("battery"));
 	}
 
 	@SubscribeEvent
@@ -70,14 +70,13 @@ public class EMCCItems
 	public static void registerModels(ModelRegistryEvent event)
 	{
 		ClientUtils.registerModel(UUS_BLOCK);
-		ClientUtils.registerModel(CONDENSER);
+		ClientUtils.registerModel(CONSTRUCTOR);
+		ClientUtils.registerModel(DESTRUCTOR);
 
 		ClientUtils.registerModel(UUS_ITEM);
 		ClientUtils.registerModel(UUS_INGOT);
 		ClientUtils.registerModel(CRYSTAL_STAR);
-
+		ClientUtils.registerModel(BALANCED_CLAY);
 		ClientUtils.registerModel(BATTERY);
-		ClientUtils.registerModel(LIFE_RING);
-		ClientUtils.registerModel(BLACK_HOLE_BAND);
 	}
 }

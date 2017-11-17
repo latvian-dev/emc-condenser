@@ -1,9 +1,0 @@
-{
-	"parent": "item/generated",
-	"textures": {
-		"layer0": "emc_condenser:items/life_ring"
-	},
-	"overrides": [
-		{"predicate": {"active": 1}, "model": "emc_condenser:item/life_ring_active"}
-	]
-}

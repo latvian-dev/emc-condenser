@@ -14,7 +14,6 @@ import com.feed_the_beast.ftbl.lib.util.misc.EnumRedstoneMode;
 import com.feed_the_beast.ftbl.lib.util.misc.MouseButton;
 import com.latmod.emc_condenser.EMCCConfig;
 import com.latmod.emc_condenser.api.IEmcStorageItem;
-import com.latmod.emc_condenser.util.Blacklist;
 import com.latmod.emc_condenser.util.EMCValues;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -29,7 +28,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class TileCondenser extends TileBase implements ITickable
+public class TileDestructor extends TileBase implements ITickable
 {
 	public static final int BUTTON_TRANSFER_ITEMS = 0;
 	public static final int BUTTON_SECURITY_LEFT = 1;
@@ -51,7 +50,7 @@ public class TileCondenser extends TileBase implements ITickable
 
 	public final ItemStackHandler target, input, output;
 
-	public TileCondenser()
+	public TileDestructor()
 	{
 		target = new ItemStackHandler(1);
 		input = new ItemStackHandler(36);
@@ -170,9 +169,9 @@ public class TileCondenser extends TileBase implements ITickable
 					continue;
 				}
 
-				int iev = EMCValues.getEMC(in).value;
+				int iev = EMCValues.getDestructionEMC(in).value;
 
-				if (iev > 0 && !Blacklist.isBlacklistedFuel(in))
+				if (iev > 0)
 				{
 					if (safe_mode.getAsBoolean() && in.getCount() == 1)
 					{
@@ -222,9 +221,9 @@ public class TileCondenser extends TileBase implements ITickable
 			}
 			else
 			{
-				int ev = EMCValues.getEMC(tar).value;
+				int ev = EMCValues.getConstructionEMC(tar).value;
 
-				if (ev > 0 && !Blacklist.isBlacklistedTarget(tar))
+				if (ev > 0)
 				{
 					int d1 = storedEMC / ev;
 

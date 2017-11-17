@@ -7,9 +7,8 @@ import com.feed_the_beast.ftbl.api.RegisterSyncDataEvent;
 import com.feed_the_beast.ftbl.api.ServerReloadEvent;
 import com.feed_the_beast.ftbl.api.player.RegisterContainerProvidersEvent;
 import com.feed_the_beast.ftbl.lib.util.JsonUtils;
-import com.latmod.emc_condenser.block.TileCondenser;
-import com.latmod.emc_condenser.client.gui.ContainerCondenser;
-import com.latmod.emc_condenser.util.Blacklist;
+import com.latmod.emc_condenser.block.TileDestructor;
+import com.latmod.emc_condenser.client.gui.ContainerDestructor;
 import com.latmod.emc_condenser.util.EMCValues;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,14 +20,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EMCCEventHandler
 {
 	private static final ResourceLocation RELOAD_CONFIG = new ResourceLocation(EMCC.MOD_ID, "config");
-	private static final ResourceLocation RELOAD_BLACKLIST = new ResourceLocation(EMCC.MOD_ID, "blacklist");
 	private static final ResourceLocation RELOAD_EMC = new ResourceLocation(EMCC.MOD_ID, "emc");
 
 	@SubscribeEvent
 	public static void registerReloadIds(ServerReloadEvent.RegisterIds event)
 	{
 		event.register(RELOAD_CONFIG);
-		event.register(RELOAD_BLACKLIST);
 		event.register(RELOAD_EMC);
 	}
 
@@ -38,11 +35,6 @@ public class EMCCEventHandler
 		if (event.reload(RELOAD_CONFIG))
 		{
 			EMCCConfig.sync();
-		}
-
-		if (event.reload(RELOAD_BLACKLIST) && !Blacklist.load())
-		{
-			event.failedToReload(RELOAD_BLACKLIST);
 		}
 
 		if (event.reload(RELOAD_EMC) && !EMCValues.load())
@@ -60,7 +52,6 @@ public class EMCCEventHandler
 			public NBTTagCompound writeSyncData(EntityPlayerMP player, IForgePlayer forgePlayer)
 			{
 				NBTTagCompound nbt = new NBTTagCompound();
-				nbt.setString("Blacklist", JsonUtils.toJson(Blacklist.json));
 				nbt.setString("EMCValues", JsonUtils.toJson(EMCValues.json));
 				return nbt;
 			}
@@ -68,8 +59,7 @@ public class EMCCEventHandler
 			@Override
 			public void readSyncData(NBTTagCompound nbt)
 			{
-				Blacklist.load(JsonUtils.fromJson(nbt.getString("Blacklist")).getAsJsonObject());
-				EMCValues.load(JsonUtils.fromJson(nbt.getString("EMCValues")).getAsJsonArray());
+				EMCValues.load(JsonUtils.fromJson(nbt.getString("EMCValues")).getAsJsonObject());
 			}
 		});
 	}
@@ -109,6 +99,6 @@ public class EMCCEventHandler
 	@SubscribeEvent
 	public static void registerContainers(RegisterContainerProvidersEvent event)
 	{
-		event.register(ContainerCondenser.ID, (player, pos, data) -> new ContainerCondenser(player, (TileCondenser) player.world.getTileEntity(pos)));
+		event.register(ContainerDestructor.ID, (player, pos, data) -> new ContainerDestructor(player, (TileDestructor) player.world.getTileEntity(pos)));
 	}
 }

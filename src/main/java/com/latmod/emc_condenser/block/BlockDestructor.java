@@ -1,7 +1,7 @@
 package com.latmod.emc_condenser.block;
 
 import com.feed_the_beast.ftbl.api.FTBLibAPI;
-import com.latmod.emc_condenser.client.gui.ContainerCondenser;
+import com.latmod.emc_condenser.client.gui.ContainerDestructor;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -14,9 +14,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockCondenser extends BlockEMCC
+public class BlockDestructor extends BlockEMCC
 {
-	public BlockCondenser(String s)
+	public BlockDestructor(String s)
 	{
 		super(s, Material.ROCK, MapColor.OBSIDIAN);
 		setResistance(100000F);
@@ -31,7 +31,7 @@ public class BlockCondenser extends BlockEMCC
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
-		return new TileCondenser();
+		return new TileDestructor();
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class BlockCondenser extends BlockEMCC
 	{
 		if (!worldIn.isRemote)
 		{
-			FTBLibAPI.API.openGui(ContainerCondenser.ID, (EntityPlayerMP) playerIn, pos, null);
+			FTBLibAPI.API.openGui(ContainerDestructor.ID, (EntityPlayerMP) playerIn, pos, null);
 		}
 
 		return true;

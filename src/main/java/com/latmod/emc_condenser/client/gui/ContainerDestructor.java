@@ -2,7 +2,7 @@ package com.latmod.emc_condenser.client.gui;
 
 import com.feed_the_beast.ftbl.lib.util.InvUtils;
 import com.latmod.emc_condenser.EMCC;
-import com.latmod.emc_condenser.block.TileCondenser;
+import com.latmod.emc_condenser.block.TileDestructor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
@@ -10,14 +10,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ContainerCondenser extends Container
+public class ContainerDestructor extends Container
 {
-	public static final ResourceLocation ID = new ResourceLocation(EMCC.MOD_ID, "condenser");
+	public static final ResourceLocation ID = new ResourceLocation(EMCC.MOD_ID, "constructor");
 
 	public final EntityPlayer player;
-	public final TileCondenser condenser;
+	public final TileDestructor condenser;
 
-	public ContainerCondenser(EntityPlayer ep, TileCondenser t)
+	public ContainerDestructor(EntityPlayer ep, TileDestructor t)
 	{
 		player = ep;
 		condenser = t;

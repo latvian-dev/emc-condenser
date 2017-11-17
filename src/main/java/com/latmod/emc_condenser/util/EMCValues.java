@@ -20,9 +20,12 @@ import java.util.Map;
 
 public class EMCValues
 {
-	private static final List<EMCValue> LIST = new ArrayList<>();
-	private static final Map<ItemEntry, EMCValue> CACHE = new HashMap<>();
-	public static JsonArray json;
+	private static final EMCValues ALL = new EMCValues();
+	private static final EMCValues CONSTRUCTION = new EMCValues();
+	private static final EMCValues DESTRUCTION = new EMCValues();
+	private static final Map<ItemEntry, EMCValue> CONSTRUCTION_CACHE = new HashMap<>();
+	private static final Map<ItemEntry, EMCValue> DESTRUCTION_CACHE = new HashMap<>();
+	public static JsonObject json;
 
 	public static boolean load()
 	{
@@ -35,21 +38,30 @@ public class EMCValues
 				FileUtils.save(file, StringUtils.readStringList(new InputStreamReader(EMCValues.class.getResourceAsStream("/assets/emc_condenser/default_values.json"))));
 			}
 
-			json = JsonUtils.fromJson(file).getAsJsonArray();
+			json = JsonUtils.fromJson(file).getAsJsonObject();
 			return load(json);
 		}
 		catch (Exception ex)
 		{
 			System.err.println(ex.toString());
-			json = new JsonArray();
+			json = new JsonObject();
 			return false;
 		}
 	}
 
-	public static boolean load(JsonArray a)
+	public static boolean load(JsonObject json)
 	{
-		LIST.clear();
-		CACHE.clear();
+		CONSTRUCTION_CACHE.clear();
+		DESTRUCTION_CACHE.clear();
+		boolean all = !json.has("all") || load(ALL, json.get("all").getAsJsonArray());
+		boolean construction = !json.has("construction") || load(CONSTRUCTION, json.get("construction").getAsJsonArray());
+		boolean destruction = !json.has("destruction") || load(DESTRUCTION, json.get("destruction").getAsJsonArray());
+		return all || construction || destruction;
+	}
+
+	private static boolean load(EMCValues values, JsonArray a)
+	{
+		values.values.clear();
 		boolean ret = true;
 
 		for (JsonElement e : a)
@@ -61,11 +73,11 @@ public class EMCValues
 			{
 				try
 				{
-					Ingredient ingredient = CommonUtils.getIngredient(o);
+					Ingredient ingredient = CommonUtils.getIngredient(o.has("ingredient") ? o.get("ingredient") : o);
 
 					if (ingredient != Ingredient.EMPTY)
 					{
-						LIST.add(new EMCValue(ingredient, value));
+						values.values.add(new EMCValue(ingredient, value));
 					}
 				}
 				catch (Exception ex)
@@ -79,7 +91,7 @@ public class EMCValues
 		return ret;
 	}
 
-	public static EMCValue getEMC(ItemStack stack)
+	public static EMCValue getConstructionEMC(ItemStack stack)
 	{
 		if (stack.isEmpty())
 		{
@@ -87,24 +99,65 @@ public class EMCValues
 		}
 
 		ItemEntry entry = ItemEntry.get(stack);
-		EMCValue emc = CACHE.get(entry);
+		EMCValue emc = CONSTRUCTION_CACHE.get(entry);
 
 		if (emc == null)
 		{
-			emc = EMCValue.EMPTY;
+			emc = CONSTRUCTION.getEMC(stack);
 
-			for (EMCValue value : LIST)
+			if (emc.isEmpty())
 			{
-				if (value.ingredient.apply(stack))
-				{
-					emc = value;
-					break;
-				}
+				emc = ALL.getEMC(stack);
 			}
 
-			CACHE.put(entry, emc);
+			CONSTRUCTION_CACHE.put(entry, emc);
 		}
 
 		return emc;
+	}
+
+	public static EMCValue getDestructionEMC(ItemStack stack)
+	{
+		if (stack.isEmpty())
+		{
+			return EMCValue.EMPTY;
+		}
+
+		ItemEntry entry = ItemEntry.get(stack);
+		EMCValue emc = DESTRUCTION_CACHE.get(entry);
+
+		if (emc == null)
+		{
+			emc = DESTRUCTION.getEMC(stack);
+
+			if (emc.isEmpty())
+			{
+				emc = ALL.getEMC(stack);
+			}
+
+			DESTRUCTION_CACHE.put(entry, emc);
+		}
+
+		return emc;
+	}
+
+	private final List<EMCValue> values = new ArrayList<>();
+
+	private EMCValue getEMC(ItemStack stack)
+	{
+		if (stack.isEmpty())
+		{
+			return EMCValue.EMPTY;
+		}
+
+		for (EMCValue value : values)
+		{
+			if (!value.isEmpty() && value.ingredient.apply(stack))
+			{
+				return value;
+			}
+		}
+
+		return EMCValue.EMPTY;
 	}
 }

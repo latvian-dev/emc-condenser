@@ -16,7 +16,7 @@ import com.feed_the_beast.ftbl.lib.util.misc.EnumRedstoneMode;
 import com.feed_the_beast.ftbl.lib.util.misc.MouseButton;
 import com.latmod.emc_condenser.EMCC;
 import com.latmod.emc_condenser.EMCCLang;
-import com.latmod.emc_condenser.block.TileCondenser;
+import com.latmod.emc_condenser.block.TileDestructor;
 import com.latmod.emc_condenser.util.EMCValues;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
@@ -35,16 +35,16 @@ public class GuiCondenser extends GuiBase
 	public static final Icon TEX_TARGET = TEXTURE.withUVfromCoords(176, 0, 16, 16, 256, 256);
 	public static final Icon TEX_SIDEBAR = TEXTURE.withUVfromCoords(176, 26, 25, 83, 256, 256);
 
-	public final ContainerCondenser container;
+	public final ContainerDestructor container;
 	public final Button buttonTransItems, buttonSecurity, buttonRedstone, buttonInvMode, buttonSafeMode;
 	public final Widget barEMC, targetIcon, sidebar;
 
-	public GuiCondenser(ContainerCondenser c)
+	public GuiCondenser(ContainerDestructor c)
 	{
 		super(176, 236);
 		container = c;
 
-		buttonTransItems = new SimpleButton(this, 153, 9, EMCCLang.TAKEITEMS, GuiIcons.DOWN, (gui, button) -> ClientUtils.MC.playerController.sendEnchantPacket(container.windowId, TileCondenser.BUTTON_TRANSFER_ITEMS));
+		buttonTransItems = new SimpleButton(this, 153, 9, EMCCLang.TAKEITEMS, GuiIcons.DOWN, (gui, button) -> ClientUtils.MC.playerController.sendEnchantPacket(container.windowId, TileDestructor.BUTTON_TRANSFER_ITEMS));
 
 		buttonSecurity = new Button(this, -19, 32, 16, 16)
 		{
@@ -52,7 +52,7 @@ public class GuiCondenser extends GuiBase
 			public void onClicked(MouseButton button)
 			{
 				GuiHelper.playClickSound();
-				ClientUtils.MC.playerController.sendEnchantPacket(container.windowId, button.isLeft() ? TileCondenser.BUTTON_SECURITY_LEFT : TileCondenser.BUTTON_SECURITY_RIGHT);
+				ClientUtils.MC.playerController.sendEnchantPacket(container.windowId, button.isLeft() ? TileDestructor.BUTTON_SECURITY_LEFT : TileDestructor.BUTTON_SECURITY_RIGHT);
 			}
 
 			@Override
@@ -77,7 +77,7 @@ public class GuiCondenser extends GuiBase
 			public void onClicked(MouseButton button)
 			{
 				GuiHelper.playClickSound();
-				ClientUtils.MC.playerController.sendEnchantPacket(container.windowId, button.isLeft() ? TileCondenser.BUTTON_REDSTONE_MODE_LEFT : TileCondenser.BUTTON_REDSTONE_MODE_RIGHT);
+				ClientUtils.MC.playerController.sendEnchantPacket(container.windowId, button.isLeft() ? TileDestructor.BUTTON_REDSTONE_MODE_LEFT : TileDestructor.BUTTON_REDSTONE_MODE_RIGHT);
 			}
 
 			@Override
@@ -102,7 +102,7 @@ public class GuiCondenser extends GuiBase
 			public void onClicked(MouseButton button)
 			{
 				GuiHelper.playClickSound();
-				ClientUtils.MC.playerController.sendEnchantPacket(container.windowId, button.isLeft() ? TileCondenser.BUTTON_INVENTORY_MODE_LEFT : TileCondenser.BUTTON_INVENTORY_MODE_RIGHT);
+				ClientUtils.MC.playerController.sendEnchantPacket(container.windowId, button.isLeft() ? TileDestructor.BUTTON_INVENTORY_MODE_LEFT : TileDestructor.BUTTON_INVENTORY_MODE_RIGHT);
 			}
 
 			@Override
@@ -127,7 +127,7 @@ public class GuiCondenser extends GuiBase
 			public void onClicked(MouseButton button)
 			{
 				GuiHelper.playClickSound();
-				ClientUtils.MC.playerController.sendEnchantPacket(container.windowId, TileCondenser.BUTTON_SAFE_MODE);
+				ClientUtils.MC.playerController.sendEnchantPacket(container.windowId, TileDestructor.BUTTON_SAFE_MODE);
 			}
 
 			@Override
@@ -152,14 +152,14 @@ public class GuiCondenser extends GuiBase
 			public void addMouseOverText(List<String> l)
 			{
 				ItemStack tar = container.condenser.target.getStackInSlot(0);
-				int emc1 = EMCValues.getEMC(tar).value;
+				int emc1 = EMCValues.getConstructionEMC(tar).value;
 				l.add(TextFormatting.GOLD.toString() + "" + formatEMC(container.condenser.storedEMC) + (emc1 <= 0 ? "" : (" / " + formatEMC(emc1))));
 			}
 
 			@Override
 			public Icon getIcon()
 			{
-				int emc1 = EMCValues.getEMC(container.condenser.target.getStackInSlot(0)).value;
+				int emc1 = EMCValues.getConstructionEMC(container.condenser.target.getStackInSlot(0)).value;
 
 				if (emc1 > 0)
 				{

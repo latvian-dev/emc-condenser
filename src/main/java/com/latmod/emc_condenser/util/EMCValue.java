@@ -17,4 +17,9 @@ public class EMCValue
 		ingredient = i;
 		value = v;
 	}
+
+	public boolean isEmpty()
+	{
+		return ingredient == Ingredient.EMPTY || value <= 0;
+	}
 }

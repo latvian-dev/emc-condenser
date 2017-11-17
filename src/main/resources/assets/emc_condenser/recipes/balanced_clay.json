@@ -1,0 +1,14 @@
+{
+	"type": "forge:ore_shaped",
+	"group": "emc_condenser:condenser",
+	"result": {"item": "balanced_clay", "count": 8},
+	"pattern": [
+		"CCC",
+		"CSC",
+		"CCC"
+	],
+	"key": {
+		"C": {"item": "minecraft:clay_ball"},
+		"S": {"type": "forge:ore_dict", "ore": "netherStar"}
+	}
+}

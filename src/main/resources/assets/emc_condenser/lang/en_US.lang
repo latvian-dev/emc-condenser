@@ -2,20 +2,23 @@ itemGroup.emc_condenser=EMC Condenser
 
 # Blocks
 tile.emc_condenser.uus_block.name=UnUnSeptium Block
-tile.emc_condenser.condenser.name=EMC Condenser
+tile.emc_condenser.constructor.name=EMC Constructor
+tile.emc_condenser.destructor.name=EMC Destructor
 
 # Items
 item.emc_condenser.uus_item.name=UnUnSeptium
 item.emc_condenser.crystal_star.name=Crystal Star
 item.emc_condenser.uus_ingot.name=UnUnSeptium Ingot
-
+item.emc_condenser.balanced_clay.name=Balanced Clay
 item.emc_condenser.battery.name=EMC Battery
-item.emc_condenser.life_ring.name=Ring of Life
-item.emc_condenser.black_hole_band.name=Black Hole Band
 
 # Lang
+fluid.emc=EMC
 lang.emc_condenser.notarget=No Target
 lang.emc_condenser.emc=EMC: %s
-lang.emc_condenser.total_emc=Total EMC: %s
+lang.emc_condenser.total_emc=EMC: %s, Total: %s
+lang.emc_condenser.construction_emc=Construction EMC: %s
+lang.emc_condenser.total_construction_emc=Construction EMC: %s, Total: %s
+lang.emc_condenser.destruction_emc=Destruction EMC: %s
+lang.emc_condenser.total_destruction_emc=Destruction EMC: %s, Total: %s
 lang.emc_condenser.safemode=Safe Mode
-lang.emc_condenser.takeitems=Take Items
