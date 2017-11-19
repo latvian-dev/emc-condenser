@@ -9,7 +9,6 @@ import com.latmod.emc_condenser.block.TileConstructor;
 import com.latmod.emc_condenser.block.TileDestructor;
 import com.latmod.emc_condenser.item.ItemBalancedClay;
 import com.latmod.emc_condenser.item.ItemEMCC;
-import com.latmod.emc_condenser.item.ItemEmcBattery;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -37,7 +36,6 @@ public class EMCCItems
 	public static final Item UUS_INGOT = Items.AIR;
 	public static final Item CRYSTAL_STAR = Items.AIR;
 	public static final Item BALANCED_CLAY = Items.AIR;
-	public static final Item BATTERY = Items.AIR;
 
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event)
@@ -61,8 +59,7 @@ public class EMCCItems
 				new ItemEMCC("uus_item"),
 				new ItemEMCC("uus_ingot"),
 				new ItemEMCC("crystal_star"),
-				new ItemBalancedClay("balanced_clay"),
-				new ItemEmcBattery("battery"));
+				new ItemBalancedClay("balanced_clay"));
 	}
 
 	@SubscribeEvent
@@ -77,6 +74,5 @@ public class EMCCItems
 		ClientUtils.registerModel(UUS_INGOT);
 		ClientUtils.registerModel(CRYSTAL_STAR);
 		ClientUtils.registerModel(BALANCED_CLAY);
-		ClientUtils.registerModel(BATTERY);
 	}
 }

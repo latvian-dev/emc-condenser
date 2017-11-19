@@ -10,7 +10,7 @@
 	"key": {
 		"O": {"type": "forge:ore_dict", "ore": "blockUUS"},
 		"I": {"type": "forge:ore_dict", "ore": "crystalStar"},
-		"B": {"item": "battery"},
+		"B": {"item": "minecraft:beacon"},
 		"S": {"type": "forge:ore_dict", "ore": "glowstone"},
 		"C": {"item": "balanced_clay"}
 	}

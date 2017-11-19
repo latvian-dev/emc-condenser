@@ -1,9 +1,12 @@
 package com.latmod.emc_condenser.block;
 
+import com.feed_the_beast.ftbl.api.FTBLibAPI;
+import com.latmod.emc_condenser.gui.ContainerConstructor;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -46,6 +49,17 @@ public class BlockConstructor extends BlockEMCC
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
+		if (!worldIn.isRemote)
+		{
+			TileEntity tileEntity = worldIn.getTileEntity(pos);
+
+			if (tileEntity instanceof TileConstructor)
+			{
+				tileEntity.markDirty();
+				FTBLibAPI.API.openGui(ContainerConstructor.ID, (EntityPlayerMP) playerIn, pos, null);
+			}
+		}
+
 		return true;
 	}
 }

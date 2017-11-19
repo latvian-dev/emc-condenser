@@ -10,7 +10,6 @@ item.emc_condenser.uus_item.name=UnUnSeptium
 item.emc_condenser.crystal_star.name=Crystal Star
 item.emc_condenser.uus_ingot.name=UnUnSeptium Ingot
 item.emc_condenser.balanced_clay.name=Balanced Clay
-item.emc_condenser.battery.name=EMC Battery
 
 # Lang
 fluid.emc=EMC
@@ -22,3 +21,5 @@ lang.emc_condenser.total_construction_emc=Construction EMC: %s, Total: %s
 lang.emc_condenser.destruction_emc=Destruction EMC: %s
 lang.emc_condenser.total_destruction_emc=Destruction EMC: %s, Total: %s
 lang.emc_condenser.safemode=Safe Mode
+
+emc_condenser.general.uu_block_enchant_power=UnUnSeptium Block Enchantment Power

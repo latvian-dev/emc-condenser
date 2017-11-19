@@ -1,7 +1,7 @@
 package com.latmod.emc_condenser.block;
 
 import com.feed_the_beast.ftbl.api.FTBLibAPI;
-import com.latmod.emc_condenser.client.gui.ContainerDestructor;
+import com.latmod.emc_condenser.gui.ContainerDestructor;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -51,7 +51,13 @@ public class BlockDestructor extends BlockEMCC
 	{
 		if (!worldIn.isRemote)
 		{
-			FTBLibAPI.API.openGui(ContainerDestructor.ID, (EntityPlayerMP) playerIn, pos, null);
+			TileEntity tileEntity = worldIn.getTileEntity(pos);
+
+			if (tileEntity instanceof TileDestructor)
+			{
+				tileEntity.markDirty();
+				FTBLibAPI.API.openGui(ContainerDestructor.ID, (EntityPlayerMP) playerIn, pos, null);
+			}
 		}
 
 		return true;

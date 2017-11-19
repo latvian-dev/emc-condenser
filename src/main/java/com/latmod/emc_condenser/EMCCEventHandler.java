@@ -7,13 +7,14 @@ import com.feed_the_beast.ftbl.api.RegisterSyncDataEvent;
 import com.feed_the_beast.ftbl.api.ServerReloadEvent;
 import com.feed_the_beast.ftbl.api.player.RegisterContainerProvidersEvent;
 import com.feed_the_beast.ftbl.lib.util.JsonUtils;
+import com.latmod.emc_condenser.block.TileConstructor;
 import com.latmod.emc_condenser.block.TileDestructor;
-import com.latmod.emc_condenser.client.gui.ContainerDestructor;
+import com.latmod.emc_condenser.gui.ContainerConstructor;
+import com.latmod.emc_condenser.gui.ContainerDestructor;
 import com.latmod.emc_condenser.util.EMCValues;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @EventHandler
@@ -53,6 +54,9 @@ public class EMCCEventHandler
 			{
 				NBTTagCompound nbt = new NBTTagCompound();
 				nbt.setString("EMCValues", JsonUtils.toJson(EMCValues.json));
+				nbt.setInteger("C_Speed", EMCCConfig.constructor.speed);
+				nbt.setInteger("D_Cooldown", EMCCConfig.destructor.cooldown);
+				nbt.setInteger("D_MaxEMC", EMCCConfig.destructor.max_emc);
 				return nbt;
 			}
 
@@ -60,45 +64,17 @@ public class EMCCEventHandler
 			public void readSyncData(NBTTagCompound nbt)
 			{
 				EMCValues.load(JsonUtils.fromJson(nbt.getString("EMCValues")).getAsJsonObject());
+				EMCCConfig.constructor.speed = nbt.getInteger("C_Speed");
+				EMCCConfig.destructor.cooldown = nbt.getInteger("D_Cooldown");
+				EMCCConfig.destructor.max_emc = nbt.getInteger("D_MaxEMC");
 			}
 		});
-	}
-
-	/*
-	@SubscribeEvent
-	public static void onAnvilEvent(AnvilUpdateEvent event)
-	{
-		if (event.getLeft().getItem() instanceof IEmcTool && !event.getRight().isEmpty())
-		{
-			IEmcTool tool = (IEmcTool) event.getLeft().getItem();
-			ToolInfusion t = ToolInfusion.get(event.getRight());
-
-			if (t != null && tool.canEnchantWith(event.getLeft(), t))
-			{
-				int l = tool.getInfusionLevel(event.getLeft(), t);
-				int lvlsToAdd = Math.min(event.getRight().getCount(), t.maxLevel - l);
-
-				if (lvlsToAdd > 0)
-				{
-					event.setMaterialCost(lvlsToAdd);
-					event.setCost(t.requiredLevel.getAsInt() * lvlsToAdd);
-					event.setOutput(event.getLeft().copy());
-					tool.setInfusionLevel(event.getOutput(), t, l + lvlsToAdd);
-				}
-			}
-		}
-	}
-	*/
-
-	@SubscribeEvent
-	public static void onPlayerDamaged(LivingAttackEvent event)
-	{
-		//TODO: Check if Life Ring can save them
 	}
 
 	@SubscribeEvent
 	public static void registerContainers(RegisterContainerProvidersEvent event)
 	{
+		event.register(ContainerConstructor.ID, ((player, pos, nbt) -> new ContainerConstructor(player, (TileConstructor) player.world.getTileEntity(pos))));
 		event.register(ContainerDestructor.ID, (player, pos, data) -> new ContainerDestructor(player, (TileDestructor) player.world.getTileEntity(pos)));
 	}
 }

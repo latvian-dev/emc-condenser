@@ -1,3 +1,3 @@
 @javax.annotation.ParametersAreNonnullByDefault
 @mcp.MethodsReturnNonnullByDefault
-package com.latmod.emc_condenser.api;
+package com.latmod.emc_condenser.gui;
