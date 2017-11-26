@@ -32,7 +32,8 @@ repositories {
 }
 
 dependencies {
-	compile "com.latmod.mods:FTBLib:${ftblib_version}:api"
+	provided "com.latmod.mods:FTBLib:${ftblib_version}:api"
+	runtime "com.latmod.mods:FTBLib:${ftblib_version}"
 }
 
 processResources {
