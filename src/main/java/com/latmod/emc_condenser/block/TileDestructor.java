@@ -1,8 +1,8 @@
 package com.latmod.emc_condenser.block;
 
-import com.feed_the_beast.ftbl.lib.tile.EnumSaveType;
-import com.feed_the_beast.ftbl.lib.tile.TileBase;
-import com.feed_the_beast.ftbl.lib.util.InvUtils;
+import com.feed_the_beast.ftblib.lib.tile.EnumSaveType;
+import com.feed_the_beast.ftblib.lib.tile.TileBase;
+import com.feed_the_beast.ftblib.lib.util.InvUtils;
 import com.latmod.emc_condenser.EMCCConfig;
 import com.latmod.emc_condenser.util.EMCValues;
 import net.minecraft.item.ItemStack;

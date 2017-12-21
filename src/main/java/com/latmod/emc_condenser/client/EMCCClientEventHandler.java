@@ -1,9 +1,9 @@
 package com.latmod.emc_condenser.client;
 
-import com.feed_the_beast.ftbl.api.EventHandler;
-import com.feed_the_beast.ftbl.api.player.RegisterGuiProvidersEvent;
-import com.feed_the_beast.ftbl.lib.client.ClientUtils;
-import com.feed_the_beast.ftbl.lib.gui.IGuiWrapper;
+import com.feed_the_beast.ftblib.events.player.RegisterGuiProvidersEvent;
+import com.feed_the_beast.ftblib.lib.EventHandler;
+import com.feed_the_beast.ftblib.lib.client.ClientUtils;
+import com.feed_the_beast.ftblib.lib.gui.IGuiWrapper;
 import com.latmod.emc_condenser.EMCCLang;
 import com.latmod.emc_condenser.block.TileConstructor;
 import com.latmod.emc_condenser.block.TileDestructor;
@@ -40,7 +40,7 @@ public class EMCCClientEventHandler
 			{
 				if (cv == dv)
 				{
-					if (cv > 0 && stack.getCount() > 1)
+					if (stack.getCount() > 1)
 					{
 						event.getToolTip().add(EMCCLang.TOTAL_EMC.translate(EMCCLang.format(cv, TextFormatting.GOLD), EMCCLang.format(cv * stack.getCount(), TextFormatting.GOLD)));
 					}

@@ -1,6 +1,6 @@
 package com.latmod.emc_condenser.client;
 
-import com.feed_the_beast.ftbl.lib.client.ClientUtils;
+import com.feed_the_beast.ftblib.lib.client.ClientUtils;
 import com.latmod.emc_condenser.EMCCCommon;
 import com.latmod.emc_condenser.EMCCItems;
 import net.minecraft.client.Minecraft;

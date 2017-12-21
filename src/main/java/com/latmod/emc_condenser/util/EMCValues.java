@@ -1,10 +1,10 @@
 package com.latmod.emc_condenser.util;
 
-import com.feed_the_beast.ftbl.lib.item.ItemEntry;
-import com.feed_the_beast.ftbl.lib.util.CommonUtils;
-import com.feed_the_beast.ftbl.lib.util.FileUtils;
-import com.feed_the_beast.ftbl.lib.util.JsonUtils;
-import com.feed_the_beast.ftbl.lib.util.StringUtils;
+import com.feed_the_beast.ftblib.lib.item.ItemEntry;
+import com.feed_the_beast.ftblib.lib.util.CommonUtils;
+import com.feed_the_beast.ftblib.lib.util.FileUtils;
+import com.feed_the_beast.ftblib.lib.util.JsonUtils;
+import com.feed_the_beast.ftblib.lib.util.StringUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

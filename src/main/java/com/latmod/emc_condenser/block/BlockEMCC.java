@@ -1,6 +1,6 @@
 package com.latmod.emc_condenser.block;
 
-import com.feed_the_beast.ftbl.lib.block.BlockBase;
+import com.feed_the_beast.ftblib.lib.block.BlockBase;
 import com.latmod.emc_condenser.EMCC;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;

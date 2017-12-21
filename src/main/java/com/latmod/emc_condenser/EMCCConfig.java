@@ -1,6 +1,6 @@
 package com.latmod.emc_condenser;
 
-import com.feed_the_beast.ftbl.lib.gui.GuiLang;
+import com.feed_the_beast.ftblib.lib.gui.GuiLang;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;

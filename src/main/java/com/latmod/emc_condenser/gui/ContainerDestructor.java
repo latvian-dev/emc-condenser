@@ -1,6 +1,6 @@
 package com.latmod.emc_condenser.gui;
 
-import com.feed_the_beast.ftbl.lib.util.InvUtils;
+import com.feed_the_beast.ftblib.lib.util.InvUtils;
 import com.latmod.emc_condenser.EMCC;
 import com.latmod.emc_condenser.block.TileDestructor;
 import net.minecraft.entity.player.EntityPlayer;

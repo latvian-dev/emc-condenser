@@ -1,7 +1,6 @@
 package com.latmod.emc_condenser;
 
-
-import com.feed_the_beast.ftbl.lib.util.LangKey;
+import com.feed_the_beast.ftblib.lib.util.LangKey;
 import net.minecraft.util.text.TextFormatting;
 
 import java.text.DecimalFormat;

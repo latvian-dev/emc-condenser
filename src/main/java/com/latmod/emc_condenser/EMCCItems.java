@@ -1,7 +1,7 @@
 package com.latmod.emc_condenser;
 
-import com.feed_the_beast.ftbl.lib.block.ItemBlockBase;
-import com.feed_the_beast.ftbl.lib.client.ClientUtils;
+import com.feed_the_beast.ftblib.lib.block.ItemBlockBase;
+import com.feed_the_beast.ftblib.lib.client.ClientUtils;
 import com.latmod.emc_condenser.block.BlockConstructor;
 import com.latmod.emc_condenser.block.BlockDestructor;
 import com.latmod.emc_condenser.block.BlockUUBlock;

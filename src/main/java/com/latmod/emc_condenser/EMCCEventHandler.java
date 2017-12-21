@@ -1,12 +1,12 @@
 package com.latmod.emc_condenser;
 
-import com.feed_the_beast.ftbl.api.EventHandler;
-import com.feed_the_beast.ftbl.api.IForgePlayer;
-import com.feed_the_beast.ftbl.api.ISyncData;
-import com.feed_the_beast.ftbl.api.RegisterSyncDataEvent;
-import com.feed_the_beast.ftbl.api.ServerReloadEvent;
-import com.feed_the_beast.ftbl.api.player.RegisterContainerProvidersEvent;
-import com.feed_the_beast.ftbl.lib.util.JsonUtils;
+import com.feed_the_beast.ftblib.events.RegisterSyncDataEvent;
+import com.feed_the_beast.ftblib.events.ServerReloadEvent;
+import com.feed_the_beast.ftblib.events.player.RegisterContainerProvidersEvent;
+import com.feed_the_beast.ftblib.lib.EventHandler;
+import com.feed_the_beast.ftblib.lib.data.ForgePlayer;
+import com.feed_the_beast.ftblib.lib.data.ISyncData;
+import com.feed_the_beast.ftblib.lib.util.JsonUtils;
 import com.latmod.emc_condenser.block.TileConstructor;
 import com.latmod.emc_condenser.block.TileDestructor;
 import com.latmod.emc_condenser.gui.ContainerConstructor;
@@ -50,7 +50,7 @@ public class EMCCEventHandler
 		event.register(EMCC.MOD_ID, new ISyncData()
 		{
 			@Override
-			public NBTTagCompound writeSyncData(EntityPlayerMP player, IForgePlayer forgePlayer)
+			public NBTTagCompound writeSyncData(EntityPlayerMP player, ForgePlayer forgePlayer)
 			{
 				NBTTagCompound nbt = new NBTTagCompound();
 				nbt.setString("EMCValues", JsonUtils.toJson(EMCValues.json));

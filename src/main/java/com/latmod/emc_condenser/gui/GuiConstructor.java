@@ -1,13 +1,13 @@
 package com.latmod.emc_condenser.gui;
 
-import com.feed_the_beast.ftbl.lib.client.ClientUtils;
-import com.feed_the_beast.ftbl.lib.gui.Button;
-import com.feed_the_beast.ftbl.lib.gui.GuiBase;
-import com.feed_the_beast.ftbl.lib.gui.GuiContainerWrapper;
-import com.feed_the_beast.ftbl.lib.gui.Widget;
-import com.feed_the_beast.ftbl.lib.icon.Icon;
-import com.feed_the_beast.ftbl.lib.icon.ItemIcon;
-import com.feed_the_beast.ftbl.lib.util.misc.MouseButton;
+import com.feed_the_beast.ftblib.lib.client.ClientUtils;
+import com.feed_the_beast.ftblib.lib.gui.Button;
+import com.feed_the_beast.ftblib.lib.gui.GuiBase;
+import com.feed_the_beast.ftblib.lib.gui.GuiContainerWrapper;
+import com.feed_the_beast.ftblib.lib.gui.Widget;
+import com.feed_the_beast.ftblib.lib.icon.Icon;
+import com.feed_the_beast.ftblib.lib.icon.ItemIcon;
+import com.feed_the_beast.ftblib.lib.util.misc.MouseButton;
 import com.latmod.emc_condenser.EMCC;
 import com.latmod.emc_condenser.EMCCLang;
 import net.minecraft.client.gui.GuiScreen;

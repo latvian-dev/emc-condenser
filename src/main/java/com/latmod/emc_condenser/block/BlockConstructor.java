@@ -1,6 +1,6 @@
 package com.latmod.emc_condenser.block;
 
-import com.feed_the_beast.ftbl.api.FTBLibAPI;
+import com.feed_the_beast.ftblib.lib.data.FTBLibAPI;
 import com.latmod.emc_condenser.gui.ContainerConstructor;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -56,7 +56,7 @@ public class BlockConstructor extends BlockEMCC
 			if (tileEntity instanceof TileConstructor)
 			{
 				tileEntity.markDirty();
-				FTBLibAPI.API.openGui(ContainerConstructor.ID, (EntityPlayerMP) playerIn, pos, null);
+				FTBLibAPI.openGui(ContainerConstructor.ID, (EntityPlayerMP) playerIn, pos, null);
 			}
 		}
 
