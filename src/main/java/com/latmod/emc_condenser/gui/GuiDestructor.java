@@ -34,9 +34,9 @@ public class GuiDestructor extends GuiBase
 			}
 
 			@Override
-			public void renderWidget()
+			public void draw()
 			{
-				getIcon().draw(this);
+				getIcon().draw(getAX(), getAY(), width, height);
 				//render EMC
 			}
 		};
